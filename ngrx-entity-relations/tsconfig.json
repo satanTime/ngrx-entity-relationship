@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "lib": ["es2016"],
+    "module": "commonjs",
+    "target": "es2015",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "noUnusedLocals": true,
+    "sourceMap": false,
+    "declaration": true,
+    "rootDir": ".",
+    "outDir": "dist",
+    "allowSyntheticDefaultImports": true,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "types" : ["node"],
+    "strictNullChecks": true,
+    "baseUrl": "..",
+    "skipLibCheck": true
+  },
+  "include": [
+    "index.ts"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "ngrx-entity-relations",
+  "version": "0.1.0",
+  "description": "Selector of related entities for @ngrx/entity",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublish": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:satanTime/ngrx-entity-relations.git"
+  },
+  "keywords": [
+    "ngrx",
+    "entities",
+    "relation",
+    "related",
+    "angular"
+  ],
+  "author": "Michael Gusev <m@sudo.eu>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/satanTime/ngrx-entity-relations/issues"
+  },
+  "homepage": "https://github.com/satanTime/ngrx-entity-relations#readme",
+  "peerDependencies": {
+    "@ngrx/entity": "^9.0.0"
+  },
+  "devDependencies": {
+    "typescript": "~3.7.5"
+  }
+}

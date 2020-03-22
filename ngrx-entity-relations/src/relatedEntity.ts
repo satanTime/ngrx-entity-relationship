@@ -49,7 +49,7 @@ export function relatedEntity<
       }
 
       // we have to clone it because we are going to update it with relations.
-      const cacheValue = {...stateItems[id]};
+      const cacheValue = {...stateItems[id]} as RELATED_ENTITY; // TODO find a better way for the spread.
       cacheRefs.push([cachePrefix, featureSelector, id, stateItems[id], cacheValue]);
 
       let incrementedPrefix = 0;

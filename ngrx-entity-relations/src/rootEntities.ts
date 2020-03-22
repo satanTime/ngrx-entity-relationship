@@ -1,5 +1,5 @@
 import {rootEntity} from './rootEntity';
-import {FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY} from './types';
+import {FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, HANDLER_ROOT_ENTITIES} from './types';
 
 export function rootEntities<
   STORE,
@@ -13,10 +13,7 @@ export function rootEntities<
 
   return (state: STORE, ids: Array<string>) => {
     const cacheKey = ids.join(',');
-    if (!cacheMap.has(cacheKey)) {
-      cacheMap.set(cacheKey, []);
-    }
-    const cacheValue = cacheMap.get(cacheKey);
+    const cacheValue = cacheMap.get(cacheKey) || [];
 
     const value: Array<ENTITY> = [];
     for (const itemId of ids) {

@@ -1,4 +1,4 @@
-import {FEATURE_SELECTOR, HANDLER_CACHE, HANDLER_RELATED_ENTITY, HANDLER_ROOT_ENTITY} from 'src/ngrx-entity-relations/types';
+import {FEATURE_SELECTOR, HANDLER_CACHE, HANDLER_RELATED_ENTITY, HANDLER_ROOT_ENTITY} from './types';
 
 export function rootEntity<
   STORE,
@@ -13,9 +13,6 @@ export function rootEntity<
     state: STORE,
     id: string,
   ) => {
-    if (!cacheMap.has(id)) {
-      cacheMap.set(id, [[]]);
-    }
     const cacheData = cacheMap.get(id);
     let cacheRefs: HANDLER_CACHE<STORE, unknown> = [];
     let cacheValue: undefined | ENTITY;
@@ -51,7 +48,7 @@ export function rootEntity<
     }
 
     // we have to clone it because we are going to update it with relations.
-    cacheValue = {...featureState.entities[id]};
+    cacheValue = {...featureState.entities[id]} as ENTITY; // TODO find a better way for the spread.
     cacheRefs.push(['', featureSelector, id, featureState.entities[id], cacheValue]);
     cacheMap.set(id, [cacheRefs, cacheValue]);
 
