@@ -24,7 +24,7 @@
   "bugs": {
     "url": "https://github.com/satanTime/ngrx-entity-relations/issues"
   },
-  "homepage": "https://github.com/satanTime/ngrx-entity-relations#readme",
+  "homepage": "https://github.com/satanTime/ngrx-entity-relations/tree/master/ngrx-entity-relations#readme",
   "peerDependencies": {
     "@ngrx/entity": "^9.0.0"
   },
