@@ -1,8 +1,7 @@
-import {
-  createSelector,
-  createFeatureSelector,
-  ActionReducerMap, defaultMemoize,
-} from '@ngrx/store';
+import {ActionReducerMap, createFeatureSelector, createSelector} from '@ngrx/store';
+import {selectAddressState} from 'src/app/store/address';
+import {selectCompanyState} from 'src/app/store/company';
+import {relatedEntitySelector, rootEntitySelector} from 'src/ngrx-entity-relations';
 import * as fromUser from './user.reducer';
 
 export interface State {
@@ -15,6 +14,12 @@ export const reducers: ActionReducerMap<State> = {
 
 export const selectUserState = createFeatureSelector<fromUser.State>('users');
 
+export const selectUser = createSelector(
+  selectUserState,
+  (state, userId: string) => {
+    return state.entities[userId];
+  },
+);
 export const selectUserIds = createSelector(
   selectUserState,
   fromUser.selectUserIds // shorthand for usersState => fromUser.selectUserIds(usersState)
@@ -22,13 +27,6 @@ export const selectUserIds = createSelector(
 export const selectUserEntities = createSelector(
   selectUserState,
   fromUser.selectUserEntities
-);
-export const selectUser = createSelector(
-  selectUserState,
-  (state, userId: string) => {
-    console.log(state, userId);
-    return state.entities[userId];
-  },
 );
 export const selectUserAll = createSelector(
   selectUserState,
@@ -38,13 +36,32 @@ export const selectUserTotal = createSelector(
   selectUserState,
   fromUser.selectUserTotal
 );
-export const selectCurrentUserId = createSelector(
-  selectUserState,
-  fromUser.getSelectedUserId
-);
 
-export const selectCurrentUser = createSelector(
-  selectUserEntities,
-  selectCurrentUserId,
-  (userEntities, userId) => userEntities[userId]
+export const selectCompleteUser = rootEntitySelector(
+  selectUserState,
+  relatedEntitySelector(
+    selectCompanyState,
+    'companyId',
+    'company',
+    relatedEntitySelector(
+      selectUserState,
+      'staffId',
+      'staff',
+    ),
+    relatedEntitySelector(
+      selectUserState,
+      'adminId',
+      'admin',
+    ),
+    relatedEntitySelector(
+      selectAddressState,
+      'addressId',
+      'address',
+      relatedEntitySelector(
+        selectCompanyState,
+        'companyId',
+        'company',
+      ),
+    ),
+  ),
 );

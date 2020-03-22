@@ -26,7 +26,6 @@ export const selectCompanyEntities = createSelector(
 export const selectCompany = createSelector(
   selectCompanyState,
   (state, companyId: string) => {
-    console.log(state, companyId);
     return state.entities[companyId];
   },
 );
