@@ -26,7 +26,6 @@ export const selectAddressEntities = createSelector(
 export const selectAddress = createSelector(
   selectAddressState,
   (state, addressId: string) => {
-    console.log(state, addressId);
     return state.entities[addressId];
   },
 );

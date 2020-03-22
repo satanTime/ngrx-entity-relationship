@@ -3,11 +3,11 @@ import {Store} from '@ngrx/store';
 import {combineLatest, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {selectAddress, selectAddressAll, selectAddressEntities, selectAddressIds, selectAddressTotal} from 'src/app/store/address';
-import {addAddress} from 'src/app/store/address/address.actions';
+import {setAddress} from 'src/app/store/address/address.actions';
 import {selectCompany, selectCompanyAll, selectCompanyEntities, selectCompanyIds, selectCompanyTotal} from 'src/app/store/company';
-import {addCompany} from 'src/app/store/company/company.actions';
+import {setCompany} from 'src/app/store/company/company.actions';
 import {selectUser, selectUserAll, selectUserEntities, selectUserIds, selectUserTotal} from 'src/app/store/user';
-import {addUser} from 'src/app/store/user/user.actions';
+import {setUser} from 'src/app/store/user/user.actions';
 
 @Component({
   selector: 'app-root',
@@ -98,41 +98,89 @@ export class AppComponent implements OnInit {
       })),
     );
 
-    this.store.dispatch(addUser({
+    this.store.dispatch(setUser({
       user: {
         id: '1',
-        name: 'Michael 1',
+        name: 'User 1',
+        companyId: '3',
       }
     }));
-    this.store.dispatch(addUser({
+    this.store.dispatch(setUser({
       user: {
         id: '2',
-        name: 'Gusev 2',
+        name: 'User 2',
+        companyId: '3',
       }
     }));
-    this.store.dispatch(addCompany({
+    this.store.dispatch(setUser({
+      user: {
+        id: '3',
+        name: 'User 3',
+        companyId: '3',
+      }
+    }));
+    this.store.dispatch(setUser({
+      user: {
+        id: '4',
+        name: 'User 4',
+        companyId: '4',
+      }
+    }));
+    this.store.dispatch(setUser({
+      user: {
+        id: '5',
+        name: 'User 5',
+        companyId: '4',
+      }
+    }));
+    this.store.dispatch(setUser({
+      user: {
+        id: '6',
+        name: 'User 6',
+        companyId: '4',
+      }
+    }));
+    this.store.dispatch(setCompany({
       company: {
         id: '3',
         name: 'Company 3',
+        staffId: ['1', '2', '3'],
+        adminId: '2',
+        addressId: '5',
       }
     }));
-    this.store.dispatch(addCompany({
+    this.store.dispatch(setCompany({
       company: {
         id: '4',
         name: 'Company 4',
+        staffId: ['4', '5', '6'],
+        adminId: '5',
+        addressId: '6',
       }
     }));
-    this.store.dispatch(addAddress({
+    this.store.dispatch(setAddress({
       address: {
         id: '5',
         name: 'Address 5',
+        companyId: '3',
       }
     }));
-    this.store.dispatch(addAddress({
+    this.store.dispatch(setAddress({
       address: {
         id: '6',
         name: 'Address 6',
+        companyId: '4',
       }
     }));
+
+    setInterval(() => {
+      this.store.dispatch(setAddress({
+        address: {
+          id: '6',
+          name: `Address ${new Date().getTime()}`,
+          companyId: '4',
+        }
+      }));
+    }, 500);
   }
 }
