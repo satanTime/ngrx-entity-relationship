@@ -1,7 +1,7 @@
 ```typescript
 import {createFeatureSelector} from '@ngrx/store';
 import {EntityState} from '@ngrx/entity';
-import {relatedEntity, rootEntities, rootEntity} from 'ngrx-entity-relations';
+import {relatedEntity, rootEntities, rootEntity} from 'ngrx-entity-relationship';
 
 const selectUserState = createFeatureSelector<EntityState<User>>('users');
 const selectCompanyState = createFeatureSelector<EntityState<Company>>('companies');
@@ -50,7 +50,7 @@ with predefined selectors
 ```typescript
 import {createFeatureSelector} from '@ngrx/store';
 import {EntityState} from '@ngrx/entity';
-import {relatedEntitySelector, rootEntitiesSelector, rootEntitySelector} from 'ngrx-entity-relations';
+import {relatedEntitySelector, rootEntitiesSelector, rootEntitySelector} from 'ngrx-entity-relationship';
 
 const selectUserState = createFeatureSelector<EntityState<User>>('users');
 const selectCompanyState = createFeatureSelector<EntityState<Company>>('companies');
