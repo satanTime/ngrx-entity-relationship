@@ -1,5 +1,5 @@
 {
-  "name": "ngrx-entity-relations",
+  "name": "ngrx-entity-relationship",
   "version": "0.1.1",
   "description": "Selector of related entities for @ngrx/entity",
   "main": "dist/index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:satanTime/ngrx-entity-relations.git"
+    "url": "git@github.com:satanTime/ngrx-entity-relationship.git"
   },
   "keywords": [
     "ngrx",
@@ -22,9 +22,9 @@
   "author": "Michael Gusev <m@sudo.eu>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/satanTime/ngrx-entity-relations/issues"
+    "url": "https://github.com/satanTime/ngrx-entity-relationship/issues"
   },
-  "homepage": "https://github.com/satanTime/ngrx-entity-relations/tree/master/ngrx-entity-relations#readme",
+  "homepage": "https://github.com/satanTime/ngrx-entity-relationship/tree/master/ngrx-entity-relationship#readme",
   "peerDependencies": {
     "@ngrx/entity": "^9.0.0"
   },
