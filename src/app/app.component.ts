@@ -6,7 +6,14 @@ import {selectAddress, selectAddressAll, selectAddressEntities, selectAddressIds
 import {setAddress} from 'src/app/store/address/address.actions';
 import {selectCompany, selectCompanyAll, selectCompanyEntities, selectCompanyIds, selectCompanyTotal} from 'src/app/store/company';
 import {setCompany} from 'src/app/store/company/company.actions';
-import {selectUser, selectUserAll, selectUserEntities, selectUserIds, selectUserTotal} from 'src/app/store/user';
+import {
+  selectCompleteUsers,
+  selectSimpleUser,
+  selectUserAll,
+  selectUserEntities,
+  selectUserIds,
+  selectUserTotal,
+} from 'src/app/store/user';
 import {setUser} from 'src/app/store/user/user.actions';
 
 @Component({
@@ -20,6 +27,7 @@ export class AppComponent implements OnInit {
   public data$: Observable<{
     user1: unknown,
     user2: unknown,
+    users: unknown,
     userIds: unknown,
     userEntities: unknown,
     userAll: unknown,
@@ -46,8 +54,9 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this.data$ = combineLatest([
       combineLatest([
-        this.store.select(selectUser, '1'),
-        this.store.select(selectUser, '2'),
+        this.store.select(selectSimpleUser, '3'),
+        this.store.select(selectSimpleUser, '5'),
+        this.store.select(selectCompleteUsers, ['2', '6']),
         this.store.select(selectUserIds),
         this.store.select(selectUserEntities),
         this.store.select(selectUserAll),
@@ -71,12 +80,13 @@ export class AppComponent implements OnInit {
       ]),
   ]).pipe(
       map(([
-          [user1, user2, userIds, userEntities, userAll, userTotal],
+          [user1, user2, users, userIds, userEntities, userAll, userTotal],
           [company3, company4, companyIds, companyEntities, companyAll, companyTotal],
           [address5, address6, addressIds, addressEntities, addressAll, addressTotal],
         ]) => ({
         user1,
         user2,
+        users,
         userIds,
         userEntities,
         userAll,
