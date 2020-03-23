@@ -1,9 +1,11 @@
 import {ActionReducerMap, createFeatureSelector, createSelector} from '@ngrx/store';
-import {selectAddressState} from 'src/app/store/address';
-import {selectCompanyState} from 'src/app/store/company';
-import {relatedEntity, rootEntities, rootEntity} from 'ngrx-entity-relationship';
+import {childEntity, relatedEntity, rootEntities, rootEntity} from 'ngrx-entity-relationship';
+import {childrenEntity} from 'ngrx-entity-relationship/src/childrenEntity';
+import {childrenEntitySelector} from 'ngrx-entity-relationship/src/childrenEntitySelector';
 import {relatedEntitySelector} from 'ngrx-entity-relationship/src/relatedEntitySelector';
 import {rootEntitySelector} from 'ngrx-entity-relationship/src/rootEntitySelector';
+import {selectAddressState} from 'src/app/store/address';
+import {selectCompanyState} from 'src/app/store/company';
 import * as fromUser from './user.reducer';
 
 export interface State {
@@ -42,7 +44,7 @@ export const selectUserTotal = createSelector(
 const entityUser = rootEntitySelector(selectUserState);
 const entityUserCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company');
 const entityCompany = rootEntitySelector(selectCompanyState);
-const entityCompanyStaff = relatedEntitySelector(selectUserState, 'staffId', 'staff');
+const entityCompanyStaff = childrenEntitySelector(selectUserState, 'companyId', 'staff');
 const entityCompanyAdmin = relatedEntitySelector(selectUserState, 'adminId', 'admin');
 const entityCompanyAddress = relatedEntitySelector(selectAddressState, 'addressId', 'address');
 const entityAddress = rootEntitySelector(selectAddressState);
@@ -54,9 +56,9 @@ export const selectCompleteUser = rootEntity(
     selectCompanyState,
     'companyId',
     'company',
-    relatedEntity(
+    childrenEntity(
       selectUserState,
-      'staffId',
+      'companyId',
       'staff',
     ),
     relatedEntity(
@@ -75,6 +77,16 @@ export const selectCompleteUser = rootEntity(
       ),
     ),
   ),
+  childrenEntity(
+    selectUserState,
+    'managerId',
+    'employees',
+  ),
+  childEntity(
+    selectUserState,
+    'managerId',
+    'employee',
+  ),
 );
 
 export const selectCompleteUsers = rootEntities(
@@ -83,9 +95,9 @@ export const selectCompleteUsers = rootEntities(
     selectCompanyState,
     'companyId',
     'company',
-    relatedEntity(
+    childrenEntity(
       selectUserState,
-      'staffId',
+      'companyId',
       'staff',
     ),
     relatedEntity(

@@ -23,7 +23,6 @@ export interface Company {
   id: string;
   name: string;
   staff?: Array<User>;
-  staffId?: Array<string>;
   admin?: User;
   adminId?: string;
   address?: Address;
@@ -46,7 +45,6 @@ store.dispatch(setCompany({
   company: {
     id: '1',
     name: 'Magic',
-    staffId: ['1'],
     adminId: '1',
     addressId: '1',
   },
@@ -73,7 +71,6 @@ const user = {
   company: {
     id: '1',
     name: 'Magic',
-    staffId: ['1'],
     adminId: '2',
     addressId: '1',
     address: {
@@ -136,13 +133,14 @@ this.store.select(selectUsers, ['user1', 'user2', 'user3']);
 
 ## Additional examples.
 Of course we can select as many relationships as we want until we have a field with a related id.
+Check how `childrenEntity` works. It gathers entities based on a parent field.
 ```typescript
 export const selectUser = rootEntity(
   selectUserState,
   relatedEntity(
     selectCompanyState, 'companyId', 'company',
-    relatedEntity(
-      selectUserState, 'staffId', 'staff',
+    childrenEntity(
+      selectUserState, 'companyId', 'staff',
     ),
     relatedEntity(
       selectUserState, 'adminId', 'admin',
@@ -157,13 +155,12 @@ export const selectUser = rootEntity(
 );
 ```
 You can simplify the definition with predefined selectors.
+Check how `childrenEntitySelector` works. It gathers entities based on a parent field.  
 ```typescript
-import {relatedEntitySelector, rootEntitiesSelector, rootEntitySelector} from 'ngrx-entity-relationship';
-
 const entityUser = rootEntitySelector(selectUserState);
 const entityUsers = rootEntitiesSelector(selectUserState);
 const entityUserCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company');
-const entityCompanyStaff = relatedEntitySelector(selectUserState, 'staffId', 'staff');
+const entityCompanyStaff = childrenEntitySelector(selectUserState, 'companyId', 'staff');
 const entityCompanyAdmin = relatedEntitySelector(selectUserState, 'adminId', 'admin');
 const entityCompanyAddress = relatedEntitySelector(selectAddressState, 'addressId', 'address');
 const entityAddressCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company');
