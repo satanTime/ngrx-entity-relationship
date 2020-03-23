@@ -1,3 +1,4 @@
+import {rootEntityFlags} from './rootEntityFlags';
 import {rootEntity} from './rootEntity';
 import {FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, HANDLER_ROOT_ENTITIES} from './types';
 
@@ -7,11 +8,11 @@ export function rootEntities<
 >(
   featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
   ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
-): HANDLER_ROOT_ENTITIES<STORE, ENTITY> {
+): HANDLER_ROOT_ENTITIES<STORE, ENTITY, string | number> {
   const cacheMap = new Map<string, Array<ENTITY>>();
   const itemSelector = rootEntity<STORE, ENTITY>(featureSelector, ...relations);
 
-  return (state: STORE, ids: Array<string>) => {
+  return (state: STORE, ids: Array<any>) => {
     const cacheKey = ids.join(',');
     const cacheValue = cacheMap.get(cacheKey) || [];
 
@@ -34,6 +35,10 @@ export function rootEntities<
       index += 1;
     }
     if (equal) {
+      return cacheValue;
+    }
+
+    if (rootEntityFlags.disabled) {
       return cacheValue;
     }
 

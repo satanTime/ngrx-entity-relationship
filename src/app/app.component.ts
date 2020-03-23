@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
+import {rootEntityFlags} from 'ngrx-entity-relationship';
 import {combineLatest, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {selectAddress, selectAddressAll, selectAddressEntities, selectAddressIds, selectAddressTotal} from 'src/app/store/address';
@@ -19,7 +20,8 @@ import {setUser} from 'src/app/store/user/user.actions';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
   public title = 'app';
@@ -182,6 +184,13 @@ export class AppComponent implements OnInit {
         companyId: '4',
       }
     }));
+
+    rootEntityFlags.disabled = true;
+
+    setTimeout(() => {
+      console.log(false);
+      rootEntityFlags.disabled = false;
+    }, 5000);
 
     setInterval(() => {
       this.store.dispatch(setAddress({

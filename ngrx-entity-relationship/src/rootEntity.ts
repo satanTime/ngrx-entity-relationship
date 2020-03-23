@@ -1,3 +1,4 @@
+import {rootEntityFlags} from './rootEntityFlags';
 import {FEATURE_SELECTOR, HANDLER_CACHE, HANDLER_RELATED_ENTITY, HANDLER_ROOT_ENTITY} from './types';
 
 export function rootEntity<
@@ -6,7 +7,7 @@ export function rootEntity<
 >(
   featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
   ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
-): HANDLER_ROOT_ENTITY<STORE, ENTITY> {
+): HANDLER_ROOT_ENTITY<STORE, ENTITY, string | number> {
   const cacheMap = new Map<string, [HANDLER_CACHE<STORE, unknown>, unknown?]>();
 
   return (
@@ -23,9 +24,9 @@ export function rootEntity<
       cacheValue = cacheData[1] as ENTITY;
     }
 
-    // if (state.v2core && state.v2core.flags && state.v2core.flags.selectorsSuspend) {
-    //   return cacheValue;
-    // }
+    if (rootEntityFlags.disabled) {
+      return cacheValue;
+    }
 
     if (cacheRefs.length) {
       let cached = true;

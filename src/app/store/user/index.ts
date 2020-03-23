@@ -44,7 +44,7 @@ const entityUserCompany = relatedEntitySelector(selectCompanyState, 'companyId',
 const entityCompany = rootEntitySelector(selectCompanyState);
 const entityCompanyStaff = relatedEntitySelector(selectUserState, 'staffId', 'staff');
 const entityCompanyAdmin = relatedEntitySelector(selectUserState, 'adminId', 'admin');
-const entityCompanyAddress = relatedEntitySelector(selectAddressState, 'addressId', 'addressId');
+const entityCompanyAddress = relatedEntitySelector(selectAddressState, 'addressId', 'address');
 const entityAddress = rootEntitySelector(selectAddressState);
 const entityAddressCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company');
 
