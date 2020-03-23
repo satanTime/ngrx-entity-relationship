@@ -5,7 +5,6 @@ export interface Company {
   id: string;
   name: string;
   staff?: Array<User>;
-  staffId?: Array<string>;
   admin?: User;
   adminId?: string;
   address?: Address;

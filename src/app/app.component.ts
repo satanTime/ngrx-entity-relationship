@@ -14,6 +14,7 @@ import {
   selectUserEntities,
   selectUserIds,
   selectUserTotal,
+  selectCompleteUser,
 } from 'src/app/store/user';
 import {setUser} from 'src/app/store/user/user.actions';
 
@@ -56,7 +57,7 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this.data$ = combineLatest([
       combineLatest([
-        this.store.select(selectSimpleUser, '3'),
+        this.store.select(selectCompleteUser, '3'),
         this.store.select(selectSimpleUser, '5'),
         this.store.select(selectCompleteUsers, ['2', '6']),
         this.store.select(selectUserIds),
@@ -114,6 +115,7 @@ export class AppComponent implements OnInit {
       user: {
         id: '1',
         name: 'User 1',
+        managerId: '3',
         companyId: '3',
       }
     }));
@@ -121,6 +123,7 @@ export class AppComponent implements OnInit {
       user: {
         id: '2',
         name: 'User 2',
+        managerId: '3',
         companyId: '3',
       }
     }));
@@ -135,6 +138,7 @@ export class AppComponent implements OnInit {
       user: {
         id: '4',
         name: 'User 4',
+        managerId: '3',
         companyId: '4',
       }
     }));
@@ -156,7 +160,6 @@ export class AppComponent implements OnInit {
       company: {
         id: '3',
         name: 'Company 3',
-        staffId: ['1', '2', '3'],
         adminId: '2',
         addressId: '5',
       }
@@ -165,7 +168,6 @@ export class AppComponent implements OnInit {
       company: {
         id: '4',
         name: 'Company 4',
-        staffId: ['4', '5', '6'],
         adminId: '5',
         addressId: '6',
       }
@@ -190,7 +192,7 @@ export class AppComponent implements OnInit {
     setTimeout(() => {
       console.log(false);
       rootEntityFlags.disabled = false;
-    }, 5000);
+    }, 1500);
 
     setInterval(() => {
       this.store.dispatch(setAddress({

@@ -9,7 +9,7 @@ export type FEATURE_SELECTOR<STORE, ENTITY> = (store: STORE) => EntityState<ENTI
 export type HANDLER_CACHE<STORE, ENTITY> = Array<[
   string,
   FEATURE_SELECTOR<STORE, ENTITY>,
-  string,
+  string | number,
   ENTITY?,
   ENTITY?,
 ]>;
