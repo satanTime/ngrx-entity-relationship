@@ -107,11 +107,11 @@ To solve the issue we need `rootEntity`, `relatedEntity` and `rootEntities` from
 ```typescript
 export const selectUser = rootEntity(
   selectUserState, // selecting our root entity.
-  relatedEntity( // now we define a relation we want to add.
+  relatedEntity( // now we define a relationship we want to add.
     selectCompanyState, // a selector of the related entity.
     'companyId', // the key in the root entity which points to the related entity.
     'company', // the key in the root entity where we'll set the related entity.
-    relatedEntity( // now we define a relation we want to add to the company.
+    relatedEntity( // now we define a relationship we want to add to the company.
       selectAddressState, // a selector of the related entity.
       'addressId', // the key with the id.
       'address', // the key where to set the result.
@@ -135,7 +135,7 @@ this.store.select(selectUsers, ['user1', 'user2', 'user3']);
 ```
 
 ## Additional examples.
-Of course we can select as many relations as we want until we have a field with a related id.
+Of course we can select as many relationships as we want until we have a field with a related id.
 ```typescript
 export const selectUser = rootEntity(
   selectUserState,
