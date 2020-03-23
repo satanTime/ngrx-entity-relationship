@@ -5,8 +5,8 @@ export function relatedEntitySelector<
   STORE,
   PARENT_ENTITY extends any, // TODO add a proper detection of parent type based on rootEntity.
   RELATED_ENTITY,
-  RELATED_KEY_IDS extends NonNullable<FILTER_PROPS<PARENT_ENTITY, string | undefined | null>>,
-  RELATED_KEY_IDS_ARRAYS extends NonNullable<FILTER_PROPS<PARENT_ENTITY, Array<string> | undefined | null>>,
+  RELATED_KEY_IDS extends NonNullable<FILTER_PROPS<PARENT_ENTITY, string | number | undefined | null>>,
+  RELATED_KEY_IDS_ARRAYS extends NonNullable<FILTER_PROPS<PARENT_ENTITY, Array<string | number> | undefined | null>>,
   RELATED_KEY_VALUES extends NonNullable<FILTER_PROPS<PARENT_ENTITY, RELATED_ENTITY | undefined | null>>,
   RELATED_KEY_VALUES_ARRAYS extends NonNullable<FILTER_PROPS<PARENT_ENTITY, Array<RELATED_ENTITY> | undefined | null>>
   >(

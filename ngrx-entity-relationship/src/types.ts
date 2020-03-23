@@ -14,14 +14,14 @@ export type HANDLER_CACHE<STORE, ENTITY> = Array<[
   ENTITY?,
 ]>;
 
-export type HANDLER_ROOT_ENTITY<S, E> = (
+export type HANDLER_ROOT_ENTITY<S, E, I> = (
   state: S,
-  id: string,
+  id: I,
 ) => E | undefined;
 
-export type HANDLER_ROOT_ENTITIES<S, E> = (
+export type HANDLER_ROOT_ENTITIES<S, E, I> = (
   state: S,
-  id: Array<string>,
+  id: Array<I>,
 ) => Array<E>;
 
 export type HANDLER_RELATED_ENTITY<S, E> = (
