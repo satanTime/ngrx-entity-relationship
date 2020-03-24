@@ -1,5 +1,7 @@
 # A simple way to select related entities from a store.
 
+Supports ngrx 8.x and 9.x
+
 Imagine that we have the next entities in ngrx store, every entity is stored in its own feature.
 ```typescript
 export interface User {
