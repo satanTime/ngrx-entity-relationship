@@ -1,7 +1,7 @@
 import {childEntity} from './childEntity';
 import {FEATURE_SELECTOR, FILTER_PROPS, HANDLER_RELATED_ENTITY} from './types';
 
-export function childrenEntitySelector<
+export function childEntitySelector<
   STORE,
   PARENT_ENTITY extends any, // TODO add a proper detection of parent type based on rootEntity.
   RELATED_ENTITY,

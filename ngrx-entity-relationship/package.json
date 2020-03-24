@@ -1,6 +1,6 @@
 {
   "name": "ngrx-entity-relationship",
-  "version": "0.3.0",
+  "version": "0.3.3",
   "description": "Selector of related entities for @ngrx/entity",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,6 +30,8 @@
     "@ngrx/entity": "^9.0.0"
   },
   "devDependencies": {
+    "@ngrx/entity": "^9.0.0",
+    "@types/node": "^12.12.30",
     "typescript": "~3.7.5"
   }
 }

@@ -1,9 +1,13 @@
 import {ActionReducerMap, createFeatureSelector, createSelector} from '@ngrx/store';
-import {childEntity, relatedEntity, rootEntities, rootEntity} from 'ngrx-entity-relationship';
-import {childrenEntity} from 'ngrx-entity-relationship/src/childrenEntity';
-import {childrenEntitySelector} from 'ngrx-entity-relationship/src/childrenEntitySelector';
-import {relatedEntitySelector} from 'ngrx-entity-relationship/src/relatedEntitySelector';
-import {rootEntitySelector} from 'ngrx-entity-relationship/src/rootEntitySelector';
+import {
+  childEntity, childrenEntity,
+  childrenEntitySelector,
+  relatedEntity,
+  relatedEntitySelector,
+  rootEntities,
+  rootEntity,
+  rootEntitySelector,
+} from 'ngrx-entity-relationship';
 import {selectAddressState} from 'src/app/store/address';
 import {selectCompanyState} from 'src/app/store/company';
 import * as fromUser from './user.reducer';
