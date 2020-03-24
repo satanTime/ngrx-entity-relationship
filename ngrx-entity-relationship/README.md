@@ -117,11 +117,8 @@ export const selectUser = rootEntity(
 );
 export const selectUsers = rootEntities( // the same but for a list.
   selectUserState,
-  relatedEntity(
-    selectCompanyState, 'companyId', 'company',
-    relatedEntity(
-      selectAddressState, 'addressId', 'address',
-    ),
+  relatedEntity(selectCompanyState, 'companyId', 'company',
+    relatedEntity(selectAddressState, 'addressId', 'address'),
   ),
 );
 ```
@@ -139,17 +136,10 @@ export const selectUser = rootEntity(
   selectUserState,
   relatedEntity(
     selectCompanyState, 'companyId', 'company',
-    childrenEntity(
-      selectUserState, 'companyId', 'staff',
-    ),
-    relatedEntity(
-      selectUserState, 'adminId', 'admin',
-    ),
-    relatedEntity(
-      selectAddressState, 'addressId', 'address',
-      relatedEntity(
-        selectCompanyState, 'companyId', 'company',
-      ),
+    childrenEntity(selectUserState, 'companyId', 'staff'),
+    relatedEntity(selectUserState, 'adminId', 'admin'),
+    relatedEntity(selectAddressState, 'addressId', 'address',
+      relatedEntity(selectCompanyState, 'companyId', 'company'),
     ),
   ),
 );
