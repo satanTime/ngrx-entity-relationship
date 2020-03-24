@@ -1,5 +1,7 @@
-/index.ts
+/e2e
 /node_modules
 /src
+
+/index.ts
 /README.md
 /tsconfig.json
