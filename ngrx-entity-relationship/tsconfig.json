@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["es2016"],
+    "lib": ["es2016", "dom"],
     "module": "commonjs",
     "target": "es2015",
     "noImplicitAny": true,
@@ -14,7 +14,6 @@
     "allowSyntheticDefaultImports": true,
     "removeComments": true,
     "experimentalDecorators": true,
-    "types" : ["node"],
     "strictNullChecks": true,
     "baseUrl": "..",
     "skipLibCheck": true
