@@ -14,8 +14,9 @@
   },
   "keywords": [
     "ngrx",
+    "ngrx-entity",
     "entities",
-    "relation",
+    "relationship",
     "related",
     "angular"
   ],
