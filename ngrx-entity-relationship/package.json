@@ -1,6 +1,6 @@
 {
   "name": "ngrx-entity-relationship",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "Selector of related entities for @ngrx/entity",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/satanTime/ngrx-entity-relationship/tree/master/ngrx-entity-relationship#readme",
   "peerDependencies": {
-    "@ngrx/entity": "^9.0.0"
+    "@ngrx/entity": ">=8.x <=9.x"
   },
   "devDependencies": {
     "@ngrx/entity": "^9.0.0",
