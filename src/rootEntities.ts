@@ -1,48 +1,45 @@
-import {rootEntityFlags} from './rootEntityFlags';
 import {rootEntity} from './rootEntity';
+import {rootEntityFlags} from './rootEntityFlags';
 import {FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, HANDLER_ROOT_ENTITIES} from './types';
 
-export function rootEntities<
-  STORE,
-  ENTITY,
->(
-  featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
-  ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
+export function rootEntities<STORE, ENTITY>(
+    featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
+    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
 ): HANDLER_ROOT_ENTITIES<STORE, ENTITY, string | number> {
-  const cacheMap = new Map<string, Array<ENTITY>>();
-  const itemSelector = rootEntity<STORE, ENTITY>(featureSelector, ...relations);
+    const cacheMap = new Map<string, Array<ENTITY>>();
+    const itemSelector = rootEntity<STORE, ENTITY>(featureSelector, ...relations);
 
-  return (state: STORE, ids: Array<any>) => {
-    const cacheKey = ids.join(',');
-    const cacheValue = cacheMap.get(cacheKey) || [];
+    return (state: STORE, ids: Array<any>) => {
+        const cacheKey = ids.join(',');
+        const cacheValue = cacheMap.get(cacheKey) || [];
 
-    const value: Array<ENTITY> = [];
-    for (const itemId of ids) {
-      const item = itemSelector(state, itemId);
-      if (!item) {
-        continue;
-      }
-      value.push(item);
-    }
+        const value: Array<ENTITY> = [];
+        for (const itemId of ids) {
+            const item = itemSelector(state, itemId);
+            if (!item) {
+                continue;
+            }
+            value.push(item);
+        }
 
-    let index = 0;
-    let equal = cacheValue && value.length === cacheValue.length;
-    for (const item of value) {
-      if (!cacheValue || !cacheValue[index] || cacheValue[index] !== item) {
-        equal = false;
-        break;
-      }
-      index += 1;
-    }
-    if (equal) {
-      return cacheValue;
-    }
+        let index = 0;
+        let equal = cacheValue && value.length === cacheValue.length;
+        for (const item of value) {
+            if (!cacheValue || !cacheValue[index] || cacheValue[index] !== item) {
+                equal = false;
+                break;
+            }
+            index += 1;
+        }
+        if (equal) {
+            return cacheValue;
+        }
 
-    if (rootEntityFlags.disabled) {
-      return cacheValue;
-    }
+        if (rootEntityFlags.disabled) {
+            return cacheValue;
+        }
 
-    cacheMap.set(cacheKey, value);
-    return value;
-  };
+        cacheMap.set(cacheKey, value);
+        return value;
+    };
 }

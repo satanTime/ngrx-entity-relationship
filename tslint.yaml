@@ -1,0 +1,215 @@
+rulesDirectory:
+    - node_modules/tslint-microsoft-contrib
+    - node_modules/tslint-lines-between-class-members
+extends:
+    - tslint:recommended
+    - tslint-microsoft-contrib/recommended
+    - tslint-defocus
+defaultSeverity: error
+
+rules:
+    array-type:
+        - true
+        - generic
+    arrow-parens: false
+    arrow-return-shorthand: true
+    await-promise: true
+    ban: false
+    ban-comma-operator: true
+    ban-ts-ignore: true
+    ban-types:
+        - true
+        - - Object
+          - 'Use {} instead.'
+        - - Function
+          - 'Avoid using the `Function` type. Prefer a specific function type'
+    binary-expression-operand-order: true
+    callable-types: true
+    class-name: true
+    comment-format:
+        - true
+        - check-space
+        - ignore-words:
+              - TODO
+    comment-type:
+        - true
+        - singleline
+        - doc
+        - directive
+    completed-docs: false
+    curly: true
+    cyclomatic-complexity: false
+    defocus: true
+    deprecation: false
+    encoding: true
+    export-name: false
+    forin: true
+    function-constructor: true
+    function-name:
+        - true
+        - static-method-regex: "^forRoot|[A-Z_\\\\d]+$"
+    import-name: false
+    increment-decrement: true
+    insecure-random: false
+    interface-name: false
+    interface-over-type-literal: false
+    label-position: true
+    lines-between-class-members: true
+    match-default-export-name: false
+    max-classes-per-file: false
+    max-func-body-length: 150
+    max-line-length:
+        - true
+        - ignore-pattern: '^import |^export {(.*?)}'
+    member-access: true
+    member-ordering:
+        - true
+        - order: fields-first
+    mocha-no-side-effect-code: false
+    newline-per-chained-call: false
+    no-angle-bracket-type-assertion: false
+    no-arg: true
+    no-backbone-get-set-outside-model: false
+    no-bitwise: false
+    no-boolean-literal-compare: true
+    no-conditional-assignment: true
+    no-console:
+        - true
+        - log
+    no-construct: true
+    no-cookies: false
+    no-debugger: true
+    no-default-export: false
+    no-duplicate-imports: true
+    no-duplicate-super: true
+    no-duplicate-switch-case: true
+    no-duplicate-variable: true
+    no-dynamic-delete: true
+    no-empty: true
+    no-empty-interface: true
+    no-eval: true
+    no-floating-promises: true
+    no-for-in-array: true
+    no-http-string: false
+    no-inferred-empty-object-type: true
+    no-internal-module: true
+    no-invalid-template-strings: true
+    no-invalid-this: true
+    no-mergeable-namespace: true
+    no-misused-new: true
+    no-namespace: false
+    no-non-null-assertion: true
+    no-null-keyword: false
+    no-redundant-jsdoc: true
+    no-reference: true
+    no-reference-import: true
+    no-relative-imports:
+        - true
+        - allow-siblings
+    no-require-imports: false
+    no-return-await: true
+    no-shadowed-variable: true
+    no-sparse-arrays: true
+    no-string-literal: true
+    no-string-throw: true
+    no-submodule-imports: false
+    no-suspicious-comment: false
+    no-switch-case-fall-through: true
+    no-tautology-expression: true
+    no-this-assignment: true
+    no-unbound-method:
+        - true
+        - ignore-static: true
+          whitelist:
+              - expect
+    no-unnecessary-callback-wrapper: true
+    no-unnecessary-class:
+        - true
+        - allow-constructor-only
+        - allow-empty-class
+        - allow-static-only
+    no-unnecessary-initializer: true
+    no-unnecessary-qualifier: true
+    no-unnecessary-type-assertion: true
+    no-unsafe-finally: true
+    no-unused-expression: true
+    no-var-keyword: true
+    no-var-requires: false
+    no-void-expression:
+        - true
+        - ignore-arrow-function-shorthand
+    non-literal-fs-path: false
+    object-literal-key-quotes:
+        - true
+        - as-needed
+    object-literal-shorthand: true
+    object-literal-sort-keys: false
+    one-line:
+        - true
+        - check-catch
+        - check-finally
+        - check-else
+        - check-whitespace
+    one-variable-per-declaration: true
+    only-arrow-functions: false
+    ordered-imports:
+        - true
+        - grouped-imports: true
+    possible-timing-attack: false
+    prefer-array-literal: false
+    prefer-conditional-expression: true
+    prefer-const: true
+    prefer-for-of: true
+    prefer-method-signature: true
+    prefer-object-spread: true
+    prefer-readonly: true
+    prefer-template: true
+    promise-function-async: true
+    quotemark:
+        - true
+        - single
+        - double
+        - avoid-escape
+    radix: true
+    restrict-plus-operands: true
+    space-before-function-paren: false
+    space-within-parens: false
+    static-this: true
+    strict-boolean-expressions: false
+    strict-type-predicates: true
+    switch-final-break: false
+    triple-equals: true
+    type-literal-delimiter: true
+    typedef:
+        - true
+        - call-signature
+        - parameter
+        - property-declaration
+        - member-variable-declaration
+    unified-signatures: false
+    unnecessary-bind: true
+    unnecessary-constructor: true
+    unnecessary-else: true
+    use-default-type-parameter: true
+    use-isnan: true
+    variable-name:
+        - true
+        - check-format
+        - ban-keywords
+        - allow-pascal-case
+    whitespace:
+        - true
+        - check-branch
+        - check-decl
+        - check-operator
+        - check-separator
+        - check-rest-spread
+        - check-type
+        - check-type-operator
+        - check-preblock
+
+    # fix one day
+    no-any: false
+    no-object-literal-type-assertion: false
+    no-unsafe-any: false
+    prefer-type-cast: false
