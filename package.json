@@ -1,40 +1,61 @@
 {
-  "name": "ngrx-entity-relationship",
-  "version": "0.3.8",
-  "description": "Selector of related entities for @ngrx/entity",
-  "files": [
-    "dist"
-  ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "prepublish": "rm -Rf dist && tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:satanTime/ngrx-entity-relationship.git"
-  },
-  "keywords": [
-    "ngrx",
-    "ngrx-entity",
-    "entities",
-    "relationship",
-    "related",
-    "angular"
-  ],
-  "author": "Michael Gusev <m@sudo.eu>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/satanTime/ngrx-entity-relationship/issues"
-  },
-  "homepage": "https://github.com/satanTime/ngrx-entity-relationship#readme",
-  "peerDependencies": {
-    "@ngrx/entity": ">=8.x <=9.x"
-  },
-  "devDependencies": {
-    "@ngrx/entity": "^9.0.0",
-    "@types/node": "^12.12.30",
-    "typescript": "~3.7.5"
-  }
+    "name": "ngrx-entity-relationship",
+    "version": "0.3.9",
+    "description": "Selector of related entities for @ngrx/entity",
+    "files": [
+        "dist"
+    ],
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "prepublish": "npm run lint && npm test && rm -Rf dist && tsc",
+        "lint": "tslint --config ./tslint.yaml -p ./",
+        "test": "karma start"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:satanTime/ngrx-entity-relationship.git"
+    },
+    "keywords": [
+        "ngrx",
+        "ngrx-entity",
+        "entities",
+        "relationship",
+        "related",
+        "angular"
+    ],
+    "author": "Michael Gusev <m@sudo.eu>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/satanTime/ngrx-entity-relationship/issues"
+    },
+    "homepage": "https://github.com/satanTime/ngrx-entity-relationship#readme",
+    "peerDependencies": {
+        "@ngrx/entity": ">=8.x <=9.x"
+    },
+    "devDependencies": {
+        "@angular/core": "^9.1.0",
+        "@ngrx/entity": "^9.0.0",
+        "@ngrx/store": "^9.0.0",
+        "@types/jasmine": "^3.5.10",
+        "@types/node": "^12.12.30",
+        "husky": "^4.2.3",
+        "jasmine": "^3.5.0",
+        "jasmine-core": "^3.1.0",
+        "karma": "^4.4.1",
+        "karma-chrome-launcher": "^3.1.0",
+        "karma-jasmine": "^3.1.1",
+        "karma-typescript": "^5.0.1",
+        "lint-staged": "^10.0.9",
+        "prettier": "^2.0.2",
+        "rxjs": "^6.5.4",
+        "tslint": "^5.20.1",
+        "tslint-defocus": "^2.0.6",
+        "tslint-lines-between-class-members": "^1.3.6",
+        "tslint-microsoft-contrib": "^6.2.0",
+        "typescript": "~3.7.5"
+    },
+    "dependencies": {
+        "zone.js": "^0.10.3"
+    }
 }

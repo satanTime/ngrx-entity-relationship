@@ -1,29 +1,27 @@
 {
-  "compilerOptions": {
-    "lib": ["es2016", "dom"],
-    "module": "commonjs",
-    "target": "es2015",
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "sourceMap": false,
-    "declaration": true,
-    "outDir": "dist",
-    "allowSyntheticDefaultImports": true,
-    "removeComments": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": false,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": false,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "strictBindCallApply": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
-    "strictNullChecks": true
-  },
-  "include": [
-    "index.ts"
-  ]
+    "compilerOptions": {
+        "lib": ["es2016", "dom"],
+        "module": "commonjs",
+        "target": "es2015",
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "sourceMap": false,
+        "declaration": true,
+        "outDir": "dist",
+        "allowSyntheticDefaultImports": true,
+        "removeComments": true,
+        "experimentalDecorators": true,
+        "skipLibCheck": false,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": false,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strictBindCallApply": true,
+        "strictFunctionTypes": true,
+        "strictPropertyInitialization": true,
+        "strictNullChecks": true
+    },
+    "include": ["index.ts"]
 }
