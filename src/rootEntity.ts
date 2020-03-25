@@ -8,11 +8,11 @@ export function rootEntity<
   featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
   ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
 ): HANDLER_ROOT_ENTITY<STORE, ENTITY, string | number> {
-  const cacheMap = new Map<string, [HANDLER_CACHE<STORE, unknown>, unknown?]>();
+  const cacheMap = new Map<string | number, [HANDLER_CACHE<STORE, unknown>, unknown?]>();
 
   return (
     state: STORE,
-    id: string,
+    id: string | number,
   ) => {
     const cacheData = cacheMap.get(id);
     let cacheRefs: HANDLER_CACHE<STORE, unknown> = [];
