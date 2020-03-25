@@ -1,11 +1,14 @@
 {
   "name": "ngrx-entity-relationship",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Selector of related entities for @ngrx/entity",
+  "files": [
+    "dist"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepublish": "tsc",
+    "prepublish": "rm -Rf dist && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
