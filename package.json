@@ -8,8 +8,9 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "prepublish": "npm run lint && npm test && rm -Rf dist && tsc",
+        "build": "rm -Rf dist && tsc",
         "lint": "tslint --config ./tslint.yaml -p ./",
+        "prepublish": "npm run lint && npm test && npm run build",
         "test": "karma start"
     },
     "repository": {
