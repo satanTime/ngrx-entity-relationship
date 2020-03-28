@@ -46,16 +46,63 @@ export const selectUserTotal = createSelector(
   fromUser.selectUserTotal
 );
 
-const entityUser = rootEntitySelector(selectUserState, (entity) => ({...entity, cloned: true}),);
-const entityUserCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company', (entity) => ({...entity, cloned: true}),);
-const entityCompany = rootEntitySelector(selectCompanyState, (entity) => ({...entity, cloned: true}),);
-const entityCompanyStaff = childrenEntitySelector(selectUserState, 'companyId', 'staff', (entity) => ({...entity, cloned: true}));
-const entityCompanyAdmin = relatedEntitySelector(selectUserState, 'adminId', 'admin', (entity) => ({...entity, cloned: true}),);
-const entityCompanyAddress = relatedEntitySelector(selectAddressState, 'addressId', 'address', (entity) => ({...entity, cloned: true}),);
-const entityAddress = rootEntitySelector(selectAddressState, (entity) => ({...entity, cloned: true}),);
-const entityAddressCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company', (entity) => ({...entity, cloned: true}),);
+const transformedUser = rootEntitySelector(selectUserState, (entity) => ({...entity, cloned: true}));
+const transformedUserCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company', (entity) => ({...entity, cloned: true}));
+const transformedCompany = rootEntitySelector(selectCompanyState, (entity) => ({...entity, cloned: true}));
+const transformedCompanyStaff = childrenEntitySelector(selectUserState, 'companyId', 'staff', (entity) => ({...entity, cloned: true}));
+const transformedCompanyAdmin = relatedEntitySelector(selectUserState, 'adminId', 'admin', (entity) => ({...entity, cloned: true}));
+const transformedCompanyAddress = relatedEntitySelector(selectAddressState, 'addressId', 'address', (entity) => ({...entity, cloned: true}));
+const transformedAddress = rootEntitySelector(selectAddressState, (entity) => ({...entity, cloned: true}));
+const transformedAddressCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company', (entity) => ({...entity, cloned: true}));
+const entityUser = rootEntitySelector(selectUserState);
+const entityUserCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company');
+const entityCompany = rootEntitySelector(selectCompanyState);
+const entityCompanyStaff = childrenEntitySelector(selectUserState, 'companyId', 'staff');
+const entityCompanyAdmin = relatedEntitySelector(selectUserState, 'adminId', 'admin');
+const entityCompanyAddress = relatedEntitySelector(selectAddressState, 'addressId', 'address');
+const entityAddress = rootEntitySelector(selectAddressState);
+const entityAddressCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company');
 
 export const selectCompleteUser = rootEntity(
+  selectUserState,
+  relatedEntity(
+    selectCompanyState,
+    'companyId',
+    'company',
+    childrenEntity(
+      selectUserState,
+      'companyId',
+      'staff',
+    ),
+    relatedEntity(
+      selectUserState,
+      'adminId',
+      'admin',
+    ),
+    relatedEntity(
+      selectAddressState,
+      'addressId',
+      'address',
+      relatedEntity(
+        selectCompanyState,
+        'companyId',
+        'company',
+      ),
+    ),
+  ),
+  childrenEntity(
+    selectUserState,
+    'managerId',
+    'employees',
+  ),
+    childEntity(
+    selectUserState,
+    'managerId',
+    'employee',
+  ),
+);
+
+export const selectTransformedUser = rootEntity(
   selectUserState,
   (entity) => ({...entity, cloned: true}),
   relatedEntity(
@@ -144,6 +191,17 @@ export const selectSimpleUser = entityUser(
     entityCompanyAddress(
       entityAddressCompany(),
       entityCompanyAdmin(),
+    ),
+  ),
+);
+
+export const selectSimpleTransformedUser = transformedUser(
+  transformedUserCompany(
+      transformedCompanyStaff(),
+      transformedCompanyAdmin(),
+      transformedCompanyAddress(
+          transformedAddressCompany(),
+          transformedCompanyAdmin(),
     ),
   ),
 );

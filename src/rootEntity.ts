@@ -9,21 +9,21 @@ import {
     TRANSFORMER,
 } from './types';
 
-export function rootEntity<STORE, ENTITY, TRANSFORMED_ENTITY>(
-    featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
-    transformer: TRANSFORMER<ENTITY, TRANSFORMED_ENTITY>,
-    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
-): HANDLER_ROOT_ENTITY<STORE, ENTITY, ID_TYPES>;
 export function rootEntity<STORE, ENTITY>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
 ): HANDLER_ROOT_ENTITY<STORE, ENTITY, ID_TYPES>;
-export function rootEntity<STORE, ENTITY, TRANSFORMED_ENTITY>(
+export function rootEntity<STORE, ENTITY>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
-    deside?: TRANSFORMER<ENTITY, TRANSFORMED_ENTITY> | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
+    transformer: TRANSFORMER<ENTITY>,
+    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
+): HANDLER_ROOT_ENTITY<STORE, ENTITY, ID_TYPES>;
+export function rootEntity<STORE, ENTITY>(
+    featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
+    deside?: TRANSFORMER<ENTITY> | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
 ): HANDLER_ROOT_ENTITY<STORE, ENTITY, ID_TYPES> {
-    let transformer: undefined | TRANSFORMER<ENTITY, TRANSFORMED_ENTITY>;
+    let transformer: undefined | TRANSFORMER<ENTITY>;
     if (isBuiltInSelector<STORE, ENTITY>(deside)) {
         relations = [deside, ...relations];
     } else {
@@ -68,10 +68,10 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED_ENTITY>(
         }
 
         // we have to clone it because we are going to update it with relations.
-        cacheValue = {...featureState.entities[id]} as ENTITY; // TODO find a better way for the spread.
-        if (transformer) {
-            // TODO IMPLEMENT
-        }
+        cacheValue = transformer
+            ? transformer(featureState.entities[id] as ENTITY)
+            : ({...featureState.entities[id]} as ENTITY);
+
         cacheRefs.push(['', featureSelector, id, featureState.entities[id], cacheValue]);
         cacheMap.set(id, [cacheRefs, cacheValue]);
 
@@ -83,7 +83,7 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED_ENTITY>(
 
         return cacheValue;
     };
-    callback.ngrxEntityRelationShip = 'rootEntity';
+    callback.ngrxEntityRelationship = 'rootEntity';
 
     return callback;
 }

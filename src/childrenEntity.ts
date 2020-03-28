@@ -14,20 +14,6 @@ export function childrenEntity<
     PARENT_ENTITY,
     RELATED_ENTITY,
     RELATED_KEY_IDS extends ID_FILTER_PROPS<RELATED_ENTITY, ID_TYPES>,
-    RELATED_KEY_VALUES_ARRAYS extends VALUES_FILTER_PROPS<PARENT_ENTITY, Array<RELATED_ENTITY>>,
-    TRANSFORMED_RELATED_ENTITY
->(
-    featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
-    keyId: RELATED_KEY_IDS,
-    keyValue: RELATED_KEY_VALUES_ARRAYS,
-    transformer: TRANSFORMER<RELATED_ENTITY, TRANSFORMED_RELATED_ENTITY>,
-    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
-): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY>;
-export function childrenEntity<
-    STORE,
-    PARENT_ENTITY,
-    RELATED_ENTITY,
-    RELATED_KEY_IDS extends ID_FILTER_PROPS<RELATED_ENTITY, ID_TYPES>,
     RELATED_KEY_VALUES_ARRAYS extends VALUES_FILTER_PROPS<PARENT_ENTITY, Array<RELATED_ENTITY>>
 >(
     featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
@@ -40,16 +26,28 @@ export function childrenEntity<
     PARENT_ENTITY,
     RELATED_ENTITY,
     RELATED_KEY_IDS extends ID_FILTER_PROPS<RELATED_ENTITY, ID_TYPES>,
-    RELATED_KEY_VALUES_ARRAYS extends VALUES_FILTER_PROPS<PARENT_ENTITY, Array<RELATED_ENTITY>>,
-    TRANSFORMED_RELATED_ENTITY
+    RELATED_KEY_VALUES_ARRAYS extends VALUES_FILTER_PROPS<PARENT_ENTITY, Array<RELATED_ENTITY>>
 >(
     featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
     keyId: RELATED_KEY_IDS,
     keyValue: RELATED_KEY_VALUES_ARRAYS,
-    decide?: TRANSFORMER<RELATED_ENTITY, TRANSFORMED_RELATED_ENTITY> | HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>,
+    transformer: TRANSFORMER<RELATED_ENTITY>,
+    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
+): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY>;
+export function childrenEntity<
+    STORE,
+    PARENT_ENTITY,
+    RELATED_ENTITY,
+    RELATED_KEY_IDS extends ID_FILTER_PROPS<RELATED_ENTITY, ID_TYPES>,
+    RELATED_KEY_VALUES_ARRAYS extends VALUES_FILTER_PROPS<PARENT_ENTITY, Array<RELATED_ENTITY>>
+>(
+    featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
+    keyId: RELATED_KEY_IDS,
+    keyValue: RELATED_KEY_VALUES_ARRAYS,
+    decide?: TRANSFORMER<RELATED_ENTITY> | HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>,
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
 ): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
-    let transformer: undefined | TRANSFORMER<RELATED_ENTITY, TRANSFORMED_RELATED_ENTITY>;
+    let transformer: undefined | TRANSFORMER<RELATED_ENTITY>;
     if (isBuiltInSelector<STORE, RELATED_ENTITY>(decide)) {
         relations = [decide, ...relations];
     } else {
@@ -92,10 +90,10 @@ export function childrenEntity<
             }
 
             // we have to clone it because we are going to update it with relations.
-            const cacheValue = {...stateItems[id]} as RELATED_ENTITY; // TODO find a better way for the spread.
-            if (transformer) {
-                // TODO implement
-            }
+            const cacheValue = transformer
+                ? transformer(stateItems[id] as RELATED_ENTITY)
+                : ({...stateItems[id]} as RELATED_ENTITY);
+
             cacheRefs.push([cachePrefix, featureSelector, id, stateItems[id], cacheValue]);
 
             let incrementedPrefix = 0;
@@ -108,7 +106,7 @@ export function childrenEntity<
 
         source[keyValue] = relatedItems as any;
     };
-    callback.ngrxEntityRelationShip = 'childrenEntity';
+    callback.ngrxEntityRelationship = 'childrenEntity';
 
     return callback;
 }

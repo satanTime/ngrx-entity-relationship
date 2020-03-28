@@ -9,21 +9,21 @@ import {
     TRANSFORMER,
 } from './types';
 
-export function rootEntities<STORE, ENTITY, TRANSFORMED_ENTITY>(
-    featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
-    transformer: TRANSFORMER<ENTITY, TRANSFORMED_ENTITY>,
-    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
-): HANDLER_ROOT_ENTITIES<STORE, ENTITY, ID_TYPES>;
 export function rootEntities<STORE, ENTITY>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
 ): HANDLER_ROOT_ENTITIES<STORE, ENTITY, ID_TYPES>;
-export function rootEntities<STORE, ENTITY, TRANSFORMED_ENTITY>(
+export function rootEntities<STORE, ENTITY>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
-    decide?: TRANSFORMER<ENTITY, TRANSFORMED_ENTITY> | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
+    transformer: TRANSFORMER<ENTITY>,
+    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
+): HANDLER_ROOT_ENTITIES<STORE, ENTITY, ID_TYPES>;
+export function rootEntities<STORE, ENTITY>(
+    featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
+    decide?: TRANSFORMER<ENTITY> | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
 ): HANDLER_ROOT_ENTITIES<STORE, ENTITY, ID_TYPES> {
-    let transformer: undefined | TRANSFORMER<ENTITY, TRANSFORMED_ENTITY>;
+    let transformer: undefined | TRANSFORMER<ENTITY>;
     if (isBuiltInSelector<STORE, ENTITY>(decide)) {
         relations = [decide, ...relations];
     } else {
@@ -32,7 +32,7 @@ export function rootEntities<STORE, ENTITY, TRANSFORMED_ENTITY>(
 
     const cacheMap = new Map<string, Array<ENTITY>>();
     const itemSelector = transformer
-        ? rootEntity<STORE, ENTITY, TRANSFORMED_ENTITY>(featureSelector, transformer, ...relations)
+        ? rootEntity<STORE, ENTITY>(featureSelector, transformer, ...relations)
         : rootEntity<STORE, ENTITY>(featureSelector, ...relations);
 
     const callback = (state: STORE, ids: Array<any>) => {
@@ -68,7 +68,7 @@ export function rootEntities<STORE, ENTITY, TRANSFORMED_ENTITY>(
         cacheMap.set(cacheKey, value);
         return value;
     };
-    callback.ngrxEntityRelationShip = 'rootEntities';
+    callback.ngrxEntityRelationship = 'rootEntities';
 
     return callback;
 }

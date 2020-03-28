@@ -3,18 +3,31 @@ import {Store} from '@ngrx/store';
 import {rootEntityFlags} from 'ngrx-entity-relationship';
 import {combineLatest, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {selectAddress, selectAddressAll, selectAddressEntities, selectAddressIds, selectAddressTotal} from 'src/app/store/address';
+import {
+    selectAddress,
+    selectAddressAll,
+    selectAddressEntities,
+    selectAddressIds,
+    selectAddressTotal,
+} from 'src/app/store/address';
 import {setAddress} from 'src/app/store/address/address.actions';
-import {selectCompany, selectCompanyAll, selectCompanyEntities, selectCompanyIds, selectCompanyTotal} from 'src/app/store/company';
+import {
+    selectCompany,
+    selectCompanyAll,
+    selectCompanyEntities,
+    selectCompanyIds,
+    selectCompanyTotal,
+} from 'src/app/store/company';
 import {setCompany} from 'src/app/store/company/company.actions';
 import {
-  selectCompleteUsers,
-  selectSimpleUser,
-  selectUserAll,
-  selectUserEntities,
-  selectUserIds,
-  selectUserTotal,
-  selectCompleteUser,
+    selectCompleteUsers,
+    selectSimpleUser,
+    selectTransformedUser,
+    selectUserAll,
+    selectUserEntities,
+    selectUserIds,
+    selectUserTotal,
+    selectSimpleTransformedUser,
 } from 'src/app/store/user';
 import {setUser} from 'src/app/store/user/user.actions';
 
@@ -57,8 +70,8 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this.data$ = combineLatest([
       combineLatest([
-        this.store.select(selectCompleteUser, '3'),
-        this.store.select(selectSimpleUser, '5'),
+        this.store.select(selectTransformedUser, '3'),
+        this.store.select(selectSimpleTransformedUser, '5'),
         this.store.select(selectCompleteUsers, ['2', '6']),
         this.store.select(selectUserIds),
         this.store.select(selectUserEntities),
