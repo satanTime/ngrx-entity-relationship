@@ -12,12 +12,10 @@ export type HANDLER_ROOT_ENTITY<S, E, I> = (state: S, id: I) => undefined | E;
 
 export type HANDLER_ROOT_ENTITIES<S, E, I> = (state: S, id: Array<I>) => Array<E>;
 
-export type HANDLER_RELATED_ENTITY<S, E> = (
-    cachePrefix: string,
-    state: S,
-    cacheRefs: HANDLER_CACHE<S, unknown>,
-    source: E,
-) => void;
+export type HANDLER_RELATED_ENTITY<S, E> = {
+    (cachePrefix: string, state: S, cacheRefs: HANDLER_CACHE<S, unknown>, source: E): void;
+    ngrxEntityRelationship: string;
+};
 
 export type EMPTY_TYPES = undefined | null;
 
@@ -29,10 +27,8 @@ export type VALUES_FILTER_PROPS<PARENT_ENTITY, RELATED_ENTITY> = NonNullable<
     FILTER_PROPS<PARENT_ENTITY, RELATED_ENTITY | EMPTY_TYPES>
 >;
 
-export type TRANSFORMER<I extends {}, O extends {}> = (entity: I) => O;
+export type TRANSFORMER<T> = (entity: T) => T;
 
-export const isBuiltInSelector = <STORE, RELATED_ENTITY>(
-    value: unknown,
-): value is HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY> => {
-    return !!value && (<any>value).ngrxEntityRelationShip;
+export const isBuiltInSelector = <STORE, ENTITY>(value: unknown): value is HANDLER_RELATED_ENTITY<STORE, ENTITY> => {
+    return !!value && (<any>value).ngrxEntityRelationship;
 };
