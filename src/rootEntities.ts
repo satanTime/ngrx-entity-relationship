@@ -1,15 +1,41 @@
 import {rootEntity} from './rootEntity';
 import {rootEntityFlags} from './rootEntityFlags';
-import {FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, HANDLER_ROOT_ENTITIES} from './types';
+import {
+    FEATURE_SELECTOR,
+    HANDLER_RELATED_ENTITY,
+    HANDLER_ROOT_ENTITIES,
+    ID_TYPES,
+    isBuiltInSelector,
+    TRANSFORMER,
+} from './types';
 
+export function rootEntities<STORE, ENTITY, TRANSFORMED_ENTITY>(
+    featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
+    transformer: TRANSFORMER<ENTITY, TRANSFORMED_ENTITY>,
+    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
+): HANDLER_ROOT_ENTITIES<STORE, ENTITY, ID_TYPES>;
 export function rootEntities<STORE, ENTITY>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
-): HANDLER_ROOT_ENTITIES<STORE, ENTITY, string | number> {
-    const cacheMap = new Map<string, Array<ENTITY>>();
-    const itemSelector = rootEntity<STORE, ENTITY>(featureSelector, ...relations);
+): HANDLER_ROOT_ENTITIES<STORE, ENTITY, ID_TYPES>;
+export function rootEntities<STORE, ENTITY, TRANSFORMED_ENTITY>(
+    featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
+    decide?: TRANSFORMER<ENTITY, TRANSFORMED_ENTITY> | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
+    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
+): HANDLER_ROOT_ENTITIES<STORE, ENTITY, ID_TYPES> {
+    let transformer: undefined | TRANSFORMER<ENTITY, TRANSFORMED_ENTITY>;
+    if (isBuiltInSelector<STORE, ENTITY>(decide)) {
+        relations = [decide, ...relations];
+    } else {
+        transformer = decide;
+    }
 
-    return (state: STORE, ids: Array<any>) => {
+    const cacheMap = new Map<string, Array<ENTITY>>();
+    const itemSelector = transformer
+        ? rootEntity<STORE, ENTITY, TRANSFORMED_ENTITY>(featureSelector, transformer, ...relations)
+        : rootEntity<STORE, ENTITY>(featureSelector, ...relations);
+
+    const callback = (state: STORE, ids: Array<any>) => {
         const cacheKey = ids.join(',');
         const cacheValue = cacheMap.get(cacheKey) || [];
 
@@ -42,4 +68,7 @@ export function rootEntities<STORE, ENTITY>(
         cacheMap.set(cacheKey, value);
         return value;
     };
+    callback.ngrxEntityRelationShip = 'rootEntities';
+
+    return callback;
 }

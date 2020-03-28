@@ -5,8 +5,8 @@
     "files": [
         "dist"
     ],
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "main": "dist/src/index.js",
+    "types": "dist/src/index.d.ts",
     "scripts": {
         "build": "rm -Rf dist && tsc",
         "lint": "tslint --config ./tslint.yaml -p ./",
@@ -56,5 +56,11 @@
         "tslint-microsoft-contrib": "^6.2.0",
         "typescript": "~3.7.5",
         "zone.js": "^0.10.3"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged && npm run lint",
+            "post-commit": "git update-index --again"
+        }
     }
 }

@@ -1,13 +1,38 @@
 import {rootEntityFlags} from './rootEntityFlags';
-import {FEATURE_SELECTOR, HANDLER_CACHE, HANDLER_RELATED_ENTITY, HANDLER_ROOT_ENTITY} from './types';
+import {
+    FEATURE_SELECTOR,
+    HANDLER_CACHE,
+    HANDLER_RELATED_ENTITY,
+    HANDLER_ROOT_ENTITY,
+    ID_TYPES,
+    isBuiltInSelector,
+    TRANSFORMER,
+} from './types';
 
+export function rootEntity<STORE, ENTITY, TRANSFORMED_ENTITY>(
+    featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
+    transformer: TRANSFORMER<ENTITY, TRANSFORMED_ENTITY>,
+    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
+): HANDLER_ROOT_ENTITY<STORE, ENTITY, ID_TYPES>;
 export function rootEntity<STORE, ENTITY>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
-): HANDLER_ROOT_ENTITY<STORE, ENTITY, string | number> {
-    const cacheMap = new Map<string | number, [HANDLER_CACHE<STORE, unknown>, unknown?]>();
+): HANDLER_ROOT_ENTITY<STORE, ENTITY, ID_TYPES>;
+export function rootEntity<STORE, ENTITY, TRANSFORMED_ENTITY>(
+    featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
+    deside?: TRANSFORMER<ENTITY, TRANSFORMED_ENTITY> | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
+    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
+): HANDLER_ROOT_ENTITY<STORE, ENTITY, ID_TYPES> {
+    let transformer: undefined | TRANSFORMER<ENTITY, TRANSFORMED_ENTITY>;
+    if (isBuiltInSelector<STORE, ENTITY>(deside)) {
+        relations = [deside, ...relations];
+    } else {
+        transformer = deside;
+    }
 
-    return (state: STORE, id: string | number) => {
+    const cacheMap = new Map<ID_TYPES, [HANDLER_CACHE<STORE, unknown>, unknown?]>();
+
+    const callback = (state: STORE, id: ID_TYPES) => {
         const cacheData = cacheMap.get(id);
         let cacheRefs: HANDLER_CACHE<STORE, unknown> = [];
         let cacheValue: undefined | ENTITY;
@@ -44,6 +69,9 @@ export function rootEntity<STORE, ENTITY>(
 
         // we have to clone it because we are going to update it with relations.
         cacheValue = {...featureState.entities[id]} as ENTITY; // TODO find a better way for the spread.
+        if (transformer) {
+            // TODO IMPLEMENT
+        }
         cacheRefs.push(['', featureSelector, id, featureState.entities[id], cacheValue]);
         cacheMap.set(id, [cacheRefs, cacheValue]);
 
@@ -55,4 +83,7 @@ export function rootEntity<STORE, ENTITY>(
 
         return cacheValue;
     };
+    callback.ngrxEntityRelationShip = 'rootEntity';
+
+    return callback;
 }

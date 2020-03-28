@@ -7,6 +7,7 @@ module.exports = {
         const files = filenames
             .filter(file => !file.match(/\.(ts)$/i))
             .map(file => path.relative(cwd, file))
+            .filter(file => !file.match(/^e2e\//i))
             .map(file => `'${file}'`);
         if (files.length === 0) {
             return [];
@@ -19,15 +20,16 @@ module.exports = {
     '*.ts': filenames => {
         const commands = [];
         const cwd = process.cwd();
-        const files = filenames.map(file => path.relative(cwd, file)).map(file => `'${file}'`);
+        const files = filenames
+            .map(file => path.relative(cwd, file))
+            .filter(file => !file.match(/^e2e\//i))
+            .map(file => `'${file}'`);
         if (files.length === 0) {
             return [];
         }
 
-        commands.push(`prettier --write ${files.join(' ')}`);
         commands.push(`npm run lint -- --fix --force ${files.join(' ')}`);
         commands.push(`prettier --write ${files.join(' ')}`);
-        commands.push(`npm run lint -- ${files.join(' ')}`);
 
         return commands;
     },

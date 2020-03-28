@@ -23,5 +23,5 @@
         "strictPropertyInitialization": true,
         "strictNullChecks": true
     },
-    "include": ["index.ts"]
+    "include": ["src/index.ts"]
 }
