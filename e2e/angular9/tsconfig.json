@@ -14,7 +14,10 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+      "paths": {
+          "ngrx-entity-relationship": ["../../src"]
+      }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
