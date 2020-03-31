@@ -103,9 +103,7 @@ rules:
     no-redundant-jsdoc: true
     no-reference: true
     no-reference-import: true
-    no-relative-imports:
-        - true
-        - allow-siblings
+    no-relative-imports: false
     no-require-imports: false
     no-return-await: true
     no-shadowed-variable: true

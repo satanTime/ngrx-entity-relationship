@@ -1,0 +1,20 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "sourceMap": true,
+        "declaration": true,
+        "skipLibCheck": true,
+        "noFallthroughCasesInSwitch": false,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitThis": false,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "strictBindCallApply": false,
+        "strictFunctionTypes": false,
+        "strictPropertyInitialization": false,
+        "strictNullChecks": false
+    },
+    "files": ["src/index.ts"],
+    "include": ["test/**/*.ts"]
+}

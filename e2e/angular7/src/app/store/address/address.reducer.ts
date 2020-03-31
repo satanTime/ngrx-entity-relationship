@@ -10,21 +10,16 @@ export const adapter: EntityAdapter<Address> = createEntityAdapter<Address>();
 export const initialState: State = adapter.getInitialState();
 
 export function addressReducerFunc(state: State | undefined = initialState, action: Action) {
-  switch (action.type) {
-    case AddressActions.setAddress.type: {
-      return adapter.upsertOne((action as any).address, state);
+    switch (action.type) {
+        case AddressActions.setAddress.type: {
+            return adapter.upsertOne((action as any).address, state);
+        }
     }
-  }
-  return state;
+    return state;
 }
 
 // get the selectors
-const {
-  selectIds,
-  selectEntities,
-  selectAll,
-  selectTotal,
-} = adapter.getSelectors();
+const {selectIds, selectEntities, selectAll, selectTotal} = adapter.getSelectors();
 
 // select the array of address ids
 export const selectAddressIds = selectIds;

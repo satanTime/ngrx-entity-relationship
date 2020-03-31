@@ -1,7 +1,11 @@
+process.on('infrastructure_error', error => {
+    console.error('infrastructure_error', error);
+});
+
 module.exports = function (config) {
     config.set({
         frameworks: ['jasmine', 'karma-typescript'],
-        files: [{pattern: 'test/**/*.ts'}],
+        files: [{pattern: 'src/**/*.ts'}, {pattern: 'test/**/*.ts'}],
         preprocessors: {
             '**/*.ts': ['karma-typescript'],
         },
@@ -13,8 +17,7 @@ module.exports = function (config) {
         singleRun: true,
         browsers: ['ChromeHeadless'],
         karmaTypescriptConfig: {
-            include: ['test/**/*.ts'],
-            tsconfig: 'tsconfig.json',
+            tsconfig: 'tsconfig.spec.json',
         },
     });
 };
