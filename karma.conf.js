@@ -12,7 +12,7 @@ module.exports = function (config) {
         client: {
             clearContext: false,
         },
-        reporters: ['dots', 'junit'],
+        reporters: ['dots', 'junit', 'coverage'],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
@@ -21,6 +21,10 @@ module.exports = function (config) {
         browsers: ['ChromeHeadless'],
         karmaTypescriptConfig: {
             tsconfig: 'tsconfig.spec.json',
+        },
+        coverageReporter: {
+            type: 'html',
+            dir: './test-reports/coverage',
         },
         junitReporter: {
             outputDir: require('path').join(__dirname, './test-reports'),
