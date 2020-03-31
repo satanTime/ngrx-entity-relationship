@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
         "lib": ["es2016", "dom"],
         "module": "commonjs",
         "target": "es2015",
@@ -11,7 +12,7 @@
         "allowSyntheticDefaultImports": true,
         "removeComments": true,
         "experimentalDecorators": true,
-        "skipLibCheck": false,
+        "skipLibCheck": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitAny": true,
         "noImplicitReturns": false,
