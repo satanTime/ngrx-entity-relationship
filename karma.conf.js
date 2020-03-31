@@ -9,7 +9,10 @@ module.exports = function (config) {
         preprocessors: {
             '**/*.ts': ['karma-typescript'],
         },
-        reporters: ['dots'],
+        client: {
+            clearContext: false,
+        },
+        reporters: ['dots', 'junit'],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
@@ -18,6 +21,11 @@ module.exports = function (config) {
         browsers: ['ChromeHeadless'],
         karmaTypescriptConfig: {
             tsconfig: 'tsconfig.spec.json',
+        },
+        junitReporter: {
+            outputDir: require('path').join(__dirname, './test-reports'),
+            outputFile: 'specs-junit.xml',
+            useBrowserName: false,
         },
     });
 };
