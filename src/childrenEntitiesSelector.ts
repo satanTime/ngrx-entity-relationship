@@ -1,4 +1,4 @@
-import {childrenEntity} from './childrenEntity';
+import {childrenEntities} from './childrenEntities';
 import {
     FEATURE_SELECTOR,
     HANDLER_RELATED_ENTITY,
@@ -8,7 +8,7 @@ import {
     VALUES_FILTER_PROPS,
 } from './types';
 
-export function childrenEntitySelector<
+export function childrenEntitiesSelector<
     STORE,
     PARENT_ENTITY extends any, // TODO add a proper detection of parent type based on rootEntity.
     RELATED_ENTITY,
@@ -24,20 +24,20 @@ export function childrenEntitySelector<
 ) => HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
     const callback = (...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>) =>
         transformer
-            ? childrenEntity<STORE, PARENT_ENTITY, RELATED_ENTITY, RELATED_KEY_IDS, RELATED_KEY_VALUES_ARRAYS>(
+            ? childrenEntities<STORE, PARENT_ENTITY, RELATED_ENTITY, RELATED_KEY_IDS, RELATED_KEY_VALUES_ARRAYS>(
                   featureSelector,
                   keyId,
                   keyValue,
                   transformer,
                   ...relations,
               )
-            : childrenEntity<STORE, PARENT_ENTITY, RELATED_ENTITY, RELATED_KEY_IDS, RELATED_KEY_VALUES_ARRAYS>(
+            : childrenEntities<STORE, PARENT_ENTITY, RELATED_ENTITY, RELATED_KEY_IDS, RELATED_KEY_VALUES_ARRAYS>(
                   featureSelector,
                   keyId,
                   keyValue,
                   ...relations,
               );
-    callback.ngrxEntityRelationship = 'childrenEntitySelector';
+    callback.ngrxEntityRelationship = 'childrenEntitiesSelector';
 
     return callback;
 }

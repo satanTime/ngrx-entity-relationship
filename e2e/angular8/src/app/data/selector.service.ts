@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {childrenEntity, relatedEntity, rootEntities} from 'ngrx-entity-relationship';
+import {childrenEntities, relatedEntity, rootEntities} from 'ngrx-entity-relationship';
 import {switchMap} from 'rxjs/operators';
 import {DataHeroService} from './data-hero.service';
 import {DataVillainService} from './data-villain.service';
@@ -24,12 +24,12 @@ export class SelectorService {
 
     public readonly selectVillainsWithHero = rootEntities(
         this.villain.selectors.selectCollection,
-        childrenEntity(this.hero.selectors.selectCollection, 'villainId', 'heroes'),
+        childrenEntities(this.hero.selectors.selectCollection, 'villainId', 'heroes'),
     );
 
     public readonly selectVillainsWithHeroShort = rootEntities(
         this.villain,
-        childrenEntity(this.hero, 'villainId', 'heroes'),
+        childrenEntities(this.hero, 'villainId', 'heroes'),
     );
 
     public readonly heroesWithVillain$ = this.store.pipe(
