@@ -1,8 +1,8 @@
 import {ActionReducerMap, createFeatureSelector, createSelector} from '@ngrx/store';
 import {
     childEntity,
-    childrenEntity,
-    childrenEntitySelector,
+    childrenEntities,
+    childrenEntitiesSelector,
     relatedEntity,
     relatedEntitySelector,
     rootEntities,
@@ -40,7 +40,7 @@ const transformedUserCompany = relatedEntitySelector(selectCompanyState, 'compan
     cloned: true,
 }));
 const transformedCompany = rootEntitySelector(selectCompanyState, entity => ({...entity, cloned: true}));
-const transformedCompanyStaff = childrenEntitySelector(selectUserState, 'companyId', 'staff', entity => ({
+const transformedCompanyStaff = childrenEntitiesSelector(selectUserState, 'companyId', 'staff', entity => ({
     ...entity,
     cloned: true,
 }));
@@ -60,7 +60,7 @@ const transformedAddressCompany = relatedEntitySelector(selectCompanyState, 'com
 const entityUser = rootEntitySelector(selectUserState);
 const entityUserCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company');
 const entityCompany = rootEntitySelector(selectCompanyState);
-const entityCompanyStaff = childrenEntitySelector(selectUserState, 'companyId', 'staff');
+const entityCompanyStaff = childrenEntitiesSelector(selectUserState, 'companyId', 'staff');
 const entityCompanyAdmin = relatedEntitySelector(selectUserState, 'adminId', 'admin');
 const entityCompanyAddress = relatedEntitySelector(selectAddressState, 'addressId', 'address');
 const entityAddress = rootEntitySelector(selectAddressState);
@@ -72,7 +72,7 @@ export const selectCompleteUser = rootEntity(
         selectCompanyState,
         'companyId',
         'company',
-        childrenEntity(selectUserState, 'companyId', 'staff'),
+        childrenEntities(selectUserState, 'companyId', 'staff'),
         relatedEntity(selectUserState, 'adminId', 'admin'),
         relatedEntity(
             selectAddressState,
@@ -81,7 +81,7 @@ export const selectCompleteUser = rootEntity(
             relatedEntity(selectCompanyState, 'companyId', 'company'),
         ),
     ),
-    childrenEntity(selectUserState, 'managerId', 'employees'),
+    childrenEntities(selectUserState, 'managerId', 'employees'),
     childEntity(selectUserState, 'managerId', 'employee'),
 );
 
@@ -93,7 +93,7 @@ export const selectTransformedUser = rootEntity(
         'companyId',
         'company',
         entity => ({...entity, cloned: true}),
-        childrenEntity(selectUserState, 'companyId', 'staff', entity => ({...entity, cloned: true})),
+        childrenEntities(selectUserState, 'companyId', 'staff', entity => ({...entity, cloned: true})),
         relatedEntity(selectUserState, 'adminId', 'admin', entity => ({...entity, cloned: true})),
         relatedEntity(
             selectAddressState,
@@ -103,7 +103,7 @@ export const selectTransformedUser = rootEntity(
             relatedEntity(selectCompanyState, 'companyId', 'company', entity => ({...entity, cloned: true})),
         ),
     ),
-    childrenEntity(selectUserState, 'managerId', 'employees', entity => ({...entity, cloned: true})),
+    childrenEntities(selectUserState, 'managerId', 'employees', entity => ({...entity, cloned: true})),
     childEntity(selectUserState, 'managerId', 'employee', entity => ({...entity, cloned: true})),
 );
 
@@ -115,7 +115,7 @@ export const selectCompleteUsers = rootEntities(
         'companyId',
         'company',
         entity => ({...entity, cloned: true}),
-        childrenEntity(selectUserState, 'companyId', 'staff', entity => ({...entity, cloned: true})),
+        childrenEntities(selectUserState, 'companyId', 'staff', entity => ({...entity, cloned: true})),
         relatedEntity(selectUserState, 'adminId', 'admin', entity => ({...entity, cloned: true})),
         relatedEntity(
             selectAddressState,

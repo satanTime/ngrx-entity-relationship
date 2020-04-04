@@ -1,14 +1,14 @@
 import createSpy = jasmine.createSpy;
 
-import {childrenEntitySelector} from '../src';
+import {childrenEntitiesSelector} from '../src';
 
-describe('childrenEntitySelector', () => {
+describe('childrenEntitiesSelector', () => {
     it('marks callback with ngrxEntityRelationship key', () => {
-        const actual = childrenEntitySelector<any, any, any, any, any>(createSpy(), '', '');
+        const actual = childrenEntitiesSelector<any, any, any, any, any>(createSpy(), '', '');
         expect(actual).toEqual(jasmine.any(Function));
         expect(actual).toEqual(
             jasmine.objectContaining({
-                ngrxEntityRelationship: 'childrenEntitySelector',
+                ngrxEntityRelationship: 'childrenEntitiesSelector',
             }),
         );
     });

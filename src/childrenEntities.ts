@@ -9,7 +9,7 @@ import {
     VALUES_FILTER_PROPS,
 } from './types';
 
-export function childrenEntity<
+export function childrenEntities<
     STORE,
     PARENT_ENTITY,
     RELATED_ENTITY,
@@ -21,7 +21,7 @@ export function childrenEntity<
     keyValue: RELATED_KEY_VALUES_ARRAYS,
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
 ): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY>;
-export function childrenEntity<
+export function childrenEntities<
     STORE,
     PARENT_ENTITY,
     RELATED_ENTITY,
@@ -34,7 +34,7 @@ export function childrenEntity<
     transformer: TRANSFORMER<RELATED_ENTITY>,
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
 ): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY>;
-export function childrenEntity<
+export function childrenEntities<
     STORE,
     PARENT_ENTITY,
     RELATED_ENTITY,
@@ -109,7 +109,7 @@ export function childrenEntity<
         cacheRefs.push([cachePrefix, funcSelector, null, stateItems]);
         source[keyValue] = relatedItems as any;
     };
-    callback.ngrxEntityRelationship = 'childrenEntity';
+    callback.ngrxEntityRelationship = 'childrenEntities';
 
     return callback;
 }
