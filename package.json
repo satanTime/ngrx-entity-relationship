@@ -36,6 +36,7 @@
     },
     "devDependencies": {
         "@angular/core": "^9.1.0",
+        "@ngrx/data": "^9.0.0",
         "@ngrx/entity": "^9.0.0",
         "@ngrx/store": "^9.0.0",
         "@types/jasmine": "^3.5.10",

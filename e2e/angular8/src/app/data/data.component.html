@@ -1,0 +1,9 @@
+<div>Hero loading: {{ heroService.loading$ | async | json }}</div>
+<div *ngFor="let item of heroService.entities$ | async">Hero: {{ item.name }}</div>
+<div>Heroes: {{ selector.heroesWithVillain$ | async | json }}</div>
+<div>Heroes: {{ selector.heroesWithVillainShort$ | async | json }}</div>
+
+<div>Villain loading: {{ villainService.loading$ | async | json }}</div>
+<div *ngFor="let item of villainService.entities$ | async">Villain: {{ item.name }}</div>
+<div>Villains: {{ selector.villainsWithHeroes$ | async | json }}</div>
+<div>Villains: {{ selector.villainsWithHeroesShort$ | async | json }}</div>

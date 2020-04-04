@@ -1,12 +1,21 @@
 import {EntityState} from '@ngrx/entity';
+import {Selector} from '@ngrx/store/src/models';
 
 export type FILTER_PROPS<Base, Condition> = {
     [Key in keyof Base]: Base[Key] extends Condition ? Key : never;
 }[keyof Base];
 
-export type FEATURE_SELECTOR<STORE, ENTITY> = (store: STORE) => EntityState<ENTITY>;
+export type FEATURE_SELECTOR<STORE, ENTITY> =
+    | Selector<STORE, EntityState<ENTITY>>
+    | {
+          selectors: {
+              selectCollection: Selector<STORE, EntityState<ENTITY>>;
+          };
+      };
 
-export type HANDLER_CACHE<STORE, ENTITY> = Array<[string, FEATURE_SELECTOR<STORE, ENTITY>, ID_TYPES, ENTITY?, ENTITY?]>;
+export type HANDLER_CACHE<STORE, ENTITY> = Array<
+    [string, Selector<STORE, EntityState<ENTITY>>, ID_TYPES | null, ENTITY?, ENTITY?]
+>;
 
 export type HANDLER_ROOT_ENTITY<S, E, I> = (state: S, id: I) => undefined | E;
 

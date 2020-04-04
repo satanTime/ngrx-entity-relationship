@@ -29,11 +29,13 @@ export function rootEntities<STORE, ENTITY>(
     } else {
         transformer = decide;
     }
+    const funcSelector =
+        typeof featureSelector === 'function' ? featureSelector : featureSelector.selectors.selectCollection;
 
     const cacheMap = new Map<string, Array<ENTITY>>();
     const itemSelector = transformer
-        ? rootEntity<STORE, ENTITY>(featureSelector, transformer, ...relations)
-        : rootEntity<STORE, ENTITY>(featureSelector, ...relations);
+        ? rootEntity<STORE, ENTITY>(funcSelector, transformer, ...relations)
+        : rootEntity<STORE, ENTITY>(funcSelector, ...relations);
 
     const callback = (state: STORE, ids: Array<any>) => {
         const cacheKey = ids.join(',');

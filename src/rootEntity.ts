@@ -29,6 +29,8 @@ export function rootEntity<STORE, ENTITY>(
     } else {
         transformer = deside;
     }
+    const funcSelector =
+        typeof featureSelector === 'function' ? featureSelector : featureSelector.selectors.selectCollection;
 
     const cacheMap = new Map<ID_TYPES, [HANDLER_CACHE<STORE, unknown>, unknown?]>();
 
@@ -50,7 +52,11 @@ export function rootEntity<STORE, ENTITY>(
         if (cacheRefs.length) {
             let cached = true;
             for (const [, selector, itemId, value] of cacheRefs) {
-                if (selector(state).entities[itemId] !== value) {
+                if (!itemId && selector(state).entities !== value) {
+                    cached = false;
+                    break;
+                }
+                if (itemId && selector(state).entities[itemId] !== value) {
                     cached = false;
                     break;
                 }
@@ -61,9 +67,9 @@ export function rootEntity<STORE, ENTITY>(
             cacheRefs = [];
         }
 
-        const featureState = featureSelector(state);
+        const featureState = funcSelector(state);
         if (!featureState || !featureState.entities[id]) {
-            cacheRefs.push(['', featureSelector, id, featureState.entities[id]]);
+            cacheRefs.push(['', funcSelector, id, featureState.entities[id]]);
             return;
         }
 
@@ -72,7 +78,7 @@ export function rootEntity<STORE, ENTITY>(
             ? transformer(featureState.entities[id] as ENTITY)
             : ({...featureState.entities[id]} as ENTITY);
 
-        cacheRefs.push(['', featureSelector, id, featureState.entities[id], cacheValue]);
+        cacheRefs.push(['', funcSelector, id, featureState.entities[id], cacheValue]);
         cacheMap.set(id, [cacheRefs, cacheValue]);
 
         let incrementedPrefix = 0;
