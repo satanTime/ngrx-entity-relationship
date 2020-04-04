@@ -32,12 +32,12 @@ import {
 import {setUser} from 'src/app/store/user/user.actions';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
+    selector: 'app-entity',
+    templateUrl: './entity.component.html',
+    styleUrls: ['./entity.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
+export class EntityComponent implements OnInit {
     public title = 'app';
 
     public data$: Observable<{
@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
         addressTotal: unknown;
     }>;
 
-    constructor(protected store: Store) {}
+    constructor(protected store: Store<unknown>) {}
 
     public ngOnInit(): void {
         this.data$ = combineLatest([

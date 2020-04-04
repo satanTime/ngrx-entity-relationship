@@ -59,6 +59,8 @@ export function relatedEntity<
     } else {
         transformer = decide;
     }
+    const funcSelector =
+        typeof featureSelector === 'function' ? featureSelector : featureSelector.selectors.selectCollection;
 
     const callback = (
         cachePrefix: string,
@@ -68,7 +70,7 @@ export function relatedEntity<
     ) => {
         // a bit magic to relax generic types.
         const sourceKeyIdValue = source[keyId];
-        const stateFeature = featureSelector(state);
+        const stateFeature = funcSelector(state);
         const stateItems = stateFeature ? stateFeature.entities : {};
 
         if (!sourceKeyIdValue) {
@@ -86,7 +88,7 @@ export function relatedEntity<
 
         for (const id of relatedIds) {
             const cacheRef = cacheRefs.find(
-                ([prefix, selector, index]) => prefix === cachePrefix && selector === featureSelector && index === id,
+                ([prefix, selector, index]) => prefix === cachePrefix && selector === funcSelector && index === id,
             );
             if (cacheRef) {
                 if (cacheRef.length) {
@@ -96,7 +98,7 @@ export function relatedEntity<
             }
 
             if (!stateItems[id]) {
-                cacheRefs.push([cachePrefix, featureSelector, id, stateItems[id]]);
+                cacheRefs.push([cachePrefix, funcSelector, id, stateItems[id]]);
                 continue;
             }
 
@@ -105,7 +107,7 @@ export function relatedEntity<
                 ? transformer(stateItems[id] as RELATED_ENTITY)
                 : ({...stateItems[id]} as RELATED_ENTITY);
 
-            cacheRefs.push([cachePrefix, featureSelector, id, stateItems[id], cacheValue]);
+            cacheRefs.push([cachePrefix, funcSelector, id, stateItems[id], cacheValue]);
 
             let incrementedPrefix = 0;
             for (const relation of relations) {

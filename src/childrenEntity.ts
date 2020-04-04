@@ -53,6 +53,8 @@ export function childrenEntity<
     } else {
         transformer = decide;
     }
+    const funcSelector =
+        typeof featureSelector === 'function' ? featureSelector : featureSelector.selectors.selectCollection;
 
     const callback = (
         cachePrefix: string,
@@ -62,7 +64,7 @@ export function childrenEntity<
     ) => {
         // a bit magic to relax generic types.
         const relatedIds: Array<ID_TYPES> = [];
-        const stateFeature = featureSelector(state);
+        const stateFeature = funcSelector(state);
         const stateItems = stateFeature ? stateFeature.entities : {};
         for (const stateItem of Object.values(stateItems)) {
             if (!stateItem || stateItem[keyId] !== (source as any).id) {
@@ -75,7 +77,7 @@ export function childrenEntity<
 
         for (const id of relatedIds) {
             const cacheRef = cacheRefs.find(
-                ([prefix, selector, index]) => prefix === cachePrefix && selector === featureSelector && index === id,
+                ([prefix, selector, index]) => prefix === cachePrefix && selector === funcSelector && index === id,
             );
             if (cacheRef) {
                 if (cacheRef.length) {
@@ -85,7 +87,7 @@ export function childrenEntity<
             }
 
             if (!stateItems[id]) {
-                cacheRefs.push([cachePrefix, featureSelector, id, stateItems[id]]);
+                cacheRefs.push([cachePrefix, funcSelector, id, stateItems[id]]);
                 continue;
             }
 
@@ -94,7 +96,7 @@ export function childrenEntity<
                 ? transformer(stateItems[id] as RELATED_ENTITY)
                 : ({...stateItems[id]} as RELATED_ENTITY);
 
-            cacheRefs.push([cachePrefix, featureSelector, id, stateItems[id], cacheValue]);
+            cacheRefs.push([cachePrefix, funcSelector, id, stateItems[id], cacheValue]);
 
             let incrementedPrefix = 0;
             for (const relation of relations) {
@@ -104,6 +106,7 @@ export function childrenEntity<
             relatedItems.push(cacheValue);
         }
 
+        cacheRefs.push([cachePrefix, funcSelector, null, stateItems]);
         source[keyValue] = relatedItems as any;
     };
     callback.ngrxEntityRelationship = 'childrenEntity';
