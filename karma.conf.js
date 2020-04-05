@@ -2,6 +2,10 @@ process.on('infrastructure_error', error => {
     console.error('infrastructure_error', error);
 });
 
+if (!process.env.CHROME_BIN) {
+    process.env.CHROME_BIN = require('puppeteer').executablePath();
+}
+
 module.exports = function (config) {
     config.set({
         frameworks: ['jasmine', 'karma-typescript'],
@@ -18,7 +22,13 @@ module.exports = function (config) {
         logLevel: config.LOG_INFO,
         autoWatch: false,
         singleRun: true,
-        browsers: ['ChromeHeadless'],
+        browsers: ['Chrome'],
+        customLaunchers: {
+            Chrome: {
+                base: 'ChromeHeadless',
+                flags: ['--no-sandbox'],
+            },
+        },
         karmaTypescriptConfig: {
             tsconfig: 'tsconfig.spec.json',
         },
