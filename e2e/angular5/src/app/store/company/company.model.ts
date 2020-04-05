@@ -1,5 +1,5 @@
-import {Address} from 'src/app/store/address/address.model';
-import {User} from 'src/app/store/user/user.model';
+import {Address} from '../address/address.model';
+import {User} from '../user/user.model';
 
 export interface Company {
     id: string;

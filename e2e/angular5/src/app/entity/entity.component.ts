@@ -1,22 +1,26 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {rootEntityFlags} from 'ngrx-entity-relationship';
-import {combineLatest, Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
+import {combineLatest} from 'rxjs/observable/combineLatest';
 import {map} from 'rxjs/operators';
+
 import {
     selectAddress,
     selectAddressAll,
     selectAddressEntities,
     selectAddressIds,
     selectAddressTotal,
-} from 'src/app/store/address';
+} from '../store/address';
+import {UpsertAddress} from '../store/address/address.actions';
 import {
     selectCompany,
     selectCompanyAll,
     selectCompanyEntities,
     selectCompanyIds,
     selectCompanyTotal,
-} from 'src/app/store/company';
+} from '../store/company';
+import {UpsertCompany} from '../store/company/company.actions';
 import {
     selectCompleteUsers,
     selectSimpleTransformedUser,
@@ -25,9 +29,7 @@ import {
     selectUserEntities,
     selectUserIds,
     selectUserTotal,
-} from 'src/app/store/user';
-import {UpsertAddress} from '../store/address/address.actions';
-import {UpsertCompany} from '../store/company/company.actions';
+} from '../store/user';
 import {UpsertUser} from '../store/user/user.actions';
 
 @Component({

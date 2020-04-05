@@ -3,20 +3,21 @@ import {Store} from '@ngrx/store';
 import {rootEntityFlags} from 'ngrx-entity-relationship';
 import {combineLatest, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+
 import {
     selectAddress,
     selectAddressAll,
     selectAddressEntities,
     selectAddressIds,
     selectAddressTotal,
-} from 'src/app/store/address';
+} from '../store/address';
 import {
     selectCompany,
     selectCompanyAll,
     selectCompanyEntities,
     selectCompanyIds,
     selectCompanyTotal,
-} from 'src/app/store/company';
+} from '../store/company';
 import {
     selectCompleteUsers,
     selectSimpleTransformedUser,
@@ -25,7 +26,7 @@ import {
     selectUserEntities,
     selectUserIds,
     selectUserTotal,
-} from 'src/app/store/user';
+} from '../store/user';
 import {upsertAddress} from '../store/address/address.actions';
 import {upsertCompany} from '../store/company/company.actions';
 import {upsertUser} from '../store/user/user.actions';

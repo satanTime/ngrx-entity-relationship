@@ -1,4 +1,4 @@
-import {Company} from 'src/app/store/company/company.model';
+import {Company} from '../company/company.model';
 
 export interface User {
     id: string;

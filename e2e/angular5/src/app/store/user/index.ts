@@ -9,8 +9,9 @@ import {
     rootEntity,
     rootEntitySelector,
 } from 'ngrx-entity-relationship';
-import {selectAddressState} from 'src/app/store/address';
-import {selectCompanyState} from 'src/app/store/company';
+
+import {selectAddressState} from '../address';
+import {selectCompanyState} from '../company';
 import * as fromUser from './user.reducer';
 
 export const selectUserState = createFeatureSelector<fromUser.State>('users');
