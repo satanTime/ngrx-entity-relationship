@@ -9,7 +9,7 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "rm -Rf dist && tsc",
-        "spread": "mkdir -p e2e/angular{5,6,7,8,9}/node_modules/ngrx-entity-relationship/dist && find e2e -type d -name 'angular*' -d 1 -exec rsync -a --delete ./dist/. {}/node_modules/ngrx-entity-relationship/dist/. \\; -exec cp ./package.json {}/node_modules/ngrx-entity-relationship/package.json \\;",
+        "spread": "mkdir -p e2e/angular{6,7,8,9}/node_modules/ngrx-entity-relationship/dist && find e2e -type d -name 'angular*' -d 1 -exec rsync -a --delete ./dist/. {}/node_modules/ngrx-entity-relationship/dist/. \\; -exec cp ./package.json {}/node_modules/ngrx-entity-relationship/package.json \\;",
         "i:a6": "cd e2e/angular6 && npm install",
         "i:a7": "cd e2e/angular7 && npm install",
         "i:a8": "cd e2e/angular8 && npm install",
@@ -25,7 +25,7 @@
         "e2e:a8": "cd e2e/angular8 && npm run e2e",
         "e2e:a9": "cd e2e/angular9 && npm run e2e",
         "e2e:a": "npm run e2e:a6 && npm run e2e:a7 && npm run e2e:a8 && npm run e2e:a9",
-        "e2e": "npm run i:a && npm run build && npm run spread && npm run e2e:a && npm run b:a",
+        "e2e": "npm run i:a && npm run spread && npm run e2e:a",
         "lint": "tslint --config ./tslint.yaml -p ./tsconfig.json",
         "release": "standard-version",
         "test": "karma start"
@@ -86,7 +86,7 @@
     },
     "standard-version": {
         "scripts": {
-            "prerelease": "npm run lint && npm test && npm run build && npm run e2e"
+            "prerelease": "npm run lint && npm test && npm run build && npm run e2e && npm run b:a"
         }
     }
 }

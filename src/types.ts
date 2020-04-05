@@ -58,20 +58,3 @@ export type TRANSFORMER<T> = (entity: T) => T;
 export const isBuiltInSelector = <STORE, ENTITY>(value: UNKNOWN): value is HANDLER_RELATED_ENTITY<STORE, ENTITY> => {
     return value && value.ngrxEntityRelationship;
 };
-
-export const isHandlerRootEntity = <S, E, I>(value: UNKNOWN): value is HANDLER_ROOT_ENTITY<S, E, I> => {
-    return isBuiltInSelector(value) && value.ngrxEntityRelationship === 'rootEntity';
-};
-
-export const isFeatureSelector = <STORE, ENTITY>(value: UNKNOWN): value is FEATURE_SELECTOR<STORE, ENTITY> => {
-    return (
-        isSelector(value) ||
-        (typeof value === 'object' &&
-            typeof value.selectors === 'object' &&
-            isSelector(value.selectors.selectCollection))
-    );
-};
-
-export const isSelector = <STORE, ENTITY>(value: UNKNOWN): value is STORE_SELECTOR<STORE, EntityState<ENTITY>> => {
-    return typeof value === 'function' && !isBuiltInSelector(value);
-};
