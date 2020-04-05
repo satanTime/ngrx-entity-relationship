@@ -22,7 +22,10 @@ export type FEATURE_SELECTOR<STORE, ENTITY> =
       };
 
 export type HANDLER_CACHE<STORE, ENTITY> = Array<
-    [string, STORE_SELECTOR<STORE, EntityState<ENTITY>>, ID_TYPES | null, ENTITY?, ENTITY?]
+    // thanks A6 and its TS that we can't use 'ENTITY?'
+    | [string, STORE_SELECTOR<STORE, EntityState<ENTITY>>, ID_TYPES | null]
+    | [string, STORE_SELECTOR<STORE, EntityState<ENTITY>>, ID_TYPES | null, ENTITY]
+    | [string, STORE_SELECTOR<STORE, EntityState<ENTITY>>, ID_TYPES | null, ENTITY, ENTITY]
 >;
 
 export type HANDLER_ROOT_ENTITY<S, E, I> = (state: S, id: I) => undefined | E;
