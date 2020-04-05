@@ -1,7 +1,6 @@
-import {Action} from '@ngrx/store';
-import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
+import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
+import {UserActionsUnion, UserActionTypes} from './user.actions';
 import {User} from './user.model';
-import * as UserActions from './user.actions';
 
 export interface State extends EntityState<User> {}
 
@@ -9,10 +8,12 @@ export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
 
 export const initialState: State = adapter.getInitialState();
 
-export function userReducerFunc(state: State | undefined, action: Action) {
-    if (action.type === UserActions.setUser.type) {
-        return adapter.upsertOne((action as any).user, state);
+export function userReducerFunc(state: State = initialState, action: UserActionsUnion) {
+    switch (action.type) {
+        case UserActionTypes.UPSERT:
+            return adapter.upsertOne(action.payload.user, state);
     }
+
     return state;
 }
 

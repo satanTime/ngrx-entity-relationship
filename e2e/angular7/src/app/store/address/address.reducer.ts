@@ -1,7 +1,6 @@
-import {Action} from '@ngrx/store';
-import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
+import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
+import {AddressActionsUnion, AddressActionTypes} from './address.actions';
 import {Address} from './address.model';
-import * as AddressActions from './address.actions';
 
 export interface State extends EntityState<Address> {}
 
@@ -9,12 +8,12 @@ export const adapter: EntityAdapter<Address> = createEntityAdapter<Address>();
 
 export const initialState: State = adapter.getInitialState();
 
-export function addressReducerFunc(state: State | undefined = initialState, action: Action) {
+export function addressReducerFunc(state: State = initialState, action: AddressActionsUnion) {
     switch (action.type) {
-        case AddressActions.setAddress.type: {
-            return adapter.upsertOne((action as any).address, state);
-        }
+        case AddressActionTypes.UPSERT:
+            return adapter.upsertOne(action.payload.address, state);
     }
+
     return state;
 }
 

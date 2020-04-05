@@ -1,5 +1,15 @@
-import {createAction, props} from '@ngrx/store';
+import {Action} from '@ngrx/store';
 
 import {Address} from './address.model';
 
-export const setAddress = createAction('[Address/API] Set Address', props<{address: Address}>());
+export enum AddressActionTypes {
+    UPSERT = '[Address] Upsert Address',
+}
+
+export class UpsertAddress implements Action {
+    readonly type = AddressActionTypes.UPSERT;
+
+    constructor(public payload: {address: Address}) {}
+}
+
+export type AddressActionsUnion = UpsertAddress;
