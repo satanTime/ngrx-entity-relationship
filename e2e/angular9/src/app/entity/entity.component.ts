@@ -10,7 +10,6 @@ import {
     selectAddressIds,
     selectAddressTotal,
 } from 'src/app/store/address';
-import {setAddress} from 'src/app/store/address/address.actions';
 import {
     selectCompany,
     selectCompanyAll,
@@ -18,18 +17,18 @@ import {
     selectCompanyIds,
     selectCompanyTotal,
 } from 'src/app/store/company';
-import {setCompany} from 'src/app/store/company/company.actions';
 import {
     selectCompleteUsers,
-    selectSimpleUser,
+    selectSimpleTransformedUser,
     selectTransformedUser,
     selectUserAll,
     selectUserEntities,
     selectUserIds,
     selectUserTotal,
-    selectSimpleTransformedUser,
 } from 'src/app/store/user';
-import {setUser} from 'src/app/store/user/user.actions';
+import {upsertAddress} from '../store/address/address.actions';
+import {upsertCompany} from '../store/company/company.actions';
+import {upsertUser} from '../store/user/user.actions';
 
 @Component({
     selector: 'app-entity',
@@ -126,7 +125,7 @@ export class EntityComponent implements OnInit {
         );
 
         this.store.dispatch(
-            setUser({
+            upsertUser({
                 user: {
                     id: '1',
                     name: 'User 1',
@@ -136,7 +135,7 @@ export class EntityComponent implements OnInit {
             }),
         );
         this.store.dispatch(
-            setUser({
+            upsertUser({
                 user: {
                     id: '2',
                     name: 'User 2',
@@ -146,7 +145,7 @@ export class EntityComponent implements OnInit {
             }),
         );
         this.store.dispatch(
-            setUser({
+            upsertUser({
                 user: {
                     id: '3',
                     name: 'User 3',
@@ -155,7 +154,7 @@ export class EntityComponent implements OnInit {
             }),
         );
         this.store.dispatch(
-            setUser({
+            upsertUser({
                 user: {
                     id: '4',
                     name: 'User 4',
@@ -165,7 +164,7 @@ export class EntityComponent implements OnInit {
             }),
         );
         this.store.dispatch(
-            setUser({
+            upsertUser({
                 user: {
                     id: '5',
                     name: 'User 5',
@@ -174,7 +173,7 @@ export class EntityComponent implements OnInit {
             }),
         );
         this.store.dispatch(
-            setUser({
+            upsertUser({
                 user: {
                     id: '6',
                     name: 'User 6',
@@ -183,7 +182,7 @@ export class EntityComponent implements OnInit {
             }),
         );
         this.store.dispatch(
-            setCompany({
+            upsertCompany({
                 company: {
                     id: '3',
                     name: 'Company 3',
@@ -193,7 +192,7 @@ export class EntityComponent implements OnInit {
             }),
         );
         this.store.dispatch(
-            setCompany({
+            upsertCompany({
                 company: {
                     id: '4',
                     name: 'Company 4',
@@ -203,7 +202,7 @@ export class EntityComponent implements OnInit {
             }),
         );
         this.store.dispatch(
-            setAddress({
+            upsertAddress({
                 address: {
                     id: '5',
                     name: 'Address 5',
@@ -212,7 +211,7 @@ export class EntityComponent implements OnInit {
             }),
         );
         this.store.dispatch(
-            setAddress({
+            upsertAddress({
                 address: {
                     id: '6',
                     name: 'Address 6',
@@ -229,7 +228,7 @@ export class EntityComponent implements OnInit {
 
         setInterval(() => {
             this.store.dispatch(
-                setAddress({
+                upsertAddress({
                     address: {
                         id: '6',
                         name: `Address ${new Date().getTime()}`,
