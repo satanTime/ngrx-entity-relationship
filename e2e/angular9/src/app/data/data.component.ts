@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {DataHeroService} from './data-hero.service';
-import {DataVillainService} from './data-villain.service';
+import {HeroService} from './hero.service';
+import {VillainService} from './villain.service';
 import {SelectorService} from './selector.service';
 
 @Component({
@@ -10,8 +10,8 @@ import {SelectorService} from './selector.service';
 })
 export class DataComponent implements OnInit {
     constructor(
-        public readonly heroService: DataHeroService,
-        public readonly villainService: DataVillainService,
+        public readonly heroService: HeroService,
+        public readonly villainService: VillainService,
         public readonly selector: SelectorService,
     ) {}
 

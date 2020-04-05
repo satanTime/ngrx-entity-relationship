@@ -1,6 +1,10 @@
 # A simple way to select related entities from a store.
 
-Supports ngrx 8.x and 9.x
+Supports:
+* `@ngrx/data@8` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular8/src/app/data))
+* `@ngrx/data@9` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular9/src/app/data))
+- `@ngrx/entity@8` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular8/src/app/entity))
+- `@ngrx/entity@9` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular9/src/app/entity))
 
 Imagine that we have the next entities in ngrx store, every entity is stored in its own feature.
 
@@ -100,7 +104,10 @@ With the default adapter we can select only an entity without its nested entitie
 const userAdapter = createEntityAdapter<User>();
 const userSelectors = userAdapter.getSelectors();
 
-export const selectUserEntities = createSelector(selectUserState, userSelectors.selectEntities);
+export const selectUserEntities = createSelector(
+    selectUserState,
+    userSelectors.selectEntities,
+);
 
 store.pipe(
     selectUserEntities,
@@ -141,7 +148,7 @@ store.select(selectUser, 'userId');
 store.select(selectUsers, ['user1', 'user2', 'user3']);
 ```
 
-## `relationshiops` pipe operator
+## `relationships` pipe operator
 
 The same code as above can be used with existing entities.
 
@@ -173,9 +180,23 @@ export class SelectorService {
         protected readonly villain: VillainService,
     ) {}
 
-    public readonly selectHero = rootEntity(this.hero, relatedEntity(this.villain, 'villainId', 'villain'));
+    // Structure we want to select from the store for a hero.
+    public readonly selectHero = rootEntity(
+        this.hero,
+        relatedEntity(
+            this.villain,
+            'villainId',
+            'villain',
+        ),
+    );
+
+    // The same structure as above but for a list of heroes.
     public readonly selectHeroes = rootEntities(this.selectHero);
-    public readonly heroes$ = this.hero.entities$.pipe(relationships(this.store, this.selectHeroes));
+
+    // Observable stream with fulfilled heroes.
+    public readonly heroes$ = this.hero.entities$.pipe(
+        relationships(this.store, this.selectHeroes),
+    );
 }
 ```
 
@@ -199,13 +220,25 @@ export const selectUser = rootEntity(
         selectCompanyState,
         'companyId',
         'company',
-        childrenEntities(selectUserState, 'companyId', 'staff'),
-        relatedEntity(selectUserState, 'adminId', 'admin'),
+        childrenEntities(
+            selectUserState,
+            'companyId',
+            'staff',
+        ),
+        relatedEntity(
+            selectUserState,
+            'adminId',
+            'admin',
+        ),
         relatedEntity(
             selectAddressState,
             'addressId',
             'address',
-            relatedEntity(selectCompanyState, 'companyId', 'company'),
+            relatedEntity(
+                selectCompanyState,
+                'companyId',
+                'company',
+            ),
         ),
     ),
 );
@@ -227,7 +260,15 @@ export const selectUserWithStrangePath = entityUser(
     entityUserCompany(
         entityCompanyStaff(),
         entityCompanyAdmin(),
-        entityCompanyAddress(entityAddressCompany(entityCompanyAdmin(entityUserCompany(entityCompanyStaff())))),
+        entityCompanyAddress(
+            entityAddressCompany(
+                entityCompanyAdmin(
+                    entityUserCompany(
+                        entityCompanyStaff(),
+                    ),
+                ),
+            ),
+        ),
     ),
 );
 ```
@@ -249,27 +290,29 @@ export const selectUser = rootEntity(
         'companyId',
         'company',
         company => new CompanyClass(company),
-        childrenEntities(selectUserState, 'companyId', 'staff'),
-        relatedEntity(selectUserState, 'adminId', 'admin'),
+        childrenEntities(
+            selectUserState,
+            'companyId',
+            'staff',
+        ),
+        relatedEntity(
+            selectUserState,
+            'adminId',
+            'admin',
+        ),
         relatedEntity(
             selectAddressState,
             'addressId',
             'address',
-            relatedEntity(selectCompanyState, 'companyId', 'company'),
+            relatedEntity(
+                selectCompanyState,
+                'companyId',
+                'company',
+            ),
         ),
     ),
 );
 ```
-
-## Real examples
-
-They are in the e2e directory of the repo.
-
--   [Angular 9 with usage of @ngrx/data](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular9/src/app/data)
--   [Angular 9 with usage of @ngrx/entity](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular9/src/app/entity)
-
-*   [Angular 8 with usage of @ngrx/data](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular8/src/app/data)
-*   [Angular 8 with usage of @ngrx/entity](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular8/src/app/entity)
 
 ## Warnings
 

@@ -2,16 +2,20 @@ import {Injectable} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {childrenEntities, relatedEntity, relationships, rootEntities, rootEntity} from 'ngrx-entity-relationship';
 import {map, switchMap} from 'rxjs/operators';
-import {DataHeroService} from './data-hero.service';
-import {DataVillainService} from './data-villain.service';
+import {HeroService} from './hero.service';
+import {VillainService} from './villain.service';
 
 @Injectable({providedIn: 'root'})
 export class SelectorService {
     constructor(
-        protected readonly hero: DataHeroService,
-        protected readonly villain: DataVillainService,
         protected readonly store: Store<unknown>,
+        protected readonly hero: HeroService,
+        protected readonly villain: VillainService,
     ) {}
+
+    public readonly selectHero = rootEntity(this.hero, relatedEntity(this.villain, 'villainId', 'villain'));
+    public readonly selectHeroes = rootEntities(this.selectHero);
+    public readonly heroes$ = this.hero.entities$.pipe(relationships(this.store, this.selectHeroes));
 
     public readonly selectHeroesWithVillainShort = rootEntities(
         rootEntity(this.hero, relatedEntity(this.villain, 'villainId', 'villain')),
