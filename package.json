@@ -1,6 +1,6 @@
 {
     "name": "ngrx-entity-relationship",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "description": "Selector of related entities for @ngrx/entity",
     "files": [
         "dist"
