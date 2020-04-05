@@ -8,7 +8,7 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build": "rm -Rf dist && tsc && mkdir -p e2e/angular8/node_modules/ngrx-entity-relationship && mkdir -p e2e/angular9/node_modules/ngrx-entity-relationship && rsync -rap ./dist/. ./e2e/angular8/node_modules/ngrx-entity-relationship/. && rsync -rap ./dist/. ./e2e/angular9/node_modules/ngrx-entity-relationship/.",
+        "build": "rm -Rf dist && tsc && mkdir -p e2e/angular{5,6,7,8,9}/node_modules/ngrx-entity-relationship && find e2e -type d -name 'angular*' -d 1 -exec rsync -av --delete ./dist/. {}/node_modules/ngrx-entity-relationship/. \\;",
         "lint": "tslint --config ./tslint.yaml -p ./tsconfig.json",
         "release": "standard-version",
         "test": "karma start"
