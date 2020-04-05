@@ -22,11 +22,11 @@ export function rootEntity<STORE, ENTITY>(
 export function rootEntity<STORE, ENTITY>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
     deside?: TRANSFORMER<ENTITY> | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
-    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
+    ...relationships: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
 ): HANDLER_ROOT_ENTITY<STORE, ENTITY, ID_TYPES> {
     let transformer: undefined | TRANSFORMER<ENTITY>;
     if (isBuiltInSelector<STORE, ENTITY>(deside)) {
-        relations = [deside, ...relations];
+        relationships = [deside, ...relationships];
     } else {
         transformer = deside;
     }
@@ -78,9 +78,9 @@ export function rootEntity<STORE, ENTITY>(
         cacheValue = {...featureState.entities[id]} as ENTITY;
 
         let incrementedPrefix = 0;
-        for (const relation of relations) {
+        for (const relationship of relationships) {
             incrementedPrefix += 1;
-            relation(`${incrementedPrefix}`, state, cacheRefs, cacheValue);
+            relationship(`${incrementedPrefix}`, state, cacheRefs, cacheValue);
         }
 
         cacheValue = transformer ? transformer(featureState.entities[id] as ENTITY) : cacheValue;
