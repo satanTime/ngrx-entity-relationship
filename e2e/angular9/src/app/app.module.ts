@@ -4,15 +4,15 @@ import {BrowserModule} from '@angular/platform-browser';
 import {EntityDataModule} from '@ngrx/data';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
-import {addressReducerFunc} from 'src/app/store/address/address.reducer';
-import {companyReducerFunc} from 'src/app/store/company/company.reducer';
-import {userReducerFunc} from 'src/app/store/user/user.reducer';
 
 import {AppComponent} from './app.component';
 import {entityConfig} from './data/data';
 import {DataComponent} from './data/data.component';
 import {DataInterceptor} from './data/data.interceptor';
 import {EntityComponent} from './entity/entity.component';
+import {addressReducerFunc} from './store/address/address.reducer';
+import {companyReducerFunc} from './store/company/company.reducer';
+import {userReducerFunc} from './store/user/user.reducer';
 
 @NgModule({
     declarations: [AppComponent, EntityComponent, DataComponent],
