@@ -32,7 +32,7 @@
     },
     "homepage": "https://github.com/satanTime/ngrx-entity-relationship#readme",
     "peerDependencies": {
-        "@ngrx/entity": ">=8.x <=9.x"
+        "@ngrx/entity": ">=6.x <=9.x"
     },
     "devDependencies": {
         "@angular/core": "^9.1.0",
