@@ -1,4 +1,4 @@
-import {ActionReducerMap, createFeatureSelector, createSelector} from '@ngrx/store';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {
     childEntity,
     childrenEntities,
@@ -12,14 +12,6 @@ import {
 import {selectAddressState} from 'src/app/store/address';
 import {selectCompanyState} from 'src/app/store/company';
 import * as fromUser from './user.reducer';
-
-export interface State {
-    users: fromUser.State;
-}
-
-export const reducers: ActionReducerMap<State> = {
-    users: fromUser.userReducerFunc,
-};
 
 export const selectUserState = createFeatureSelector<fromUser.State>('users');
 
