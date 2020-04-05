@@ -21,7 +21,7 @@ const companyReducer = createReducer(
         return adapter.addOne(company, state);
     }),
     on(CompanyActions.setCompany, (state, {company}) => {
-        return adapter.setOne(company, state);
+        return adapter.upsertOne(company, state);
     }),
     on(CompanyActions.upsertCompany, (state, {company}) => {
         return adapter.upsertOne(company, state);

@@ -21,7 +21,7 @@ const addressReducer = createReducer(
         return adapter.addOne(address, state);
     }),
     on(AddressActions.setAddress, (state, {address}) => {
-        return adapter.setOne(address, state);
+        return adapter.upsertOne(address, state);
     }),
     on(AddressActions.upsertAddress, (state, {address}) => {
         return adapter.upsertOne(address, state);

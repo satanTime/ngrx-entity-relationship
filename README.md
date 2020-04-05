@@ -108,7 +108,7 @@ store.pipe(
 );
 ```
 
-## The solution.
+## The solution
 
 To solve the issue we need `rootEntity`, `relatedEntity` and `rootEntities` from `ngrx-entity-relationship`.
 
@@ -130,24 +130,64 @@ export const selectUser = rootEntity(
 );
 export const selectUsers = rootEntities(
     // the same but for a list.
-    selectUserState,
-    relatedEntity(
-        selectCompanyState,
-        'companyId',
-        'company',
-        relatedEntity(selectAddressState, 'addressId', 'address'),
-    ),
+    selectUser,
 );
 ```
 
 Now we can use the selectors with the store.
 
 ```typescript
-this.store.select(selectUser, 'userId');
-this.store.select(selectUsers, ['user1', 'user2', 'user3']);
+store.select(selectUser, 'userId');
+store.select(selectUsers, ['user1', 'user2', 'user3']);
 ```
 
-## Additional examples.
+## `relationshiops` pipe operator
+
+The same code as above can be used with existing entities.
+
+```typescript
+// single entity
+store.pipe(
+    selectUserEntities,
+    map(entities => entities['1']),
+    relationships(store, selectUser),
+);
+// set of entities
+store.pipe(
+    selectUserEntities,
+    map(entities => Object.values(entities)),
+    relationships(store, selectUsers),
+);
+```
+
+## Support of `@ngrx/data`
+
+An entity service can be used to create a selector.
+
+```typescript
+@Injectable({providedIn: 'root'})
+export class SelectorService {
+    constructor(
+        protected readonly store: Store<any>,
+        protected readonly hero: HeroService,
+        protected readonly villain: VillainService,
+    ) {}
+
+    public readonly selectHero = rootEntity(this.hero, relatedEntity(this.villain, 'villainId', 'villain'));
+    public readonly selectHeroes = rootEntities(this.selectHero);
+    public readonly heroes$ = this.hero.entities$.pipe(relationships(this.store, this.selectHeroes));
+}
+```
+
+and then in a template
+
+```html
+<ng-container *ngFor="let hero of selectorService.heroes$ | async">
+    {{ hero.id }}-{{ hero.villain.id }}
+</ng-container>
+```
+
+## Additional examples
 
 Of course we can select as many relationships as we want until we have a field with a related id.
 Check how `childrenEntities` works. It gathers entities based on a parent field.
@@ -176,7 +216,6 @@ Check how `childrenEntitiesSelector` works. It gathers entities based on a paren
 
 ```typescript
 const entityUser = rootEntitySelector(selectUserState);
-const entityUsers = rootEntitiesSelector(selectUserState);
 const entityUserCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company');
 const entityCompanyStaff = childrenEntitiesSelector(selectUserState, 'companyId', 'staff');
 const entityCompanyAdmin = relatedEntitySelector(selectUserState, 'adminId', 'admin');
@@ -222,7 +261,17 @@ export const selectUser = rootEntity(
 );
 ```
 
-## Warnings.
+## Real examples
+
+They are in the e2e directory of the repo.
+
+-   [Angular 9 with usage of @ngrx/data](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular9/src/app/data)
+-   [Angular 9 with usage of @ngrx/entity](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular9/src/app/entity)
+
+*   [Angular 8 with usage of @ngrx/data](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular8/src/app/data)
+*   [Angular 8 with usage of @ngrx/entity](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular8/src/app/entity)
+
+## Warnings
 
 -   An entity from the same feature with the same id is a different object.
 
