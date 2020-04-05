@@ -42,30 +42,30 @@ export class EntityComponent implements OnInit {
     public title = 'app';
 
     public data$: Observable<{
-        user1: unknown;
-        user2: unknown;
-        users: unknown;
-        userIds: unknown;
-        userEntities: unknown;
-        userAll: unknown;
-        userTotal: unknown;
+        user1: any;
+        user2: any;
+        users: any;
+        userIds: any;
+        userEntities: any;
+        userAll: any;
+        userTotal: any;
 
-        company3: unknown;
-        company4: unknown;
-        companyIds: unknown;
-        companyEntities: unknown;
-        companyAll: unknown;
-        companyTotal: unknown;
+        company3: any;
+        company4: any;
+        companyIds: any;
+        companyEntities: any;
+        companyAll: any;
+        companyTotal: any;
 
-        address5: unknown;
-        address6: unknown;
-        addressIds: unknown;
-        addressEntities: unknown;
-        addressAll: unknown;
-        addressTotal: unknown;
+        address5: any;
+        address6: any;
+        addressIds: any;
+        addressEntities: any;
+        addressAll: any;
+        addressTotal: any;
     }>;
 
-    constructor(protected store: Store<unknown>) {}
+    constructor(protected store: Store<any>) {}
 
     public ngOnInit(): void {
         this.data$ = combineLatest([
