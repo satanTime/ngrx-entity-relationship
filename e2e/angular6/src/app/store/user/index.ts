@@ -124,7 +124,7 @@ export const selectSimpleUser = entityUser(
     entityUserCompany(
         entityCompanyStaff(),
         entityCompanyAdmin(),
-        entityCompanyAddress(entityAddressCompany(), entityCompanyAdmin()),
+        entityCompanyAddress(entityAddressCompany(entityCompanyAdmin())),
     ),
 );
 
@@ -132,6 +132,6 @@ export const selectSimpleTransformedUser = transformedUser(
     transformedUserCompany(
         transformedCompanyStaff(),
         transformedCompanyAdmin(),
-        transformedCompanyAddress(transformedAddressCompany(), transformedCompanyAdmin()),
+        transformedCompanyAddress(transformedAddressCompany(transformedCompanyAdmin())),
     ),
 );

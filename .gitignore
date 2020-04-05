@@ -1,4 +1,4 @@
-/dist
-/test-reports
+dist
+test-reports
 
 node_modules
