@@ -8,9 +8,20 @@ describe('workspace-project App', () => {
         page = new AppPage();
     });
 
-    it('should display welcome message', () => {
+    it('should display blocks', async () => {
         page.navigateTo();
-        expect(page.getTitleText()).toEqual('app app is running!');
+        const content = await page.getAppEntity();
+        expect(content).toContain('userAll:');
+        expect(content).toContain('user1:');
+        expect(content).toContain('user2:');
+
+        expect(content).toContain('companyAll:');
+        expect(content).toContain('company3:');
+        expect(content).toContain('company4:');
+
+        expect(content).toContain('addressAll:');
+        expect(content).toContain('address5:');
+        expect(content).toContain('address6:');
     });
 
     afterEach(async () => {

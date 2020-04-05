@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {rootEntityFlags} from 'ngrx-entity-relationship';
 import {combineLatest, Observable} from 'rxjs';
@@ -64,7 +64,7 @@ export class EntityComponent implements OnInit {
         addressTotal: unknown;
     }>;
 
-    constructor(protected store: Store<unknown>) {}
+    constructor(protected store: Store<unknown>, protected ngZone: NgZone, protected cd: ChangeDetectorRef) {}
 
     public ngOnInit(): void {
         this.data$ = combineLatest([
@@ -223,20 +223,24 @@ export class EntityComponent implements OnInit {
 
         rootEntityFlags.disabled = true;
 
-        setTimeout(() => {
-            rootEntityFlags.disabled = false;
-        }, 1500);
+        this.ngZone.runOutsideAngular(() => {
+            setTimeout(() => {
+                rootEntityFlags.disabled = false;
+                this.cd.detectChanges();
+            }, 1500);
 
-        setInterval(() => {
-            this.store.dispatch(
-                upsertAddress({
-                    address: {
-                        id: '6',
-                        name: `Address ${new Date().getTime()}`,
-                        companyId: '4',
-                    },
-                }),
-            );
-        }, 500);
+            setInterval(() => {
+                this.store.dispatch(
+                    upsertAddress({
+                        address: {
+                            id: '6',
+                            name: `Address ${new Date().getTime()}`,
+                            companyId: '4',
+                        },
+                    }),
+                );
+                this.cd.detectChanges();
+            }, 500);
+        });
     }
 }
