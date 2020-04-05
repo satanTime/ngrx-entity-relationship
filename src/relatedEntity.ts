@@ -4,8 +4,6 @@ import {
     HANDLER_RELATED_ENTITY,
     ID_FILTER_PROPS,
     ID_TYPES,
-    isBuiltInSelector,
-    TRANSFORMER,
     UNKNOWN,
     VALUES_FILTER_PROPS,
 } from './types';
@@ -23,43 +21,7 @@ export function relatedEntity<
     keyId: RELATED_KEY_IDS | RELATED_KEY_IDS_ARRAYS,
     keyValue: RELATED_KEY_VALUES | RELATED_KEY_VALUES_ARRAYS,
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
-): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY>;
-export function relatedEntity<
-    STORE,
-    PARENT_ENTITY,
-    RELATED_ENTITY,
-    RELATED_KEY_IDS extends ID_FILTER_PROPS<PARENT_ENTITY, ID_TYPES>,
-    RELATED_KEY_IDS_ARRAYS extends ID_FILTER_PROPS<PARENT_ENTITY, Array<ID_TYPES>>,
-    RELATED_KEY_VALUES extends VALUES_FILTER_PROPS<PARENT_ENTITY, RELATED_ENTITY>,
-    RELATED_KEY_VALUES_ARRAYS extends VALUES_FILTER_PROPS<PARENT_ENTITY, Array<RELATED_ENTITY>>
->(
-    featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
-    keyId: RELATED_KEY_IDS | RELATED_KEY_IDS_ARRAYS,
-    keyValue: RELATED_KEY_VALUES | RELATED_KEY_VALUES_ARRAYS,
-    transformer: TRANSFORMER<RELATED_ENTITY>,
-    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
-): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY>;
-export function relatedEntity<
-    STORE,
-    PARENT_ENTITY,
-    RELATED_ENTITY,
-    RELATED_KEY_IDS extends ID_FILTER_PROPS<PARENT_ENTITY, ID_TYPES>,
-    RELATED_KEY_IDS_ARRAYS extends ID_FILTER_PROPS<PARENT_ENTITY, Array<ID_TYPES>>,
-    RELATED_KEY_VALUES extends VALUES_FILTER_PROPS<PARENT_ENTITY, RELATED_ENTITY>,
-    RELATED_KEY_VALUES_ARRAYS extends VALUES_FILTER_PROPS<PARENT_ENTITY, Array<RELATED_ENTITY>>
->(
-    featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
-    keyId: RELATED_KEY_IDS | RELATED_KEY_IDS_ARRAYS,
-    keyValue: RELATED_KEY_VALUES | RELATED_KEY_VALUES_ARRAYS,
-    decide?: TRANSFORMER<RELATED_ENTITY> | HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>,
-    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
 ): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
-    let transformer: undefined | TRANSFORMER<RELATED_ENTITY>;
-    if (isBuiltInSelector<STORE, RELATED_ENTITY>(decide)) {
-        relations = [decide, ...relations];
-    } else {
-        transformer = decide;
-    }
     const funcSelector =
         typeof featureSelector === 'function' ? featureSelector : featureSelector.selectors.selectCollection;
 
@@ -104,9 +66,7 @@ export function relatedEntity<
             }
 
             // we have to clone it because we are going to update it with relations.
-            const cacheValue = transformer
-                ? transformer(stateItems[id] as RELATED_ENTITY)
-                : ({...stateItems[id]} as RELATED_ENTITY);
+            const cacheValue = {...stateItems[id]} as RELATED_ENTITY;
 
             cacheRefs.push([cachePrefix, funcSelector, id, stateItems[id], cacheValue]);
 

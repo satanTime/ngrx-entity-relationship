@@ -1,5 +1,5 @@
 import {childrenEntities} from './childrenEntities';
-import {FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, ID_FILTER_PROPS, ID_TYPES, TRANSFORMER} from './types';
+import {FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, ID_FILTER_PROPS, ID_TYPES} from './types';
 
 export function childrenEntitiesSelector<
     STORE,
@@ -13,25 +13,16 @@ export function childrenEntitiesSelector<
     featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
     keyId: RELATED_KEY_IDS,
     keyValue: RELATED_KEY_VALUES_ARRAYS,
-    transformer?: TRANSFORMER<RELATED_ENTITY>,
 ): (
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
 ) => HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
     const callback = (...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>) =>
-        transformer
-            ? childrenEntities<STORE, PARENT_ENTITY, RELATED_ENTITY, RELATED_KEY_IDS, any>(
-                  featureSelector,
-                  keyId,
-                  keyValue,
-                  transformer,
-                  ...relations,
-              )
-            : childrenEntities<STORE, PARENT_ENTITY, RELATED_ENTITY, RELATED_KEY_IDS, any>(
-                  featureSelector,
-                  keyId,
-                  keyValue,
-                  ...relations,
-              );
+        childrenEntities<STORE, PARENT_ENTITY, RELATED_ENTITY, RELATED_KEY_IDS, any>(
+            featureSelector,
+            keyId,
+            keyValue,
+            ...relations,
+        );
     callback.ngrxEntityRelationship = 'childrenEntitiesSelector';
 
     return callback;

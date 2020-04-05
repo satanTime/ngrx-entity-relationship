@@ -277,9 +277,9 @@ export const selectUserWithStrangePath = entityUser(
 
 ## Transform an entity to a class instance
 
-Every function of the library supports a `<T>(entity: T) => T` callback.
+`rootEntity` and `rootEntitySelector` of the library support a `<T>(entity: T) => T` callback.
 It should be specified as the latest argument, but before relationships definition.
-The transformation happens before relations.
+The transformation happens after all relationships.
 
 ```typescript
 const entityUser = rootEntitySelector(selectUserState, user => new UserClass(user));
@@ -291,7 +291,6 @@ export const selectUser = rootEntity(
         selectCompanyState,
         'companyId',
         'company',
-        company => new CompanyClass(company),
         childrenEntities(
             selectUserState,
             'companyId',

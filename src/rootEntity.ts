@@ -75,18 +75,17 @@ export function rootEntity<STORE, ENTITY>(
         }
 
         // we have to clone it because we are going to update it with relations.
-        cacheValue = transformer
-            ? transformer(featureState.entities[id] as ENTITY)
-            : ({...featureState.entities[id]} as ENTITY);
-
-        cacheRefs.push(['', funcSelector, id, featureState.entities[id], cacheValue]);
-        cacheMap.set(id, [cacheRefs, cacheValue]);
+        cacheValue = {...featureState.entities[id]} as ENTITY;
 
         let incrementedPrefix = 0;
         for (const relation of relations) {
             incrementedPrefix += 1;
             relation(`${incrementedPrefix}`, state, cacheRefs, cacheValue);
         }
+
+        cacheValue = transformer ? transformer(featureState.entities[id] as ENTITY) : cacheValue;
+        cacheRefs.push(['', funcSelector, id, featureState.entities[id], cacheValue]);
+        cacheMap.set(id, [cacheRefs, cacheValue]);
 
         return cacheValue;
     };
