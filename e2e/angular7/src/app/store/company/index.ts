@@ -1,13 +1,5 @@
-import {createSelector, createFeatureSelector, ActionReducerMap} from '@ngrx/store';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
 import * as fromCompany from './company.reducer';
-
-export interface State {
-    companies: fromCompany.State;
-}
-
-export const reducers: ActionReducerMap<State> = {
-    companies: fromCompany.companyReducerFunc,
-};
 
 export const selectCompanyState = createFeatureSelector<fromCompany.State>('companies');
 

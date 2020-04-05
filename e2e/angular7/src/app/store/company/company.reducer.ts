@@ -1,7 +1,6 @@
-import {Action} from '@ngrx/store';
-import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
+import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
+import {CompanyActionsUnion, CompanyActionTypes} from './company.actions';
 import {Company} from './company.model';
-import * as CompanyActions from './company.actions';
 
 export interface State extends EntityState<Company> {}
 
@@ -9,10 +8,12 @@ export const adapter: EntityAdapter<Company> = createEntityAdapter<Company>();
 
 export const initialState: State = adapter.getInitialState();
 
-export function companyReducerFunc(state: State | undefined = initialState, action: Action) {
-    if (action.type === CompanyActions.setCompany.type) {
-        return adapter.upsertOne((action as any).company, state);
+export function companyReducerFunc(state: State = initialState, action: CompanyActionsUnion) {
+    switch (action.type) {
+        case CompanyActionTypes.UPSERT:
+            return adapter.upsertOne(action.payload.company, state);
     }
+
     return state;
 }
 

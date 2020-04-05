@@ -1,5 +1,15 @@
-import {createAction, props} from '@ngrx/store';
+import {Action} from '@ngrx/store';
 
 import {Company} from './company.model';
 
-export const setCompany = createAction('[Company/API] Set Company', props<{company: Company}>());
+export enum CompanyActionTypes {
+    UPSERT = '[Company] Upsert Company',
+}
+
+export class UpsertCompany implements Action {
+    readonly type = CompanyActionTypes.UPSERT;
+
+    constructor(public payload: {company: Company}) {}
+}
+
+export type CompanyActionsUnion = UpsertCompany;
