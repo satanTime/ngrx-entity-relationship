@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.2](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.5.1...v0.5.2) (2020-04-05)
+
+### Features
+
+-   Support of Angular 6 ([2bc5cae](https://github.com/satanTime/ngrx-entity-relationship/commit/2bc5cae2217161f0970e94a0ebeb5a5314b41453)), closes [#4](https://github.com/satanTime/ngrx-entity-relationship/issues/4)
+
 ### [0.5.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.5.0...v0.5.1) (2020-04-05)
 
 ### Features
