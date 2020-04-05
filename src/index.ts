@@ -9,7 +9,6 @@ export * from './rootEntity';
 export * from './childEntitySelector';
 export * from './childrenEntitiesSelector';
 export * from './relatedEntitySelector';
-export * from './rootEntitiesSelector';
 export * from './rootEntitySelector';
 
 export * from './operators/relationships';
