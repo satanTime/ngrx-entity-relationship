@@ -1,12 +1,11 @@
-declare const window: unknown;
-declare const global: unknown;
+declare const window: any;
+declare const global: any;
 
-(window || (global as any))['ngrx-entity-relationship-rootEntityFlags'] = (window || (global as any))[
-    'ngrx-entity-relationship-rootEntityFlags'
-] || {
+// tslint:disable-next-line:no-typeof-undefined
+const local = typeof global === 'undefined' ? window : global;
+
+local['ngrx-entity-relationship-rootEntityFlags'] = local['ngrx-entity-relationship-rootEntityFlags'] || {
     disabled: false,
 };
 
-export const rootEntityFlags: {disabled: boolean} = (window || (global as any))[
-    'ngrx-entity-relationship-rootEntityFlags'
-];
+export const rootEntityFlags: {disabled: boolean} = local['ngrx-entity-relationship-rootEntityFlags'];

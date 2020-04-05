@@ -7,6 +7,7 @@ import {
     ID_TYPES,
     isBuiltInSelector,
     TRANSFORMER,
+    UNKNOWN,
 } from './types';
 
 export function rootEntity<STORE, ENTITY>(
@@ -32,11 +33,11 @@ export function rootEntity<STORE, ENTITY>(
     const funcSelector =
         typeof featureSelector === 'function' ? featureSelector : featureSelector.selectors.selectCollection;
 
-    const cacheMap = new Map<ID_TYPES, [HANDLER_CACHE<STORE, unknown>, unknown?]>();
+    const cacheMap = new Map<ID_TYPES, [HANDLER_CACHE<STORE, UNKNOWN>, UNKNOWN?]>();
 
     const callback = (state: STORE, id: ID_TYPES) => {
         const cacheData = cacheMap.get(id);
-        let cacheRefs: HANDLER_CACHE<STORE, unknown> = [];
+        let cacheRefs: HANDLER_CACHE<STORE, UNKNOWN> = [];
         let cacheValue: undefined | ENTITY;
         if (cacheData && cacheData[0]) {
             cacheRefs = cacheData[0];

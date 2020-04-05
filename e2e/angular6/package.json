@@ -10,6 +10,9 @@
         "e2e": "ng e2e"
     },
     "private": true,
+    "peerDependencies": {
+        "ngrx-entity-relationship": "*"
+    },
     "dependencies": {
         "@angular/animations": "^6.1.0",
         "@angular/common": "^6.1.0",
@@ -20,6 +23,8 @@
         "@angular/platform-browser": "^6.1.0",
         "@angular/platform-browser-dynamic": "^6.1.0",
         "@angular/router": "^6.1.0",
+        "@ngrx/entity": "^6.1.2",
+        "@ngrx/store": "^6.1.2",
         "core-js": "^2.5.4",
         "rxjs": "~6.2.0",
         "zone.js": "~0.8.26"
