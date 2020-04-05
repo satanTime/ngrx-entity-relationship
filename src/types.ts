@@ -1,20 +1,26 @@
 import {EntityState} from '@ngrx/entity';
-import {Selector} from '@ngrx/store/src/models';
+import {Observable} from 'rxjs';
+
+export type STORE_SELECTOR<T, V> = (state: T) => V;
+
+export type STORE_INSTANCE<T> = {
+    select<K, Props>(mapFn: (state: T, props: Props) => K, props: Props): Observable<K>;
+};
 
 export type FILTER_PROPS<Base, Condition> = {
     [Key in keyof Base]: Base[Key] extends Condition ? Key : never;
 }[keyof Base];
 
 export type FEATURE_SELECTOR<STORE, ENTITY> =
-    | Selector<STORE, EntityState<ENTITY>>
+    | STORE_SELECTOR<STORE, EntityState<ENTITY>>
     | {
           selectors: {
-              selectCollection: Selector<STORE, EntityState<ENTITY>>;
+              selectCollection: STORE_SELECTOR<STORE, EntityState<ENTITY>>;
           };
       };
 
 export type HANDLER_CACHE<STORE, ENTITY> = Array<
-    [string, Selector<STORE, EntityState<ENTITY>>, ID_TYPES | null, ENTITY?, ENTITY?]
+    [string, STORE_SELECTOR<STORE, EntityState<ENTITY>>, ID_TYPES | null, ENTITY?, ENTITY?]
 >;
 
 export type HANDLER_ROOT_ENTITY<S, E, I> = (state: S, id: I) => undefined | E;
@@ -39,5 +45,22 @@ export type VALUES_FILTER_PROPS<PARENT_ENTITY, RELATED_ENTITY> = NonNullable<
 export type TRANSFORMER<T> = (entity: T) => T;
 
 export const isBuiltInSelector = <STORE, ENTITY>(value: unknown): value is HANDLER_RELATED_ENTITY<STORE, ENTITY> => {
-    return !!value && (<any>value).ngrxEntityRelationship;
+    return value && (<any>value).ngrxEntityRelationship;
+};
+
+export const isHandlerRootEntity = <S, E, I>(value: unknown): value is HANDLER_ROOT_ENTITY<S, E, I> => {
+    return isBuiltInSelector(value) && value.ngrxEntityRelationship === 'rootEntity';
+};
+
+export const isFeatureSelector = <STORE, ENTITY>(value: unknown): value is FEATURE_SELECTOR<STORE, ENTITY> => {
+    return (
+        isSelector(value) ||
+        (typeof value === 'object' &&
+            typeof (<any>value).selectors === 'object' &&
+            isSelector((<any>value).selectors.selectCollection))
+    );
+};
+
+export const isSelector = <STORE, ENTITY>(value: unknown): value is STORE_SELECTOR<STORE, EntityState<ENTITY>> => {
+    return typeof value === 'function' && !isBuiltInSelector(value);
 };

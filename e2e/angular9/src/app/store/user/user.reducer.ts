@@ -21,7 +21,7 @@ const userReducer = createReducer(
         return adapter.addOne(user, state);
     }),
     on(UserActions.setUser, (state, {user}) => {
-        return adapter.setOne(user, state);
+        return adapter.upsertOne(user, state);
     }),
     on(UserActions.upsertUser, (state, {user}) => {
         return adapter.upsertOne(user, state);

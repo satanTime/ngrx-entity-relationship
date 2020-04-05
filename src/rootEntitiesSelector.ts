@@ -1,6 +1,9 @@
 import {rootEntities} from './rootEntities';
 import {FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, HANDLER_ROOT_ENTITIES, ID_TYPES, TRANSFORMER} from './types';
 
+/**
+ * @deprecated
+ */
 export function rootEntitiesSelector<STORE, ENTITY>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
     transformer?: TRANSFORMER<ENTITY>,
