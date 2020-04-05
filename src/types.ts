@@ -28,9 +28,15 @@ export type HANDLER_CACHE<STORE, ENTITY> = Array<
     | [string, STORE_SELECTOR<STORE, EntityState<ENTITY>>, ID_TYPES | null, ENTITY, ENTITY]
 >;
 
-export type HANDLER_ROOT_ENTITY<S, E, I> = (state: S, id: I) => undefined | E;
+export type HANDLER_ROOT_ENTITY<S, E, I> = {
+    (state: S, id: I): undefined | E;
+    ngrxEntityRelationship: string;
+};
 
-export type HANDLER_ROOT_ENTITIES<S, E, I> = (state: S, id: Array<I>) => Array<E>;
+export type HANDLER_ROOT_ENTITIES<S, E, I> = {
+    (state: S, id: Array<I>): Array<E>;
+    ngrxEntityRelationship: string;
+};
 
 export type HANDLER_RELATED_ENTITY<S, E> = {
     (cachePrefix: string, state: S, cacheRefs: HANDLER_CACHE<S, UNKNOWN>, source: E): void;
