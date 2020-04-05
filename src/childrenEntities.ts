@@ -18,7 +18,7 @@ export function childrenEntities<
     featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
     keyId: RELATED_KEY_IDS,
     keyValue: RELATED_KEY_VALUES_ARRAYS,
-    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
+    ...relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
 ): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
     const funcSelector =
         typeof featureSelector === 'function' ? featureSelector : featureSelector.selectors.selectCollection;
@@ -64,9 +64,9 @@ export function childrenEntities<
             cacheRefs.push([cachePrefix, funcSelector, id, stateItems[id], cacheValue]);
 
             let incrementedPrefix = 0;
-            for (const relation of relations) {
+            for (const relationship of relationships) {
                 incrementedPrefix += 1;
-                relation(`${cachePrefix}${incrementedPrefix}`, state, cacheRefs, cacheValue);
+                relationship(`${cachePrefix}${incrementedPrefix}`, state, cacheRefs, cacheValue);
             }
             relatedItems.push(cacheValue);
         }
