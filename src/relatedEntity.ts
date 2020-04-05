@@ -6,6 +6,7 @@ import {
     ID_TYPES,
     isBuiltInSelector,
     TRANSFORMER,
+    UNKNOWN,
     VALUES_FILTER_PROPS,
 } from './types';
 
@@ -65,7 +66,7 @@ export function relatedEntity<
     const callback = (
         cachePrefix: string,
         state: STORE,
-        cacheRefs: HANDLER_CACHE<STORE, unknown>,
+        cacheRefs: HANDLER_CACHE<STORE, UNKNOWN>,
         source: PARENT_ENTITY,
     ) => {
         // a bit magic to relax generic types.
