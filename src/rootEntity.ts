@@ -83,7 +83,7 @@ export function rootEntity<STORE, ENTITY>(
             relationship(`${incrementedPrefix}`, state, cacheRefs, cacheValue);
         }
 
-        cacheValue = transformer ? transformer(featureState.entities[id] as ENTITY) : cacheValue;
+        cacheValue = transformer ? transformer(cacheValue) : cacheValue;
         cacheRefs.push(['', funcSelector, id, featureState.entities[id], cacheValue]);
         cacheMap.set(id, [cacheRefs, cacheValue]);
 
