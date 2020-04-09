@@ -43,7 +43,7 @@
         "angular"
     ],
     "author": "Michael Gusev <m@sudo.eu>",
-    "license": "MIT",
+    "license": "Apache-2.0",
     "bugs": {
         "url": "https://github.com/satanTime/ngrx-entity-relationship/issues"
     },

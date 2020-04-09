@@ -1,7 +1,8 @@
 .editorconfig
 .gitignore
 .prettierignore
+LICENSE
+README.md
 package-lock.json
 
 node_modules
-README.md
