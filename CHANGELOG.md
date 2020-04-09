@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.2](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.6.1...v0.6.2) (2020-04-09)
+
+### Bug Fixes
+
+-   transformer gets the built value ([6971f5c](https://github.com/satanTime/ngrx-entity-relationship/commit/6971f5c7835f22154a27d1007ee34b882668b8ae))
+
 ### [0.6.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.6.0...v0.6.1) (2020-04-05)
 
 ## [0.6.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.5.3...v0.6.0) (2020-04-05)
