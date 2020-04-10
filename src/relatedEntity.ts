@@ -50,16 +50,6 @@ export function relatedEntity<
         }
 
         for (const id of relatedIds) {
-            const cacheRef = cacheRefs.find(
-                ([prefix, selector, index]) => prefix === cachePrefix && selector === funcSelector && index === id,
-            );
-            if (cacheRef) {
-                if (cacheRef.length) {
-                    relatedItems.push(cacheRef[3] as RELATED_ENTITY);
-                }
-                continue;
-            }
-
             if (!stateItems[id]) {
                 cacheRefs.push([cachePrefix, funcSelector, id, stateItems[id]]);
                 continue;
@@ -73,7 +63,7 @@ export function relatedEntity<
             let incrementedPrefix = 0;
             for (const relationship of relationships) {
                 incrementedPrefix += 1;
-                relationship(`${cachePrefix}${incrementedPrefix}`, state, cacheRefs, cacheValue);
+                relationship(`${cachePrefix}:${incrementedPrefix}`, state, cacheRefs, cacheValue);
             }
             relatedItems.push(cacheValue);
         }

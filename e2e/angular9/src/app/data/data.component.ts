@@ -34,6 +34,5 @@ export class DataComponent implements OnInit {
             id: '14',
             villainName: 'Villain 4',
         });
-        this.heroService.getAll();
     }
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {childrenEntities, relatedEntity, relationships, rootEntities, rootEntity} from 'ngrx-entity-relationship';
-import {map, switchMap} from 'rxjs/operators';
+import {map, switchMap, tap} from 'rxjs/operators';
 import {HeroService} from './hero.service';
 import {VillainService} from './villain.service';
 
@@ -55,6 +55,7 @@ export class SelectorService {
     );
 
     public readonly villainsWithHeroesShort$ = this.villain.entities$.pipe(
+        tap(v => console.log(v)),
         relationships(this.store, this.selectVillainWithHeroShort),
     );
 }
