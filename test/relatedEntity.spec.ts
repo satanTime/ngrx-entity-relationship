@@ -23,7 +23,7 @@ describe('relatedEntity', () => {
         );
     });
 
-    it('returns undefined if the related id is falsy', () => {
+    it('does not set anything if the related id is falsy', () => {
         const state = {
             feature: createEntityAdapter<Entity>().getInitialState(),
         };
@@ -37,13 +37,17 @@ describe('relatedEntity', () => {
             id: 'id1',
             name: 'name1',
         };
-        expect(selector('', state, [], entity)).toBeUndefined();
+
+        selector('', state, [], entity);
+        expect(entity.parent).toBeUndefined();
 
         entity.parentId = '';
-        expect(selector('', state, [], entity)).toBeUndefined();
+        selector('', state, [], entity);
+        expect(entity.parent).toBeUndefined();
 
         entity.parentId = 0;
-        expect(selector('', state, [], entity)).toBeUndefined();
+        selector('', state, [], entity);
+        expect(entity.parent).toBeUndefined();
     });
 
     it('sets the related entity if the related id field has primitive type', () => {
@@ -234,8 +238,13 @@ describe('relatedEntity', () => {
         };
 
         const cache = [];
-        selector('rand', state, cache, entity);
-        expect(cache).toEqual([['rand', featureSelector, 'id2', state.feature.entities.id2, entity.parent]]);
+        selector('randRelatedEntity', state, cache, entity);
+        expect(cache[0].length).toBe(5);
+        expect(cache[0][0]).toBe('randRelatedEntity');
+        expect(cache[0][1]).toBe(featureSelector);
+        expect(cache[0][2]).toBe('id2');
+        expect(cache[0][3]).toBe(state.feature.entities.id2);
+        expect(cache[0][4]).toBe(entity.parent);
     });
 
     it('sets the cache when the related entity does not exist', () => {
@@ -256,8 +265,12 @@ describe('relatedEntity', () => {
         };
 
         const cache = [];
-        selector('rand', state, cache, entity);
-        expect(cache).toEqual([['rand', featureSelector, 'id2', undefined]]);
+        selector('randRelatedEntity', state, cache, entity);
+        expect(cache[0].length).toBe(4);
+        expect(cache[0][0]).toBe('randRelatedEntity');
+        expect(cache[0][1]).toBe(featureSelector);
+        expect(cache[0][2]).toBe('id2');
+        expect(cache[0][3]).toBe(undefined);
     });
 
     it('calls relationships with an incrementing prefix and arguments', () => {
@@ -296,9 +309,9 @@ describe('relatedEntity', () => {
         };
 
         const cache = [];
-        selector('rand1', state, cache, entity);
-        expect(rel1).toHaveBeenCalledWith('rand1:1', state, cache, entity.parent);
-        expect(rel2).toHaveBeenCalledWith('rand1:2', state, cache, entity.parent);
+        selector('randRelatedEntity', state, cache, entity);
+        expect(rel1).toHaveBeenCalledWith('randRelatedEntity:1', state, cache, entity.parent);
+        expect(rel2).toHaveBeenCalledWith('randRelatedEntity:2', state, cache, entity.parent);
     });
 
     it('supports EntityCollectionService as a selector', () => {

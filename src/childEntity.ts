@@ -30,48 +30,31 @@ export function childEntity<
         source: PARENT_ENTITY,
     ) => {
         // a bit magic to relax generic types.
-        const relatedIds: Array<ID_TYPES> = [];
+        let relatedId: undefined | ID_TYPES;
         const stateFeature = funcSelector(state);
         const stateItems = stateFeature ? stateFeature.entities : {};
         for (const stateItem of Object.values(stateItems)) {
             if (!stateItem || stateItem[keyId] !== (source as any).id) {
                 continue;
             }
-            relatedIds.push((stateItem as any).id);
+            relatedId = (stateItem as any).id;
+            break;
+        }
+        if (!relatedId) {
+            cacheRefs.push([cachePrefix, funcSelector, null, stateItems]);
+            return;
         }
 
-        const relatedItems: Array<RELATED_ENTITY> = [];
+        // we have to clone it because we are going to update it with relations.
+        const cacheValue = {...stateItems[relatedId]} as RELATED_ENTITY;
+        cacheRefs.push([cachePrefix, funcSelector, relatedId, stateItems[relatedId], cacheValue]);
 
-        for (const id of relatedIds) {
-            const cacheRef = cacheRefs.find(
-                ([prefix, selector, index]) => prefix === cachePrefix && selector === funcSelector && index === id,
-            );
-            if (cacheRef) {
-                if (cacheRef.length) {
-                    relatedItems.push(cacheRef[3] as RELATED_ENTITY);
-                }
-                continue;
-            }
-
-            if (!stateItems[id]) {
-                cacheRefs.push([cachePrefix, funcSelector, id, stateItems[id]]);
-                continue;
-            }
-
-            // we have to clone it because we are going to update it with relations.
-            const cacheValue = {...stateItems[id]} as RELATED_ENTITY;
-
-            cacheRefs.push([cachePrefix, funcSelector, id, stateItems[id], cacheValue]);
-
-            let incrementedPrefix = 0;
-            for (const relationship of relationships) {
-                incrementedPrefix += 1;
-                relationship(`${cachePrefix}${incrementedPrefix}`, state, cacheRefs, cacheValue);
-            }
-            relatedItems.push(cacheValue);
+        let incrementedPrefix = 0;
+        for (const relationship of relationships) {
+            incrementedPrefix += 1;
+            relationship(`${cachePrefix}:${incrementedPrefix}`, state, cacheRefs, cacheValue);
         }
-
-        source[keyValue] = relatedItems[0] as any;
+        source[keyValue] = (cacheValue as any) as PARENT_ENTITY[RELATED_KEY_VALUES];
     };
     callback.ngrxEntityRelationship = 'childEntity';
 
