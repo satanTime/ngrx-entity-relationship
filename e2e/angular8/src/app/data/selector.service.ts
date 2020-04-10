@@ -1,7 +1,16 @@
 import {Injectable} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {childrenEntities, relatedEntity, relationships, rootEntities, rootEntity} from 'ngrx-entity-relationship';
-import {map, switchMap} from 'rxjs/operators';
+import {
+    childEntity,
+    childrenEntities,
+    relatedEntity,
+    relationships,
+    rootEntities,
+    rootEntity,
+} from 'ngrx-entity-relationship';
+import {map, switchMap, tap} from 'rxjs/operators';
+import {HeroUuidService} from 'src/app/data/hero-uuid.service';
+import {VillainUuidService} from 'src/app/data/villain-uuid.service';
 import {HeroService} from './hero.service';
 import {VillainService} from './villain.service';
 
@@ -11,6 +20,8 @@ export class SelectorService {
         protected readonly store: Store<unknown>,
         protected readonly hero: HeroService,
         protected readonly villain: VillainService,
+        protected readonly heroUuid: HeroUuidService,
+        protected readonly villainUuid: VillainUuidService,
     ) {}
 
     public readonly selectHero = rootEntity(this.hero, relatedEntity(this.villain, 'villainId', 'villain'));
@@ -57,4 +68,23 @@ export class SelectorService {
     public readonly villainsWithHeroesShort$ = this.villain.entities$.pipe(
         relationships(this.store, this.selectVillainWithHeroShort),
     );
+
+    public readonly uuid$ = this.heroUuid.entities$;
+
+    public readonly selectHeroesUuid = rootEntities(
+        rootEntity(
+            this.heroUuid,
+            relatedEntity(
+                this.villainUuid,
+                'villainId',
+                'villain',
+                childEntity(this.heroUuid, 'villainId', 'hero'),
+                childrenEntities(this.heroUuid, 'villainId', 'heroes'),
+            ),
+        ),
+    );
+
+    public readonly uuidRel$ = this.heroUuid.entities$.pipe(relationships(this.store, this.selectHeroesUuid));
+
+    public readonly store$ = this.store.pipe(tap(v => console.log(v)));
 }

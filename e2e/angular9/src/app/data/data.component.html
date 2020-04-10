@@ -1,3 +1,21 @@
+<div>
+    <h2>UUID</h2>
+    {{ selector.uuid$ | async | json }}
+</div>
+<hr />
+
+<div>
+    <h2>UUID Rel</h2>
+    {{ selector.uuidRel$ | async | json }}
+</div>
+<hr />
+
+<div>
+    <h2>Store</h2>
+    {{ selector.store$ | async | json }}
+</div>
+<hr />
+
 <div>Hero loading: {{ heroService.loading$ | async | json }}</div>
 <div *ngFor="let item of heroService.entities$ | async">Hero: {{ item.heroName }}</div>
 <div>Heroes: {{ selector.heroesWithVillain$ | async | json }}</div>
