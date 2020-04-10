@@ -16,8 +16,8 @@ export function relationships<STORE, ENTITY>(
 export function relationships<STORE, SET, TYPES>(
     store: STORE_INSTANCE<STORE>,
     selector: HANDLER_ROOT_ENTITY<STORE, SET, TYPES>,
-): (next: Observable<SET>) => Observable<SET> {
-    return (next: Observable<SET>): Observable<SET> =>
+): (next: Observable<SET>) => Observable<undefined | SET> {
+    return next =>
         next.pipe(
             switchMap(input => {
                 const result = of(input);
@@ -32,7 +32,6 @@ export function relationships<STORE, SET, TYPES>(
                             return (<any>set).id as TYPES;
                         }),
                         switchMap(id => store.select(selector, id)),
-                        map(output => (output ? output : input)),
                     ),
                 );
             }),
