@@ -69,9 +69,11 @@ export function relatedEntity<
         }
 
         if (Array.isArray(source[keyId])) {
-            source[keyValue] = relatedItems as any;
+            source[keyValue] = (relatedItems as any) as PARENT_ENTITY[RELATED_KEY_VALUES] &
+                PARENT_ENTITY[RELATED_KEY_VALUES_ARRAYS];
         } else if (relatedItems) {
-            source[keyValue] = relatedItems[0] as any;
+            source[keyValue] = (relatedItems[0] as any) as PARENT_ENTITY[RELATED_KEY_VALUES] &
+                PARENT_ENTITY[RELATED_KEY_VALUES_ARRAYS];
         }
     };
     callback.ngrxEntityRelationship = 'relatedEntity';

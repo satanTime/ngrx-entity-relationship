@@ -21,7 +21,7 @@ describe('childEntity', () => {
         );
     });
 
-    it('does not set anything if there is not child entity', () => {
+    it('does not set anything if there is no child entity', () => {
         const state = {
             feature: createEntityAdapter<Entity>().getInitialState(),
         };
@@ -104,11 +104,6 @@ describe('childEntity', () => {
 
         selector('', state, [], entity);
         expect(entity.child).not.toBe(state.feature.entities.id2);
-        expect(entity.child).toEqual({
-            id: 'id2',
-            name: 'name2',
-            parentId: 'id1',
-        });
     });
 
     it('sets the cache when the related entity does not exist', () => {
@@ -129,6 +124,7 @@ describe('childEntity', () => {
 
         const cache = [];
         selector('randChildEntity', state, cache, entity);
+        expect(cache.length).toBe(1);
         expect(cache[0].length).toBe(4);
         expect(cache[0][0]).toBe('randChildEntity');
         expect(cache[0][1]).toBe(featureSelector);
@@ -163,6 +159,7 @@ describe('childEntity', () => {
 
         const cache = [];
         selector('randChildEntity', state, cache, entity);
+        expect(cache.length).toBe(1);
         expect(cache[0].length).toBe(5);
         expect(cache[0][0]).toBe('randChildEntity');
         expect(cache[0][1]).toBe(featureSelector);
