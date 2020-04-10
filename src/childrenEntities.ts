@@ -43,21 +43,6 @@ export function childrenEntities<
         const relatedItems: Array<RELATED_ENTITY> = [];
 
         for (const id of relatedIds) {
-            const cacheRef = cacheRefs.find(
-                ([prefix, selector, index]) => prefix === cachePrefix && selector === funcSelector && index === id,
-            );
-            if (cacheRef) {
-                if (cacheRef.length) {
-                    relatedItems.push(cacheRef[3] as RELATED_ENTITY);
-                }
-                continue;
-            }
-
-            if (!stateItems[id]) {
-                cacheRefs.push([cachePrefix, funcSelector, id, stateItems[id]]);
-                continue;
-            }
-
             // we have to clone it because we are going to update it with relations.
             const cacheValue = {...stateItems[id]} as RELATED_ENTITY;
 
@@ -66,13 +51,13 @@ export function childrenEntities<
             let incrementedPrefix = 0;
             for (const relationship of relationships) {
                 incrementedPrefix += 1;
-                relationship(`${cachePrefix}${incrementedPrefix}`, state, cacheRefs, cacheValue);
+                relationship(`${cachePrefix}:${incrementedPrefix}`, state, cacheRefs, cacheValue);
             }
             relatedItems.push(cacheValue);
         }
 
         cacheRefs.push([cachePrefix, funcSelector, null, stateItems]);
-        source[keyValue] = relatedItems as any;
+        source[keyValue] = (relatedItems as any) as PARENT_ENTITY[RELATED_KEY_VALUES_ARRAYS];
     };
     callback.ngrxEntityRelationship = 'childrenEntities';
 
