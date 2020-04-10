@@ -56,7 +56,7 @@ describe('childEntitySelector', () => {
         };
 
         const cache = [];
-        selector('randChildEntitySelector', state, cache, entity);
+        selector('', state, cache, entity);
         expect(entity.child).toEqual(
             jasmine.objectContaining({
                 rel1: true,
