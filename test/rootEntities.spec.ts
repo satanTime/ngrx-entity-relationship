@@ -1,4 +1,3 @@
-import createSpy = jasmine.createSpy;
 import {rootEntities, rootEntityFlags} from '../src';
 import {HANDLER_ROOT_ENTITY, ID_TYPES} from '../src/types';
 
@@ -16,7 +15,7 @@ describe('rootEntities', () => {
     });
 
     it('marks callback with ngrxEntityRelationship key', () => {
-        const actual = rootEntities(createSpy() as any);
+        const actual = rootEntities(jasmine.createSpy() as any);
         expect(actual).toEqual(jasmine.any(Function));
         expect(actual).toEqual(
             jasmine.objectContaining({
