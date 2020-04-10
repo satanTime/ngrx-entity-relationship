@@ -1,4 +1,4 @@
-import {createEntityAdapter, EntityState} from '@ngrx/entity';
+import {createEntityAdapter} from '@ngrx/entity';
 
 import {rootEntitySelector} from '../src';
 import {HANDLER_RELATED_ENTITY} from '../src/types';
@@ -23,7 +23,7 @@ describe('rootEntitySelector', () => {
     });
 
     it('calls rootEntity with transformer and relations', () => {
-        const state: {feature: EntityState<Entity>} = {
+        const state = {
             feature: createEntityAdapter<Entity>().getInitialState(),
         };
 
@@ -60,7 +60,7 @@ describe('rootEntitySelector', () => {
     });
 
     it('calls rootEntity with relations only', () => {
-        const state: {feature: EntityState<Entity>} = {
+        const state = {
             feature: createEntityAdapter<Entity>().getInitialState(),
         };
 

@@ -31,7 +31,8 @@ export function relationships<STORE, SET, TYPES>(
                             }
                             return (<any>set).id as TYPES;
                         }),
-                        switchMap(id => store.select(selector, id).pipe(map(output => (output ? output : input)))),
+                        switchMap(id => store.select(selector, id)),
+                        map(output => (output ? output : input)),
                     ),
                 );
             }),

@@ -221,14 +221,7 @@ export class EntityComponent implements OnInit {
             }),
         );
 
-        rootEntityFlags.disabled = true;
-
         this.ngZone.runOutsideAngular(() => {
-            setTimeout(() => {
-                rootEntityFlags.disabled = false;
-                this.cd.detectChanges();
-            }, 1500);
-
             setInterval(() => {
                 this.store.dispatch(
                     upsertAddress({

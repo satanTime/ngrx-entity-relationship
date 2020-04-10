@@ -28,7 +28,8 @@
         "e2e": "npm run i:a && npm run spread && npm run e2e:a",
         "lint": "tslint --config ./tslint.yaml -p ./tsconfig.json",
         "release": "standard-version",
-        "test": "karma start"
+        "test": "karma start",
+        "test:debug": "karma start --no-single-run --auto-watch --browsers=Chrome"
     },
     "repository": {
         "type": "git",

@@ -2,9 +2,7 @@ process.on('infrastructure_error', error => {
     console.error('infrastructure_error', error);
 });
 
-if (!process.env.CHROME_BIN) {
-    process.env.CHROME_BIN = require('puppeteer').executablePath();
-}
+process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 module.exports = function (config) {
     config.set({
@@ -22,10 +20,9 @@ module.exports = function (config) {
         logLevel: config.LOG_INFO,
         autoWatch: false,
         singleRun: true,
-        browsers: ['Chrome'],
+        browsers: ['ChromeHeadless'],
         customLaunchers: {
-            Chrome: {
-                base: 'ChromeHeadless',
+            ChromeHeadless: {
                 flags: ['--no-sandbox'],
             },
         },
