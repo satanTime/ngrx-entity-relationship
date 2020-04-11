@@ -286,7 +286,21 @@ const address = rootEntity(
 
 ### childrenEntities function
 
-TBD
+`childrenEntities(selector, keyId, keyValue, ...relationships)` is a relationship function that defines a relationship based on data in its related entity.
+
+`selector` is a selector that works with the related entity.
+
+`keyId` is a field in the related entity that points to the parent entity. (Company.id -> User.companyId)
+
+`keyValue` an array of related entities will be set to this field in the parent entity.
+
+`relationships` is an optional argument that is produced by a relationship function.
+```typescript
+const company = rootEntity(
+    rootRelector,
+    childrenEntities(selectUserState, 'companyId', 'staff'),
+);
+```
 
 ### rootEntitySelector function
 
