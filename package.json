@@ -1,7 +1,7 @@
 {
     "name": "ngrx-entity-relationship",
     "version": "0.7.0",
-    "description": "Selector of related entities for @ngrx/entity",
+    "description": "Selector of related entities for @ngrx/entity and @ngrx/data",
     "files": [
         "dist"
     ],
@@ -42,10 +42,17 @@
     "keywords": [
         "ngrx",
         "ngrx-entity",
+        "ngrx-data",
+        "ngrx-relationships",
         "entities",
         "relationship",
+        "relationships",
         "related",
-        "angular"
+        "angular",
+        "angular6",
+        "angular7",
+        "angular8",
+        "angular9"
     ],
     "author": "Michael Gusev <m@sudo.eu>",
     "license": "Apache-2.0",
