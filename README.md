@@ -59,7 +59,6 @@ export interface Address {
     country: string;
 
     company?: Company;
-    companyId?: string;
 }
 ```
 
@@ -81,7 +80,6 @@ const user = {
             street: 'Main st.',
             city: 'Town',
             country: 'Land',
-            companyId: '1',
         },
     },
 };
@@ -249,9 +247,13 @@ rootEntity(
 
 ### relatedEntity function
 
-`relatedEntity(selector, keyId, keyValue, ...relationships)` is a relationship function that defined a relationship based on data in its parent entity.
+`relatedEntity(selector, keyId, keyValue, ...relationships)` is a relationship function that defines a relationship based on data in its parent entity.
 
 `selector` is a selector that works with the related entity.
+
+`keyId` is a field in the parent entity that points to the related entity. (User.companyId -> Company.id)
+
+`keyValue` an related entity will be set to this field in the parent entity.
 
 An example is the `User`, its model has `company`, `companyId`
 and there is `selectCompanyState` that returns `EntityState<Company>`.
@@ -266,7 +268,21 @@ const user = rootEntity(
 
 ### childEntity function
 
-TBD
+`childEntity(selector, keyId, keyValue, ...relationships)` is a relationship function that defines a relationship based on data in its related entity.
+
+`selector` is a selector that works with the related entity.
+
+`keyId` is a field in the related entity that points to the parent entity. (Address.id -> Company.addressId)
+
+`keyValue` an related entity will be set to this field in the parent entity.
+
+`relationships` is an optional argument that is produced by a relationship function.
+```typescript
+const address = rootEntity(
+    rootRelector,
+    childEntity(selectCompanyState, 'addressId', 'company'),
+);
+```
 
 ### childrenEntities function
 
@@ -355,9 +371,9 @@ export const selectUser = rootEntity(
             selectAddressState,
             'addressId',
             'address',
-            relatedEntity(
+            childEntity(
                 selectCompanyState,
-                'companyId',
+                'addressId',
                 'company',
             ),
         ),
@@ -374,7 +390,7 @@ const entityUserCompany = relatedEntitySelector(selectCompanyState, 'companyId',
 const entityCompanyStaff = childrenEntitiesSelector(selectUserState, 'companyId', 'staff');
 const entityCompanyAdmin = relatedEntitySelector(selectUserState, 'adminId', 'admin');
 const entityCompanyAddress = relatedEntitySelector(selectAddressState, 'addressId', 'address');
-const entityAddressCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company');
+const entityAddressCompany = childEntitySelector(selectCompanyState, 'addressId', 'company');
 
 export const selectUserWithCompany = entityUser(entityUserCompany());
 export const selectUserWithStrangePath = entityUser(
@@ -424,9 +440,9 @@ export const selectUser = rootEntity(
             selectAddressState,
             'addressId',
             'address',
-            relatedEntity(
+            childEntity(
                 selectCompanyState,
-                'companyId',
+                'addressId',
                 'company',
             ),
         ),
