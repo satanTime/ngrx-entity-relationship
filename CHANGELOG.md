@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.6.3...v0.7.0) (2020-04-11)
+
+### Features
+
+-   support of all e2e tests on CI ([937564f](https://github.com/satanTime/ngrx-entity-relationship/commit/937564f5a9bf85a08fc5a5fe55891c39159e62dd))
+-   support of selectId from ngrx/data ([1803fb0](https://github.com/satanTime/ngrx-entity-relationship/commit/1803fb09cf37765d6421871a34de40a18bc2c222)), closes [#2](https://github.com/satanTime/ngrx-entity-relationship/issues/2)
+
+### Bug Fixes
+
+-   package.json scripts ([b09c9ce](https://github.com/satanTime/ngrx-entity-relationship/commit/b09c9ce5a7a9c1225a63d36b4e4e9c4de45b918a))
+-   removal of references to the original src ([cb1d7c9](https://github.com/satanTime/ngrx-entity-relationship/commit/cb1d7c9df7cc2860dd8f3f6897900db7310f956b))
+
 ### [0.6.3](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.6.2...v0.6.3) (2020-04-10)
 
 ### [0.6.2](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.6.1...v0.6.2) (2020-04-09)
