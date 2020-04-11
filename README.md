@@ -255,6 +255,8 @@ rootEntity(
 
 `keyValue` an related entity will be set to this field in the parent entity.
 
+> if `keyId` is an array of ids then `keyValue` has to be an array of related entities.
+
 An example is the `User`, its model has `company`, `companyId`
 and there is `selectCompanyState` that returns `EntityState<Company>`.
 ```typescript
