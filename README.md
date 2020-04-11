@@ -234,7 +234,7 @@ const selector3 = {
 
 `rootEntity(selector, transformer?, ...relationships)` is an entry point function to create a selector for relationships.
 
-`selector` is a selector that works with the root entity.
+`selector` is a selector that works with a root entity.
 
 `transformer` is an optional function that can be useful when we need a
 post processing transformation, for example to a call instance.
@@ -251,7 +251,7 @@ rootEntity(
 
 `relatedEntity(selector, keyId, keyValue, ...relationships)` is a relationship function that defines a relationship based on data in its parent entity.
 
-`selector` is a selector that works with the related entity.
+`selector` is a selector that works with a related entity.
 
 `keyId` is a field in the parent entity that points to the related entity. (User.companyId -> Company.id)
 
@@ -274,7 +274,7 @@ const user = rootEntity(
 
 `childEntity(selector, keyId, keyValue, ...relationships)` is a relationship function that defines a relationship based on data in its related entity.
 
-`selector` is a selector that works with the related entity.
+`selector` is a selector that works with a related entity.
 
 `keyId` is a field in the related entity that points to the parent entity. (Address.id -> Company.addressId)
 
@@ -292,7 +292,7 @@ const address = rootEntity(
 
 `childrenEntities(selector, keyId, keyValue, ...relationships)` is a relationship function that defines a relationship based on data in its related entity.
 
-`selector` is a selector that works with the related entity.
+`selector` is a selector that works with a related entity.
 
 `keyId` is a field in the related entity that points to the parent entity. (Company.id -> User.companyId)
 
@@ -311,7 +311,7 @@ const company = rootEntity(
 `rootEntitySelector(selector, transformer?)` is a function to produce an entry point function.
 The goal here is to simply the process of the selectors creation.
 
-`selector` is a selector that works with the root entity.
+`selector` is a selector that works with a root entity.
 
 `transformer` is the same as in `rootEntity`.
 
@@ -325,7 +325,30 @@ const user2 = rootEntity(selector);
 
 ### relatedEntitySelector function
 
-TBD
+`relatedEntitySelector(selector, keyId, keyValue)` is a function to produce a relationship function.
+
+`selector` is a selector that works with a related entity.
+
+`keyId` is a field in the parent entity that points to the related entity. (User.companyId -> Company.id)
+
+`keyValue` an related entity will be set to this field in the parent entity.
+```typescript
+const userSelector = rootEntitySelector(userSelector);
+const userCompanySelector = relatedEntitySelector(companySelector, 'companyId', 'company');
+
+const user1 = userSelector(
+    userCompanySelector(),
+);
+// the same as.
+const user2 = rootEntity(
+    userSelector,
+    relatedEntity(
+        companySelector,
+        'companyId',
+        'company',
+    ),
+);
+```
 
 ### childEntitySelector function
 
