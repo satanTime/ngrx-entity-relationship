@@ -6,22 +6,78 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                  key: dependency-cache-{{ checksum "package-lock.json" }}
+                  key: root-cache-{{ checksum "package-lock.json" }}
             - run:
-                  name: install-dependencies
+                  name: install-root-dependencies
                   command: npm install
+
             - save_cache:
-                  key: dependency-cache-{{ checksum "package-lock.json" }}
+                  key: root-cache-{{ checksum "package-lock.json" }}
                   paths:
                       - ./node_modules
             - run:
-                  name: angular-test
+                  name: root-lint
+                  command: npm run lint
+            - run:
+                  name: root-test
                   command: npm run test -- --single-run --no-progress
             - store_test_results:
                   path: ./test-reports
             - store_artifacts:
                   path: ./test-reports/coverage
                   prefix: coverage
+
+            - restore_cache:
+                  key: a6-cache-{{ checksum "e2e/angular6/package-lock.json" }}
+            - restore_cache:
+                  key: a7-cache-{{ checksum "e2e/angular7/package-lock.json" }}
+            - restore_cache:
+                  key: a8-cache-{{ checksum "e2e/angular8/package-lock.json" }}
+            - restore_cache:
+                  key: a9-cache-{{ checksum "e2e/angular9/package-lock.json" }}
             - run:
-                  name: angular-lint
-                  command: npm run lint
+                  name: install-a-dependencies
+                  command: npm run i:a
+            - save_cache:
+                  key: a6-cache-{{ checksum "e2e/angular6/package-lock.json" }}
+                  paths:
+                      - ./e2e/angular6/node_modules
+            - save_cache:
+                  key: a7-cache-{{ checksum "e2e/angular7/package-lock.json" }}
+                  paths:
+                      - ./e2e/angular7/node_modules
+            - save_cache:
+                  key: a8-cache-{{ checksum "e2e/angular8/package-lock.json" }}
+                  paths:
+                      - ./e2e/angular8/node_modules
+            - save_cache:
+                  key: a9-cache-{{ checksum "e2e/angular9/package-lock.json" }}
+                  paths:
+                      - ./e2e/angular9/node_modules
+            - run:
+                  name: root-spread
+                  command: npm run build && npm run s:a
+            - run:
+                  name: e2e:a6
+                  command: npm run e2e:a6
+            - run:
+                  name: e2e:a7
+                  command: npm run e2e:a7
+            - run:
+                  name: e2e:a8
+                  command: npm run e2e:a8
+            - run:
+                  name: e2e:a9
+                  command: npm run e2e:a9
+            - run:
+                  name: build:a6
+                  command: npm run b:a6
+            - run:
+                  name: build:a7
+                  command: npm run b:a7
+            - run:
+                  name: build:a8
+                  command: npm run b:a8
+            - run:
+                  name: build:a9
+                  command: npm run b:a9
