@@ -21,6 +21,7 @@
 - [relatedEntitySelector function](#relatedentityselector-function)
 - [childEntitySelector function](#childentityselector-function)
 - [childrenEntitiesSelector function](#childrenentitiesselector-function)
+* [selector argument](#selector-argument)
 * [rootEntities function](#rootentities-function)
 * [relationships pipe operator](#relationships-pipe-operator)
 * [rootEntityFlags options](#rootentityflags-options)
@@ -206,13 +207,62 @@ const users$ = store.select(userSelectorService.selectUsers, ['userIdValue1', 'u
 
 ## API
 
+### selector argument
+
+a `selector` argument can be:
+* a function that returns `EntityState<T>`
+* an instance of `EntityCollectionService<T>`
+* an instance of `EntityCollectionServiceBase<T>`
+* an object `{collection, id}`
+
+The last case is useful when `id` key of an entity isn't `id`, but an other: `Id`, `uuid`, etc.
+Then you can define here a key name or a function that returns its value.
+```typescript
+const selector1 = {
+    collection: createFeatureSelector('users'),
+    id: 'Id',
+};
+const selector2 = {
+    collection: createFeatureSelector('users'),
+    id: 0,
+};
+const selector3 = {
+    collection: createFeatureSelector('users'),
+    id: entity => entity.uuid,
+};
+```
+
 ### rootEntity function
 
-TBD
+`rootEntity(selector, transformer?, ...relationships)` is an entry point function to create a selector for relationships.
+
+`transformer` is an optional function that can be useful when we need a
+post processing transformation, for example to a call instance.
+```typescript
+rootEntity(
+    selector,
+    entity => plainToClass(UserClass, entity),
+);
+```
+
+`relationships` is an optional argument that is produced by a relationship function.
 
 ### relatedEntity function
 
-TBD
+`relatedEntity(selector, keyId, keyValue, ...relationships)` is a relationship function that defined a relationship based on data in its parent entity.
+
+`selector` is a selector that works with the related entity.
+
+An example is the `User`, its model has `company`, `companyId`
+and there is `selectCompanyState` that returns `EntityState<Company>`.
+```typescript
+const user = rootEntity(
+    rootRelector,
+    relatedEntity(selectCompanyState, 'companyId', 'company'),
+);
+```
+
+`relationships` is an optional argument that is produced by a relationship function.
 
 ### childEntity function
 
