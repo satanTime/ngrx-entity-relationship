@@ -322,7 +322,12 @@ TBD
 
 ### rootEntities function
 
-TBD
+`rootEntities(rootSelector)` is an entry point function to create a selector for a list of entities.
+
+`rootSelector` is produced by `rootEntity` function.
+```typescript
+const selectUsers = rootEntities(selectUser);
+```
 
 ### relationships pipe operator
 
