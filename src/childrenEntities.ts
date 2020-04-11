@@ -3,10 +3,12 @@ import {
     HANDLER_CACHE,
     HANDLER_RELATED_ENTITY,
     ID_FILTER_PROPS,
+    ID_SELECTOR,
     ID_TYPES,
     UNKNOWN,
     VALUES_FILTER_PROPS,
 } from './types';
+import {normalizeSelector} from './utils';
 
 export function childrenEntities<
     STORE,
@@ -20,24 +22,23 @@ export function childrenEntities<
     keyValue: RELATED_KEY_VALUES_ARRAYS,
     ...relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
 ): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
-    const funcSelector =
-        typeof featureSelector === 'function' ? featureSelector : featureSelector.selectors.selectCollection;
+    const {collection: funcSelector, id: idSelector} = normalizeSelector(featureSelector);
 
     const callback = (
         cachePrefix: string,
         state: STORE,
         cacheRefs: HANDLER_CACHE<STORE, UNKNOWN>,
         source: PARENT_ENTITY,
+        idParentSelector: ID_SELECTOR<PARENT_ENTITY>,
     ) => {
         // a bit magic to relax generic types.
         const relatedIds: Array<ID_TYPES> = [];
-        const stateFeature = funcSelector(state);
-        const stateItems = stateFeature ? stateFeature.entities : {};
+        const stateItems = funcSelector(state).entities;
         for (const stateItem of Object.values(stateItems)) {
-            if (!stateItem || stateItem[keyId] !== (source as any).id) {
+            if (!stateItem || stateItem[keyId] !== (idParentSelector(source) as any) /* todo fix any A8 */) {
                 continue;
             }
-            relatedIds.push((stateItem as any).id);
+            relatedIds.push(idSelector(stateItem));
         }
 
         const relatedItems: Array<RELATED_ENTITY> = [];
@@ -51,15 +52,16 @@ export function childrenEntities<
             let incrementedPrefix = 0;
             for (const relationship of relationships) {
                 incrementedPrefix += 1;
-                relationship(`${cachePrefix}:${incrementedPrefix}`, state, cacheRefs, cacheValue);
+                relationship(`${cachePrefix}:${incrementedPrefix}`, state, cacheRefs, cacheValue, idSelector);
             }
             relatedItems.push(cacheValue);
         }
 
         cacheRefs.push([cachePrefix, funcSelector, null, stateItems]);
-        source[keyValue] = (relatedItems as any) as PARENT_ENTITY[RELATED_KEY_VALUES_ARRAYS];
+        source[keyValue] = relatedItems as PARENT_ENTITY[RELATED_KEY_VALUES_ARRAYS];
     };
     callback.ngrxEntityRelationship = 'childrenEntities';
+    callback.idSelector = idSelector;
 
     return callback;
 }

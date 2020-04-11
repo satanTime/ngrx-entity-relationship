@@ -1,7 +1,7 @@
 import {Company} from '../company/company.model';
 
 export interface User {
-    id: string;
+    userId: string;
     name: string;
     managerId?: string;
     employee?: User;

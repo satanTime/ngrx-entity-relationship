@@ -3,10 +3,12 @@ import {
     HANDLER_CACHE,
     HANDLER_RELATED_ENTITY,
     ID_FILTER_PROPS,
+    ID_SELECTOR,
     ID_TYPES,
     UNKNOWN,
     VALUES_FILTER_PROPS,
 } from './types';
+import {normalizeSelector} from './utils';
 
 export function childEntity<
     STORE,
@@ -20,24 +22,23 @@ export function childEntity<
     keyValue: RELATED_KEY_VALUES,
     ...relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
 ): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
-    const funcSelector =
-        typeof featureSelector === 'function' ? featureSelector : featureSelector.selectors.selectCollection;
+    const {collection: funcSelector, id: idSelector} = normalizeSelector(featureSelector);
 
     const callback = (
         cachePrefix: string,
         state: STORE,
         cacheRefs: HANDLER_CACHE<STORE, UNKNOWN>,
         source: PARENT_ENTITY,
+        idParentSelector: ID_SELECTOR<PARENT_ENTITY>,
     ) => {
         // a bit magic to relax generic types.
         let relatedId: undefined | ID_TYPES;
-        const stateFeature = funcSelector(state);
-        const stateItems = stateFeature ? stateFeature.entities : {};
+        const stateItems = funcSelector(state).entities;
         for (const stateItem of Object.values(stateItems)) {
-            if (!stateItem || stateItem[keyId] !== (source as any).id) {
+            if (!stateItem || stateItem[keyId] !== (idParentSelector(source) as any) /* todo fix any A8 */) {
                 continue;
             }
-            relatedId = (stateItem as any).id;
+            relatedId = idSelector(stateItem);
             break;
         }
         if (!relatedId) {
@@ -52,11 +53,12 @@ export function childEntity<
         let incrementedPrefix = 0;
         for (const relationship of relationships) {
             incrementedPrefix += 1;
-            relationship(`${cachePrefix}:${incrementedPrefix}`, state, cacheRefs, cacheValue);
+            relationship(`${cachePrefix}:${incrementedPrefix}`, state, cacheRefs, cacheValue, idSelector);
         }
         source[keyValue] = (cacheValue as any) as PARENT_ENTITY[RELATED_KEY_VALUES];
     };
     callback.ngrxEntityRelationship = 'childEntity';
+    callback.idSelector = idSelector;
 
     return callback;
 }

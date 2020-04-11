@@ -45,6 +45,7 @@ export function rootEntities<STORE, ENTITY>(
         return value;
     };
     callback.ngrxEntityRelationship = 'rootEntities';
+    callback.idSelector = rootSelector.idSelector;
 
     return callback;
 }

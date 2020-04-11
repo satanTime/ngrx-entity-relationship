@@ -5,7 +5,9 @@ import {User} from './user.model';
 
 export interface State extends EntityState<User> {}
 
-export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
+export const adapter: EntityAdapter<User> = createEntityAdapter<User>({
+    selectId: v => v.userId,
+});
 
 export const initialState: State = adapter.getInitialState();
 

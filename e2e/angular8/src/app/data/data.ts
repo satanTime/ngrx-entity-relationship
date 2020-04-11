@@ -1,13 +1,17 @@
 import {EntityMetadataMap} from '@ngrx/data';
 
+export function selectId(entity) {
+    return entity.uuid;
+}
+
 const data: EntityMetadataMap = {
     Hero: {},
     Villain: {},
     HeroUuid: {
-        selectId: entity => entity.uuid,
+        selectId,
     },
     VillainUuid: {
-        selectId: entity => entity.uuid,
+        selectId,
     },
 };
 

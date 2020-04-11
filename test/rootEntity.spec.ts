@@ -1,7 +1,7 @@
 import {createEntityAdapter} from '@ngrx/entity';
 
 import {rootEntity, rootEntityFlags} from '../src';
-import {HANDLER_RELATED_ENTITY} from '../src/types';
+import {HANDLER_RELATED_ENTITY, UNKNOWN} from '../src/types';
 
 describe('rootEntity', () => {
     type Entity = {
@@ -258,8 +258,8 @@ describe('rootEntity', () => {
             },
         };
         const entity = selector(state, 'id1');
-        expect(rel1).toHaveBeenCalledWith('1', state, jasmine.anything(), entity);
-        expect(rel2).toHaveBeenCalledWith('2', state, jasmine.anything(), entity);
+        expect(rel1).toHaveBeenCalledWith('1', state, jasmine.anything(), entity, selector.idSelector);
+        expect(rel2).toHaveBeenCalledWith('2', state, jasmine.anything(), entity, selector.idSelector);
     });
 
     it('uses transformer', () => {
@@ -315,16 +315,101 @@ describe('rootEntity', () => {
         const state = {
             feature: createEntityAdapter<Entity>().getInitialState(),
         };
+        const idSelector = v => v.id;
         const selector = rootEntity<typeof state, Entity>({
             selectors: {
                 selectCollection: v => v.feature,
             },
+            selectId: idSelector,
         });
+        expect(selector.idSelector).toBe(idSelector);
 
         state.feature.entities = {
             ...state.feature.entities,
             id: {
                 id: 'id',
+                name: 'name',
+            },
+        };
+        const entity = selector(state, 'id');
+        expect(entity).toEqual(state.feature.entities.id);
+    });
+
+    it('supports a default selector and returns id field', () => {
+        const state = {
+            feature: createEntityAdapter<Entity>().getInitialState(),
+        };
+        const selector = rootEntity<typeof state, Entity>(v => v.feature);
+        expect(selector.idSelector({id: 'myId', name: 'myName'})).toBe('myId');
+
+        state.feature.entities = {
+            ...state.feature.entities,
+            id: {
+                id: 'id',
+                name: 'name',
+            },
+        };
+        const entity = selector(state, 'id');
+        expect(entity).toEqual(state.feature.entities.id);
+    });
+
+    it('supports custom feature selector and id field of string', () => {
+        const state = {
+            feature: createEntityAdapter<UNKNOWN>().getInitialState(),
+        };
+        const selector = rootEntity<typeof state, UNKNOWN>({
+            collection: v => v.feature,
+            id: 'uuid',
+        });
+        expect(selector.idSelector({uuid: 'myId'})).toBe('myId');
+
+        state.feature.entities = {
+            ...state.feature.entities,
+            id: {
+                uuid: 'id',
+                name: 'name',
+            },
+        };
+        const entity = selector(state, 'id');
+        expect(entity).toEqual(state.feature.entities.id);
+    });
+
+    it('supports custom feature selector and id field of number', () => {
+        const state = {
+            feature: createEntityAdapter<UNKNOWN>().getInitialState(),
+        };
+        const selector = rootEntity<typeof state, UNKNOWN>({
+            collection: v => v.feature,
+            id: 5,
+        });
+        expect(selector.idSelector({5: 'myId'})).toBe('myId');
+
+        state.feature.entities = {
+            ...state.feature.entities,
+            id: {
+                5: 'id',
+                name: 'name',
+            },
+        };
+        const entity = selector(state, 'id');
+        expect(entity).toEqual(state.feature.entities.id);
+    });
+
+    it('supports custom feature selector and id selector', () => {
+        const state = {
+            feature: createEntityAdapter<UNKNOWN>().getInitialState(),
+        };
+        const idSelector = v => v.feature;
+        const selector = rootEntity<typeof state, UNKNOWN>({
+            collection: v => v.feature,
+            id: idSelector,
+        });
+        expect(selector.idSelector).toBe(idSelector);
+
+        state.feature.entities = {
+            ...state.feature.entities,
+            id: {
+                feature: 'id',
                 name: 'name',
             },
         };

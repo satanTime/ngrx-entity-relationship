@@ -7,6 +7,7 @@ import {
     UNKNOWN,
     VALUES_FILTER_PROPS,
 } from './types';
+import {normalizeSelector} from './utils';
 
 export function relatedEntity<
     STORE,
@@ -22,8 +23,7 @@ export function relatedEntity<
     keyValue: RELATED_KEY_VALUES | RELATED_KEY_VALUES_ARRAYS,
     ...relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
 ): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
-    const funcSelector =
-        typeof featureSelector === 'function' ? featureSelector : featureSelector.selectors.selectCollection;
+    const {collection: funcSelector, id: idSelector} = normalizeSelector(featureSelector);
 
     const callback = (
         cachePrefix: string,
@@ -33,8 +33,7 @@ export function relatedEntity<
     ) => {
         // a bit magic to relax generic types.
         const sourceKeyIdValue = source[keyId];
-        const stateFeature = funcSelector(state);
-        const stateItems = stateFeature ? stateFeature.entities : {};
+        const stateItems = funcSelector(state).entities;
 
         if (!sourceKeyIdValue) {
             return;
@@ -63,7 +62,7 @@ export function relatedEntity<
             let incrementedPrefix = 0;
             for (const relationship of relationships) {
                 incrementedPrefix += 1;
-                relationship(`${cachePrefix}:${incrementedPrefix}`, state, cacheRefs, cacheValue);
+                relationship(`${cachePrefix}:${incrementedPrefix}`, state, cacheRefs, cacheValue, idSelector);
             }
             relatedItems.push(cacheValue);
         }
@@ -71,12 +70,13 @@ export function relatedEntity<
         if (Array.isArray(source[keyId])) {
             source[keyValue] = (relatedItems as any) as PARENT_ENTITY[RELATED_KEY_VALUES] &
                 PARENT_ENTITY[RELATED_KEY_VALUES_ARRAYS];
-        } else if (relatedItems) {
+        } else {
             source[keyValue] = (relatedItems[0] as any) as PARENT_ENTITY[RELATED_KEY_VALUES] &
                 PARENT_ENTITY[RELATED_KEY_VALUES_ARRAYS];
         }
     };
     callback.ngrxEntityRelationship = 'relatedEntity';
+    callback.idSelector = idSelector;
 
     return callback;
 }

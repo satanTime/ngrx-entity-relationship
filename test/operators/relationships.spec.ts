@@ -1,7 +1,7 @@
 import {of, Subject} from 'rxjs';
 
 import {relationships} from '../../src';
-import {HANDLER_ROOT_ENTITY, UNKNOWN} from '../../src/types';
+import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, UNKNOWN} from '../../src/types';
 
 describe('operators/relationships', () => {
     type Entity = {
@@ -34,6 +34,7 @@ describe('operators/relationships', () => {
         };
         const selector: HANDLER_ROOT_ENTITY<UNKNOWN, Entity, UNKNOWN> = <any>jasmine.createSpy();
         selector.ngrxEntityRelationship = 'spy';
+        selector.idSelector = jasmine.createSpy('idSelector').and.returnValue('hello');
 
         const entity: Entity = {
             id: 'id1',
@@ -45,7 +46,8 @@ describe('operators/relationships', () => {
             .pipe(relationships(store, selector))
             .subscribe(actual => {
                 expect(actual).toBe(expected as any);
-                expect(store.select).toHaveBeenCalledWith(selector, 'id1');
+                expect(selector.idSelector).toHaveBeenCalledWith(entity);
+                expect(store.select).toHaveBeenCalledWith(selector, 'hello');
                 store$.complete();
                 doneFn();
             });
@@ -58,8 +60,9 @@ describe('operators/relationships', () => {
         const store = {
             select: jasmine.createSpy().and.returnValue(store$),
         };
-        const selector: HANDLER_ROOT_ENTITY<UNKNOWN, Array<Entity>, UNKNOWN> = <any>jasmine.createSpy();
+        const selector: HANDLER_ROOT_ENTITIES<UNKNOWN, Entity, UNKNOWN> = <any>jasmine.createSpy();
         selector.ngrxEntityRelationship = 'spy';
+        selector.idSelector = jasmine.createSpy('idSelector').and.returnValues('hello1', 'hello2');
 
         const entity1: Entity = {
             id: 'id1',
@@ -75,7 +78,9 @@ describe('operators/relationships', () => {
             .pipe(relationships(store, selector))
             .subscribe(actual => {
                 expect(actual).toBe(expected as any);
-                expect(store.select).toHaveBeenCalledWith(selector, ['id1', 'id2']);
+                expect(selector.idSelector).toHaveBeenCalledWith(entity1);
+                expect(selector.idSelector).toHaveBeenCalledWith(entity2);
+                expect(store.select).toHaveBeenCalledWith(selector, ['hello1', 'hello2']);
                 store$.complete();
                 doneFn();
             });

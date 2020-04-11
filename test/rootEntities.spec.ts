@@ -33,6 +33,17 @@ describe('rootEntities', () => {
         expect(selector({}, null)).toBe(actual);
     });
 
+    it('returns the same idSelector as rootEntity', () => {
+        const selectorRoot: HANDLER_ROOT_ENTITY<{}, Entity, ID_TYPES> & jasmine.Spy = <any>jasmine.createSpy();
+        selectorRoot.idSelector = <any>jasmine.createSpy();
+        const selector = rootEntities(selectorRoot);
+        expect(selector.idSelector).toBe(selectorRoot.idSelector);
+
+        const actual = selector({}, undefined);
+        expect(actual).toEqual([]);
+        expect(selector({}, null)).toBe(actual);
+    });
+
     it('returns the cached value when rootEntityFlags.disabled is true', () => {
         const state = {};
         const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, ID_TYPES> & jasmine.Spy = <any>(

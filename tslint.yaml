@@ -34,6 +34,7 @@ rules:
     comment-type:
         - true
         - singleline
+        - multiline
         - doc
         - directive
     completed-docs: false
