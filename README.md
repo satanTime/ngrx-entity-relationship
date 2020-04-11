@@ -87,7 +87,7 @@ const user = {
 
 ## Solution
 
-Below you can find 2 solutions, for support for [ngrx/entity](#relationships-in-ngrxentity)
+Below you can find 2 solutions, support of [ngrx/entity](#relationships-in-ngrxentity)
 and [ngrx/data](#relationships-in-ngrxdata).
 
 More detailed information goes in the [API](#api) section.
