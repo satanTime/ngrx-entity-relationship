@@ -12,6 +12,7 @@ import {
 
 import {selectAddressState} from '../address';
 import {selectCompanyState} from '../company';
+import {adapter} from './user.reducer';
 import * as fromUser from './user.reducer';
 
 export const selectUserState = createFeatureSelector<fromUser.State>('users');
@@ -27,7 +28,10 @@ export const selectUserEntities = createSelector(selectUserState, fromUser.selec
 export const selectUserAll = createSelector(selectUserState, fromUser.selectAllUsers);
 export const selectUserTotal = createSelector(selectUserState, fromUser.selectUserTotal);
 
-const transformedUser = rootEntitySelector(selectUserState, entity => ({...entity, cloned: true}));
+const transformedUser = rootEntitySelector({collection: selectUserState, id: adapter.selectId}, entity => ({
+    ...entity,
+    cloned: true,
+}));
 const transformedUserCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company');
 const transformedCompany = rootEntitySelector(selectCompanyState, entity => ({...entity, cloned: true}));
 const transformedCompanyStaff = childrenEntitiesSelector(selectUserState, 'companyId', 'staff');

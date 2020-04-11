@@ -5,7 +5,9 @@ import {Address} from './address.model';
 
 export interface State extends EntityState<Address> {}
 
-export const adapter: EntityAdapter<Address> = createEntityAdapter<Address>();
+export const adapter: EntityAdapter<Address> = createEntityAdapter<Address>({
+    selectId: v => v.uuid,
+});
 
 export const initialState: State = adapter.getInitialState();
 

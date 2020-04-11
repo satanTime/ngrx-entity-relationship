@@ -1,16 +1,16 @@
 import {iif, Observable, of} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 
-import {HANDLER_ROOT_ENTITY, STORE_INSTANCE} from '../types';
+import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, ID_TYPES, STORE_INSTANCE} from '../types';
 
 export function relationships<STORE, ENTITY>(
     store: STORE_INSTANCE<STORE>,
-    selector: HANDLER_ROOT_ENTITY<STORE, Array<ENTITY>, any>,
+    selector: HANDLER_ROOT_ENTITIES<STORE, ENTITY, ID_TYPES>,
 ): (next: Observable<Array<ENTITY>>) => Observable<Array<ENTITY>>;
 
 export function relationships<STORE, ENTITY>(
     store: STORE_INSTANCE<STORE>,
-    selector: HANDLER_ROOT_ENTITY<STORE, ENTITY, any>,
+    selector: HANDLER_ROOT_ENTITY<STORE, ENTITY, ID_TYPES>,
 ): (next: Observable<ENTITY>) => Observable<ENTITY>;
 
 export function relationships<STORE, SET, TYPES>(
@@ -27,9 +27,9 @@ export function relationships<STORE, SET, TYPES>(
                     result.pipe(
                         map(set => {
                             if (Array.isArray(set)) {
-                                return (set.map(item => item.id) as any) as TYPES;
+                                return (set.map(entity => selector.idSelector(entity)) as any) as TYPES;
                             }
-                            return (<any>set).id as TYPES;
+                            return (selector.idSelector(set) as any) as TYPES;
                         }),
                         switchMap(id => store.select(selector, id)),
                     ),

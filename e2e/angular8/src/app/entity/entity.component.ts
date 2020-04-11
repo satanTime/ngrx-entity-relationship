@@ -128,7 +128,7 @@ export class EntityComponent implements OnInit {
         this.store.dispatch(
             upsertUser({
                 user: {
-                    id: '1',
+                    userId: '1',
                     name: 'User 1',
                     managerId: '3',
                     companyId: '3',
@@ -138,7 +138,7 @@ export class EntityComponent implements OnInit {
         this.store.dispatch(
             upsertUser({
                 user: {
-                    id: '2',
+                    userId: '2',
                     name: 'User 2',
                     managerId: '3',
                     companyId: '3',
@@ -148,7 +148,7 @@ export class EntityComponent implements OnInit {
         this.store.dispatch(
             upsertUser({
                 user: {
-                    id: '3',
+                    userId: '3',
                     name: 'User 3',
                     companyId: '3',
                 },
@@ -157,7 +157,7 @@ export class EntityComponent implements OnInit {
         this.store.dispatch(
             upsertUser({
                 user: {
-                    id: '4',
+                    userId: '4',
                     name: 'User 4',
                     managerId: '3',
                     companyId: '4',
@@ -167,7 +167,7 @@ export class EntityComponent implements OnInit {
         this.store.dispatch(
             upsertUser({
                 user: {
-                    id: '5',
+                    userId: '5',
                     name: 'User 5',
                     companyId: '4',
                 },
@@ -176,7 +176,7 @@ export class EntityComponent implements OnInit {
         this.store.dispatch(
             upsertUser({
                 user: {
-                    id: '6',
+                    userId: '6',
                     name: 'User 6',
                     companyId: '4',
                 },
@@ -205,7 +205,7 @@ export class EntityComponent implements OnInit {
         this.store.dispatch(
             upsertAddress({
                 address: {
-                    id: '5',
+                    uuid: '5',
                     name: 'Address 5',
                     companyId: '3',
                 },
@@ -214,7 +214,7 @@ export class EntityComponent implements OnInit {
         this.store.dispatch(
             upsertAddress({
                 address: {
-                    id: '6',
+                    uuid: '6',
                     name: 'Address 6',
                     companyId: '4',
                 },
@@ -226,7 +226,7 @@ export class EntityComponent implements OnInit {
                 this.store.dispatch(
                     upsertAddress({
                         address: {
-                            id: '6',
+                            uuid: '6',
                             name: `Address ${new Date().getTime()}`,
                             companyId: '4',
                         },

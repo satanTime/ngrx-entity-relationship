@@ -9,6 +9,7 @@ import {
     TRANSFORMER,
     UNKNOWN,
 } from './types';
+import {normalizeSelector} from './utils';
 
 export function rootEntity<STORE, ENTITY>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
@@ -30,8 +31,7 @@ export function rootEntity<STORE, ENTITY>(
     } else {
         transformer = deside;
     }
-    const funcSelector =
-        typeof featureSelector === 'function' ? featureSelector : featureSelector.selectors.selectCollection;
+    const {collection: funcSelector, id: idSelector} = normalizeSelector(featureSelector);
 
     const cacheMap = new Map<ID_TYPES, [HANDLER_CACHE<STORE, UNKNOWN>, UNKNOWN?]>();
 
@@ -80,7 +80,7 @@ export function rootEntity<STORE, ENTITY>(
         let incrementedPrefix = 0;
         for (const relationship of relationships) {
             incrementedPrefix += 1;
-            relationship(`${incrementedPrefix}`, state, cacheRefs, cacheValue);
+            relationship(`${incrementedPrefix}`, state, cacheRefs, cacheValue, idSelector);
         }
 
         cacheValue = transformer ? transformer(cacheValue) : cacheValue;
@@ -90,6 +90,7 @@ export function rootEntity<STORE, ENTITY>(
         return cacheValue;
     };
     callback.ngrxEntityRelationship = 'rootEntity';
+    callback.idSelector = idSelector;
 
     return callback;
 }
