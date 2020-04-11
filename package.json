@@ -29,7 +29,7 @@
         "e2e:a8": "cd e2e/angular8 && npm run e2e",
         "e2e:a9": "cd e2e/angular9 && npm run e2e",
         "e2e:a": "npm run e2e:a6 && npm run e2e:a7 && npm run e2e:a8 && npm run e2e:a9",
-        "e2e": "npm run i:a && npm run spread && npm run e2e:a",
+        "e2e": "npm run i:a && npm run s:a && npm run e2e:a",
         "lint": "tslint --config ./tslint.yaml -p ./tsconfig.json",
         "release": "standard-version",
         "test": "karma start",
