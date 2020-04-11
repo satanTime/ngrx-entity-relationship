@@ -29,7 +29,7 @@ export type FEATURE_SELECTOR<S, E> =
           selectors: {
               selectCollection: STORE_SELECTOR<S, EntityState<E>>;
           };
-          selectId: ID_SELECTOR<E>;
+          selectId?: ID_SELECTOR<E>; // EntityCollectionService doesn't have it but EntityCollectionServiceBase does.
       };
 
 export type HANDLER_CACHE<S, E> = Array<
