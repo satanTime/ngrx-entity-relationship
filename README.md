@@ -234,6 +234,8 @@ const selector3 = {
 
 `rootEntity(selector, transformer?, ...relationships)` is an entry point function to create a selector for relationships.
 
+`selector` is a selector that works with the root entity.
+
 `transformer` is an optional function that can be useful when we need a
 post processing transformation, for example to a call instance.
 ```typescript
@@ -306,7 +308,20 @@ const company = rootEntity(
 
 ### rootEntitySelector function
 
-TBD
+`rootEntitySelector(selector, transformer?)` is a function to produce an entry point function.
+The goal here is to simply the process of the selectors creation.
+
+`selector` is a selector that works with the root entity.
+
+`transformer` is the same as in `rootEntity`.
+
+```typescript
+const userSelector = rootEntitySelector(selector);
+
+const user1 = userSelector();
+// the same as.
+const user2 = rootEntity(selector);
+```
 
 ### relatedEntitySelector function
 
