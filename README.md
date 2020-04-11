@@ -11,7 +11,7 @@
 - Angular 8 and `@ngrx/entity@8` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular8/src/app/entity))
 - Angular 9 and `@ngrx/entity@9` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular9/src/app/entity))
 
-### API
+### API short list
 
 * [rootEntity function](#rootentity-function)
 * [relatedEntity function](#relatedentity-function)
@@ -87,8 +87,8 @@ const user = {
 
 ## Solution
 
-Below you can find 2 solutions, for support for [ngrx/entity](#relationships-in-ngrx-entity)
-and [ngrx/data](#relationships-in-ngrx-data).
+Below you can find 2 solutions, for support for [ngrx/entity](#relationships-in-ngrxentity)
+and [ngrx/data](#relationships-in-ngrxdata).
 
 More detailed information goes in the [API](#api) section.
 
