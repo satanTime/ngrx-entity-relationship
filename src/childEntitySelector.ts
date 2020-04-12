@@ -16,13 +16,15 @@ export function childEntitySelector<
 ): (
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
 ) => HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
-    const callback = (...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>) =>
-        childEntity<STORE, PARENT_ENTITY, RELATED_ENTITY, RELATED_KEY_IDS, any>(
+    function callback(): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
+        const relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>> = [...arguments];
+        return childEntity<STORE, PARENT_ENTITY, RELATED_ENTITY, RELATED_KEY_IDS, any>(
             featureSelector,
             keyId,
             keyValue,
             ...relations,
         );
+    }
     callback.ngrxEntityRelationship = 'childEntitySelector';
 
     return callback;

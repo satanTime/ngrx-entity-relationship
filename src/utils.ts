@@ -1,6 +1,14 @@
 import {EntityState} from '@ngrx/entity';
 
-import {CACHE_CHECKS_SET, FEATURE_SELECTOR, ID_SELECTOR, STORE_SELECTOR} from './types';
+import {
+    CACHE_CHECKS,
+    CACHE_CHECKS_SET,
+    FEATURE_SELECTOR,
+    ID_SELECTOR,
+    ID_TYPES,
+    STORE_SELECTOR,
+    UNKNOWN,
+} from './types';
 
 export function normalizeSelector<S, E>(
     selector: FEATURE_SELECTOR<S, E>,
@@ -42,7 +50,9 @@ export function verifyCache<S>(state: S, checks: CACHE_CHECKS_SET<S>): boolean {
     if (!checks.size) {
         return false;
     }
-    for (const [checkSelector, checkEntities] of checks.entries()) {
+    const checksData: Array<[STORE_SELECTOR<S, EntityState<UNKNOWN>>, CACHE_CHECKS]> = [];
+    checks.forEach((v, k) => checksData.push([k, v]));
+    for (const [checkSelector, checkEntities] of checksData) {
         if (checkEntities.has(null) && checkSelector(state).entities === checkEntities.get(null)) {
             continue;
         }
@@ -54,7 +64,10 @@ export function verifyCache<S>(state: S, checks: CACHE_CHECKS_SET<S>): boolean {
             return false;
         }
         const checkState = checkSelector(state);
-        for (const [checkId, checkValue] of checkEntities.entries()) {
+
+        const checkEntitiesData: Array<[ID_TYPES | null, UNKNOWN]> = [];
+        checkEntities.forEach((v, k) => checkEntitiesData.push([k, v]));
+        for (const [checkId, checkValue] of checkEntitiesData) {
             if (checkId === null) {
                 continue;
             }
@@ -70,9 +83,14 @@ export function mergeCache<S>(from: CACHE_CHECKS_SET<S> | undefined, to: CACHE_C
     if (!from) {
         return;
     }
-    for (const [fromSelector, fromEntities] of from.entries()) {
+    const fromData: Array<[STORE_SELECTOR<S, EntityState<UNKNOWN>>, CACHE_CHECKS]> = [];
+    from.forEach((v, k) => fromData.push([k, v]));
+    for (const [fromSelector, fromEntities] of fromData) {
         const toMap = to.get(fromSelector) || new Map();
-        for (const [fromId, fromEntity] of fromEntities) {
+
+        const fromEntitiesData: Array<[ID_TYPES | null, UNKNOWN]> = [];
+        fromEntities.forEach((v, k) => fromEntitiesData.push([k, v]));
+        for (const [fromId, fromEntity] of fromEntitiesData) {
             if (toMap.has(fromId)) {
                 continue;
             }

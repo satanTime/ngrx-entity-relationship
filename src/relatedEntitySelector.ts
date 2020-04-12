@@ -28,13 +28,15 @@ export function relatedEntitySelector<
 ): (
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
 ) => HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
-    const callback = (...relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>) =>
-        relatedEntity<STORE, PARENT_ENTITY, RELATED_ENTITY, any, any, any, any>(
+    function callback(): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
+        const relations: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>> = [...arguments];
+        return relatedEntity<STORE, PARENT_ENTITY, RELATED_ENTITY, any, any, any, any>(
             featureSelector,
             keyId,
             keyValue,
             ...relations,
         );
+    }
     callback.ngrxEntityRelationship = 'relatedEntitySelector';
 
     return callback;
