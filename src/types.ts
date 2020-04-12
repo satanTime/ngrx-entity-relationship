@@ -39,16 +39,16 @@ export type HANDLER_CACHE<S, E> = Array<
     | [string, STORE_SELECTOR<S, EntityState<E>>, ID_TYPES | null, E, E]
 >;
 
-export type HANDLER_ROOT_ENTITY<S, E, I> = {
-    (state: S, id: I): undefined | E;
+export type HANDLER_ROOT_ENTITY<S, F, T, I> = {
+    (state: S, id: I): undefined | T;
     ngrxEntityRelationship: string;
-    idSelector: ID_SELECTOR<E>;
+    idSelector: ID_SELECTOR<F>;
 };
 
-export type HANDLER_ROOT_ENTITIES<S, E, I> = {
-    (state: S, id: Array<I>): Array<E>;
+export type HANDLER_ROOT_ENTITIES<S, F, T, I> = {
+    (state: S, id: Array<I>): Array<T>;
     ngrxEntityRelationship: string;
-    idSelector: ID_SELECTOR<E>;
+    idSelector: ID_SELECTOR<F>;
 };
 
 export type HANDLER_RELATED_ENTITY<S, E> = {
@@ -73,7 +73,7 @@ export type VALUES_FILTER_PROPS<PARENT_ENTITY, RELATED_ENTITY> = NonNullable<
     FILTER_PROPS<PARENT_ENTITY, RELATED_ENTITY | EMPTY_TYPES>
 >;
 
-export type TRANSFORMER<T> = (entity: T) => T;
+export type TRANSFORMER<F, T> = (entity: F) => T;
 
 export const isBuiltInSelector = <S, E>(value: UNKNOWN): value is HANDLER_RELATED_ENTITY<S, E> => {
     return value && value.ngrxEntityRelationship;

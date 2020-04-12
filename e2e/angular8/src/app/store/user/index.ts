@@ -33,7 +33,7 @@ const transformedUser = rootEntitySelector({collection: selectUserState, id: ada
     cloned: true,
 }));
 const transformedUserCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company');
-const transformedCompany = rootEntitySelector(selectCompanyState, entity => ({...entity, cloned: true}));
+const transformedCompany = rootEntitySelector(selectCompanyState, () => 'transformed:company');
 const transformedCompanyStaff = childrenEntitiesSelector(selectUserState, 'companyId', 'staff');
 const transformedCompanyAdmin = relatedEntitySelector(selectUserState, 'adminId', 'admin');
 const transformedCompanyAddress = relatedEntitySelector(selectAddressState, 'addressId', 'address');
@@ -69,7 +69,7 @@ export const selectCompleteUser = rootEntity(
 
 export const selectTransformedUser = rootEntity(
     selectUserState,
-    entity => ({...entity, cloned: true}),
+    () => 'transformed:user',
     relatedEntity(
         selectCompanyState,
         'companyId',

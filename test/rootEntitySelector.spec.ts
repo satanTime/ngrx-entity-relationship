@@ -38,7 +38,15 @@ describe('rootEntitySelector', () => {
         rel2.ngrxEntityRelationship = 'spy';
         rel2.and.callFake((_1, _2, _3, entity) => (entity.rel2 = true));
 
-        const entitySelector = rootEntitySelector<typeof state, Entity>(v => v.feature, transformer);
+        const entitySelector = rootEntitySelector<
+            typeof state,
+            Entity,
+            {
+                rel1: true;
+                rel2: true;
+                transformed: true;
+            }
+        >(v => v.feature, transformer);
 
         const selector = entitySelector(rel1, rel2);
 
@@ -57,6 +65,28 @@ describe('rootEntitySelector', () => {
                 transformed: true,
             }),
         );
+    });
+
+    it('calls rootEntity with transformer to a different type', () => {
+        const state = {
+            feature: createEntityAdapter<Entity>().getInitialState(),
+        };
+
+        const transformer = () => 'transformed';
+
+        const entitySelector = rootEntitySelector<typeof state, Entity, string>(v => v.feature, transformer);
+
+        const selector = entitySelector();
+
+        state.feature.entities = {
+            ...state.feature.entities,
+            id1: {
+                id: 'id1',
+                name: 'name1',
+            },
+        };
+        const actual = selector(state, 'id1');
+        expect(actual).toBe('transformed');
     });
 
     it('calls rootEntity with relations only', () => {

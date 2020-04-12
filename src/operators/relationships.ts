@@ -5,18 +5,28 @@ import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, ID_TYPES, STORE_INSTANCE} fr
 
 export function relationships<STORE, ENTITY>(
     store: STORE_INSTANCE<STORE>,
-    selector: HANDLER_ROOT_ENTITIES<STORE, ENTITY, ID_TYPES>,
+    selector: HANDLER_ROOT_ENTITIES<STORE, ENTITY, ENTITY, ID_TYPES>,
 ): (next: Observable<Array<ENTITY>>) => Observable<Array<ENTITY>>;
+
+export function relationships<STORE, ENTITY, TRANSFORMED>(
+    store: STORE_INSTANCE<STORE>,
+    selector: HANDLER_ROOT_ENTITIES<STORE, ENTITY, TRANSFORMED, ID_TYPES>,
+): (next: Observable<Array<ENTITY>>) => Observable<Array<TRANSFORMED>>;
 
 export function relationships<STORE, ENTITY>(
     store: STORE_INSTANCE<STORE>,
-    selector: HANDLER_ROOT_ENTITY<STORE, ENTITY, ID_TYPES>,
+    selector: HANDLER_ROOT_ENTITY<STORE, ENTITY, ENTITY, ID_TYPES>,
 ): (next: Observable<ENTITY>) => Observable<ENTITY>;
 
-export function relationships<STORE, SET, TYPES>(
+export function relationships<STORE, ENTITY, TRANSFORMED>(
     store: STORE_INSTANCE<STORE>,
-    selector: HANDLER_ROOT_ENTITY<STORE, SET, TYPES>,
-): (next: Observable<SET>) => Observable<undefined | SET> {
+    selector: HANDLER_ROOT_ENTITY<STORE, ENTITY, TRANSFORMED, ID_TYPES>,
+): (next: Observable<ENTITY>) => Observable<TRANSFORMED>;
+
+export function relationships<STORE, SET, TRANSFORMED, TYPES>(
+    store: STORE_INSTANCE<STORE>,
+    selector: HANDLER_ROOT_ENTITY<STORE, SET, SET | TRANSFORMED, TYPES>,
+): (next: Observable<SET>) => Observable<undefined | SET | TRANSFORMED> {
     return next =>
         next.pipe(
             switchMap(input => {

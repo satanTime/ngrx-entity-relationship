@@ -266,7 +266,7 @@ describe('rootEntity', () => {
         const state = {
             feature: createEntityAdapter<Entity>().getInitialState(),
         };
-        const selector = rootEntity<typeof state, Entity>(
+        const selector = rootEntity<typeof state, Entity, Entity>(
             v => v.feature,
             entity => ({...entity, transformed: true}),
         );
@@ -294,7 +294,7 @@ describe('rootEntity', () => {
         rel.ngrxEntityRelationship = 'spy';
         rel.and.callFake((_1, _2, _3, v) => (v.processed = true));
 
-        const selector = rootEntity<typeof state, Entity>(v => v.feature, transformer, rel);
+        const selector = rootEntity<typeof state, Entity, Entity>(v => v.feature, transformer, rel);
 
         state.feature.entities = {
             ...state.feature.entities,
@@ -309,6 +309,28 @@ describe('rootEntity', () => {
                 processed: true,
             }),
         );
+    });
+
+    it('uses transformer to a different type', () => {
+        const state = {
+            feature: createEntityAdapter<Entity>().getInitialState(),
+        };
+        const transformer = () => 'transformed';
+        const rel = <jasmine.Spy & HANDLER_RELATED_ENTITY<typeof state, Entity>>(<any>jasmine.createSpy());
+        rel.ngrxEntityRelationship = 'spy';
+        rel.and.callFake((_1, _2, _3, v) => (v.processed = true));
+
+        const selector = rootEntity<typeof state, Entity, string>(v => v.feature, transformer, rel);
+
+        state.feature.entities = {
+            ...state.feature.entities,
+            id1: {
+                id: 'id1',
+                name: 'name1',
+            },
+        };
+        const actual = selector(state, 'id1');
+        expect(actual).toBe('transformed');
     });
 
     it('supports EntityCollectionService as a selector', () => {
