@@ -238,11 +238,15 @@ const selector3 = {
 `selector` is a selector that works with a root entity.
 
 `transformer` is an optional function that can be useful when we need a
-post processing transformation, for example to a call instance.
+post processing transformation, for example to a class instance, actually an entity can be transformed to anything.
 ```typescript
-rootEntity(
+const userClassInstance = rootEntity(
     selector,
     entity => plainToClass(UserClass, entity),
+);
+const userJsonString = rootEntity(
+    selector,
+    entity => JSON.stringify(entity),
 );
 ```
 

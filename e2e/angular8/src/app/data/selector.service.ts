@@ -38,6 +38,7 @@ export class SelectorService {
 
     public readonly selectHeroWithVillainShort = rootEntity(
         this.hero,
+        () => 'transformed:hero',
         relatedEntity(this.serviceFactory.create<Villain>('Villain'), 'villainId', 'villain'),
     );
 

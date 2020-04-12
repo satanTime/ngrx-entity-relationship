@@ -1,5 +1,6 @@
 import {rootEntities, rootEntityFlags} from '../src';
-import {HANDLER_ROOT_ENTITY, ID_TYPES} from '../src/types';
+import {rootEntity} from '../src/rootEntity';
+import {FEATURE_SELECTOR, HANDLER_ROOT_ENTITY, ID_TYPES} from '../src/types';
 
 describe('rootEntities', () => {
     type Entity = {
@@ -25,7 +26,7 @@ describe('rootEntities', () => {
     });
 
     it('returns the same empty array on no ids', () => {
-        const selectorRoot: HANDLER_ROOT_ENTITY<{}, Entity, ID_TYPES> & jasmine.Spy = <any>jasmine.createSpy();
+        const selectorRoot: HANDLER_ROOT_ENTITY<{}, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>jasmine.createSpy();
         const selector = rootEntities(selectorRoot);
 
         const actual = selector({}, undefined);
@@ -34,7 +35,7 @@ describe('rootEntities', () => {
     });
 
     it('returns the same idSelector as rootEntity', () => {
-        const selectorRoot: HANDLER_ROOT_ENTITY<{}, Entity, ID_TYPES> & jasmine.Spy = <any>jasmine.createSpy();
+        const selectorRoot: HANDLER_ROOT_ENTITY<{}, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>jasmine.createSpy();
         selectorRoot.idSelector = <any>jasmine.createSpy();
         const selector = rootEntities(selectorRoot);
         expect(selector.idSelector).toBe(selectorRoot.idSelector);
@@ -46,7 +47,7 @@ describe('rootEntities', () => {
 
     it('returns the cached value when rootEntityFlags.disabled is true', () => {
         const state = {};
-        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, ID_TYPES> & jasmine.Spy = <any>(
+        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>(
             jasmine.createSpy()
         );
         const selector = rootEntities(selectorRoot);
@@ -103,7 +104,7 @@ describe('rootEntities', () => {
 
     it('collects only existing entities', () => {
         const state = {};
-        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, ID_TYPES> & jasmine.Spy = <any>(
+        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>(
             jasmine.createSpy()
         );
         const selector = rootEntities(selectorRoot);
@@ -139,7 +140,7 @@ describe('rootEntities', () => {
 
     it('returns the cached value when entities have not been changed', () => {
         const state = {};
-        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, ID_TYPES> & jasmine.Spy = <any>(
+        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>(
             jasmine.createSpy()
         );
         const selector = rootEntities(selectorRoot);
@@ -159,5 +160,24 @@ describe('rootEntities', () => {
 
         const actual2 = selector(state, [1, 2]);
         expect(actual2).toBe(actual1);
+    });
+
+    it('returns an array of transformed entities', () => {
+        const state = {};
+        const funcSelector: FEATURE_SELECTOR<typeof state, Entity> & jasmine.Spy = <any>jasmine.createSpy();
+        const selectorRoot = rootEntity(funcSelector, () => 'transformed');
+        const selector = rootEntities(selectorRoot);
+
+        const entity1 = Symbol();
+        const entity2 = Symbol();
+        funcSelector.and.returnValue({
+            entities: {
+                1: entity1,
+                2: entity2,
+            },
+        });
+
+        const actual = selector(state, [1, 2]);
+        expect(actual).toEqual(['transformed', 'transformed']);
     });
 });

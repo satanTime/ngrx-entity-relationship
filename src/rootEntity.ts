@@ -14,18 +14,18 @@ import {normalizeSelector} from './utils';
 export function rootEntity<STORE, ENTITY>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
-): HANDLER_ROOT_ENTITY<STORE, ENTITY, ID_TYPES>;
-export function rootEntity<STORE, ENTITY>(
+): HANDLER_ROOT_ENTITY<STORE, ENTITY, ENTITY, ID_TYPES>;
+export function rootEntity<STORE, ENTITY, TRANSFORMED>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
-    transformer: TRANSFORMER<ENTITY>,
+    transformer: TRANSFORMER<ENTITY, TRANSFORMED>,
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
-): HANDLER_ROOT_ENTITY<STORE, ENTITY, ID_TYPES>;
-export function rootEntity<STORE, ENTITY>(
+): HANDLER_ROOT_ENTITY<STORE, ENTITY, TRANSFORMED, ID_TYPES>;
+export function rootEntity<STORE, ENTITY, TRANSFORMED>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
-    deside?: TRANSFORMER<ENTITY> | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
+    deside?: TRANSFORMER<ENTITY, TRANSFORMED> | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
     ...relationships: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
-): HANDLER_ROOT_ENTITY<STORE, ENTITY, ID_TYPES> {
-    let transformer: undefined | TRANSFORMER<ENTITY>;
+): HANDLER_ROOT_ENTITY<STORE, ENTITY, ENTITY | TRANSFORMED, ID_TYPES> {
+    let transformer: undefined | TRANSFORMER<ENTITY, TRANSFORMED>;
     if (isBuiltInSelector<STORE, ENTITY>(deside)) {
         relationships = [deside, ...relationships];
     } else {
@@ -38,7 +38,7 @@ export function rootEntity<STORE, ENTITY>(
     const callback = (state: STORE, id: ID_TYPES) => {
         const cacheData = cacheMap.get(id);
         let cacheRefs: HANDLER_CACHE<STORE, UNKNOWN> = [];
-        let cacheValue: undefined | ENTITY;
+        let cacheValue: undefined | TRANSFORMED | ENTITY;
         if (cacheData && cacheData[0]) {
             cacheRefs = cacheData[0];
         }
