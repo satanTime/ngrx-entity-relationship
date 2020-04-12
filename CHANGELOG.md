@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.8.0...v0.8.1) (2020-04-12)
+
+### Features
+
+-   support of IE ([3c63437](https://github.com/satanTime/ngrx-entity-relationship/commit/3c634370b898cc59e1bb583b79fe9c513604f4a1))
+
 ## [0.8.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.7.0...v0.8.0) (2020-04-12)
 
 ### Features
