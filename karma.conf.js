@@ -31,8 +31,17 @@ module.exports = function (config) {
             tsconfig: 'tsconfig.spec.json',
         },
         coverageReporter: {
-            type: 'html',
             dir: './test-reports/coverage',
+            reporters: [
+                {
+                    type: 'lcov',
+                    subdir: 'lcov',
+                },
+                {
+                    type: 'html',
+                    subdir: 'html',
+                },
+            ],
         },
         junitReporter: {
             outputDir: require('path').join(__dirname, './test-reports'),
