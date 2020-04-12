@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.8.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.7.0...v0.8.0) (2020-04-12)
+
+### Features
+
+-   Coverage ([cd3bc39](https://github.com/satanTime/ngrx-entity-relationship/commit/cd3bc3902456120a9d6033b8e9bd6d5cedae1f82))
+-   extensive and smart caching ([713a610](https://github.com/satanTime/ngrx-entity-relationship/commit/713a610755c8f1cc49c014c21a71630844643ede)), closes [#6](https://github.com/satanTime/ngrx-entity-relationship/issues/6)
+-   support of release of selectors' cache ([239f3de](https://github.com/satanTime/ngrx-entity-relationship/commit/239f3de7f27454e2d72a7d1f96e4fbbdd56ca511))
+-   transformation to anything ([8bd859c](https://github.com/satanTime/ngrx-entity-relationship/commit/8bd859ca31245078c8220001a92ce22dc8e5d2f1)), closes [#7](https://github.com/satanTime/ngrx-entity-relationship/issues/7)
+
 ## [0.7.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.6.3...v0.7.0) (2020-04-11)
 
 ### Features
