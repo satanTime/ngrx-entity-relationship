@@ -27,6 +27,7 @@
         "@ngrx/effects": "^9.0.0",
         "@ngrx/entity": "^9.0.0",
         "@ngrx/store": "^9.0.0",
+        "classlist.js": "^1.1.20150312",
         "rxjs": "~6.5.4",
         "tslib": "^1.10.0",
         "zone.js": "~0.10.2"

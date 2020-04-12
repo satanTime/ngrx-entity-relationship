@@ -24,13 +24,14 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED>(
 export function rootEntity<STORE, ENTITY, TRANSFORMED>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
     deside?: TRANSFORMER<ENTITY, TRANSFORMED> | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
-    ...relationships: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
 ): HANDLER_ROOT_ENTITY<STORE, ENTITY, ENTITY | TRANSFORMED, ID_TYPES> {
+    let relationships: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>> = [...arguments];
+    relationships = relationships.slice(1);
+
     let transformer: undefined | TRANSFORMER<ENTITY, TRANSFORMED>;
-    if (isBuiltInSelector<STORE, ENTITY>(deside)) {
-        relationships = [deside, ...relationships];
-    } else {
+    if (!isBuiltInSelector<STORE, ENTITY>(deside)) {
         transformer = deside;
+        relationships = relationships.slice(1);
     }
     const {collection: funcSelector, id: idSelector} = normalizeSelector(featureSelector);
 

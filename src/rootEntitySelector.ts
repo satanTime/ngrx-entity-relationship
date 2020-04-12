@@ -18,10 +18,12 @@ export function rootEntitySelector<STORE, ENTITY, TRANSFORMED>(
 ): (
     ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
 ) => HANDLER_ROOT_ENTITY<STORE, ENTITY, ENTITY | TRANSFORMED, ID_TYPES> {
-    const callback = (...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>) =>
-        transformer
+    function callback(): HANDLER_ROOT_ENTITY<STORE, ENTITY, ENTITY | TRANSFORMED, ID_TYPES> {
+        const relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>> = [...arguments];
+        return transformer
             ? rootEntity(featureSelector, transformer, ...relations)
             : rootEntity(featureSelector, ...relations);
+    }
     callback.ngrxEntityRelationship = 'rootEntitySelector';
 
     return callback;

@@ -22,7 +22,22 @@ export function childrenEntities<
     keyId: RELATED_KEY_IDS,
     keyValue: RELATED_KEY_VALUES_ARRAYS,
     ...relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
+): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY>;
+
+export function childrenEntities<
+    STORE,
+    PARENT_ENTITY,
+    RELATED_ENTITY,
+    RELATED_KEY_IDS extends ID_FILTER_PROPS<RELATED_ENTITY, ID_TYPES>,
+    RELATED_KEY_VALUES_ARRAYS extends VALUES_FILTER_PROPS<PARENT_ENTITY, Array<RELATED_ENTITY>>
+>(
+    featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
+    keyId: RELATED_KEY_IDS,
+    keyValue: RELATED_KEY_VALUES_ARRAYS,
 ): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
+    let relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>> = [...arguments];
+    relationships = relationships.slice(3);
+
     const {collection: funcSelector, id: idSelector} = normalizeSelector(featureSelector);
     const emptyResult: Map<UNKNOWN, UNKNOWN> = new Map();
 
