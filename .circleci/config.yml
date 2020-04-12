@@ -8,7 +8,7 @@ jobs:
             - restore_cache:
                   key: root-cache-{{ checksum "package-lock.json" }}
             - run:
-                  name: install-root-dependencies
+                  name: NPM Install
                   command: npm install
 
             - save_cache:
@@ -16,11 +16,14 @@ jobs:
                   paths:
                       - ./node_modules
             - run:
-                  name: root-lint
+                  name: Lint
                   command: npm run lint
             - run:
-                  name: root-test
-                  command: npm run test -- --single-run --no-progress
+                  name: Tests
+                  command: npm run test -- --single-run --no-progress --coverage
+            - run:
+                  name: Collecting Coverage
+                  command: ./node_modules/coveralls/bin/coveralls.js < test-reports/coverage/lcov/lcov.info
             - store_test_results:
                   path: ./test-reports
             - store_artifacts:
@@ -36,7 +39,7 @@ jobs:
             - restore_cache:
                   key: a9-cache-{{ checksum "e2e/angular9/package-lock.json" }}
             - run:
-                  name: install-a-dependencies
+                  name: NPM Install for E2E
                   command: npm run i:a
             - save_cache:
                   key: a6-cache-{{ checksum "e2e/angular6/package-lock.json" }}
@@ -55,29 +58,29 @@ jobs:
                   paths:
                       - ./e2e/angular9/node_modules
             - run:
-                  name: root-spread
+                  name: Spreading Build
                   command: npm run build && npm run s:a
             - run:
-                  name: e2e:a6
+                  name: Angular 6 E2E
                   command: npm run e2e:a6
             - run:
-                  name: e2e:a7
+                  name: Angular 7 E2E
                   command: npm run e2e:a7
             - run:
-                  name: e2e:a8
+                  name: Angular 8 E2E
                   command: npm run e2e:a8
             - run:
-                  name: e2e:a9
+                  name: Angular 9 E2E
                   command: npm run e2e:a9
             - run:
-                  name: build:a6
+                  name: Angular 6 Build
                   command: npm run b:a6
             - run:
-                  name: build:a7
+                  name: Angular 7 Build
                   command: npm run b:a7
             - run:
-                  name: build:a8
+                  name: Angular 8 Build
                   command: npm run b:a8
             - run:
-                  name: build:a9
+                  name: Angular 9 Build
                   command: npm run b:a9
