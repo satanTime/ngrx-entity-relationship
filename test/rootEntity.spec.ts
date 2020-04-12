@@ -110,7 +110,7 @@ describe('rootEntity', () => {
         expect(entity4).not.toBe(entity3);
     });
 
-    it('returns cached value when the original entity has not been changed', () => {
+    it('returns cached value when the original entity has not been changed unless the cache release', () => {
         const state = {
             feature: createEntityAdapter<Entity>().getInitialState(),
         };
@@ -133,9 +133,14 @@ describe('rootEntity', () => {
             },
         };
         expect(selector(state, 'id1')).toBe(entity);
+
+        // checking that release resets cache.
+        selector.release();
+        expect(selector(state, 'id1')).not.toBe(entity);
+        expect(selector(state, 'id1')).toEqual(entity);
     });
 
-    it('returns cached value when the related entity has not been changed', () => {
+    it('returns cached value when the related entity has not been changed unless the cache release', () => {
         const state = {
             feature1: createEntityAdapter<Entity>().getInitialState(),
             feature2: createEntityAdapter<Entity>().getInitialState(),
@@ -158,6 +163,7 @@ describe('rootEntity', () => {
 
         const rel = <jasmine.Spy & HANDLER_RELATED_ENTITY<typeof state, Entity>>(<any>jasmine.createSpy());
         rel.ngrxEntityRelationship = 'spy';
+        rel.release = jasmine.createSpy('rel:release');
         rel.and.callFake((cachePrefix, currentState, cache) => {
             const symbol = Symbol();
             cache.push([cachePrefix, () => state.feature2, 'id2', state.feature2.entities.id2]);
@@ -187,9 +193,15 @@ describe('rootEntity', () => {
         const entity2 = selector(state, 'id1');
         expect(entity2).not.toBe(entity1);
         expect(entity2).toEqual(state.feature1.entities.id1);
+
+        // checking that release resets cache.
+        expect(selector(state, 'id1')).toBe(entity2);
+        selector.release();
+        expect(selector(state, 'id1')).not.toBe(entity2);
+        expect(selector(state, 'id1')).toEqual(entity2);
     });
 
-    it('returns cached value when the related entity set has not been changed', () => {
+    it('returns cached value when the related entity set has not been changed unless the cache release', () => {
         const state = {
             feature1: createEntityAdapter<Entity>().getInitialState(),
             feature2: createEntityAdapter<Entity>().getInitialState(),
@@ -212,6 +224,7 @@ describe('rootEntity', () => {
 
         const rel = <jasmine.Spy & HANDLER_RELATED_ENTITY<typeof state, Entity>>(<any>jasmine.createSpy());
         rel.ngrxEntityRelationship = 'spy';
+        rel.release = jasmine.createSpy('rel:release');
         rel.and.callFake((cachePrefix, currentState, cache) => {
             const symbol = Symbol();
             cache.push([cachePrefix, () => state.feature2, undefined, state.feature2.entities]);
@@ -237,6 +250,12 @@ describe('rootEntity', () => {
         const entity2 = selector(state, 'id1');
         expect(entity2).not.toBe(entity1);
         expect(entity2).toEqual(state.feature1.entities.id1);
+
+        // checking that release resets cache.
+        expect(selector(state, 'id1')).toBe(entity2);
+        selector.release();
+        expect(selector(state, 'id1')).not.toBe(entity2);
+        expect(selector(state, 'id1')).toEqual(entity2);
     });
 
     it('calls relationships with an incrementing prefix and arguments', () => {
@@ -260,6 +279,24 @@ describe('rootEntity', () => {
         const entity = selector(state, 'id1');
         expect(rel1).toHaveBeenCalledWith('1', state, jasmine.anything(), entity, selector.idSelector);
         expect(rel2).toHaveBeenCalledWith('2', state, jasmine.anything(), entity, selector.idSelector);
+    });
+
+    it('calls relationships.release on own release call', () => {
+        const state = {
+            feature: createEntityAdapter<Entity>().getInitialState(),
+        };
+        const rel1: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy();
+        rel1.ngrxEntityRelationship = 'spy';
+        rel1.release = jasmine.createSpy('rel1.release');
+        const rel2: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy();
+        rel2.ngrxEntityRelationship = 'spy';
+        rel2.release = jasmine.createSpy('rel2.release');
+
+        expect(rel1.release).not.toHaveBeenCalled();
+        expect(rel2.release).not.toHaveBeenCalled();
+        rootEntity<typeof state, Entity>(v => v.feature, rel1, rel2).release();
+        expect(rel1.release).toHaveBeenCalled();
+        expect(rel2.release).toHaveBeenCalled();
     });
 
     it('uses transformer', () => {

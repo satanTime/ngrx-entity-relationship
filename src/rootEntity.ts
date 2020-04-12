@@ -91,6 +91,12 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED>(
     };
     callback.ngrxEntityRelationship = 'rootEntity';
     callback.idSelector = idSelector;
+    callback.release = () => {
+        cacheMap.clear();
+        for (const relationship of relationships || []) {
+            relationship.release();
+        }
+    };
 
     return callback;
 }

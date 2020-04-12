@@ -315,6 +315,32 @@ describe('relatedEntity', () => {
         expect(rel2).toHaveBeenCalledWith('randRelatedEntity:2', state, cache, entity.parent, selector.idSelector);
     });
 
+    it('calls relationships.release on own release call', () => {
+        const state = {
+            feature: createEntityAdapter<Entity>().getInitialState(),
+        };
+        const rel1: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy();
+        rel1.ngrxEntityRelationship = 'spy';
+        rel1.release = jasmine.createSpy('rel1.release');
+        const rel2: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy();
+        rel2.ngrxEntityRelationship = 'spy';
+        rel2.release = jasmine.createSpy('rel2.release');
+
+        const selector = relatedEntity<typeof state, Entity, Entity, 'parentId', never, 'parent', never>(
+            v => v.feature,
+            'parentId',
+            'parent',
+            rel1,
+            rel2,
+        );
+
+        expect(rel1.release).not.toHaveBeenCalled();
+        expect(rel2.release).not.toHaveBeenCalled();
+        selector.release();
+        expect(rel1.release).toHaveBeenCalled();
+        expect(rel2.release).toHaveBeenCalled();
+    });
+
     it('supports EntityCollectionService as a selector', () => {
         const state = {
             feature: createEntityAdapter<Entity>().getInitialState(),

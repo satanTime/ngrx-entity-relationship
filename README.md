@@ -26,6 +26,7 @@
 * [rootEntities function](#rootentities-function)
 * [relationships pipe operator](#relationships-pipe-operator)
 * [rootEntityFlags options](#rootentityflags-options)
+* [Releasing cache](#releasing-cache)
 
 ## Problem
 
@@ -454,6 +455,19 @@ There's a flag `rootEntityFlags.disabled` that can be useful for disabling selec
 Simply set it to `true` before you start update and back to `false` after it.
 
 **When you set it back to `false` you need to share the store to get updated entities**.
+
+### Releasing cache
+
+Every function of the library that works with data selection returns a structure that has `release` function.
+Its behavior and purpose is the as [Memoized Selectors](https://ngrx.io/guide/store/selectors#resetting-memoized-selectors) of `ngrx/store`.
+Once you don't need a selector simply call `release` to reset the memoized value.
+```typescript
+const selectUser = rootEntity(selectUserState);
+store.select(selectUser, 1).subsribe(user => {
+    // ...some activity
+    selectUser.release();
+});
+```
 
 ## Additional examples
 
