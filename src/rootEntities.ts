@@ -28,18 +28,18 @@ export function rootEntities<STORE, ENTITY, TRANSFORMED>(
         }
 
         const value: Array<ENTITY | TRANSFORMED> = [];
-        for (const itemId of ids) {
-            const item = rootSelector(state, itemId);
-            if (!item) {
+        for (const id of ids) {
+            const entity = rootSelector(state, id);
+            if (!entity) {
                 continue;
             }
-            value.push(item);
+            value.push(entity);
         }
 
         let index = 0;
-        let equal = cacheValue && value.length === cacheValue.length;
-        for (const item of value) {
-            if (!cacheValue || !cacheValue[index] || cacheValue[index] !== item) {
+        let equal = value.length === cacheValue.length;
+        for (const entity of value) {
+            if (!equal || !cacheValue || !cacheValue[index] || cacheValue[index] !== entity) {
                 equal = false;
                 break;
             }

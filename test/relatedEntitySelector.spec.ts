@@ -55,7 +55,7 @@ describe('relatedEntitySelector', () => {
                 name: 'name2',
             },
         };
-        selector('randRelatedEntitySelector', state, [], entity, selector.idSelector);
+        selector('randRelatedEntitySelector', state, new Map(), entity, selector.idSelector);
         expect(entity.parent).toEqual(
             jasmine.objectContaining({
                 rel1: true,

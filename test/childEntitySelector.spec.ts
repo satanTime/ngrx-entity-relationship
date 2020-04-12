@@ -55,7 +55,7 @@ describe('childEntitySelector', () => {
             },
         };
 
-        const cache = [];
+        const cache = new Map();
         selector('', state, cache, entity, selector.idSelector);
         expect(entity.child).toEqual(
             jasmine.objectContaining({

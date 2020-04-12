@@ -36,7 +36,7 @@ describe('childrenEntities', () => {
             name: 'name1',
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.child).toEqual([]);
     });
 
@@ -75,7 +75,7 @@ describe('childrenEntities', () => {
             },
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.child).toEqual([
             {
                 id: 'id2',
@@ -114,7 +114,7 @@ describe('childrenEntities', () => {
             },
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.child[0]).not.toBe(state.feature.entities.id2);
     });
 
@@ -134,14 +134,16 @@ describe('childrenEntities', () => {
             name: 'name1',
         };
 
-        const cache = [];
+        const cache = new Map();
         selector('randChildrenEntities', state, cache, entity, selector.idSelector);
-        expect(cache.length).toBe(1);
-        expect(cache[0].length).toBe(4);
-        expect(cache[0][0]).toBe('randChildrenEntities');
-        expect(cache[0][1]).toBe(featureSelector);
-        expect(cache[0][2]).toBe(null);
-        expect(cache[0][3]).toBe(state.feature.entities);
+        expect(cache.size).toBe(1);
+        expect(cache.get('randChildrenEntities').size).toBe(1);
+        expect(cache.get('randChildrenEntities').get('!id1')[0].size).toBe(1);
+        expect(cache.get('randChildrenEntities').get('!id1')[0].get(featureSelector).size).toBe(1);
+        expect(cache.get('randChildrenEntities').get('!id1')[0].get(featureSelector).get(null)).toBe(
+            state.feature.entities,
+        );
+        expect(cache.get('randChildrenEntities').get('!id1')[1]).toEqual([]);
     });
 
     it('sets the cache when the children entities exist', () => {
@@ -169,22 +171,40 @@ describe('childrenEntities', () => {
             },
         };
 
-        const cache = [];
+        const cache = new Map();
         selector('randChildrenEntities', state, cache, entity, selector.idSelector);
-        expect(cache.length).toBe(2);
+        expect(cache.size).toBe(1);
+        expect(cache.get('randChildrenEntities').size).toBe(3);
+        expect(cache.get('randChildrenEntities').get('!id1')[0].size).toBe(1);
+        expect(cache.get('randChildrenEntities').get('!id1')[0].get(featureSelector).size).toBe(1);
+        expect(cache.get('randChildrenEntities').get('!id1')[0].get(featureSelector).get(null)).toBe(
+            state.feature.entities,
+        );
+        expect(cache.get('randChildrenEntities').get('!id1')[1]).toEqual(['id2']);
 
-        expect(cache[0].length).toBe(5);
-        expect(cache[0][0]).toBe('randChildrenEntities');
-        expect(cache[0][1]).toBe(featureSelector);
-        expect(cache[0][2]).toBe('id2');
-        expect(cache[0][3]).toBe(state.feature.entities.id2);
-        expect(cache[0][4]).toBe(entity.child[0]);
+        expect(cache.get('randChildrenEntities').get('#id2:id2')[0].size).toBe(1);
+        expect(cache.get('randChildrenEntities').get('#id2:id2')[0].get(featureSelector).size).toBe(2);
+        expect(cache.get('randChildrenEntities').get('#id2:id2')[0].get(featureSelector).get(null)).toBe(
+            state.feature.entities,
+        );
+        expect(cache.get('randChildrenEntities').get('#id2:id2')[0].get(featureSelector).get('id2')).toBe(
+            state.feature.entities.id2,
+        );
+        expect(cache.get('randChildrenEntities').get('#id2:id2')[1]).not.toBe(state.feature.entities.id2);
+        expect(cache.get('randChildrenEntities').get('#id2:id2')[1]).toEqual(state.feature.entities.id2);
 
-        expect(cache[1].length).toBe(4);
-        expect(cache[1][0]).toBe('randChildrenEntities');
-        expect(cache[1][1]).toBe(featureSelector);
-        expect(cache[1][2]).toBe(null);
-        expect(cache[1][3]).toBe(state.feature.entities);
+        expect(cache.get('randChildrenEntities').get('#id2')[0].size).toBe(1);
+        expect(cache.get('randChildrenEntities').get('#id2')[0].get(featureSelector).size).toBe(2);
+        expect(cache.get('randChildrenEntities').get('#id2')[0].get(featureSelector).get(null)).toBe(
+            state.feature.entities,
+        );
+        expect(cache.get('randChildrenEntities').get('#id2')[0].get(featureSelector).get('id2')).toBe(
+            state.feature.entities.id2,
+        );
+        expect(cache.get('randChildrenEntities').get('#id2')[1].length).toBe(1);
+        expect(cache.get('randChildrenEntities').get('#id2')[1][0]).toBe(
+            cache.get('randChildrenEntities').get('#id2:id2')[1],
+        );
     });
 
     it('calls relationships with an incrementing prefix and arguments', () => {
@@ -219,10 +239,10 @@ describe('childrenEntities', () => {
             },
         };
 
-        const cache = [];
+        const cache = new Map();
         selector('randChildrenEntities', state, cache, entity, selector.idSelector);
-        expect(rel1).toHaveBeenCalledWith('randChildrenEntities:1', state, cache, entity.child[0], selector.idSelector);
-        expect(rel2).toHaveBeenCalledWith('randChildrenEntities:2', state, cache, entity.child[0], selector.idSelector);
+        expect(rel1).toHaveBeenCalledWith('randChildrenEntities:0', state, cache, entity.child[0], selector.idSelector);
+        expect(rel2).toHaveBeenCalledWith('randChildrenEntities:1', state, cache, entity.child[0], selector.idSelector);
     });
 
     it('calls relationships.release on own release call', () => {
@@ -287,7 +307,7 @@ describe('childrenEntities', () => {
             },
         };
 
-        const cache = [];
+        const cache = new Map();
         selector('randChildrenEntities', state, cache, entity, selector.idSelector);
         expect(entity.child).toEqual([
             {
@@ -329,7 +349,7 @@ describe('childrenEntities', () => {
             },
         };
 
-        const cache = [];
+        const cache = new Map();
         selector('randChildrenEntities', state, cache, entity, selector.idSelector);
         expect(entity.child).toEqual([
             {
@@ -374,7 +394,7 @@ describe('childrenEntities', () => {
             },
         };
 
-        const cache = [];
+        const cache = new Map();
         selector('randChildrenEntities', state, cache, entity, selector.idSelector);
         expect(entity.child).toEqual([
             {
@@ -419,7 +439,7 @@ describe('childrenEntities', () => {
             },
         };
 
-        const cache = [];
+        const cache = new Map();
         selector('randChildrenEntities', state, cache, entity, selector.idSelector);
         expect(entity.child).toEqual([
             {
@@ -465,7 +485,7 @@ describe('childrenEntities', () => {
             },
         };
 
-        const cache = [];
+        const cache = new Map();
         selector('randChildrenEntities', state, cache, entity, selector.idSelector);
         expect(entity.child).toEqual([
             {

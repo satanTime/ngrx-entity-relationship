@@ -38,15 +38,15 @@ describe('relatedEntity', () => {
             name: 'name1',
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.parent).toBeUndefined();
 
         entity.parentId = '';
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.parent).toBeUndefined();
 
         entity.parentId = 0;
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.parent).toBeUndefined();
     });
 
@@ -74,7 +74,7 @@ describe('relatedEntity', () => {
             },
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.parent).toEqual({
             id: 'id2',
             name: 'name2',
@@ -105,7 +105,7 @@ describe('relatedEntity', () => {
             },
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.parents).toEqual([
             {
                 id: 'id2',
@@ -130,7 +130,7 @@ describe('relatedEntity', () => {
             parentId: 'id2',
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.parent).toBeUndefined();
     });
 
@@ -150,7 +150,7 @@ describe('relatedEntity', () => {
             parentsId: ['id2'],
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.parents).toEqual([]);
     });
 
@@ -178,7 +178,7 @@ describe('relatedEntity', () => {
             },
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.parent).toEqual(state.feature.entities.id2);
         expect(entity.parent).not.toBe(state.feature.entities.id2);
     });
@@ -207,7 +207,7 @@ describe('relatedEntity', () => {
             },
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.parents[0]).toEqual(state.feature.entities.id2);
         expect(entity.parents[0]).not.toBe(state.feature.entities.id2);
     });
@@ -237,14 +237,30 @@ describe('relatedEntity', () => {
             },
         };
 
-        const cache = [];
+        const cache = new Map();
         selector('randRelatedEntity', state, cache, entity, selector.idSelector);
-        expect(cache[0].length).toBe(5);
-        expect(cache[0][0]).toBe('randRelatedEntity');
-        expect(cache[0][1]).toBe(featureSelector);
-        expect(cache[0][2]).toBe('id2');
-        expect(cache[0][3]).toBe(state.feature.entities.id2);
-        expect(cache[0][4]).toBe(entity.parent);
+        expect(cache.size).toBe(1);
+        expect(cache.get('randRelatedEntity').size).toBe(2);
+        expect(cache.get('randRelatedEntity').get('#id2')[0].size).toBe(1);
+        expect(cache.get('randRelatedEntity').get('#id2')[0].get(featureSelector).size).toBe(2);
+        expect(cache.get('randRelatedEntity').get('#id2')[0].get(featureSelector).get(null)).toBe(
+            state.feature.entities,
+        );
+        expect(cache.get('randRelatedEntity').get('#id2')[0].get(featureSelector).get('id2')).toBe(
+            state.feature.entities.id2,
+        );
+        expect(cache.get('randRelatedEntity').get('#id2')[1]).not.toBe(state.feature.entities.id2);
+        expect(cache.get('randRelatedEntity').get('#id2')[1]).toEqual(state.feature.entities.id2);
+        expect(cache.get('randRelatedEntity').get('#id2:id2')[0].size).toBe(1);
+        expect(cache.get('randRelatedEntity').get('#id2:id2')[0].get(featureSelector).size).toBe(2);
+        expect(cache.get('randRelatedEntity').get('#id2:id2')[0].get(featureSelector).get(null)).toBe(
+            state.feature.entities,
+        );
+        expect(cache.get('randRelatedEntity').get('#id2:id2')[0].get(featureSelector).get('id2')).toBe(
+            state.feature.entities.id2,
+        );
+        expect(cache.get('randRelatedEntity').get('#id2:id2')[1]).not.toBe(state.feature.entities.id2);
+        expect(cache.get('randRelatedEntity').get('#id2:id2')[1]).toEqual(state.feature.entities.id2);
     });
 
     it('sets the cache when the related entity does not exist', () => {
@@ -264,13 +280,17 @@ describe('relatedEntity', () => {
             parentId: 'id2',
         };
 
-        const cache = [];
+        const cache = new Map();
         selector('randRelatedEntity', state, cache, entity, selector.idSelector);
-        expect(cache[0].length).toBe(4);
-        expect(cache[0][0]).toBe('randRelatedEntity');
-        expect(cache[0][1]).toBe(featureSelector);
-        expect(cache[0][2]).toBe('id2');
-        expect(cache[0][3]).toBe(undefined);
+        expect(cache.size).toBe(1);
+        expect(cache.get('randRelatedEntity').size).toBe(1);
+        expect(cache.get('randRelatedEntity').get('#id2')[0].size).toBe(1);
+        expect(cache.get('randRelatedEntity').get('#id2')[0].get(featureSelector).size).toBe(2);
+        expect(cache.get('randRelatedEntity').get('#id2')[0].get(featureSelector).get(null)).toBe(
+            state.feature.entities,
+        );
+        expect(cache.get('randRelatedEntity').get('#id2')[0].get(featureSelector).get('id2')).toBeUndefined();
+        expect(cache.get('randRelatedEntity').get('#id2')[1]).toBeUndefined();
     });
 
     it('calls relationships with an incrementing prefix and arguments', () => {
@@ -309,10 +329,10 @@ describe('relatedEntity', () => {
             },
         };
 
-        const cache = [];
+        const cache = new Map();
         selector('randRelatedEntity', state, cache, entity, selector.idSelector);
-        expect(rel1).toHaveBeenCalledWith('randRelatedEntity:1', state, cache, entity.parent, selector.idSelector);
-        expect(rel2).toHaveBeenCalledWith('randRelatedEntity:2', state, cache, entity.parent, selector.idSelector);
+        expect(rel1).toHaveBeenCalledWith('randRelatedEntity:0', state, cache, entity.parent, selector.idSelector);
+        expect(rel2).toHaveBeenCalledWith('randRelatedEntity:1', state, cache, entity.parent, selector.idSelector);
     });
 
     it('calls relationships.release on own release call', () => {
@@ -372,7 +392,7 @@ describe('relatedEntity', () => {
             },
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.parent).toEqual({
             id: 'id2',
             name: 'name2',
@@ -404,7 +424,7 @@ describe('relatedEntity', () => {
             },
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.parent).toEqual({
             id: 'id2',
             name: 'name2',
@@ -440,7 +460,7 @@ describe('relatedEntity', () => {
             },
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.parent).toEqual({
             uuid: 'id2',
             name: 'name2',
@@ -476,7 +496,7 @@ describe('relatedEntity', () => {
             },
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.parent).toEqual({
             5: 'id2',
             name: 'name2',
@@ -513,7 +533,7 @@ describe('relatedEntity', () => {
             },
         };
 
-        selector('', state, [], entity, selector.idSelector);
+        selector('', state, new Map(), entity, selector.idSelector);
         expect(entity.parent).toEqual({
             feature: 'id2',
             name: 'name2',

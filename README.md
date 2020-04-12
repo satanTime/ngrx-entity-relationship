@@ -35,7 +35,7 @@ Imagine that we have the next models in `ngrx/store`:
 export interface User {
     id: string;
     firstName: string;
-    firstLast: string;
+    lastName: string;
 
     company?: Company;
     companyId?: string;

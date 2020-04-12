@@ -1,7 +1,8 @@
 import {rootEntityFlags} from './rootEntityFlags';
 import {
+    CACHE,
+    CACHE_CHECKS_SET,
     FEATURE_SELECTOR,
-    HANDLER_CACHE,
     HANDLER_RELATED_ENTITY,
     HANDLER_ROOT_ENTITY,
     ID_TYPES,
@@ -9,7 +10,7 @@ import {
     TRANSFORMER,
     UNKNOWN,
 } from './types';
-import {normalizeSelector} from './utils';
+import {mergeCache, normalizeSelector, verifyCache} from './utils';
 
 export function rootEntity<STORE, ENTITY>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
@@ -33,66 +34,69 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED>(
     }
     const {collection: funcSelector, id: idSelector} = normalizeSelector(featureSelector);
 
-    const cacheMap = new Map<ID_TYPES, [HANDLER_CACHE<STORE, UNKNOWN>, UNKNOWN?]>();
+    const cacheLevel = '0';
+    const cache: CACHE<STORE> = new Map();
 
     const callback = (state: STORE, id: ID_TYPES) => {
-        const cacheData = cacheMap.get(id);
-        let cacheRefs: HANDLER_CACHE<STORE, UNKNOWN> = [];
-        let cacheValue: undefined | TRANSFORMED | ENTITY;
-        if (cacheData && cacheData[0]) {
-            cacheRefs = cacheData[0];
-        }
-        if (cacheData && cacheData[1]) {
-            cacheValue = cacheData[1] as ENTITY;
-        }
-
-        if (rootEntityFlags.disabled) {
-            return cacheValue;
-        }
-
-        if (cacheRefs.length) {
-            let cached = true;
-            for (const [, selector, itemId, value] of cacheRefs) {
-                if (!itemId && selector(state).entities !== value) {
-                    cached = false;
-                    break;
-                }
-                if (itemId && selector(state).entities[itemId] !== value) {
-                    cached = false;
-                    break;
-                }
-            }
-            if (cached) {
-                return cacheValue;
-            }
-            cacheRefs = [];
-        }
-
-        const featureState = funcSelector(state);
-        if (!featureState || !featureState.entities[id]) {
-            cacheRefs.push(['', funcSelector, id, featureState.entities[id]]);
+        if (!id) {
             return;
         }
 
-        // we have to clone it because we are going to update it with relations.
-        cacheValue = {...featureState.entities[id]} as ENTITY;
-
-        let incrementedPrefix = 0;
-        for (const relationship of relationships) {
-            incrementedPrefix += 1;
-            relationship(`${incrementedPrefix}`, state, cacheRefs, cacheValue, idSelector);
+        const featureState = funcSelector(state);
+        let cacheDataLevel = cache.get(cacheLevel);
+        if (!cacheDataLevel) {
+            cacheDataLevel = new Map();
+            cache.set(cacheLevel, cacheDataLevel);
         }
 
-        cacheValue = transformer ? transformer(cacheValue) : cacheValue;
-        cacheRefs.push(['', funcSelector, id, featureState.entities[id], cacheValue]);
-        cacheMap.set(id, [cacheRefs, cacheValue]);
+        const cacheHash = `#${id}`;
+        let [checks, value]: [CACHE_CHECKS_SET<STORE>, UNKNOWN] = cacheDataLevel.get(cacheHash) || [
+            new Map(),
+            undefined,
+        ];
+        if (rootEntityFlags.disabled) {
+            return value;
+        }
+        if (verifyCache(state, checks)) {
+            return value;
+        }
 
-        return cacheValue;
+        // building a new value.
+        value = undefined;
+        checks = new Map();
+        checks.set(funcSelector, new Map());
+        checks.get(funcSelector)?.set(null, featureState.entities);
+        if (id) {
+            checks.get(funcSelector)?.set(id, featureState.entities[id]);
+        }
+
+        // the entity does not exist.
+        if (!featureState.entities[id]) {
+            cacheDataLevel.set(cacheHash, [checks, value]);
+            return value;
+        }
+
+        // we have to clone it because we are going to update it with relations.
+        value = {...featureState.entities[id]} as ENTITY;
+
+        let cacheRelLevelIndex = 0;
+        for (const relationship of relationships) {
+            const cacheRelLevel = `${cacheLevel}:${cacheRelLevelIndex}`;
+            const cacheRelHash = relationship(cacheRelLevel, state, cache, value, idSelector);
+            cacheRelLevelIndex += 1;
+            if (cacheRelHash) {
+                mergeCache(cache.get(cacheRelLevel)?.get(cacheRelHash)?.[0], checks);
+            }
+        }
+
+        value = transformer ? transformer(value) : value;
+        cacheDataLevel.set(cacheHash, [checks, value]);
+        return value;
     };
     callback.ngrxEntityRelationship = 'rootEntity';
     callback.idSelector = idSelector;
     callback.release = () => {
-        cacheMap.clear();
+        cache.clear();
         for (const relationship of relationships || []) {
             relationship.release();
         }
