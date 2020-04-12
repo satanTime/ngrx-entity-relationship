@@ -459,7 +459,8 @@ Simply set it to `true` before you start update and back to `false` after it.
 ### Releasing cache
 
 Every function of the library that works with data selection returns a structure that has `release` function.
-Its behavior and purpose is the as [Memoized Selectors](https://ngrx.io/guide/store/selectors#resetting-memoized-selectors) of `ngrx/store`.
+Its behavior and purpose is the same as
+[Memoized Selectors](https://ngrx.io/guide/store/selectors#resetting-memoized-selectors) of `ngrx/store`.
 Once you don't need a selector simply call `release` to reset the memoized value.
 ```typescript
 const selectUser = rootEntity(selectUserState);
