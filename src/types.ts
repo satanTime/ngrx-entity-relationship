@@ -43,12 +43,14 @@ export type HANDLER_ROOT_ENTITY<S, F, T, I> = {
     (state: S, id: I): undefined | T;
     ngrxEntityRelationship: string;
     idSelector: ID_SELECTOR<F>;
+    release(): void;
 };
 
 export type HANDLER_ROOT_ENTITIES<S, F, T, I> = {
     (state: S, id: Array<I>): Array<T>;
     ngrxEntityRelationship: string;
     idSelector: ID_SELECTOR<F>;
+    release(): void;
 };
 
 export type HANDLER_RELATED_ENTITY<S, E> = {
@@ -61,6 +63,7 @@ export type HANDLER_RELATED_ENTITY<S, E> = {
     ): void;
     ngrxEntityRelationship: string;
     idSelector: ID_SELECTOR<any /* TODO has to be a related entity */>;
+    release(): void;
 };
 
 export type EMPTY_TYPES = undefined | null;

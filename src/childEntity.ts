@@ -59,6 +59,11 @@ export function childEntity<
     };
     callback.ngrxEntityRelationship = 'childEntity';
     callback.idSelector = idSelector;
+    callback.release = () => {
+        for (const relationship of relationships || []) {
+            relationship.release();
+        }
+    };
 
     return callback;
 }

@@ -138,16 +138,20 @@ describe('rootEntities', () => {
         expect(actual4).toEqual([entity1, entity2]);
     });
 
-    it('returns the cached value when entities have not been changed', () => {
+    it('returns the cached value when entities have not been changed unless the cache release', () => {
         const state = {};
         const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>(
             jasmine.createSpy()
         );
+        selectorRoot.release = jasmine.createSpy('selectorRoot.release');
         const selector = rootEntities(selectorRoot);
 
         const entity1 = Symbol();
         const entity2 = Symbol();
         selectorRoot.and.returnValues(
+            entity1,
+            entity2,
+
             entity1,
             entity2,
 
@@ -160,6 +164,11 @@ describe('rootEntities', () => {
 
         const actual2 = selector(state, [1, 2]);
         expect(actual2).toBe(actual1);
+
+        selector.release();
+        const actual3 = selector(state, [1, 2]);
+        expect(actual3).not.toBe(actual2);
+        expect(actual3).toEqual(actual2);
     });
 
     it('returns an array of transformed entities', () => {
@@ -179,5 +188,14 @@ describe('rootEntities', () => {
 
         const actual = selector(state, [1, 2]);
         expect(actual).toEqual(['transformed', 'transformed']);
+    });
+
+    it('calls rootEntity.release on own release call', () => {
+        const selectorRoot: HANDLER_ROOT_ENTITY<{}, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>jasmine.createSpy();
+        selectorRoot.release = jasmine.createSpy('selectorRoot.release');
+
+        expect(selectorRoot.release).not.toHaveBeenCalled();
+        rootEntities(selectorRoot).release();
+        expect(selectorRoot.release).toHaveBeenCalled();
     });
 });
