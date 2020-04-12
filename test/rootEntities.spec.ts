@@ -1,5 +1,4 @@
-import {rootEntities, rootEntityFlags} from '../src';
-import {rootEntity} from '../src/rootEntity';
+import {rootEntities, rootEntity, rootEntityFlags} from '../src';
 import {FEATURE_SELECTOR, HANDLER_ROOT_ENTITY, ID_TYPES} from '../src/types';
 
 describe('rootEntities', () => {

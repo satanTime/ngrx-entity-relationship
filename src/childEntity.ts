@@ -1,6 +1,7 @@
 import {
+    CACHE,
+    CACHE_CHECKS_SET,
     FEATURE_SELECTOR,
-    HANDLER_CACHE,
     HANDLER_RELATED_ENTITY,
     ID_FILTER_PROPS,
     ID_SELECTOR,
@@ -8,7 +9,7 @@ import {
     UNKNOWN,
     VALUES_FILTER_PROPS,
 } from './types';
-import {normalizeSelector} from './utils';
+import {mergeCache, normalizeSelector, verifyCache} from './utils';
 
 export function childEntity<
     STORE,
@@ -25,37 +26,85 @@ export function childEntity<
     const {collection: funcSelector, id: idSelector} = normalizeSelector(featureSelector);
 
     const callback = (
-        cachePrefix: string,
+        cacheLevel: string,
         state: STORE,
-        cacheRefs: HANDLER_CACHE<STORE, UNKNOWN>,
+        cache: CACHE<STORE>,
         source: PARENT_ENTITY,
         idParentSelector: ID_SELECTOR<PARENT_ENTITY>,
     ) => {
-        // a bit magic to relax generic types.
-        let relatedId: undefined | ID_TYPES;
-        const stateItems = funcSelector(state).entities;
-        for (const stateItem of Object.values(stateItems)) {
-            if (!stateItem || stateItem[keyId] !== (idParentSelector(source) as any) /* todo fix any A8 */) {
-                continue;
-            }
-            relatedId = idSelector(stateItem);
-            break;
+        const featureState = funcSelector(state);
+        const parentId = idParentSelector(source);
+
+        let cacheDataLevel = cache.get(cacheLevel);
+        if (!cacheDataLevel) {
+            cacheDataLevel = new Map();
+            cache.set(cacheLevel, cacheDataLevel);
         }
-        if (!relatedId) {
-            cacheRefs.push([cachePrefix, funcSelector, null, stateItems]);
-            return;
+
+        // maybe we don't need to scan the entities.
+        let [idChecks, id]: [CACHE_CHECKS_SET<STORE>, ID_TYPES | undefined] = cacheDataLevel.get(`!${parentId}`) || [
+            new Map(),
+            undefined,
+        ];
+        if (!verifyCache(state, idChecks)) {
+            id = undefined;
+            for (const entity of Object.values(featureState.entities)) {
+                if (
+                    !entity ||
+                    entity[keyId] !== ((parentId as any) as RELATED_ENTITY[RELATED_KEY_IDS]) // todo fix any A8
+                ) {
+                    continue;
+                }
+                id = idSelector(entity);
+                break;
+            }
+            idChecks = new Map();
+            idChecks.set(funcSelector, new Map());
+            idChecks.get(funcSelector)?.set(null, featureState.entities);
+            cacheDataLevel.set(`!${parentId}`, [idChecks, id]);
+        }
+        if (!id) {
+            return `!${parentId}`;
+        }
+
+        const cacheHash = `#${id}`;
+        let [checks, value]: [CACHE_CHECKS_SET<STORE>, UNKNOWN] = cacheDataLevel.get(cacheHash) || [
+            new Map(),
+            undefined,
+        ];
+        if (verifyCache(state, checks)) {
+            source[keyValue] = value;
+            return cacheHash;
+        }
+
+        // building a new value.
+        value = undefined;
+        checks = new Map();
+        checks.set(funcSelector, new Map());
+        checks.get(funcSelector)?.set(null, featureState.entities);
+        checks.get(funcSelector)?.set(id, featureState.entities[id]);
+
+        // the entity does not exist.
+        if (!featureState.entities[id]) {
+            cacheDataLevel.set(cacheHash, [checks, value]);
+            return cacheHash;
         }
 
         // we have to clone it because we are going to update it with relations.
-        const cacheValue = {...stateItems[relatedId]} as RELATED_ENTITY;
-        cacheRefs.push([cachePrefix, funcSelector, relatedId, stateItems[relatedId], cacheValue]);
+        value = {...featureState.entities[id]} as RELATED_ENTITY;
 
-        let incrementedPrefix = 0;
+        let cacheRelLevelIndex = 0;
         for (const relationship of relationships) {
-            incrementedPrefix += 1;
-            relationship(`${cachePrefix}:${incrementedPrefix}`, state, cacheRefs, cacheValue, idSelector);
+            const cacheRelLevel = `${cacheLevel}:${cacheRelLevelIndex}`;
+            const cacheRelHash = relationship(cacheRelLevel, state, cache, value, idSelector);
+            cacheRelLevelIndex += 1;
+            if (cacheRelHash) {
+                mergeCache(cache.get(cacheRelLevel)?.get(cacheRelHash)?.[0], checks);
+            }
         }
-        source[keyValue] = (cacheValue as any) as PARENT_ENTITY[RELATED_KEY_VALUES];
+        cacheDataLevel.set(cacheHash, [checks, value]);
+        source[keyValue] = value as PARENT_ENTITY[RELATED_KEY_VALUES];
+        return cacheHash;
     };
     callback.ngrxEntityRelationship = 'childEntity';
     callback.idSelector = idSelector;

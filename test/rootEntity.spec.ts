@@ -165,8 +165,12 @@ describe('rootEntity', () => {
         rel.ngrxEntityRelationship = 'spy';
         rel.release = jasmine.createSpy('rel:release');
         rel.and.callFake((cachePrefix, currentState, cache) => {
-            const symbol = Symbol();
-            cache.push([cachePrefix, () => state.feature2, 'id2', state.feature2.entities.id2]);
+            const relSelector = () => state.feature2;
+            cache.set(cachePrefix, new Map());
+            cache.get(cachePrefix).set('id2', [new Map(), Symbol()]);
+            cache.get(cachePrefix).get('id2')[0].set(relSelector, new Map());
+            cache.get(cachePrefix).get('id2')[0].get(relSelector).set('id2', state.feature2.entities.id2);
+            return 'id2';
         });
 
         const selector = rootEntity<typeof state, Entity>(v => v.feature1, rel);
@@ -226,8 +230,12 @@ describe('rootEntity', () => {
         rel.ngrxEntityRelationship = 'spy';
         rel.release = jasmine.createSpy('rel:release');
         rel.and.callFake((cachePrefix, currentState, cache) => {
-            const symbol = Symbol();
-            cache.push([cachePrefix, () => state.feature2, undefined, state.feature2.entities]);
+            const relSelector = () => state.feature2;
+            cache.set(cachePrefix, new Map());
+            cache.get(cachePrefix).set('id2', [new Map(), undefined]);
+            cache.get(cachePrefix).get('id2')[0].set(relSelector, new Map());
+            cache.get(cachePrefix).get('id2')[0].get(relSelector).set(null, state.feature2.entities);
+            return 'id2';
         });
 
         const selector = rootEntity<typeof state, Entity>(v => v.feature1, rel);
@@ -277,8 +285,8 @@ describe('rootEntity', () => {
             },
         };
         const entity = selector(state, 'id1');
-        expect(rel1).toHaveBeenCalledWith('1', state, jasmine.anything(), entity, selector.idSelector);
-        expect(rel2).toHaveBeenCalledWith('2', state, jasmine.anything(), entity, selector.idSelector);
+        expect(rel1).toHaveBeenCalledWith('0:0', state, jasmine.anything(), entity, selector.idSelector);
+        expect(rel2).toHaveBeenCalledWith('0:1', state, jasmine.anything(), entity, selector.idSelector);
     });
 
     it('calls relationships.release on own release call', () => {

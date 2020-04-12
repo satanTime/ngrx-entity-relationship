@@ -32,12 +32,9 @@ export type FEATURE_SELECTOR<S, E> =
           selectId?: ID_SELECTOR<E>; // EntityCollectionService doesn't have it but EntityCollectionServiceBase does.
       };
 
-export type HANDLER_CACHE<S, E> = Array<
-    // thanks A6 and its TS that we can't use 'ENTITY?'
-    | [string, STORE_SELECTOR<S, EntityState<E>>, ID_TYPES | null]
-    | [string, STORE_SELECTOR<S, EntityState<E>>, ID_TYPES | null, E]
-    | [string, STORE_SELECTOR<S, EntityState<E>>, ID_TYPES | null, E, E]
->;
+export type CACHE_CHECKS = Map<ID_TYPES | null, UNKNOWN>;
+export type CACHE_CHECKS_SET<S> = Map<STORE_SELECTOR<S, EntityState<UNKNOWN>>, CACHE_CHECKS>;
+export type CACHE<S> = Map<string, Map<string | null, [CACHE_CHECKS_SET<S>, UNKNOWN]>>;
 
 export type HANDLER_ROOT_ENTITY<S, F, T, I> = {
     (state: S, id: I): undefined | T;
@@ -57,10 +54,10 @@ export type HANDLER_RELATED_ENTITY<S, E> = {
     (
         cachePrefix: string,
         state: S,
-        cacheRefs: HANDLER_CACHE<S, UNKNOWN>,
+        cacheRefs: CACHE<S>,
         source: E,
         sourceIdSelector: ID_SELECTOR<any /* TODO has to be a related entity */>,
-    ): void;
+    ): string | undefined;
     ngrxEntityRelationship: string;
     idSelector: ID_SELECTOR<any /* TODO has to be a related entity */>;
     release(): void;
