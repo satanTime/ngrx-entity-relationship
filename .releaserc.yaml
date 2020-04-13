@@ -9,8 +9,9 @@ plugins:
     - - @semantic-release/changelog
       - changelogFile: CHANGELOG.md
     - - @semantic-release/npm
-      - tarballDir: dist
+      - tarballDir: tmp
     - - @semantic-release/github
       - assets:
-            - dist/*.tgz
-    - @semantic-release/git
+            - tmp/*.tgz
+    - - @semantic-release/git
+      - message: "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
