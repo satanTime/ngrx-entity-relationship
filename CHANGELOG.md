@@ -1,6 +1,8 @@
-# Changelog
+## [0.9.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.9.0...v0.9.1) (2020-04-13)
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+### Bug Fixes
+
+-   **release:** fixing rules ([4de4856](https://github.com/satanTime/ngrx-entity-relationship/commit/4de4856dd3a87a9c513f776019679e8c50400743))
 
 ### [0.8.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.8.0...v0.8.1) (2020-04-12)
 
