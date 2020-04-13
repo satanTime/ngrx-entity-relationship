@@ -6,14 +6,11 @@ plugins:
     - @semantic-release/release-notes-generator
     - - @semantic-release/changelog
       - changelogFile: CHANGELOG.md
-    - @semantic-release/npm
+    - - @semantic-release/npm
+      - tarballDir: dist
     - - @semantic-release/github
       - assets:
-            - dist/**
-            - package.json
-            - CHANGELOG.md
-            - LICENSE
-            - README.md
+            - dist/*.tgz
     - - @semantic-release/git
       - assets:
             - package.json
