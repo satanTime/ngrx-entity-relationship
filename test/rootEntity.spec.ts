@@ -1,7 +1,5 @@
-import {createEntityAdapter} from '@ngrx/entity';
-
 import {rootEntity, rootEntityFlags} from '../src';
-import {HANDLER_RELATED_ENTITY, UNKNOWN} from '../src/types';
+import {ENTITY_STATE, HANDLER_RELATED_ENTITY, UNKNOWN} from '../src/types';
 
 describe('rootEntity', () => {
     type Entity = {
@@ -28,7 +26,9 @@ describe('rootEntity', () => {
 
     it('returns undefined when the entity does not exist', () => {
         const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const selector = rootEntity<typeof state, Entity>(v => v.feature);
 
@@ -37,8 +37,10 @@ describe('rootEntity', () => {
     });
 
     it('clones the original entity', () => {
-        const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+        const state: {feature: ENTITY_STATE<Entity>} = {
+            feature: {
+                entities: {},
+            },
         };
         const selector = rootEntity<typeof state, Entity>(v => v.feature);
 
@@ -56,8 +58,10 @@ describe('rootEntity', () => {
     });
 
     it('returns cached value when rootEntityFlags.disabled is true', () => {
-        const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+        const state: {feature: ENTITY_STATE<Entity>} = {
+            feature: {
+                entities: {},
+            },
         };
         const selector = rootEntity<typeof state, Entity>(v => v.feature);
 
@@ -112,7 +116,9 @@ describe('rootEntity', () => {
 
     it('returns cached value when the original entity has not been changed unless the cache release', () => {
         const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const selector = rootEntity<typeof state, Entity>(v => v.feature);
 
@@ -141,9 +147,13 @@ describe('rootEntity', () => {
     });
 
     it('returns cached value when the related entity has not been changed unless the cache release', () => {
-        const state = {
-            feature1: createEntityAdapter<Entity>().getInitialState(),
-            feature2: createEntityAdapter<Entity>().getInitialState(),
+        const state: {feature1: ENTITY_STATE<Entity>; feature2: ENTITY_STATE<Entity>} = {
+            feature1: {
+                entities: {},
+            },
+            feature2: {
+                entities: {},
+            },
         };
 
         state.feature1.entities = {
@@ -206,9 +216,13 @@ describe('rootEntity', () => {
     });
 
     it('returns cached value when the related entity set has not been changed unless the cache release', () => {
-        const state = {
-            feature1: createEntityAdapter<Entity>().getInitialState(),
-            feature2: createEntityAdapter<Entity>().getInitialState(),
+        const state: {feature1: ENTITY_STATE<Entity>; feature2: ENTITY_STATE<Entity>} = {
+            feature1: {
+                entities: {},
+            },
+            feature2: {
+                entities: {},
+            },
         };
 
         state.feature1.entities = {
@@ -268,7 +282,9 @@ describe('rootEntity', () => {
 
     it('calls relationships with an incrementing prefix and arguments', () => {
         const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const rel1: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy();
         rel1.ngrxEntityRelationship = 'spy';
@@ -291,7 +307,9 @@ describe('rootEntity', () => {
 
     it('calls relationships.release on own release call', () => {
         const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const rel1: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy();
         rel1.ngrxEntityRelationship = 'spy';
@@ -309,7 +327,9 @@ describe('rootEntity', () => {
 
     it('uses transformer', () => {
         const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const selector = rootEntity<typeof state, Entity, Entity>(
             v => v.feature,
@@ -332,7 +352,9 @@ describe('rootEntity', () => {
 
     it('uses transformer after relationships', () => {
         const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const transformer = jasmine.createSpy();
         const rel = <jasmine.Spy & HANDLER_RELATED_ENTITY<typeof state, Entity>>(<any>jasmine.createSpy());
@@ -358,7 +380,9 @@ describe('rootEntity', () => {
 
     it('uses transformer to a different type', () => {
         const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const transformer = () => 'transformed';
         const rel = <jasmine.Spy & HANDLER_RELATED_ENTITY<typeof state, Entity>>(<any>jasmine.createSpy());
@@ -379,8 +403,10 @@ describe('rootEntity', () => {
     });
 
     it('supports EntityCollectionService as a selector', () => {
-        const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+        const state: {feature: ENTITY_STATE<Entity>} = {
+            feature: {
+                entities: {},
+            },
         };
         const idSelector = v => v.id;
         const selector = rootEntity<typeof state, Entity>({
@@ -403,8 +429,10 @@ describe('rootEntity', () => {
     });
 
     it('supports a default selector and returns id field', () => {
-        const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+        const state: {feature: ENTITY_STATE<Entity>} = {
+            feature: {
+                entities: {},
+            },
         };
         const selector = rootEntity<typeof state, Entity>(v => v.feature);
         expect(selector.idSelector({id: 'myId', name: 'myName'})).toBe('myId');
@@ -421,8 +449,10 @@ describe('rootEntity', () => {
     });
 
     it('supports custom feature selector and id field of string', () => {
-        const state = {
-            feature: createEntityAdapter<UNKNOWN>().getInitialState(),
+        const state: {feature: ENTITY_STATE<UNKNOWN>} = {
+            feature: {
+                entities: {},
+            },
         };
         const selector = rootEntity<typeof state, UNKNOWN>({
             collection: v => v.feature,
@@ -442,8 +472,10 @@ describe('rootEntity', () => {
     });
 
     it('supports custom feature selector and id field of number', () => {
-        const state = {
-            feature: createEntityAdapter<UNKNOWN>().getInitialState(),
+        const state: {feature: ENTITY_STATE<UNKNOWN>} = {
+            feature: {
+                entities: {},
+            },
         };
         const selector = rootEntity<typeof state, UNKNOWN>({
             collection: v => v.feature,
@@ -463,8 +495,10 @@ describe('rootEntity', () => {
     });
 
     it('supports custom feature selector and id selector', () => {
-        const state = {
-            feature: createEntityAdapter<UNKNOWN>().getInitialState(),
+        const state: {feature: ENTITY_STATE<UNKNOWN>} = {
+            feature: {
+                entities: {},
+            },
         };
         const idSelector = v => v.feature;
         const selector = rootEntity<typeof state, UNKNOWN>({
