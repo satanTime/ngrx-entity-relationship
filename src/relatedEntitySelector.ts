@@ -8,14 +8,14 @@ export function relatedEntitySelector<
               [KEY in RELATED_KEY_IDS | RELATED_KEY_VALUES]?: KEY extends RELATED_KEY_IDS
                   ? ID_TYPES
                   : KEY extends RELATED_KEY_VALUES
-                  ? RELATED_ENTITY
+                  ? RELATED_ENTITY | null
                   : never;
           }
         | {
               [KEY in RELATED_KEY_IDS | RELATED_KEY_VALUES]?: KEY extends RELATED_KEY_IDS
                   ? Array<ID_TYPES>
                   : KEY extends RELATED_KEY_VALUES
-                  ? Array<RELATED_ENTITY>
+                  ? Array<RELATED_ENTITY> | null
                   : never;
           },
     RELATED_ENTITY,
