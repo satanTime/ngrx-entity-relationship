@@ -8,7 +8,7 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build": "rm -Rf dist && tsc",
+        "build": "rm -Rf tmp && rm -Rf dist && tsc",
         "s:a": "npm run s:a6 && npm run s:a7 && npm run s:a8 && npm run s:a9",
         "s:a6": "P=e2e/angular6/node_modules/ngrx-entity-relationship && rm -Rf $P && mkdir -p $P && cp -R dist $P && cp package.json $P",
         "s:a7": "P=e2e/angular7/node_modules/ngrx-entity-relationship && rm -Rf $P && mkdir -p $P && cp -R dist $P && cp package.json $P",
