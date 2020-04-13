@@ -1,5 +1,3 @@
-import {createEntityAdapter} from '@ngrx/entity';
-
 import {relatedEntitySelector} from '../src';
 import {HANDLER_RELATED_ENTITY} from '../src/types';
 
@@ -24,7 +22,9 @@ describe('relatedEntitySelector', () => {
 
     it('calls relatedEntity with relations', () => {
         const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
 
         const rel1: HANDLER_RELATED_ENTITY<typeof state, Entity> & jasmine.Spy = <any>jasmine.createSpy('rel1');

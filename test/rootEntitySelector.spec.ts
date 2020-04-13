@@ -1,7 +1,5 @@
-import {createEntityAdapter} from '@ngrx/entity';
-
 import {rootEntitySelector} from '../src';
-import {HANDLER_RELATED_ENTITY} from '../src/types';
+import {ENTITY_STATE, HANDLER_RELATED_ENTITY} from '../src/types';
 
 describe('rootEntitySelector', () => {
     type Entity = {
@@ -23,8 +21,10 @@ describe('rootEntitySelector', () => {
     });
 
     it('calls rootEntity with transformer and relations', () => {
-        const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+        const state: {feature: ENTITY_STATE<Entity>} = {
+            feature: {
+                entities: {},
+            },
         };
 
         const transformer = jasmine.createSpy('transformer');
@@ -68,8 +68,10 @@ describe('rootEntitySelector', () => {
     });
 
     it('calls rootEntity with transformer to a different type', () => {
-        const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+        const state: {feature: ENTITY_STATE<Entity>} = {
+            feature: {
+                entities: {},
+            },
         };
 
         const transformer = () => 'transformed';
@@ -90,8 +92,10 @@ describe('rootEntitySelector', () => {
     });
 
     it('calls rootEntity with relations only', () => {
-        const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+        const state: {feature: ENTITY_STATE<Entity>} = {
+            feature: {
+                entities: {},
+            },
         };
 
         const rel1: HANDLER_RELATED_ENTITY<typeof state, Entity> & jasmine.Spy = <any>jasmine.createSpy('rel1');

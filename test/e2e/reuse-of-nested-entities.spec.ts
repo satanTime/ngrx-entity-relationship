@@ -1,7 +1,5 @@
-import {createEntityAdapter} from '@ngrx/entity';
-
 import {childEntity, childrenEntities, relatedEntity, rootEntity} from '../../src';
-import {FEATURE_SELECTOR} from '../../src/types';
+import {ENTITY_STATE, FEATURE_SELECTOR} from '../../src/types';
 
 interface User {
     id: string;
@@ -38,10 +36,16 @@ interface Address {
 
 describe('reuse-of-nested-entities', () => {
     it('keeps unchanged entities the same', () => {
-        const state = {
-            users: createEntityAdapter<User>().getInitialState(),
-            companies: createEntityAdapter<Company>().getInitialState(),
-            addresses: createEntityAdapter<Address>().getInitialState(),
+        const state: {users: ENTITY_STATE<User>; companies: ENTITY_STATE<Company>; addresses: ENTITY_STATE<Address>} = {
+            users: {
+                entities: {},
+            },
+            companies: {
+                entities: {},
+            },
+            addresses: {
+                entities: {},
+            },
         };
 
         const selectUserState: FEATURE_SELECTOR<typeof state, User> = v => v.users;

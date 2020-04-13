@@ -1,7 +1,5 @@
-import {createEntityAdapter} from '@ngrx/entity';
-
 import {childEntity} from '../src';
-import {FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, UNKNOWN} from '../src/types';
+import {ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, UNKNOWN} from '../src/types';
 
 describe('childEntity', () => {
     type Entity = {
@@ -23,7 +21,9 @@ describe('childEntity', () => {
 
     it('does not set anything if there is no child entity', () => {
         const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
             v => v.feature,
@@ -42,7 +42,9 @@ describe('childEntity', () => {
 
     it('sets the child entity if it exists', () => {
         const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
             v => v.feature,
@@ -79,8 +81,10 @@ describe('childEntity', () => {
     });
 
     it('clones the child entity', () => {
-        const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+        const state: {feature: ENTITY_STATE<Entity>} = {
+            feature: {
+                entities: {},
+            },
         };
         const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
             v => v.feature,
@@ -108,7 +112,9 @@ describe('childEntity', () => {
 
     it('sets the cache when the related entity does not exist', () => {
         const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const featureSelector: FEATURE_SELECTOR<typeof state, Entity> = v => v.feature;
         const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
@@ -132,8 +138,10 @@ describe('childEntity', () => {
     });
 
     it('sets the cache when the related entity exists', () => {
-        const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+        const state: {feature: ENTITY_STATE<Entity>} = {
+            feature: {
+                entities: {},
+            },
         };
         const featureSelector: FEATURE_SELECTOR<typeof state, Entity> = v => v.feature;
         const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
@@ -175,7 +183,9 @@ describe('childEntity', () => {
 
     it('calls relationships with an incrementing prefix and arguments', () => {
         const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const rel1: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy('rel1');
         rel1.ngrxEntityRelationship = 'spy';
@@ -213,7 +223,9 @@ describe('childEntity', () => {
 
     it('calls relationships.release on own release call', () => {
         const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const rel1: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy('rel1');
         rel1.ngrxEntityRelationship = 'spy';
@@ -239,7 +251,9 @@ describe('childEntity', () => {
 
     it('supports EntityCollectionService as a selector', () => {
         const state = {
-            feature: createEntityAdapter<Entity>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const idSelector = v => v.id;
         const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
@@ -278,7 +292,9 @@ describe('childEntity', () => {
 
     it('supports a default selector and returns id field', () => {
         const state = {
-            feature: createEntityAdapter<UNKNOWN>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const selector = childEntity<typeof state, UNKNOWN, UNKNOWN, 'parentId', 'child'>(
             v => v.feature,
@@ -312,7 +328,9 @@ describe('childEntity', () => {
 
     it('supports custom feature selector and id field of string', () => {
         const state = {
-            feature: createEntityAdapter<UNKNOWN>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const selector = childEntity<typeof state, UNKNOWN, UNKNOWN, 'parentId', 'child'>(
             {
@@ -349,7 +367,9 @@ describe('childEntity', () => {
 
     it('supports custom feature selector and id field of number', () => {
         const state = {
-            feature: createEntityAdapter<UNKNOWN>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const selector = childEntity<typeof state, UNKNOWN, UNKNOWN, 'parentId', 'child'>(
             {
@@ -386,7 +406,9 @@ describe('childEntity', () => {
 
     it('supports custom feature selector and id selector', () => {
         const state = {
-            feature: createEntityAdapter<UNKNOWN>().getInitialState(),
+            feature: {
+                entities: {},
+            },
         };
         const idSelector = v => v.feature;
         const selector = childEntity<typeof state, UNKNOWN, UNKNOWN, 'parentId', 'child'>(

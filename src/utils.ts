@@ -1,8 +1,7 @@
-import {EntityState} from '@ngrx/entity';
-
 import {
     CACHE_CHECKS,
     CACHE_CHECKS_SET,
+    ENTITY_STATE,
     FEATURE_SELECTOR,
     ID_SELECTOR,
     ID_TYPES,
@@ -13,12 +12,12 @@ import {
 export function normalizeSelector<S, E>(
     selector: FEATURE_SELECTOR<S, E>,
 ): {
-    collection: STORE_SELECTOR<S, EntityState<E>>;
+    collection: STORE_SELECTOR<S, ENTITY_STATE<E>>;
     id: ID_SELECTOR<E>;
 } {
     const local: any = selector;
 
-    let collection: STORE_SELECTOR<S, EntityState<E>>;
+    let collection: STORE_SELECTOR<S, ENTITY_STATE<E>>;
     if (typeof local === 'function') {
         collection = local;
     } else if (local.selectors) {
@@ -50,7 +49,7 @@ export function verifyCache<S>(state: S, checks: CACHE_CHECKS_SET<S>): boolean {
     if (!checks.size) {
         return false;
     }
-    const checksData: Array<[STORE_SELECTOR<S, EntityState<UNKNOWN>>, CACHE_CHECKS]> = [];
+    const checksData: Array<[STORE_SELECTOR<S, ENTITY_STATE<UNKNOWN>>, CACHE_CHECKS]> = [];
     checks.forEach((v, k) => checksData.push([k, v]));
     for (const [checkSelector, checkEntities] of checksData) {
         if (checkEntities.has(null) && checkSelector(state).entities === checkEntities.get(null)) {
@@ -83,7 +82,7 @@ export function mergeCache<S>(from: CACHE_CHECKS_SET<S> | undefined, to: CACHE_C
     if (!from) {
         return;
     }
-    const fromData: Array<[STORE_SELECTOR<S, EntityState<UNKNOWN>>, CACHE_CHECKS]> = [];
+    const fromData: Array<[STORE_SELECTOR<S, ENTITY_STATE<UNKNOWN>>, CACHE_CHECKS]> = [];
     from.forEach((v, k) => fromData.push([k, v]));
     for (const [fromSelector, fromEntities] of fromData) {
         const toMap = to.get(fromSelector) || new Map();

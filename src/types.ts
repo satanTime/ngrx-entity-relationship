@@ -1,4 +1,3 @@
-import {EntityState} from '@ngrx/entity';
 import {Observable} from 'rxjs';
 
 export type UNKNOWN = any;
@@ -15,25 +14,31 @@ export type FILTER_PROPS<Base, Condition> = {
     [Key in keyof Base]: Base[Key] extends Condition ? Key : never;
 }[keyof Base];
 
+export type ENTITY_STATE<E> = {
+    entities: {
+        [id in ID_TYPES]: E | undefined;
+    };
+};
+
 export type FEATURE_SELECTOR<S, E> =
-    | STORE_SELECTOR<S, EntityState<E>>
+    | STORE_SELECTOR<S, ENTITY_STATE<E>>
     | {
-          collection: STORE_SELECTOR<S, EntityState<E>>;
+          collection: STORE_SELECTOR<S, ENTITY_STATE<E>>;
           id: string | number;
       }
     | {
-          collection: STORE_SELECTOR<S, EntityState<E>>;
+          collection: STORE_SELECTOR<S, ENTITY_STATE<E>>;
           id: ID_SELECTOR<E>;
       }
     | {
           selectors: {
-              selectCollection: STORE_SELECTOR<S, EntityState<E>>;
+              selectCollection: STORE_SELECTOR<S, ENTITY_STATE<E>>;
           };
           selectId?: ID_SELECTOR<E>; // EntityCollectionService doesn't have it but EntityCollectionServiceBase does.
       };
 
 export type CACHE_CHECKS = Map<ID_TYPES | null, UNKNOWN>;
-export type CACHE_CHECKS_SET<S> = Map<STORE_SELECTOR<S, EntityState<UNKNOWN>>, CACHE_CHECKS>;
+export type CACHE_CHECKS_SET<S> = Map<STORE_SELECTOR<S, ENTITY_STATE<UNKNOWN>>, CACHE_CHECKS>;
 export type CACHE<S> = Map<string, Map<string | null, [CACHE_CHECKS_SET<S>, UNKNOWN]>>;
 
 export type HANDLER_ROOT_ENTITY<S, F, T, I> = {
