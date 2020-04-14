@@ -16,6 +16,13 @@ export function normalizeSelector<S, E>(
     id: ID_SELECTOR<E>;
 } {
     const local: any = selector;
+    if (local === undefined) {
+        console.error(
+            `Circular dependencies have been detected. You need to put selectors produced ` +
+                `by nrx-entity-relationship into a separate file: ` +
+                `https://github.com/satanTime/ngrx-entity-relationship#circular-dependency`,
+        );
+    }
 
     let collection: STORE_SELECTOR<S, ENTITY_STATE<E>>;
     if (typeof local === 'function') {

@@ -94,6 +94,9 @@ and [ngrx/data](#relationships-in-ngrxdata).
 
 More detailed information goes in the [API](#api) section.
 
+> It's very easy to create a circular dependency, keep created selectors and their feature selectors / entity services
+> in separate files.
+
 ### Relationships in ngrx/entity
 
 Based on [ngrx docs](https://ngrx.io/guide/entity/adapter#entity-selectors)
@@ -584,3 +587,41 @@ export const selectUser = rootEntity(
 -   A selector emits an updated entity only in case if the root or a nested entity has been updated in the store.
 
 -   A value of any related key can be `undefined`.
+
+## Troubleshooting
+
+### Circular dependency
+
+`WARNING in Circular dependency detected` - simply put created selectors in a separate file.
+
+A file where we have feature selectors (anything, but not selectors with relationships): `store.ts`
+```typescript
+export const selectUserState = createFeatureSelector<fromUser.State>('users');
+export const selectCompanyState = createFeatureSelector<fromCompany.State>('companies');
+export const selectAddressState = createFeatureSelector<fromAddress.State>('addresses');
+```
+
+A separate file where we import all feature selectors and declare combined selectors with relationships: `selectors.ts`
+```typescript
+import {selectUserState, selectCompanyState, selectAddressState} from 'store.ts';
+
+export const selectUser = rootEntity(
+    selectUserState, // the selector of the user's feature.
+
+    // now we define a relationship between a user and a company.
+    relatedEntity(
+        selectCompanyState, // a selector of the company's feature.
+        'companyId', // the key in the user's model that points to the company's id.
+        'company', // the key in the user's model that should be fulfilled with the company's entity.
+
+        // now we define a relationship between a company and an address.
+        relatedEntity(
+            selectAddressState, // a selector of the address's feature.
+            'addressId', // the key in the company's model that points to the address's id.
+            'address', // the key in the company's model that should be fulfilled with the address's entity.
+        ),
+    ),
+);
+```
+
+This approach helps to solve circular dependencies.
