@@ -1,3 +1,9 @@
+## [0.9.3](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.9.2...v0.9.3) (2020-04-13)
+
+### Bug Fixes
+
+-   prerelease hook ([d883064](https://github.com/satanTime/ngrx-entity-relationship/commit/d883064c4227665c9e8077c6541aa9f3dbc6b46f))
+
 ## [0.9.2](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.9.1...v0.9.2) (2020-04-13)
 
 ### Bug Fixes
