@@ -24,6 +24,17 @@ describe('rootEntity', () => {
         );
     });
 
+    it('returns undefined when the id is falsy', () => {
+        const state = {
+            feature: {
+                entities: {},
+            },
+        };
+        const selector = rootEntity<typeof state, Entity>(v => v.feature);
+
+        expect(selector(state, '')).toBeUndefined();
+    });
+
     it('returns undefined when the entity does not exist', () => {
         const state = {
             feature: {

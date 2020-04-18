@@ -65,11 +65,10 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED>(
         // building a new value.
         value = undefined;
         checks = new Map();
-        checks.set(funcSelector, new Map());
-        checks.get(funcSelector)?.set(null, featureState.entities);
-        if (id) {
-            checks.get(funcSelector)?.set(id, featureState.entities[id]);
-        }
+        const checkIds = new Map();
+        checks.set(funcSelector, checkIds);
+        checkIds.set(null, featureState.entities);
+        checkIds.set(id, featureState.entities[id]);
 
         // the entity does not exist.
         if (!featureState.entities[id]) {
@@ -98,7 +97,7 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED>(
     callback.idSelector = idSelector;
     callback.release = () => {
         cache.clear();
-        for (const relationship of relationships || []) {
+        for (const relationship of relationships) {
             relationship.release();
         }
     };
