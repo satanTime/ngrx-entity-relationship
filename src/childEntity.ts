@@ -74,8 +74,9 @@ export function childEntity<
                 break;
             }
             idChecks = new Map();
-            idChecks.set(funcSelector, new Map());
-            idChecks.get(funcSelector)?.set(null, featureState.entities);
+            const idChecksEntities = new Map();
+            idChecks.set(funcSelector, idChecksEntities);
+            idChecksEntities.set(null, featureState.entities);
             cacheDataLevel.set(`!${parentId}`, [idChecks, id]);
         }
         if (!id) {
@@ -95,15 +96,10 @@ export function childEntity<
         // building a new value.
         value = undefined;
         checks = new Map();
-        checks.set(funcSelector, new Map());
-        checks.get(funcSelector)?.set(null, featureState.entities);
-        checks.get(funcSelector)?.set(id, featureState.entities[id]);
-
-        // the entity does not exist.
-        if (!featureState.entities[id]) {
-            cacheDataLevel.set(cacheHash, [checks, value]);
-            return cacheHash;
-        }
+        const checksEntities = new Map();
+        checks.set(funcSelector, checksEntities);
+        checksEntities.set(null, featureState.entities);
+        checksEntities.set(id, featureState.entities[id]);
 
         // we have to clone it because we are going to update it with relations.
         value = {...featureState.entities[id]} as RELATED_ENTITY;
@@ -124,7 +120,7 @@ export function childEntity<
     callback.ngrxEntityRelationship = 'childEntity';
     callback.idSelector = idSelector;
     callback.release = () => {
-        for (const relationship of relationships || []) {
+        for (const relationship of relationships) {
             relationship.release();
         }
     };
