@@ -1,3 +1,13 @@
+# [1.0.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.9.6...v1.0.0) (2020-04-18)
+
+### Features
+
+-   1.0.0 ([920beca](https://github.com/satanTime/ngrx-entity-relationship/commit/920beca3c81800dda91b2e2f548ccfd129814ea6))
+
+### BREAKING CHANGES
+
+-   more stability
+
 ## [0.9.6](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.9.5...v0.9.6) (2020-04-13)
 
 ### Bug Fixes
