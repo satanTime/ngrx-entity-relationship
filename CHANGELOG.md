@@ -1,3 +1,10 @@
+## [0.9.6](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.9.5...v0.9.6) (2020-04-13)
+
+### Bug Fixes
+
+-   **core:** allowing null fields in relatedEntitySelector ([6d84103](https://github.com/satanTime/ngrx-entity-relationship/commit/6d84103990c8cc449c8bd5f515444e18204608fc))
+-   removal of tmp before build ([643f816](https://github.com/satanTime/ngrx-entity-relationship/commit/643f8162dc317aae499089d6aaf88267e831d0e0))
+
 ## [0.9.5](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.9.4...v0.9.5) (2020-04-13)
 
 ### Bug Fixes
