@@ -77,10 +77,8 @@ export function relatedEntity<
                 }
                 return;
             }
-        } else if (values) {
-            ids.push(values);
         } else {
-            return;
+            ids.push(values);
         }
 
         const cacheHash = `#${ids.join(',')}`;
@@ -96,10 +94,11 @@ export function relatedEntity<
         // building a new value.
         value = undefined;
         checks = new Map();
-        checks.set(funcSelector, new Map());
-        checks.get(funcSelector)?.set(null, featureState.entities);
+        const checkIds = new Map();
+        checks.set(funcSelector, checkIds);
+        checkIds.set(null, featureState.entities);
         for (const id of ids) {
-            checks.get(funcSelector)?.set(id, featureState.entities[id]);
+            checkIds.set(id, featureState.entities[id]);
         }
 
         const valueEntities = [];
@@ -119,9 +118,10 @@ export function relatedEntity<
             // we have to clone it because we are going to update it with relations.
             entityValue = {...featureState.entities[id]} as RELATED_ENTITY;
             entityChecks = new Map();
-            entityChecks.set(funcSelector, new Map());
-            entityChecks.get(funcSelector)?.set(null, featureState.entities);
-            entityChecks.get(funcSelector)?.set(id, featureState.entities[id]);
+            const entityCheckIds = new Map();
+            entityChecks.set(funcSelector, entityCheckIds);
+            entityCheckIds.set(null, featureState.entities);
+            entityCheckIds.set(id, featureState.entities[id]);
 
             let cacheRelLevelIndex = 0;
             for (const relationship of relationships) {
@@ -145,7 +145,7 @@ export function relatedEntity<
     callback.idSelector = idSelector;
     callback.release = () => {
         emptyResult.clear();
-        for (const relationship of relationships || []) {
+        for (const relationship of relationships) {
             relationship.release();
         }
     };

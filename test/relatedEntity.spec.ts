@@ -162,6 +162,54 @@ describe('relatedEntity', () => {
         expect(entity.parents).toEqual([]);
     });
 
+    it('ignores falsy ids', () => {
+        const state = {
+            feature: {
+                entities: {},
+            },
+        };
+        const selector = relatedEntity<typeof state, Entity, Entity, never, 'parentsId', never, 'parents'>(
+            v => v.feature,
+            'parentsId',
+            'parents',
+        );
+
+        const entity: Entity = {
+            id: 'id1',
+            name: 'name1',
+            parentsId: ['', 0],
+        };
+
+        selector('', state, new Map(), entity, selector.idSelector);
+        expect(entity.parents).toEqual([]);
+    });
+
+    it('caches an empty array', () => {
+        const state = {
+            feature: {
+                entities: {},
+            },
+        };
+        const selector = relatedEntity<typeof state, Entity, Entity, never, 'parentsId', never, 'parents'>(
+            v => v.feature,
+            'parentsId',
+            'parents',
+        );
+
+        const entity: Entity = {
+            id: 'id1',
+            name: 'name1',
+            parentsId: ['', 0],
+        };
+
+        selector('', state, new Map(), entity, selector.idSelector);
+        const expected = entity.parents;
+        expect(entity.parents).toEqual([]);
+
+        selector('', state, new Map(), entity, selector.idSelector);
+        expect(entity.parents).toBe(expected);
+    });
+
     it('clones the related entity', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
