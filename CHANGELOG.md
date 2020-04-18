@@ -1,3 +1,9 @@
+## [0.9.5](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.9.4...v0.9.5) (2020-04-13)
+
+### Bug Fixes
+
+-   removal of tgz from a release ([ef06ba2](https://github.com/satanTime/ngrx-entity-relationship/commit/ef06ba2771b2e57e711d9b0fbe222a3f914af009))
+
 ## [0.9.4](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.9.3...v0.9.4) (2020-04-13)
 
 ### Bug Fixes
