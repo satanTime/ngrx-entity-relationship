@@ -1,3 +1,9 @@
+## [0.9.2](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.9.1...v0.9.2) (2020-04-13)
+
+### Bug Fixes
+
+-   **release:** assets for github ([4ddb6a0](https://github.com/satanTime/ngrx-entity-relationship/commit/4ddb6a093362dec594af9583b48e56ea8797dcc8))
+
 ## [0.9.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.9.0...v0.9.1) (2020-04-13)
 
 ### Bug Fixes
