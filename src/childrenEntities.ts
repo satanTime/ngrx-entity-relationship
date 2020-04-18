@@ -77,8 +77,9 @@ export function childrenEntities<
                 }
             }
             idsChecks = new Map();
-            idsChecks.set(funcSelector, new Map());
-            idsChecks.get(funcSelector)?.set(null, featureState.entities);
+            const idsChecksEntities = new Map();
+            idsChecks.set(funcSelector, idsChecksEntities);
+            idsChecksEntities.set(null, featureState.entities);
             cacheDataLevel.set(`!${parentId}`, [idsChecks, ids]);
         }
         if (!ids.length) {
@@ -103,10 +104,11 @@ export function childrenEntities<
         // building a new value.
         value = [];
         checks = new Map();
-        checks.set(funcSelector, new Map());
-        checks.get(funcSelector)?.set(null, featureState.entities);
+        const checksEntities = new Map();
+        checks.set(funcSelector, checksEntities);
+        checksEntities.set(null, featureState.entities);
         for (const id of ids) {
-            checks.get(funcSelector)?.set(id, featureState.entities[id]);
+            checksEntities.set(id, featureState.entities[id]);
         }
 
         for (const id of ids) {
@@ -122,9 +124,10 @@ export function childrenEntities<
             // we have to clone it because we are going to update it with relations.
             entityValue = {...featureState.entities[id]} as RELATED_ENTITY;
             entityChecks = new Map();
-            entityChecks.set(funcSelector, new Map());
-            entityChecks.get(funcSelector)?.set(null, featureState.entities);
-            entityChecks.get(funcSelector)?.set(id, featureState.entities[id]);
+            const entityChecksEntities = new Map();
+            entityChecks.set(funcSelector, entityChecksEntities);
+            entityChecksEntities.set(null, featureState.entities);
+            entityChecksEntities.set(id, featureState.entities[id]);
 
             let cacheRelLevelIndex = 0;
             for (const relationship of relationships) {
@@ -147,7 +150,7 @@ export function childrenEntities<
     callback.idSelector = idSelector;
     callback.release = () => {
         emptyResult.clear();
-        for (const relationship of relationships || []) {
+        for (const relationship of relationships) {
             relationship.release();
         }
     };

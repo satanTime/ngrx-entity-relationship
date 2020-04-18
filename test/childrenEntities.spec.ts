@@ -255,6 +255,66 @@ describe('childrenEntities', () => {
         expect(rel2).toHaveBeenCalledWith('randChildrenEntities:1', state, cache, entity.child[0], selector.idSelector);
     });
 
+    it('respects cache of relationships', () => {
+        const state = {
+            feature: {
+                entities: {},
+            },
+        };
+        const rel1: HANDLER_RELATED_ENTITY<typeof state, Entity> & jasmine.Spy = <any>jasmine.createSpy('rel1');
+        rel1.ngrxEntityRelationship = 'spy';
+        rel1.and.callFake((cacheKey, _2, cacheSet) => {
+            const result = new Map();
+            result.set('rel1selector', new Map());
+
+            const hashMap = new Map();
+            cacheSet.set(cacheKey, hashMap);
+            hashMap.set('rel1', [result, undefined]);
+
+            return 'rel1';
+        });
+        const rel2: HANDLER_RELATED_ENTITY<typeof state, Entity> & jasmine.Spy = <any>jasmine.createSpy('rel2');
+        rel2.ngrxEntityRelationship = 'spy';
+        rel2.and.callFake((cacheKey, _2, cacheSet) => {
+            const result = new Map();
+            result.set('rel2selector', new Map());
+
+            const hashMap = new Map();
+            cacheSet.set(cacheKey, hashMap);
+            hashMap.set('rel2', [result, undefined]);
+
+            return 'rel2';
+        });
+
+        const featureSelector: FEATURE_SELECTOR<typeof state, Entity> = v => v.feature;
+        const selector = childrenEntities<typeof state, Entity, Entity, 'parentId', 'child'>(
+            featureSelector,
+            'parentId',
+            'child',
+            rel1,
+            rel2,
+        );
+
+        const entity: Entity = {
+            id: 'id1',
+            name: 'name1',
+        };
+
+        state.feature.entities = {
+            ...state.feature.entities,
+            id2: {
+                id: 'id2',
+                name: 'name2',
+                parentId: 'id1',
+            },
+        };
+
+        const cache = new Map();
+        selector('randChildEntity', state, cache, entity, selector.idSelector);
+        expect(cache.get('randChildEntity').get('#id2')[0].has('rel1selector')).toBe(true);
+        expect(cache.get('randChildEntity').get('#id2')[0].has('rel2selector')).toBe(true);
+    });
+
     it('calls relationships.release on own release call', () => {
         const state = {
             feature: {
