@@ -1,4 +1,4 @@
-import {normalizeSelector, verifyCache} from '../src/utils';
+import {mergeCache, normalizeSelector, verifyCache} from '../src/utils';
 
 describe('utils', () => {
     describe('normalizeSelector', () => {
@@ -226,6 +226,65 @@ describe('utils', () => {
             selector2Entities.set('id1', {...state.feature2.entities.id1});
 
             expect(verifyCache(state, checks)).toBe(false);
+        });
+    });
+
+    describe('mergeCache', () => {
+        it('does nothing on undefined from', () => {
+            const from = undefined;
+            const to = new Map();
+            spyOn(to, 'get');
+            spyOn(to, 'set');
+            spyOn(to, 'has');
+            mergeCache(from, to);
+            expect(to.get).not.toHaveBeenCalled();
+            expect(to.set).not.toHaveBeenCalled();
+            expect(to.has).not.toHaveBeenCalled();
+        });
+
+        it('adds new selectors to destination', () => {
+            const from = new Map();
+            const to = new Map();
+
+            const selector = v => v.feature;
+            from.set(selector, new Map());
+
+            expect(to.has(selector)).toBe(false);
+            mergeCache(from, to);
+            expect(to.has(selector)).toBe(true);
+        });
+
+        it('updates existing selectors with new values', () => {
+            const from = new Map();
+            const to = new Map();
+
+            const selector = v => v.feature;
+            const selector1Entities = new Map();
+            selector1Entities.set('id1', 'id1value');
+
+            from.set(selector, selector1Entities);
+            to.set(selector, new Map());
+
+            expect(to.get(selector).has('id1')).toBe(false);
+            mergeCache(from, to);
+            expect(to.get(selector).get('id1')).toBe('id1value');
+        });
+
+        it('skips existing values in destination', () => {
+            const from = new Map();
+            const to = new Map();
+
+            const selector = v => v.feature;
+            const selector1Entities = new Map();
+            selector1Entities.set('id1', 'id1value');
+
+            from.set(selector, selector1Entities);
+            to.set(selector, new Map());
+            to.get(selector).set('id1', 'id1exists');
+
+            expect(to.get(selector).get('id1')).toBe('id1exists');
+            mergeCache(from, to);
+            expect(to.get(selector).get('id1')).toBe('id1exists');
         });
     });
 });
