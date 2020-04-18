@@ -5,12 +5,12 @@
 [![Coverage Status](https://coveralls.io/repos/github/satanTime/ngrx-entity-relationship/badge.svg?branch=master)](https://coveralls.io/github/satanTime/ngrx-entity-relationship?branch=master)
 
 ### Supports
-* Angular 8 and `@ngrx/data@8` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular8/src/app/data))
-* Angular 9 and `@ngrx/data@9` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular9/src/app/data))
 - Angular 6 and `@ngrx/entity@6` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular6/src/app/entity))
 - Angular 7 and `@ngrx/entity@7` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular7/src/app/entity))
 - Angular 8 and `@ngrx/entity@8` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular8/src/app/entity))
 - Angular 9 and `@ngrx/entity@9` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular9/src/app/entity))
+* Angular 8 and `@ngrx/data@8` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular8/src/app/data))
+* Angular 9 and `@ngrx/data@9` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular9/src/app/data))
 
 ### API short list
 
