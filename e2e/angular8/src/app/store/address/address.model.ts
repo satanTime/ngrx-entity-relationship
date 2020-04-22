@@ -1,7 +1,7 @@
 import {Company} from '../company/company.model';
 
 export interface Address {
-    uuid: string;
+    id: string;
     name: string;
     company?: Company;
     companyId?: string;
