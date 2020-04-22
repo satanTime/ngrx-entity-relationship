@@ -1,38 +1,24 @@
 import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
-import {Action, createReducer, on} from '@ngrx/store';
-import * as UserActions from './user.actions';
+import {UserActionsUnion, UserActionTypes} from './user.actions';
 import {User} from './user.model';
 
-export interface State extends EntityState<User> {}
-
-export const adapter: EntityAdapter<User> = createEntityAdapter<User>({
-    selectId: v => v.userId,
-});
-
-export const initialState: State = adapter.getInitialState();
-
-const userReducer = createReducer(
-    initialState,
-    on(UserActions.upsertUser, (state, {user}) => {
-        return adapter.upsertOne(user, state);
-    }),
-);
-
-export function userReducerFunc(state: State | undefined, action: Action) {
-    return userReducer(state, action);
+export interface State extends EntityState<User> {
+    selectedIds: Array<string>;
 }
 
-// get the selectors
-const {selectIds, selectEntities, selectAll, selectTotal} = adapter.getSelectors();
+export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
 
-// select the array of user ids
-export const selectUserIds = selectIds;
+export const initialState: State = adapter.getInitialState({
+    selectedIds: ['user1', 'user3', 'user6'],
+});
 
-// select the dictionary of user entities
-export const selectUserEntities = selectEntities;
+export function reducer(state: State = initialState, action: UserActionsUnion) {
+    switch (action.type) {
+        case UserActionTypes.UPSERT:
+            return adapter.upsertOne(action.payload.user, state);
+        case UserActionTypes.UPDATE:
+            return adapter.updateOne(action.payload.user, state);
+    }
 
-// select the array of users
-export const selectAllUsers = selectAll;
-
-// select the total user count
-export const selectUserTotal = selectTotal;
+    return state;
+}

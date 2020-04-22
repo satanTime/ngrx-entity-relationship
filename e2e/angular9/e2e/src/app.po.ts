@@ -1,11 +1,19 @@
-import {browser, by, element, promise} from 'protractor';
+import {browser, by, element} from 'protractor';
 
 export class AppPage {
-    navigateTo(): promise.Promise<unknown> {
-        return browser.get(browser.baseUrl) as Promise<unknown>;
+    navigateTo() {
+        return browser.get(browser.baseUrl);
     }
 
-    getAppEntity(): promise.Promise<string> {
-        return element(by.css('app-entity')).getText();
+    getCompany() {
+        return element(by.css('[data-role="company"]')).getText();
+    }
+
+    getUsers() {
+        return element(by.css('[data-role="users"]')).getText();
+    }
+
+    clickButton(role: string) {
+        return element(by.css(`button[data-role="${role}"]`)).click();
     }
 }
