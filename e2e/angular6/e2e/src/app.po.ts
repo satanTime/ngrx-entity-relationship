@@ -5,7 +5,15 @@ export class AppPage {
         return browser.get(browser.baseUrl);
     }
 
-    getAppEntity() {
-        return element(by.css('app-entity')).getText();
+    getCompany() {
+        return element(by.css('[data-role="company"]')).getText();
+    }
+
+    getUsers() {
+        return element(by.css('[data-role="users"]')).getText();
+    }
+
+    clickButton(role: string) {
+        return element(by.css(`button[data-role="${role}"]`)).click();
     }
 }

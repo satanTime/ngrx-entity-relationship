@@ -1,9 +1,11 @@
+import {Update} from '@ngrx/entity';
 import {Action} from '@ngrx/store';
 
 import {User} from './user.model';
 
 export enum UserActionTypes {
     UPSERT = '[User] Upsert User',
+    UPDATE = '[User] Update User',
 }
 
 export class UpsertUser implements Action {
@@ -12,4 +14,10 @@ export class UpsertUser implements Action {
     constructor(public payload: {user: User}) {}
 }
 
-export type UserActionsUnion = UpsertUser;
+export class UpdateUser implements Action {
+    readonly type = UserActionTypes.UPDATE;
+
+    constructor(public payload: {user: Update<User>}) {}
+}
+
+export type UserActionsUnion = UpsertUser | UpdateUser;
