@@ -4,7 +4,7 @@ export interface User {
     id: string;
     name: string;
     managerId?: string;
-    employee?: User;
+    manager?: User;
     employees?: Array<User>;
     company?: Company;
     companyId?: string;

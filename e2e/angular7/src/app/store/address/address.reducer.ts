@@ -8,26 +8,13 @@ export const adapter: EntityAdapter<Address> = createEntityAdapter<Address>();
 
 export const initialState: State = adapter.getInitialState();
 
-export function addressReducerFunc(state: State = initialState, action: AddressActionsUnion) {
+export function reducer(state: State = initialState, action: AddressActionsUnion) {
     switch (action.type) {
         case AddressActionTypes.UPSERT:
             return adapter.upsertOne(action.payload.address, state);
+        case AddressActionTypes.UPDATE:
+            return adapter.updateOne(action.payload.address, state);
     }
 
     return state;
 }
-
-// get the selectors
-const {selectIds, selectEntities, selectAll, selectTotal} = adapter.getSelectors();
-
-// select the array of address ids
-export const selectAddressIds = selectIds;
-
-// select the dictionary of address entities
-export const selectAddressEntities = selectEntities;
-
-// select the array of addresses
-export const selectAllAddresses = selectAll;
-
-// select the total address count
-export const selectAddressTotal = selectTotal;
