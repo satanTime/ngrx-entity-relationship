@@ -10,6 +10,7 @@ plugins:
       - changelogFile: CHANGELOG.md
     - - @semantic-release/npm
       - tarballDir: tmp
+        npmPublish: false
     - - @semantic-release/github
       - assets:
             - tmp/*.tgz
