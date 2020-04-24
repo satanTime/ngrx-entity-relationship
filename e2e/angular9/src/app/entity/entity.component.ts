@@ -29,14 +29,31 @@ import {User} from '../store/user/user.model';
 })
 export class EntityComponent implements OnDestroy {
     public readonly company$: Observable<Company>;
+    // prettier-ignore
     private readonly companyWithCrazyData = sCompany(
         sCompanyAddress(),
-        sCompanyAdmin(sUserEmployees()),
-        sCompanyStaff(sUserCompany(sCompanyAddress(sAddressCompany()))),
+        sCompanyAdmin(
+            sUserEmployees(),
+        ),
+        sCompanyStaff(
+            sUserCompany(
+                sCompanyAddress(
+                    sAddressCompany(),
+                ),
+            ),
+        ),
     );
 
     public readonly users$: Observable<Array<User>>;
-    private readonly users = rootEntities(sUser(sUserEmployees(sUserManager()), sUserManager()));
+    // prettier-ignore
+    private readonly users = rootEntities(
+        sUser(
+            sUserEmployees(
+                sUserManager(),
+            ),
+            sUserManager(),
+        ),
+    );
 
     constructor(protected readonly store: Store<State>, public readonly entitiesService: EntitiesService) {
         this.users$ = this.store.pipe(
