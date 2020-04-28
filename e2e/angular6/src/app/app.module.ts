@@ -1,18 +1,17 @@
+import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
 
 import {AppComponent} from './app.component';
-import {EntityComponent} from './entity/entity.component';
-import {EntitiesEffects} from './store/entities.effects';
-import {EntitiesService} from './store/entities.service';
-import {reducers} from './store/reducers';
+import {EntityModule} from './entity/entity.module';
+import {EntityService} from './entity/store/entity.service';
 
 @NgModule({
-    declarations: [AppComponent, EntityComponent],
-    imports: [BrowserModule, StoreModule.forRoot(reducers), EffectsModule.forRoot([EntitiesEffects])],
+    declarations: [AppComponent],
+    imports: [BrowserModule, HttpClientModule, StoreModule.forRoot({}), EffectsModule.forRoot([]), EntityModule],
     bootstrap: [AppComponent],
-    providers: [EntitiesService],
+    providers: [EntityService],
 })
 export class AppModule {}

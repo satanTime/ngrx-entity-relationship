@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType, ROOT_EFFECTS_INIT} from '@ngrx/effects';
 import {merge, of} from 'rxjs';
-import {switchMapTo} from 'rxjs/operators';
+import {switchMapTo, tap} from 'rxjs/operators';
 import {UpsertAddress} from './address/address.actions';
 import {UpsertCompany} from './company/company.actions';
 import {UpsertUser} from './user/user.actions';
 
 @Injectable()
-export class EntitiesEffects {
+export class EntityEffects {
     @Effect()
     public readonly data$ = this.actions$.pipe(
         ofType(ROOT_EFFECTS_INIT),
