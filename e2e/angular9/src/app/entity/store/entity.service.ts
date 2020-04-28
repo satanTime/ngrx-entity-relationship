@@ -7,7 +7,7 @@ import {sAddress, sCompany, State, sUser} from './reducers';
 import {UpdateUser} from './user/user.actions';
 
 @Injectable()
-export class EntitiesService {
+export class EntityService {
     constructor(protected readonly store: Store<State>) {}
 
     public changeUser(id: string): void {

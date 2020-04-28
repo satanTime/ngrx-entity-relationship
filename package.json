@@ -60,9 +60,6 @@
         "url": "https://github.com/satanTime/ngrx-entity-relationship/issues"
     },
     "homepage": "https://github.com/satanTime/ngrx-entity-relationship#readme",
-    "peerDependencies": {
-        "@ngrx/entity": ">=6.x <=9.x"
-    },
     "devDependencies": {
         "@commitlint/cli": "^8.3.5",
         "@commitlint/config-conventional": "^8.3.4",

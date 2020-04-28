@@ -3,8 +3,8 @@ import {select, Store} from '@ngrx/store';
 import {rootEntities} from 'ngrx-entity-relationship';
 import {Observable} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
-import {Company} from '../store/company/company.model';
-import {EntitiesService} from '../store/entities.service';
+import {Company} from './store/company/company.model';
+import {EntityService} from './store/entity.service';
 import {
     sAddressCompany,
     sCompany,
@@ -18,13 +18,12 @@ import {
     sUserCompany,
     sUserEmployees,
     sUserManager,
-} from '../store/reducers';
-import {User} from '../store/user/user.model';
+} from './store/reducers';
+import {User} from './store/user/user.model';
 
 @Component({
     selector: 'app-entity',
     templateUrl: './entity.component.html',
-    styleUrls: ['./entity.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EntityComponent implements OnDestroy {
@@ -55,7 +54,7 @@ export class EntityComponent implements OnDestroy {
         ),
     );
 
-    constructor(protected readonly store: Store<State>, public readonly entitiesService: EntitiesService) {
+    constructor(protected readonly store: Store<State>, public readonly entitiesService: EntityService) {
         this.users$ = this.store.pipe(
             select(selectCurrentUsersIds),
             switchMap(ids => this.store.select(this.users, ids)),

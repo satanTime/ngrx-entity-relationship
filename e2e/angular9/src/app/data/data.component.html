@@ -1,29 +1,73 @@
-<div>
-    <h2>UUID</h2>
-    {{ selector.uuid$ | async | json }}
-</div>
-<hr />
+<h2>Actions</h2>
+<button (click)="entitiesService.changeHero('hero1')" data-role="user1">Change hero1</button>
+<button (click)="entitiesService.changeHero('hero2')" data-role="user2">Change hero2</button>
+<button (click)="entitiesService.changeVillain('villain3')" data-role="user3">Change villain3</button>
+<button (click)="entitiesService.changeVillain('villain4')" data-role="user4">Change villain4</button>
 
-<div>
-    <h2>UUID Rel</h2>
-    {{ selector.uuidRel$ | async | json }}
-</div>
-<hr />
+<h2>Fights</h2>
+<strong>selector</strong>
+<pre>
+public readonly fights$ = this.fight.selectors$.entities$.pipe(
+    relationships(
+        this.store,
+        rootEntities(
+            rootEntity(
+                this.fight,
+                relatedEntity(this.hero, 'heroId', 'hero'),
+                relatedEntity(this.villain, 'villainId', 'villain'),
+            ),
+        ),
+    ),
+);
+</pre>
+<strong>usage</strong>
+<pre>
+selector.fights$ | async | json
+</pre>
+<pre data-role="fights">{{ selector.fights$ | async | json }}</pre>
 
-<div>
-    <h2>Store</h2>
-    {{ selector.store$ | async | json }}
-</div>
-<hr />
+<h2>Heroes</h2>
+<pre>
+public readonly heroes$ = this.hero.selectors$.entities$.pipe(
+    relationships(
+        this.store,
+        rootEntities(
+            rootEntity(
+                this.hero,
+                childrenEntities(
+                    this.fight, 'heroId', 'fights',
+                    relatedEntity(this.villain, 'villainId', 'villain'),
+                ),
+            ),
+        ),
+    ),
+);
+</pre>
+<strong>usage</strong>
+<pre>
+selector.heroes$ | async | json
+</pre>
+<pre data-role="heroes">{{ selector.heroes$ | async | json }}</pre>
 
-<div>Hero loading: {{ heroService.loading$ | async | json }}</div>
-<div *ngFor="let item of heroService.entities$ | async">Hero: {{ item.heroName }}</div>
-<div>Heroes: {{ selector.heroesWithVillain$ | async | json }}</div>
-<div>Heroes: {{ selector.heroesWithVillainShort$ | async | json }}</div>
-<div>Hero from list: {{ selector.heroesWithVillainShortId$ | async | json }}</div>
-<div>Hero from id: {{ selector.heroWithVillainId$ | async | json }}</div>
-
-<div>Villain loading: {{ villainService.loading$ | async | json }}</div>
-<div *ngFor="let item of villainService.entities$ | async">Villain: {{ item.villainName }}</div>
-<div>Villains: {{ selector.villainsWithHeroes$ | async | json }}</div>
-<div>Villains: {{ selector.villainsWithHeroesShort$ | async | json }}</div>
+<h2>Villains</h2>
+<pre>
+public readonly villains$ = this.villain.selectors$.entities$.pipe(
+    relationships(
+        this.store,
+        rootEntities(
+            rootEntity(
+                this.villain,
+                childrenEntities(
+                    this.fight, 'villainId', 'fights',
+                    relatedEntity(this.hero, 'heroId', 'hero'),
+                ),
+            ),
+        ),
+    ),
+);
+</pre>
+<strong>usage</strong>
+<pre>
+selector.villains$ | async | json
+</pre>
+<pre data-role="villains">{{ selector.villains$ | async | json }}</pre>
