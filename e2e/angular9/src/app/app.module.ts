@@ -15,7 +15,7 @@ import {EntityService} from './entity/store/entity.service';
         BrowserModule,
         HttpClientModule,
         StoreModule.forRoot({}),
-        EffectsModule.forRoot(),
+        EffectsModule.forRoot([]),
 
         EntityModule,
         DataModule,
