@@ -1,3 +1,9 @@
+# [1.1.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.0.0...v1.1.0) (2020-05-02)
+
+### Features
+
+-   full info about selectors ([1e887cb](https://github.com/satanTime/ngrx-entity-relationship/commit/1e887cbd47c2ab4604730987ce0b0de28188d904))
+
 # [1.0.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v0.9.6...v1.0.0) (2020-04-18)
 
 ### Features
