@@ -33,7 +33,7 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED>(
         transformer = deside;
         relationships = relationships.slice(1);
     }
-    const {collection: funcSelector, id: idSelector} = normalizeSelector(featureSelector);
+    const {collection: collectionSelector, id: idSelector} = normalizeSelector(featureSelector);
 
     const cacheLevel = '0';
     const cache: CACHE<STORE> = new Map();
@@ -43,7 +43,7 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED>(
             return;
         }
 
-        const featureState = funcSelector(state);
+        const featureState = collectionSelector(state);
         let cacheDataLevel = cache.get(cacheLevel);
         if (!cacheDataLevel) {
             cacheDataLevel = new Map();
@@ -66,7 +66,7 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED>(
         value = undefined;
         checks = new Map();
         const checkIds = new Map();
-        checks.set(funcSelector, checkIds);
+        checks.set(collectionSelector, checkIds);
         checkIds.set(null, featureState.entities);
         checkIds.set(id, featureState.entities[id]);
 
@@ -94,7 +94,9 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED>(
         return value;
     };
     callback.ngrxEntityRelationship = 'rootEntity';
+    callback.collectionSelector = collectionSelector;
     callback.idSelector = idSelector;
+    callback.relationships = relationships;
     callback.release = () => {
         cache.clear();
         for (const relationship of relationships) {

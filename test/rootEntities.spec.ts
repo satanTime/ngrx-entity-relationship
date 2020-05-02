@@ -15,13 +15,16 @@ describe('rootEntities', () => {
     });
 
     it('marks callback with ngrxEntityRelationship key', () => {
-        const actual = rootEntities(jasmine.createSpy() as any);
+        const rootSelector: any = jasmine.createSpy();
+        rootSelector.relationships = Symbol();
+        rootSelector.collectionSelector = Symbol();
+        rootSelector.idSelector = Symbol();
+        const actual = rootEntities(rootSelector);
         expect(actual).toEqual(jasmine.any(Function));
-        expect(actual).toEqual(
-            jasmine.objectContaining({
-                ngrxEntityRelationship: 'rootEntities',
-            }),
-        );
+        expect(actual.ngrxEntityRelationship).toEqual('rootEntities');
+        expect(actual.collectionSelector).toBe(rootSelector.collectionSelector);
+        expect(actual.idSelector).toBe(rootSelector.idSelector);
+        expect(actual.relationships).toBe(rootSelector.relationships);
     });
 
     it('returns the same empty array on no ids', () => {

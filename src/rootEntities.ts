@@ -53,7 +53,9 @@ export function rootEntities<STORE, ENTITY, TRANSFORMED>(
         return value;
     };
     callback.ngrxEntityRelationship = 'rootEntities';
+    callback.collectionSelector = rootSelector.collectionSelector;
     callback.idSelector = rootSelector.idSelector;
+    callback.relationships = rootSelector.relationships;
     callback.release = () => {
         cacheMap.clear();
         rootSelector.release();

@@ -11,14 +11,23 @@ describe('relatedEntity', () => {
         parentsId?: Array<string | number>;
     };
 
-    it('marks callback with ngrxEntityRelationship key', () => {
-        const actual = relatedEntity<any, any, any, any, any, any, any>(jasmine.createSpy(), '', '');
-        expect(actual).toEqual(jasmine.any(Function));
-        expect(actual).toEqual(
-            jasmine.objectContaining({
-                ngrxEntityRelationship: 'relatedEntity',
-            }),
+    it('marks callback with ngrxEntityRelationship key and passed args', () => {
+        const rel1: any = Symbol();
+        const rel2: any = Symbol();
+        const featureSelector = jasmine.createSpy();
+        const actual = relatedEntity<any, any, any, any, any, any, any>(
+            featureSelector,
+            'myKeyId',
+            'myKeyValue',
+            rel1,
+            rel2,
         );
+        expect(actual).toEqual(jasmine.any(Function));
+        expect(actual.ngrxEntityRelationship).toEqual('relatedEntity');
+        expect(actual.collectionSelector).toBe(featureSelector);
+        expect(actual.keyId).toEqual('myKeyId');
+        expect(actual.keyValue).toEqual('myKeyValue');
+        expect(actual.relationships).toEqual([rel1, rel2]);
     });
 
     it('does not set anything if the related id is falsy', () => {

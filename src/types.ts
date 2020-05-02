@@ -41,17 +41,21 @@ export type CACHE_CHECKS = Map<ID_TYPES | null, UNKNOWN>;
 export type CACHE_CHECKS_SET<S> = Map<STORE_SELECTOR<S, ENTITY_STATE<UNKNOWN>>, CACHE_CHECKS>;
 export type CACHE<S> = Map<string, Map<string | null, [CACHE_CHECKS_SET<S>, UNKNOWN]>>;
 
-export type HANDLER_ROOT_ENTITY<S, F, T, I> = {
+export type HANDLER_ROOT_ENTITY<S, E, T, I> = {
     (state: S, id: I): undefined | T;
     ngrxEntityRelationship: string;
-    idSelector: ID_SELECTOR<F>;
+    collectionSelector: STORE_SELECTOR<S, ENTITY_STATE<E>>;
+    idSelector: ID_SELECTOR<E>;
+    relationships: Array<HANDLER_RELATED_ENTITY<S, E>>;
     release(): void;
 };
 
-export type HANDLER_ROOT_ENTITIES<S, F, T, I> = {
+export type HANDLER_ROOT_ENTITIES<S, E, T, I> = {
     (state: S, id: Array<I>): Array<T>;
     ngrxEntityRelationship: string;
-    idSelector: ID_SELECTOR<F>;
+    collectionSelector: STORE_SELECTOR<S, ENTITY_STATE<E>>;
+    idSelector: ID_SELECTOR<E>;
+    relationships: Array<HANDLER_RELATED_ENTITY<S, E>>;
     release(): void;
 };
 
@@ -64,7 +68,11 @@ export type HANDLER_RELATED_ENTITY<S, E> = {
         sourceIdSelector: ID_SELECTOR<any /* TODO has to be a related entity */>,
     ): string | undefined;
     ngrxEntityRelationship: string;
+    collectionSelector: STORE_SELECTOR<S, ENTITY_STATE<any /* TODO has to be a related entity */>>;
     idSelector: ID_SELECTOR<any /* TODO has to be a related entity */>;
+    relationships: Array<HANDLER_RELATED_ENTITY<S, any /* TODO has to be a related entity */>>;
+    keyId: keyof any;
+    keyValue: keyof any;
     release(): void;
 };
 

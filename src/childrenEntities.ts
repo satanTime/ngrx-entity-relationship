@@ -38,7 +38,7 @@ export function childrenEntities<
     let relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>> = [...arguments];
     relationships = relationships.slice(3);
 
-    const {collection: funcSelector, id: idSelector} = normalizeSelector(featureSelector);
+    const {collection: collectionSelector, id: idSelector} = normalizeSelector(featureSelector);
     const emptyResult: Map<UNKNOWN, UNKNOWN> = new Map();
 
     const callback = (
@@ -48,7 +48,7 @@ export function childrenEntities<
         source: PARENT_ENTITY,
         idParentSelector: ID_SELECTOR<PARENT_ENTITY>,
     ) => {
-        const featureState = funcSelector(state);
+        const featureState = collectionSelector(state);
         const parentId = idParentSelector(source);
 
         let cacheDataLevel = cache.get(cacheLevel);
@@ -78,7 +78,7 @@ export function childrenEntities<
             }
             idsChecks = new Map();
             const idsChecksEntities = new Map();
-            idsChecks.set(funcSelector, idsChecksEntities);
+            idsChecks.set(collectionSelector, idsChecksEntities);
             idsChecksEntities.set(null, featureState.entities);
             cacheDataLevel.set(`!${parentId}`, [idsChecks, ids]);
         }
@@ -105,7 +105,7 @@ export function childrenEntities<
         value = [];
         checks = new Map();
         const checksEntities = new Map();
-        checks.set(funcSelector, checksEntities);
+        checks.set(collectionSelector, checksEntities);
         checksEntities.set(null, featureState.entities);
         for (const id of ids) {
             checksEntities.set(id, featureState.entities[id]);
@@ -125,7 +125,7 @@ export function childrenEntities<
             entityValue = {...featureState.entities[id]} as RELATED_ENTITY;
             entityChecks = new Map();
             const entityChecksEntities = new Map();
-            entityChecks.set(funcSelector, entityChecksEntities);
+            entityChecks.set(collectionSelector, entityChecksEntities);
             entityChecksEntities.set(null, featureState.entities);
             entityChecksEntities.set(id, featureState.entities[id]);
 
@@ -147,7 +147,11 @@ export function childrenEntities<
         return cacheHash;
     };
     callback.ngrxEntityRelationship = 'childrenEntities';
+    callback.collectionSelector = collectionSelector;
     callback.idSelector = idSelector;
+    callback.relationships = relationships;
+    callback.keyId = keyId;
+    callback.keyValue = keyValue;
     callback.release = () => {
         emptyResult.clear();
         for (const relationship of relationships) {

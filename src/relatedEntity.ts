@@ -41,7 +41,7 @@ export function relatedEntity<
     let relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>> = [...arguments];
     relationships = relationships.slice(3);
 
-    const {collection: funcSelector, id: idSelector} = normalizeSelector(featureSelector);
+    const {collection: collectionSelector, id: idSelector} = normalizeSelector(featureSelector);
     const emptyResult: Map<UNKNOWN, UNKNOWN> = new Map();
 
     const callback = (cacheLevel: string, state: STORE, cache: CACHE<STORE>, source: PARENT_ENTITY) => {
@@ -51,7 +51,7 @@ export function relatedEntity<
             return;
         }
 
-        const featureState = funcSelector(state);
+        const featureState = collectionSelector(state);
 
         let cacheDataLevel = cache.get(cacheLevel);
         if (!cacheDataLevel) {
@@ -95,7 +95,7 @@ export function relatedEntity<
         value = undefined;
         checks = new Map();
         const checkIds = new Map();
-        checks.set(funcSelector, checkIds);
+        checks.set(collectionSelector, checkIds);
         checkIds.set(null, featureState.entities);
         for (const id of ids) {
             checkIds.set(id, featureState.entities[id]);
@@ -119,7 +119,7 @@ export function relatedEntity<
             entityValue = {...featureState.entities[id]} as RELATED_ENTITY;
             entityChecks = new Map();
             const entityCheckIds = new Map();
-            entityChecks.set(funcSelector, entityCheckIds);
+            entityChecks.set(collectionSelector, entityCheckIds);
             entityCheckIds.set(null, featureState.entities);
             entityCheckIds.set(id, featureState.entities[id]);
 
@@ -142,7 +142,11 @@ export function relatedEntity<
         return cacheHash;
     };
     callback.ngrxEntityRelationship = 'relatedEntity';
+    callback.collectionSelector = collectionSelector;
     callback.idSelector = idSelector;
+    callback.relationships = relationships;
+    callback.keyId = keyId;
+    callback.keyValue = keyValue;
     callback.release = () => {
         emptyResult.clear();
         for (const relationship of relationships) {

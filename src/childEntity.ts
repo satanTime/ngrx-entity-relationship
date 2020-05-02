@@ -38,7 +38,7 @@ export function childEntity<
     let relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>> = [...arguments];
     relationships = relationships.slice(3);
 
-    const {collection: funcSelector, id: idSelector} = normalizeSelector(featureSelector);
+    const {collection: collectionSelector, id: idSelector} = normalizeSelector(featureSelector);
 
     const callback = (
         cacheLevel: string,
@@ -47,7 +47,7 @@ export function childEntity<
         source: PARENT_ENTITY,
         idParentSelector: ID_SELECTOR<PARENT_ENTITY>,
     ) => {
-        const featureState = funcSelector(state);
+        const featureState = collectionSelector(state);
         const parentId = idParentSelector(source);
 
         let cacheDataLevel = cache.get(cacheLevel);
@@ -75,7 +75,7 @@ export function childEntity<
             }
             idChecks = new Map();
             const idChecksEntities = new Map();
-            idChecks.set(funcSelector, idChecksEntities);
+            idChecks.set(collectionSelector, idChecksEntities);
             idChecksEntities.set(null, featureState.entities);
             cacheDataLevel.set(`!${parentId}`, [idChecks, id]);
         }
@@ -97,7 +97,7 @@ export function childEntity<
         value = undefined;
         checks = new Map();
         const checksEntities = new Map();
-        checks.set(funcSelector, checksEntities);
+        checks.set(collectionSelector, checksEntities);
         checksEntities.set(null, featureState.entities);
         checksEntities.set(id, featureState.entities[id]);
 
@@ -118,7 +118,11 @@ export function childEntity<
         return cacheHash;
     };
     callback.ngrxEntityRelationship = 'childEntity';
+    callback.collectionSelector = collectionSelector;
     callback.idSelector = idSelector;
+    callback.relationships = relationships;
+    callback.keyId = keyId;
+    callback.keyValue = keyValue;
     callback.release = () => {
         for (const relationship of relationships) {
             relationship.release();

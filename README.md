@@ -473,9 +473,22 @@ store.select(selectUser, 1).subsribe(user => {
 });
 ```
 
+### Gathering information of a selector
+
+Besides the `release` function every selector provides information about itself.
+
+* `ngrxEntityRelationship` - name of its function: `rootEntity`, `rootEntities`, `relatedEntity`, `childEntity` and `childrenEntities`.
+* `collectionSelector` - a function that returns a collection of its entity.
+* `idSelector` - a function that returns the id of the related entity.
+* `relationships` - an array of passed relationships.
+
+In case of relationship functions there are two more keys
+* `keyId` - a name of the keyId field.
+* `keyValue` - a name of the keyValue field.
+
 ## Additional examples
 
-Of course we can select as many relationships as we want until we have a field with a related id.
+Of course, we can select as many relationships as we want until we have a field with a related id.
 Check how `childrenEntities` works. It gathers entities based on a parent field.
 
 ```typescript

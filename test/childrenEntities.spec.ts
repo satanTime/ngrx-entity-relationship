@@ -9,14 +9,17 @@ describe('childrenEntities', () => {
         child?: Array<Entity>;
     };
 
-    it('marks callback with ngrxEntityRelationship key', () => {
-        const actual = childrenEntities<any, any, any, any, any>(jasmine.createSpy(), '', '');
+    it('marks callback with ngrxEntityRelationship key and passed args', () => {
+        const rel1: any = Symbol();
+        const rel2: any = Symbol();
+        const featureSelector = jasmine.createSpy();
+        const actual = childrenEntities<any, any, any, any, any>(featureSelector, 'myKeyId', 'myKeyValue', rel1, rel2);
         expect(actual).toEqual(jasmine.any(Function));
-        expect(actual).toEqual(
-            jasmine.objectContaining({
-                ngrxEntityRelationship: 'childrenEntities',
-            }),
-        );
+        expect(actual.ngrxEntityRelationship).toEqual('childrenEntities');
+        expect(actual.collectionSelector).toBe(featureSelector);
+        expect(actual.keyId).toEqual('myKeyId');
+        expect(actual.keyValue).toEqual('myKeyValue');
+        expect(actual.relationships).toEqual([rel1, rel2]);
     });
 
     it('set an empty array if there are no child entities', () => {

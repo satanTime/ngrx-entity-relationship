@@ -15,13 +15,15 @@ describe('rootEntity', () => {
     });
 
     it('marks callback with ngrxEntityRelationship key', () => {
-        const actual = rootEntity(jasmine.createSpy());
+        const rel1: any = Symbol();
+        const rel2: any = Symbol();
+        const featureSelector = jasmine.createSpy();
+        // because rels aren't real rels we need to pass a transformer.
+        const actual = rootEntity(featureSelector, () => null, rel1, rel2);
         expect(actual).toEqual(jasmine.any(Function));
-        expect(actual).toEqual(
-            jasmine.objectContaining({
-                ngrxEntityRelationship: 'rootEntity',
-            }),
-        );
+        expect(actual.collectionSelector).toBe(featureSelector);
+        expect(actual.ngrxEntityRelationship).toEqual('rootEntity');
+        expect(actual.relationships).toEqual([rel1, rel2]);
     });
 
     it('returns undefined when the id is falsy', () => {
