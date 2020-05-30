@@ -7,6 +7,8 @@ import {
     HANDLER_ROOT_ENTITY,
     ID_TYPES,
     isBuiltInSelector,
+    isSelectorMeta,
+    SELECTOR_META,
     TRANSFORMER,
     UNKNOWN,
 } from './types';
@@ -14,25 +16,51 @@ import {mergeCache, normalizeSelector, verifyCache} from './utils';
 
 export function rootEntity<STORE, ENTITY>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
-    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
+    ...relationships: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
 ): HANDLER_ROOT_ENTITY<STORE, ENTITY, ENTITY, ID_TYPES>;
+
+export function rootEntity<STORE, ENTITY>(
+    featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
+    meta: SELECTOR_META,
+    ...relationships: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
+): HANDLER_ROOT_ENTITY<STORE, ENTITY, ENTITY, ID_TYPES>;
+
 export function rootEntity<STORE, ENTITY, TRANSFORMED>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
     transformer: TRANSFORMER<ENTITY, TRANSFORMED>,
-    ...relations: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
+    ...relationships: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
 ): HANDLER_ROOT_ENTITY<STORE, ENTITY, TRANSFORMED, ID_TYPES>;
+
 export function rootEntity<STORE, ENTITY, TRANSFORMED>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
-    deside?: TRANSFORMER<ENTITY, TRANSFORMED> | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
+    transformer: TRANSFORMER<ENTITY, TRANSFORMED>,
+    meta: SELECTOR_META,
+    ...relationships: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>>
+): HANDLER_ROOT_ENTITY<STORE, ENTITY, TRANSFORMED, ID_TYPES>;
+
+export function rootEntity<STORE, ENTITY, TRANSFORMED>(
+    featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
+    guess1?: TRANSFORMER<ENTITY, TRANSFORMED> | SELECTOR_META | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
+    guess2?: SELECTOR_META | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
 ): HANDLER_ROOT_ENTITY<STORE, ENTITY, ENTITY | TRANSFORMED, ID_TYPES> {
     let relationships: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>> = [...arguments];
     relationships = relationships.slice(1);
 
     let transformer: undefined | TRANSFORMER<ENTITY, TRANSFORMED>;
-    if (!isBuiltInSelector<STORE, ENTITY>(deside)) {
-        transformer = deside;
+    let meta: SELECTOR_META = {};
+    if (!isBuiltInSelector<STORE, ENTITY>(guess1) && !isSelectorMeta(guess1)) {
+        transformer = guess1;
         relationships = relationships.slice(1);
     }
+    if (!isBuiltInSelector<STORE, ENTITY>(guess1) && isSelectorMeta(guess1)) {
+        meta = guess1;
+        relationships = relationships.slice(1);
+    }
+    if (!isBuiltInSelector<STORE, ENTITY>(guess2) && isSelectorMeta(guess2)) {
+        meta = guess2;
+        relationships = relationships.slice(1);
+    }
+
     const {collection: collectionSelector, id: idSelector} = normalizeSelector(featureSelector);
 
     const cacheLevel = '0';
@@ -76,7 +104,7 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED>(
             return value;
         }
 
-        // we have to clone it because we are going to update it with relations.
+        // we have to clone it because we are going to update it with relationships.
         value = {...featureState.entities[id]} as ENTITY;
 
         let cacheRelLevelIndex = 0;
@@ -95,6 +123,7 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED>(
     };
     callback.ngrxEntityRelationship = 'rootEntity';
     callback.collectionSelector = collectionSelector;
+    callback.meta = meta;
     callback.idSelector = idSelector;
     callback.relationships = relationships;
     callback.release = () => {

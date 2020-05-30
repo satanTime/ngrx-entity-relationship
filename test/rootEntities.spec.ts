@@ -1,5 +1,11 @@
-import {rootEntities, rootEntity, rootEntityFlags} from '../src';
-import {FEATURE_SELECTOR, HANDLER_ROOT_ENTITY, ID_TYPES} from '../src/types';
+import {
+    FEATURE_SELECTOR,
+    HANDLER_ROOT_ENTITY,
+    ID_TYPES,
+    rootEntities,
+    rootEntity,
+    rootEntityFlags,
+} from 'ngrx-entity-relationship';
 
 describe('rootEntities', () => {
     type Entity = {

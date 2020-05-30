@@ -53,6 +53,7 @@ export function rootEntities<STORE, ENTITY, TRANSFORMED>(
         return value;
     };
     callback.ngrxEntityRelationship = 'rootEntities';
+    callback.meta = rootSelector.meta;
     callback.collectionSelector = rootSelector.collectionSelector;
     callback.idSelector = rootSelector.idSelector;
     callback.relationships = rootSelector.relationships;

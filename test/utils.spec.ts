@@ -1,10 +1,10 @@
-import {mergeCache, normalizeSelector, verifyCache} from '../src/utils';
+import {mergeCache, normalizeSelector, verifyCache} from 'ngrx-entity-relationship/dist/utils';
 
 describe('utils', () => {
     describe('normalizeSelector', () => {
         it('throws an error in console about circular dependencies', () => {
-            expect(() => normalizeSelector(undefined)).toThrowMatching(error =>
-                error.message.match('https://github.com/satanTime/ngrx-entity-relationship#circular-dependency'),
+            expect(() => normalizeSelector(undefined)).toThrowError(
+                new RegExp('https://github.com/satanTime/ngrx-entity-relationship#circular-dependency'),
             );
         });
 

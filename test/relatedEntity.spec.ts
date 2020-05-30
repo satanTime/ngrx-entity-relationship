@@ -1,5 +1,5 @@
-import {relatedEntity} from '../src';
-import {ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, UNKNOWN} from '../src/types';
+import {ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, relatedEntity} from 'ngrx-entity-relationship';
+import {UNKNOWN} from 'ngrx-entity-relationship/dist/types';
 
 describe('relatedEntity', () => {
     type Entity = {
@@ -33,6 +33,7 @@ describe('relatedEntity', () => {
     it('does not set anything if the related id is falsy', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -62,6 +63,7 @@ describe('relatedEntity', () => {
     it('sets the related entity if the related id field has primitive type', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -95,6 +97,7 @@ describe('relatedEntity', () => {
     it('sets an array of the related entities the related id field is an array', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -130,6 +133,7 @@ describe('relatedEntity', () => {
     it('sets undefined when the related entity does not exist', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -152,6 +156,7 @@ describe('relatedEntity', () => {
     it('sets an empty when the related entities do not exist', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -174,6 +179,7 @@ describe('relatedEntity', () => {
     it('ignores falsy ids', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -196,6 +202,7 @@ describe('relatedEntity', () => {
     it('caches an empty array', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -222,6 +229,7 @@ describe('relatedEntity', () => {
     it('clones the related entity', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -253,6 +261,7 @@ describe('relatedEntity', () => {
     it('clones the related entities for arrays', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -284,6 +293,7 @@ describe('relatedEntity', () => {
     it('sets the cache when the related entity exists', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -337,6 +347,7 @@ describe('relatedEntity', () => {
     it('sets the cache when the related entity does not exist', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -369,6 +380,7 @@ describe('relatedEntity', () => {
     it('calls relationships with an incrementing prefix and arguments', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -413,6 +425,7 @@ describe('relatedEntity', () => {
     it('calls relationships.release on own release call', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -441,6 +454,7 @@ describe('relatedEntity', () => {
     it('supports EntityCollectionService as a selector', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -481,6 +495,7 @@ describe('relatedEntity', () => {
     it('supports a default selector and returns id field', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -515,6 +530,7 @@ describe('relatedEntity', () => {
     it('supports custom feature selector and id field of string', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -553,6 +569,7 @@ describe('relatedEntity', () => {
     it('supports custom feature selector and id field of number', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -591,6 +608,7 @@ describe('relatedEntity', () => {
     it('supports custom feature selector and id selector', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };

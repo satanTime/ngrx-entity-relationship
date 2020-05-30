@@ -1,5 +1,4 @@
-import {childEntitySelector} from '../src';
-import {HANDLER_RELATED_ENTITY} from '../src/types';
+import {childEntitySelector, HANDLER_RELATED_ENTITY} from 'ngrx-entity-relationship';
 
 describe('childEntitySelector', () => {
     type Entity = {
@@ -22,6 +21,7 @@ describe('childEntitySelector', () => {
     it('calls childEntity with relations', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -61,7 +61,7 @@ describe('childEntitySelector', () => {
             jasmine.objectContaining({
                 rel1: true,
                 rel2: true,
-            }),
+            } as any),
         );
     });
 });

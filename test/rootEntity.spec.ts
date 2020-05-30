@@ -1,5 +1,5 @@
-import {rootEntity, rootEntityFlags} from '../src';
-import {ENTITY_STATE, HANDLER_RELATED_ENTITY, UNKNOWN} from '../src/types';
+import {ENTITY_STATE, HANDLER_RELATED_ENTITY, rootEntity, rootEntityFlags} from 'ngrx-entity-relationship';
+import {UNKNOWN} from 'ngrx-entity-relationship/dist/types';
 
 describe('rootEntity', () => {
     type Entity = {
@@ -29,6 +29,7 @@ describe('rootEntity', () => {
     it('returns undefined when the id is falsy', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -40,6 +41,7 @@ describe('rootEntity', () => {
     it('returns undefined when the entity does not exist', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -52,6 +54,7 @@ describe('rootEntity', () => {
     it('clones the original entity', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -73,6 +76,7 @@ describe('rootEntity', () => {
     it('returns cached value when rootEntityFlags.disabled is true', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -130,6 +134,7 @@ describe('rootEntity', () => {
     it('returns cached value when the original entity has not been changed unless the cache release', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -162,9 +167,11 @@ describe('rootEntity', () => {
     it('returns cached value when the related entity has not been changed unless the cache release', () => {
         const state: {feature1: ENTITY_STATE<Entity>; feature2: ENTITY_STATE<Entity>} = {
             feature1: {
+                ids: [],
                 entities: {},
             },
             feature2: {
+                ids: [],
                 entities: {},
             },
         };
@@ -231,9 +238,11 @@ describe('rootEntity', () => {
     it('returns cached value when the related entity set has not been changed unless the cache release', () => {
         const state: {feature1: ENTITY_STATE<Entity>; feature2: ENTITY_STATE<Entity>} = {
             feature1: {
+                ids: [],
                 entities: {},
             },
             feature2: {
+                ids: [],
                 entities: {},
             },
         };
@@ -296,6 +305,7 @@ describe('rootEntity', () => {
     it('calls relationships with an incrementing prefix and arguments', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -321,6 +331,7 @@ describe('rootEntity', () => {
     it('calls relationships.release on own release call', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -341,6 +352,7 @@ describe('rootEntity', () => {
     it('uses transformer', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -359,13 +371,14 @@ describe('rootEntity', () => {
         expect(selector(state, 'id')).toEqual(
             jasmine.objectContaining({
                 transformed: true,
-            }),
+            } as any),
         );
     });
 
     it('uses transformer after relationships', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -394,6 +407,7 @@ describe('rootEntity', () => {
     it('uses transformer to a different type', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -418,6 +432,7 @@ describe('rootEntity', () => {
     it('supports EntityCollectionService as a selector', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -444,6 +459,7 @@ describe('rootEntity', () => {
     it('supports a default selector and returns id field', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -464,6 +480,7 @@ describe('rootEntity', () => {
     it('supports custom feature selector and id field of string', () => {
         const state: {feature: ENTITY_STATE<UNKNOWN>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -487,6 +504,7 @@ describe('rootEntity', () => {
     it('supports custom feature selector and id field of number', () => {
         const state: {feature: ENTITY_STATE<UNKNOWN>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -510,6 +528,7 @@ describe('rootEntity', () => {
     it('supports custom feature selector and id selector', () => {
         const state: {feature: ENTITY_STATE<UNKNOWN>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };

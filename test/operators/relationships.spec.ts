@@ -1,7 +1,6 @@
+import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, relationships} from 'ngrx-entity-relationship';
+import {UNKNOWN} from 'ngrx-entity-relationship/dist/types';
 import {of, Subject} from 'rxjs';
-
-import {relationships} from '../../src';
-import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, UNKNOWN} from '../../src/types';
 
 describe('operators/relationships', () => {
     type Entity = {

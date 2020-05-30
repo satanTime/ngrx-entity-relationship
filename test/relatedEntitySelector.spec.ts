@@ -1,5 +1,4 @@
-import {relatedEntitySelector} from '../src';
-import {HANDLER_RELATED_ENTITY} from '../src/types';
+import {HANDLER_RELATED_ENTITY, relatedEntitySelector} from 'ngrx-entity-relationship';
 
 describe('relatedEntitySelector', () => {
     type Entity = {
@@ -23,6 +22,7 @@ describe('relatedEntitySelector', () => {
     it('calls relatedEntity with relations', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -60,7 +60,7 @@ describe('relatedEntitySelector', () => {
             jasmine.objectContaining({
                 rel1: true,
                 rel2: true,
-            }),
+            } as any),
         );
     });
 });

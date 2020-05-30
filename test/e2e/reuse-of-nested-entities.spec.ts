@@ -1,49 +1,50 @@
-import {childEntity, childrenEntities, relatedEntity, rootEntity} from '../../src';
-import {ENTITY_STATE, FEATURE_SELECTOR} from '../../src/types';
-
-interface User {
-    id: string;
-    firstName: string;
-    lastName: string;
-
-    company?: Company;
-    companyId?: string;
-
-    employees?: Array<User>;
-    employeesId?: Array<string>;
-}
-
-interface Company {
-    id: string;
-    name: string;
-
-    staff?: Array<User>;
-
-    admin?: User;
-    adminId?: string;
-
-    address?: Address;
-}
-
-interface Address {
-    id: string;
-    street: string;
-    city: string;
-    country: string;
-
-    companyId?: string;
-}
+import {
+    childEntity,
+    childrenEntities,
+    ENTITY_STATE,
+    FEATURE_SELECTOR,
+    relatedEntity,
+    rootEntity,
+} from 'ngrx-entity-relationship';
 
 describe('reuse-of-nested-entities', () => {
+    interface User {
+        id: string;
+        firstName: string;
+        lastName: string;
+        company?: Company;
+        companyId?: string;
+        employees?: Array<User>;
+        employeesId?: Array<string>;
+    }
+    interface Company {
+        id: string;
+        name: string;
+        staff?: Array<User>;
+        admin?: User;
+        adminId?: string;
+        address?: Address;
+    }
+    interface Address {
+        id: string;
+        street: string;
+        city: string;
+        country: string;
+        companyId?: string;
+    }
+
     it('keeps unchanged entities the same', () => {
         const state: {users: ENTITY_STATE<User>; companies: ENTITY_STATE<Company>; addresses: ENTITY_STATE<Address>} = {
             users: {
+                ids: [],
                 entities: {},
             },
             companies: {
+                ids: [],
                 entities: {},
             },
             addresses: {
+                ids: [],
                 entities: {},
             },
         };

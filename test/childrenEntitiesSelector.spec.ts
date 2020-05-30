@@ -1,5 +1,4 @@
-import {childrenEntitiesSelector} from '../src';
-import {HANDLER_RELATED_ENTITY} from '../src/types';
+import {childrenEntitiesSelector, HANDLER_RELATED_ENTITY} from 'ngrx-entity-relationship';
 
 describe('childrenEntitiesSelector', () => {
     type Entity = {
@@ -22,6 +21,7 @@ describe('childrenEntitiesSelector', () => {
     it('calls childrenEntities with relations', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -62,6 +62,6 @@ describe('childrenEntitiesSelector', () => {
                 rel1: true,
                 rel2: true,
             }),
-        ]);
+        ] as any);
     });
 });

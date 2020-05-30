@@ -59,7 +59,19 @@ jobs:
                       - ./e2e/angular9/node_modules
             - run:
                   name: Spreading Build
-                  command: npm run build && npm run s:a
+                  command: npm run build && npm run s:a && npm run s:test
+            - run:
+                  name: Angular 6 UT
+                  command: npm run test:a6
+            - run:
+                  name: Angular 7 UT
+                  command: npm run test:a7
+            - run:
+                  name: Angular 8 UT
+                  command: npm run test:a8
+            - run:
+                  name: Angular 9 UT
+                  command: npm run test:a9
             - run:
                   name: Angular 6 E2E
                   command: npm run e2e:a6

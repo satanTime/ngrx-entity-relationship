@@ -1,5 +1,4 @@
-import {rootEntitySelector} from '../src';
-import {ENTITY_STATE, HANDLER_RELATED_ENTITY} from '../src/types';
+import {ENTITY_STATE, HANDLER_RELATED_ENTITY, rootEntitySelector} from 'ngrx-entity-relationship';
 
 describe('rootEntitySelector', () => {
     type Entity = {
@@ -23,6 +22,7 @@ describe('rootEntitySelector', () => {
     it('calls rootEntity with transformer and relations', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -63,13 +63,14 @@ describe('rootEntitySelector', () => {
                 rel1: true,
                 rel2: true,
                 transformed: true,
-            }),
+            } as any),
         );
     });
 
     it('calls rootEntity with transformer to a different type', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -94,6 +95,7 @@ describe('rootEntitySelector', () => {
     it('calls rootEntity with relations only', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -122,7 +124,7 @@ describe('rootEntitySelector', () => {
             jasmine.objectContaining({
                 rel1: true,
                 rel2: true,
-            }),
+            } as any),
         );
     });
 });

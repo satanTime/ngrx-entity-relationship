@@ -1,5 +1,5 @@
-import {childEntity} from '../src';
-import {ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, UNKNOWN} from '../src/types';
+import {childEntity, ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY} from 'ngrx-entity-relationship';
+import {UNKNOWN} from 'ngrx-entity-relationship/dist/types';
 
 describe('childEntity', () => {
     type Entity = {
@@ -25,6 +25,7 @@ describe('childEntity', () => {
     it('does not set anything if there is no child entity', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -46,6 +47,7 @@ describe('childEntity', () => {
     it('sets the child entity if it exists', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -86,6 +88,7 @@ describe('childEntity', () => {
     it('clones the child entity', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -116,6 +119,7 @@ describe('childEntity', () => {
     it('sets the cache when the related entity does not exist', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -143,6 +147,7 @@ describe('childEntity', () => {
     it('sets the cache when the related entity exists', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -187,6 +192,7 @@ describe('childEntity', () => {
     it('calls relationships with an incrementing prefix and arguments', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -227,6 +233,7 @@ describe('childEntity', () => {
     it('respects cache of relationships', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -287,6 +294,7 @@ describe('childEntity', () => {
     it('calls relationships.release on own release call', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -315,6 +323,7 @@ describe('childEntity', () => {
     it('supports EntityCollectionService as a selector', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -356,6 +365,7 @@ describe('childEntity', () => {
     it('supports a default selector and returns id field', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -392,6 +402,7 @@ describe('childEntity', () => {
     it('supports custom feature selector and id field of string', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -431,6 +442,7 @@ describe('childEntity', () => {
     it('supports custom feature selector and id field of number', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };
@@ -470,6 +482,7 @@ describe('childEntity', () => {
     it('supports custom feature selector and id selector', () => {
         const state = {
             feature: {
+                ids: [],
                 entities: {},
             },
         };

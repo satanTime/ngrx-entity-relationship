@@ -23,7 +23,11 @@
         "strictBindCallApply": true,
         "strictFunctionTypes": true,
         "strictPropertyInitialization": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "paths": {
+            "ngrx-entity-relationship": ["src/index"],
+            "ngrx-entity-relationship/dist/*": ["src/*"]
+        }
     },
     "include": ["src/index.ts"]
 }

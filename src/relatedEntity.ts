@@ -5,6 +5,8 @@ import {
     HANDLER_RELATED_ENTITY,
     ID_FILTER_PROPS,
     ID_TYPES,
+    isSelectorMeta,
+    SELECTOR_META,
     UNKNOWN,
     VALUES_FILTER_PROPS,
 } from './types';
@@ -14,14 +16,24 @@ export function relatedEntity<
     STORE,
     PARENT_ENTITY,
     RELATED_ENTITY,
-    RELATED_KEY_IDS extends ID_FILTER_PROPS<PARENT_ENTITY, ID_TYPES>,
-    RELATED_KEY_IDS_ARRAYS extends ID_FILTER_PROPS<PARENT_ENTITY, Array<ID_TYPES>>,
-    RELATED_KEY_VALUES extends VALUES_FILTER_PROPS<PARENT_ENTITY, RELATED_ENTITY>,
-    RELATED_KEY_VALUES_ARRAYS extends VALUES_FILTER_PROPS<PARENT_ENTITY, Array<RELATED_ENTITY>>
+    RELATED_KEY_IDS extends ID_FILTER_PROPS<PARENT_ENTITY, ID_TYPES> = ID_FILTER_PROPS<PARENT_ENTITY, ID_TYPES>,
+    RELATED_KEY_IDS_ARRAYS extends ID_FILTER_PROPS<PARENT_ENTITY, Array<ID_TYPES>> = ID_FILTER_PROPS<
+        PARENT_ENTITY,
+        Array<ID_TYPES>
+    >,
+    RELATED_KEY_VALUES extends VALUES_FILTER_PROPS<PARENT_ENTITY, RELATED_ENTITY> = VALUES_FILTER_PROPS<
+        PARENT_ENTITY,
+        RELATED_ENTITY
+    >,
+    RELATED_KEY_VALUES_ARRAYS extends VALUES_FILTER_PROPS<PARENT_ENTITY, Array<RELATED_ENTITY>> = VALUES_FILTER_PROPS<
+        PARENT_ENTITY,
+        Array<RELATED_ENTITY>
+    >
 >(
     featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
     keyId: RELATED_KEY_IDS | RELATED_KEY_IDS_ARRAYS,
     keyValue: RELATED_KEY_VALUES | RELATED_KEY_VALUES_ARRAYS,
+    metaOrRelationship?: SELECTOR_META | HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>,
     ...relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
 ): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY>;
 
@@ -40,6 +52,12 @@ export function relatedEntity<
 ): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
     let relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>> = [...arguments];
     relationships = relationships.slice(3);
+
+    let meta: SELECTOR_META = {};
+    if (isSelectorMeta(relationships[0])) {
+        meta = relationships[0];
+        relationships = relationships.slice(1);
+    }
 
     const {collection: collectionSelector, id: idSelector} = normalizeSelector(featureSelector);
     const emptyResult: Map<UNKNOWN, UNKNOWN> = new Map();
@@ -115,7 +133,7 @@ export function relatedEntity<
                 }
                 continue;
             }
-            // we have to clone it because we are going to update it with relations.
+            // we have to clone it because we are going to update it with relationships.
             entityValue = {...featureState.entities[id]} as RELATED_ENTITY;
             entityChecks = new Map();
             const entityCheckIds = new Map();
@@ -143,6 +161,7 @@ export function relatedEntity<
     };
     callback.ngrxEntityRelationship = 'relatedEntity';
     callback.collectionSelector = collectionSelector;
+    callback.meta = meta;
     callback.idSelector = idSelector;
     callback.relationships = relationships;
     callback.keyId = keyId;

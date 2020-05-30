@@ -486,6 +486,136 @@ In case of relationship functions there are two more keys
 * `keyId` - a name of the keyId field.
 * `keyValue` - a name of the keyValue field.
 
+## NGRX Store integration
+
+All selectors can be used to update the store with response data.
+
+For that `ngrxEntityRelationshipReducer` should be added as a meta reducer to the root import:
+```typescript
+StoreModule.forRoot({/* ... */}, {
+    metaReducers: [
+        // ...
+        ngrxEntityRelationshipReducer, // <- add this
+    ],
+})
+```
+
+After that `reduceFlat` and `reduceGraph` can be used.
+
+### ReduceFlat / reduceFlat action
+
+This action helps to add to store data from a flat response.
+
+Imagine a backend returns the next flat shape:
+```json
+{
+  "users": [
+    {
+      "id": "1",
+      "firstName": "John",
+      "lastName": "Smith",
+      "companyId": "1"
+    }
+  ],
+  "companies": [
+    {
+      "id": "1",
+      "name": "Magic",
+      "adminId": "2",
+      "addressId": "1"
+    }
+  ],
+  "addresses": [
+    {
+      "id": "1",
+      "street": "Main st.",
+      "city": "Town",
+      "country": "Land"
+    }
+  ]
+}
+```
+
+There's a selector that fetches this data from the store:
+```typescript
+export const selectUser = rootEntity(
+    selectUserState,
+    relatedEntity(
+        selectCompanyState,
+        'companyId',
+        'company',
+        relatedEntity(
+            selectAddressState,
+            'addressId',
+            'address',
+        ),
+    ),
+);
+```
+
+Then the store can be updated by dispatching the `reduceFlat` action:
+```typescript
+this.store.dispatch(reduceFlat({
+  data: response,
+  selector: selectUser,
+}));
+// or
+this.store.dispatch(new ReduceFlat(response, selectUser));
+```
+
+### ReduceGraph / reduceGraph action
+
+This action helps to add to store data from a graph response.
+
+Imagine a backend returns the next flat shape of a user:
+```json
+{
+  "id": "1",
+  "firstName": "John",
+  "lastName": "Smith",
+  "companyId": "1",
+  "company": {
+    "id": "1",
+    "name": "Magic",
+    "adminId": "2",
+    "addressId": "1",
+    "address": {
+      "id": "1",
+      "street": "Main st.",
+      "city": "Town",
+      "country": "Land"
+    }
+  }
+}
+```
+
+There's a selector that fetches this data from the store:
+```typescript
+export const selectUser = rootEntity(
+    selectUserState,
+    relatedEntity(
+        selectCompanyState,
+        'companyId',
+        'company',
+        relatedEntity(
+            selectAddressState,
+            'addressId',
+            'address',
+        ),
+    ),
+);
+```
+
+Then the store can be updated by dispatching the `reduceGraph` action:
+```typescript
+this.store.dispatch(reduceGraph({
+  data: response,
+  selector: selectUser,
+}));
+// or
+this.store.dispatch(new ReduceGraph(response, selectUser));
+```
+
 ## Additional examples
 
 Of course, we can select as many relationships as we want until we have a field with a related id.
