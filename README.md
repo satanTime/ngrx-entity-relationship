@@ -536,18 +536,27 @@ Imagine a backend returns the next flat shape:
 }
 ```
 
-There's a selector that fetches this data from the store:
+There's a selector that fetches this data from the store (it has to have meta info):
 ```typescript
 export const selectUser = rootEntity(
     selectUserState,
+    {
+        flatKey: 'users',
+    },
     relatedEntity(
         selectCompanyState,
         'companyId',
         'company',
+        {
+            flatKey: 'companies',
+        },
         relatedEntity(
             selectAddressState,
             'addressId',
             'address',
+            {
+                flatKey: 'addresses',
+            },
         ),
     ),
 );
