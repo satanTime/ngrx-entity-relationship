@@ -1,3 +1,9 @@
+# [1.2.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.1.0...v1.2.0) (2020-05-30)
+
+### Features
+
+-   meta reducer and actions ([91cc581](https://github.com/satanTime/ngrx-entity-relationship/commit/91cc5817f77c2c36c53ba973c757f829a1f3d806))
+
 # [1.1.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.0.0...v1.1.0) (2020-05-02)
 
 ### Features
