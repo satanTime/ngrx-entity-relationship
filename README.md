@@ -137,7 +137,7 @@ export const selectUsers = rootEntities(
 );
 ```
 
-Now are can use the defined selectors in controllers.
+Now we can use the defined selectors in controllers.
 ```typescript
 const user$ = store.select(selectUser, 'userIdValue1');
 const users$ = store.select(selectUsers, ['userIdValue1', 'userIdValue2']);
@@ -202,7 +202,7 @@ export class UserSelectorService {
 }
 ```
 
-Now are can use the defined selectors in controllers.
+Now we can use the defined selectors in controllers.
 ```typescript
 const user$ = store.select(userSelectorService.selectUser, 'userIdValue1');
 const users$ = store.select(userSelectorService.selectUsers, ['userIdValue1', 'userIdValue2']);
@@ -576,7 +576,7 @@ this.store.dispatch(new ReduceFlat(response, selectUser));
 
 This action helps to add to store data from a graph response.
 
-Imagine a backend returns the next flat shape of a user:
+Imagine a backend returns the next nested shape of a user:
 ```json
 {
   "id": "1",
