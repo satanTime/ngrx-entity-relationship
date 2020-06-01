@@ -1,3 +1,9 @@
+## [1.2.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.2.0...v1.2.1) (2020-06-01)
+
+### Bug Fixes
+
+-   making SELECTOR_META global for extensions ([0ff6ed9](https://github.com/satanTime/ngrx-entity-relationship/commit/0ff6ed9949ff48317bfe6f7033b05490f1c5ef05))
+
 # [1.2.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.1.0...v1.2.0) (2020-05-30)
 
 ### Features
