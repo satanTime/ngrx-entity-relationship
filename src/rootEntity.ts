@@ -8,7 +8,6 @@ import {
     ID_TYPES,
     isBuiltInSelector,
     isSelectorMeta,
-    SELECTOR_META,
     TRANSFORMER,
     UNKNOWN,
 } from './types';

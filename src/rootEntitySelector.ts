@@ -5,7 +5,6 @@ import {
     HANDLER_ROOT_ENTITY,
     ID_TYPES,
     isSelectorMeta,
-    SELECTOR_META,
     TRANSFORMER,
 } from './types';
 

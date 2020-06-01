@@ -1,5 +1,12 @@
 import {Observable} from 'rxjs';
 
+declare global {
+    // tslint:disable-next-line:class-name
+    export interface SELECTOR_META {
+        flatKey?: string;
+    }
+}
+
 export type UNKNOWN = any;
 
 export type STORE_SELECTOR<T, V> = (state: T) => V;
@@ -13,11 +20,6 @@ export type STORE_INSTANCE<T> = {
 export type ACTION = {
     type: string;
 };
-
-// tslint:disable-next-line:class-name
-export interface SELECTOR_META {
-    flatKey?: string;
-}
 
 export type FILTER_PROPS<Base, Condition> = {
     [Key in keyof Base]: Base[Key] extends Condition ? Key : never;

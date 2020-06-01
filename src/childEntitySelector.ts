@@ -1,12 +1,5 @@
 import {childEntity} from './childEntity';
-import {
-    FEATURE_SELECTOR,
-    HANDLER_RELATED_ENTITY,
-    ID_FILTER_PROPS,
-    ID_TYPES,
-    isSelectorMeta,
-    SELECTOR_META,
-} from './types';
+import {FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, ID_FILTER_PROPS, ID_TYPES, isSelectorMeta} from './types';
 
 export function childEntitySelector<
     STORE,

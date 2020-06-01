@@ -6,7 +6,6 @@ import {
     ID_FILTER_PROPS,
     ID_TYPES,
     isSelectorMeta,
-    SELECTOR_META,
     UNKNOWN,
     VALUES_FILTER_PROPS,
 } from './types';
