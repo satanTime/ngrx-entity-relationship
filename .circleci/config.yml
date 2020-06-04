@@ -37,7 +37,9 @@ jobs:
             - restore_cache:
                   key: a8-cache-{{ checksum "e2e/angular8/package-lock.json" }}
             - restore_cache:
-                  key: a9-cache-{{ checksum "e2e/angular9/package-lock.json" }}
+                  key: a9-cache-ivy-false-{{ checksum "e2e/angular9-ivy-false/package-lock.json" }}
+            - restore_cache:
+                  key: a9-cache-ivy-true-{{ checksum "e2e/angular9-ivy-true/package-lock.json" }}
             - run:
                   name: NPM Install for E2E
                   command: npm run i:a
@@ -54,9 +56,13 @@ jobs:
                   paths:
                       - ./e2e/angular8/node_modules
             - save_cache:
-                  key: a9-cache-{{ checksum "e2e/angular9/package-lock.json" }}
+                  key: a9-cache-ivy-false-{{ checksum "e2e/angular9-ivy-false/package-lock.json" }}
                   paths:
-                      - ./e2e/angular9/node_modules
+                      - ./e2e/angular9-ivy-false/node_modules
+            - save_cache:
+                  key: a9-cache-ivy-true-{{ checksum "e2e/angular9-ivy-true/package-lock.json" }}
+                  paths:
+                      - ./e2e/angular9-ivy-true/node_modules
             - run:
                   name: Spreading Build
                   command: npm run build && npm run s:a && npm run s:test
@@ -70,8 +76,11 @@ jobs:
                   name: Angular 8 UT
                   command: npm run test:a8
             - run:
-                  name: Angular 9 UT
-                  command: npm run test:a9
+                  name: Angular 9 Ivy false UT
+                  command: npm run test:a9t
+            - run:
+                  name: Angular 9 Ivy true UT
+                  command: npm run test:a9t
             - run:
                   name: Angular 6 E2E
                   command: npm run e2e:a6
@@ -82,8 +91,11 @@ jobs:
                   name: Angular 8 E2E
                   command: npm run e2e:a8
             - run:
-                  name: Angular 9 E2E
-                  command: npm run e2e:a9
+                  name: Angular 9 Ivy false E2E
+                  command: npm run e2e:a9f
+            - run:
+                  name: Angular 9 Ivy true E2E
+                  command: npm run e2e:a9t
             - run:
                   name: Angular 6 Build
                   command: npm run b:a6
@@ -94,5 +106,8 @@ jobs:
                   name: Angular 8 Build
                   command: npm run b:a8
             - run:
-                  name: Angular 9 Build
-                  command: npm run b:a9
+                  name: Angular 9 Ivy false Build
+                  command: npm run b:a9f
+            - run:
+                  name: Angular 9 Ivy true Build
+                  command: npm run b:a9t

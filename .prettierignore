@@ -1,8 +1,11 @@
 .editorconfig
 .gitignore
+.gitkeep
 .prettierignore
 LICENSE
 README.md
+browserslist
+favicon.ico
 package-lock.json
 
 node_modules

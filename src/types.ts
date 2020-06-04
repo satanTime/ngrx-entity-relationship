@@ -96,10 +96,10 @@ export type VALUES_FILTER_PROPS<PARENT_ENTITY, RELATED_ENTITY> = NonNullable<
 
 export type TRANSFORMER<F, T> = (entity: F) => T;
 
-export const isBuiltInSelector = <S, E>(value: UNKNOWN): value is HANDLER_RELATED_ENTITY<S, E> => {
+export function isBuiltInSelector<S, E>(value: UNKNOWN): value is HANDLER_RELATED_ENTITY<S, E> {
     return value && value.ngrxEntityRelationship;
-};
+}
 
-export const isSelectorMeta = (value: UNKNOWN): value is SELECTOR_META => {
+export function isSelectorMeta(value: UNKNOWN): value is SELECTOR_META {
     return typeof value === 'object' && value !== null;
-};
+}

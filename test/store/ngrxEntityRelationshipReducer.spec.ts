@@ -66,7 +66,9 @@ describe('store/ngrxEntityRelationshipReducer', () => {
         const stateOriginal = Symbol();
         const stateReducer = Symbol();
         const reducer = jasmine.createSpy('reducer');
-        const action = {};
+        const action = {
+            type: 'random',
+        };
         reducer.and.returnValue(stateReducer);
 
         const actual = ngrxEntityRelationshipReducer(reducer)(stateOriginal, action);
