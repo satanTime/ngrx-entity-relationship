@@ -1,3 +1,9 @@
+## [1.2.3](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.2.2...v1.2.3) (2020-06-05)
+
+### Bug Fixes
+
+-   accepting undefined as an id ([7978482](https://github.com/satanTime/ngrx-entity-relationship/commit/7978482f41fc30371a52ae2219f376f649393684))
+
 ## [1.2.2](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.2.1...v1.2.2) (2020-06-05)
 
 ### Bug Fixes
