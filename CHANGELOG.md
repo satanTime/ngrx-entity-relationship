@@ -1,3 +1,9 @@
+## [1.2.2](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.2.1...v1.2.2) (2020-06-05)
+
+### Bug Fixes
+
+-   support of ivy flag ([508875d](https://github.com/satanTime/ngrx-entity-relationship/commit/508875dc5ea434e4e2f3fa21f0039a0208aa9016)), closes [#9](https://github.com/satanTime/ngrx-entity-relationship/issues/9)
+
 ## [1.2.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.2.0...v1.2.1) (2020-06-01)
 
 ### Bug Fixes
