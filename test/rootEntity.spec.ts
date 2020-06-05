@@ -1,4 +1,11 @@
-import {ENTITY_STATE, HANDLER_RELATED_ENTITY, rootEntity, rootEntityFlags} from 'ngrx-entity-relationship';
+import {
+    ENTITY_STATE,
+    HANDLER_RELATED_ENTITY,
+    HANDLER_ROOT_ENTITY,
+    ID_TYPES,
+    rootEntity,
+    rootEntityFlags,
+} from 'ngrx-entity-relationship';
 import {UNKNOWN} from 'ngrx-entity-relationship/dist/types';
 
 describe('rootEntity', () => {
@@ -300,6 +307,29 @@ describe('rootEntity', () => {
         selector.release();
         expect(selector(state, 'id1')).not.toBe(entity2);
         expect(selector(state, 'id1')).toEqual(entity2);
+    });
+
+    it('detects another selector as the id parameter', () => {
+        const entity = {
+            id: 1,
+            unique: Symbol(),
+        };
+        const state = {
+            feature: {
+                ids: [1],
+                entities: {
+                    1: entity,
+                },
+            },
+        };
+        const selectorIds = jasmine.createSpy().and.returnValue(1);
+        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>(
+            jasmine.createSpy().and.returnValue(state.feature)
+        );
+        const selector = rootEntity(selectorRoot);
+        const action = selector(state, selectorIds);
+        expect(selectorIds).toHaveBeenCalledWith(state);
+        expect(action).toEqual(entity);
     });
 
     it('calls relationships with an incrementing prefix and arguments', () => {

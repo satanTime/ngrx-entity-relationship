@@ -179,6 +179,19 @@ describe('rootEntities', () => {
         expect(actual3).toEqual(actual2);
     });
 
+    it('detects another selector as the id parameter', () => {
+        const state = {};
+        const selectorIds = jasmine.createSpy().and.returnValue([1, 2]);
+        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>(
+            jasmine.createSpy()
+        );
+        const selector = rootEntities(selectorRoot);
+        selector(state, selectorIds);
+        expect(selectorIds).toHaveBeenCalledWith(state);
+        expect(selectorRoot).toHaveBeenCalledWith(state, 1);
+        expect(selectorRoot).toHaveBeenCalledWith(state, 2);
+    });
+
     it('returns an array of transformed entities', () => {
         const state = {};
         const funcSelector: FEATURE_SELECTOR<typeof state, Entity> & jasmine.Spy = <any>jasmine.createSpy();

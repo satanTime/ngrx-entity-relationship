@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {rootEntities} from 'ngrx-entity-relationship';
-import {Observable} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import {combineLatest, Observable} from 'rxjs';
+import {filter, map, switchMap} from 'rxjs/operators';
 import {Company} from './store/company/company.model';
 import {EntityService} from './store/entity.service';
 import {
@@ -55,14 +55,26 @@ export class EntityComponent implements OnDestroy {
     );
 
     constructor(protected readonly store: Store<State>, public readonly entitiesService: EntityService) {
-        this.users$ = this.store.pipe(
-            select(selectCurrentUsersIds),
-            switchMap(ids => this.store.select(this.users, ids)),
+        this.users$ = combineLatest([
+            this.store.select(this.users, selectCurrentUsersIds),
+            this.store.pipe(
+                select(selectCurrentUsersIds),
+                switchMap(ids => this.store.select(this.users, ids)),
+            ),
+        ]).pipe(
+            filter(([a, b]) => a === b),
+            map(([a]) => a),
         );
 
-        this.company$ = this.store.pipe(
-            select(selectCurrentCompanyId),
-            switchMap(id => this.store.select(this.companyWithCrazyData, id)),
+        this.company$ = combineLatest([
+            this.store.select(this.companyWithCrazyData, selectCurrentCompanyId),
+            this.store.pipe(
+                select(selectCurrentCompanyId),
+                switchMap(id => this.store.select(this.companyWithCrazyData, id)),
+            ),
+        ]).pipe(
+            filter(([a, b]) => a === b),
+            map(([a]) => a),
         );
     }
 

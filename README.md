@@ -494,9 +494,10 @@ export const selectUserWithCompany = rootEntity(
 );
 ```
 
-Then we have 2 options:
+Then we have 3 options:
 
 * combine them together via `createSelector` function
+* pass an id selector as a parameter
 * usage of `switchMap`
 
 #### combine them together via `createSelector` function
@@ -509,6 +510,15 @@ export const selectCurrentUser = createSelector(
 );
 
 store.select(selectCurrentUser).subscribe(user => {
+    // profit
+});
+```
+
+#### pass an id selector as a parameter of a relationship selector
+
+```typescript
+// selecting the user with desired relationships
+store.select(selectUserWithCompany, selectCurrentUserId).subscribe(user => {
     // profit
 });
 ```

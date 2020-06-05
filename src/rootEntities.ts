@@ -1,5 +1,5 @@
 import {rootEntityFlags} from './rootEntityFlags';
-import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, ID_TYPES} from './types';
+import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, ID_TYPES, STORE_SELECTOR} from './types';
 
 export function rootEntities<STORE, ENTITY>(
     rootSelector: HANDLER_ROOT_ENTITY<STORE, ENTITY, ENTITY, ID_TYPES>,
@@ -15,7 +15,11 @@ export function rootEntities<STORE, ENTITY, TRANSFORMED>(
     const cacheMap = new Map<string, Array<ENTITY | TRANSFORMED>>();
     const emptyResult: Array<ENTITY | TRANSFORMED> = [];
 
-    const callback = (state: STORE, ids: undefined | Array<ID_TYPES>) => {
+    const callback = (
+        state: STORE,
+        idsOrSelector: undefined | null | Array<ID_TYPES> | STORE_SELECTOR<STORE, undefined | null | Array<ID_TYPES>>,
+    ) => {
+        const ids = typeof idsOrSelector === 'function' ? idsOrSelector(state) : idsOrSelector;
         if (!ids) {
             return emptyResult;
         }

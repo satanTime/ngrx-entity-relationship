@@ -8,6 +8,7 @@ import {
     ID_TYPES,
     isBuiltInSelector,
     isSelectorMeta,
+    STORE_SELECTOR,
     TRANSFORMER,
     UNKNOWN,
 } from './types';
@@ -65,7 +66,11 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED>(
     const cacheLevel = '0';
     const cache: CACHE<STORE> = new Map();
 
-    const callback = (state: STORE, id: undefined | ID_TYPES) => {
+    const callback = (
+        state: STORE,
+        idOrSelector: undefined | null | ID_TYPES | STORE_SELECTOR<STORE, undefined | null | ID_TYPES>,
+    ) => {
+        const id = typeof idOrSelector === 'function' ? idOrSelector(state) : idOrSelector;
         if (!id) {
             return;
         }
