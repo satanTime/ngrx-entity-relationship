@@ -26,7 +26,9 @@
 * [rootEntities function](#rootentities-function)
 * [relationships pipe operator](#relationships-pipe-operator)
 * [rootEntityFlags options](#rootentityflags-options)
-* [Releasing cache](#releasing-cache)
+- [Releasing cache](#releasing-cache)
+- [Usage with createSelector](#usage-with-createselector)
+- [NGRX integration](#ngrx-store-integration)
 
 ## Problem
 
@@ -470,6 +472,54 @@ const selectUser = rootEntity(selectUserState);
 store.select(selectUser, 1).subsribe(user => {
     // ...some activity
     selectUser.release();
+});
+```
+
+### Usage with createSelector
+
+Imagine there are a selector that returns id of a current user and a selector with relationships:
+```typescript
+export const selectCurrentUserId = createSelector(
+    selectUserFeature,
+    feature => feature.currentUserId,
+);
+
+export const selectUserWithCompany = rootEntity(
+    selectUserFeature,
+    relatedEntity(
+        selectCompanyFeature,
+        'companyId',
+        'company',
+    ),
+);
+```
+
+Then we have 2 options:
+
+* combine them together via `createSelector` function
+* usage of `switchMap`
+
+#### combine them together via `createSelector` function
+
+```typescript
+export const selectCurrentUser = createSelector(
+    s => s, // selecting the whole store
+    selectCurrentUserId, // selecting the id of a current user
+    selectUserWithCompany, // selecting the user with desired relationships
+);
+
+store.select(selectCurrentUser).subscribe(user => {
+    // profit
+});
+```
+
+#### usage of `switchMap`
+
+```typescript
+store.select(selectCurrentUserId).pipe( // selecting the id of a current user
+    switchMap(id => store.select(selectUserWithCompany, id)),  // selecting the user with desired relationships
+).subscribe(user => {
+    // profit
 });
 ```
 

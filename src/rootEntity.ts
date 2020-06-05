@@ -65,7 +65,7 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED>(
     const cacheLevel = '0';
     const cache: CACHE<STORE> = new Map();
 
-    const callback = (state: STORE, id: ID_TYPES) => {
+    const callback = (state: STORE, id: undefined | ID_TYPES) => {
         if (!id) {
             return;
         }

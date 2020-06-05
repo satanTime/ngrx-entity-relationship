@@ -62,12 +62,12 @@ export type ENTITY_SELECTOR<S = any, E = any> = {
 };
 
 export type HANDLER_ROOT_ENTITY<S, E, T, I> = ENTITY_SELECTOR<S, E> & {
-    (state: S, id: I): undefined | T;
+    (state: S, id: undefined | I): undefined | T;
     release(): void;
 };
 
 export type HANDLER_ROOT_ENTITIES<S, E, T, I> = ENTITY_SELECTOR<S, E> & {
-    (state: S, id: Array<I>): Array<T>;
+    (state: S, id: undefined | Array<I>): Array<T>;
     release(): void;
 };
 

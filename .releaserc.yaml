@@ -14,5 +14,11 @@ plugins:
     - - @semantic-release/github
       - assets:
             - tmp/*.tgz
+        successComment: |-
+            ${nextRelease.version} has been released and contains a fix for the issue.
+            Feel free to reopen the issue or to submit a new one if you meet any problems.
+        failTitle: false
+        failComment: false
+        labels: false
     - - @semantic-release/git
       - message: "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
