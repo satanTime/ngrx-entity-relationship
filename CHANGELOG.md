@@ -1,3 +1,9 @@
+# [1.3.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.2.3...v1.3.0) (2020-06-05)
+
+### Features
+
+-   support of a selector as the id parameter ([4ccb451](https://github.com/satanTime/ngrx-entity-relationship/commit/4ccb451a9251da899232589cf5d66d3ea6af2f9b)), closes [#11](https://github.com/satanTime/ngrx-entity-relationship/issues/11)
+
 ## [1.2.3](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.2.2...v1.2.3) (2020-06-05)
 
 ### Bug Fixes
