@@ -1,4 +1,4 @@
-export function selectId(entity) {
+export function selectId(entity: {uuid: string}): string {
     return entity.uuid;
 }
 

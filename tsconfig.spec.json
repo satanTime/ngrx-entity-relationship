@@ -3,7 +3,7 @@
     "compilerOptions": {
         "sourceMap": true,
         "declaration": true,
-        "skipLibCheck": true,
+
         "noFallthroughCasesInSwitch": false,
         "noImplicitAny": false,
         "noImplicitReturns": false,
@@ -12,8 +12,8 @@
         "noUnusedParameters": false,
         "strictBindCallApply": false,
         "strictFunctionTypes": false,
-        "strictPropertyInitialization": false,
-        "strictNullChecks": false
+        "strictNullChecks": false,
+        "strictPropertyInitialization": false
     },
     "files": ["src/index.ts"],
     "include": ["test/**/*.ts"]

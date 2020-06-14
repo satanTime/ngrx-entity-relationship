@@ -27,7 +27,7 @@ import {User} from './store/user/user.model';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EntityComponent implements OnDestroy {
-    public readonly company$: Observable<Company>;
+    public readonly company$: Observable<Company | undefined>;
     // prettier-ignore
     private readonly companyWithCrazyData = sCompany(
         sCompanyAddress(),

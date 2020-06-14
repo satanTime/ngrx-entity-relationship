@@ -1,10 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
-import {first, tap} from 'rxjs/operators';
+import {filter, first, tap} from 'rxjs/operators';
 import {UpdateAddress} from './address/address.actions';
+import {Address} from './address/address.model';
 import {UpdateCompany} from './company/company.actions';
+import {Company} from './company/company.model';
 import {sAddress, sCompany, State, sUser} from './reducers';
 import {UpdateUser} from './user/user.actions';
+import {User} from './user/user.model';
 
 @Injectable()
 export class EntityService {
@@ -14,6 +17,7 @@ export class EntityService {
         this.store
             .select(sUser(), id)
             .pipe(
+                filter((v): v is User => !!v),
                 first(),
                 tap(entity => {
                     const index = entity.name.match(/\d+$/);
@@ -38,6 +42,7 @@ export class EntityService {
         this.store
             .select(sCompany(), id)
             .pipe(
+                filter((v): v is Company => !!v),
                 first(),
                 tap(entity => {
                     const index = entity.name.match(/\d+$/);
@@ -62,6 +67,7 @@ export class EntityService {
         this.store
             .select(sAddress(), id)
             .pipe(
+                filter((v): v is Address => !!v),
                 first(),
                 tap(entity => {
                     const index = entity.name.match(/\d+$/);

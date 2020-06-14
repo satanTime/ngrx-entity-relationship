@@ -14,20 +14,21 @@
         "removeComments": true,
         "experimentalDecorators": true,
         "skipLibCheck": true,
+        "paths": {
+            "ngrx-entity-relationship": ["src/index"],
+            "ngrx-entity-relationship/dist/*": ["src/*"]
+        },
+
         "noFallthroughCasesInSwitch": true,
         "noImplicitAny": true,
-        "noImplicitReturns": false,
+        "noImplicitReturns": true,
         "noImplicitThis": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "strictBindCallApply": true,
         "strictFunctionTypes": true,
-        "strictPropertyInitialization": true,
         "strictNullChecks": true,
-        "paths": {
-            "ngrx-entity-relationship": ["src/index"],
-            "ngrx-entity-relationship/dist/*": ["src/*"]
-        }
+        "strictPropertyInitialization": true
     },
     "include": ["src/index.ts"]
 }
