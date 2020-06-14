@@ -6,8 +6,8 @@ import {fromGraph} from './fromGraph';
 
 export function ngrxEntityRelationshipReducer<T>(
     reducer: (state: T | undefined, action: ACTION) => T,
-): (state: T, action: ACTION) => T {
-    return (state: T, action: any) => {
+): (state: T | undefined, action: ACTION) => T {
+    return (state: T | undefined, action: any) => {
         if (action.type === ngrxEntityRelationshipActions.reduceGraph) {
             return reducer(fromGraph.func(state, action.selector, action.data), action);
         }
