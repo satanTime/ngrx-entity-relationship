@@ -1,3 +1,9 @@
+## [1.3.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.3.0...v1.3.1) (2020-06-14)
+
+### Bug Fixes
+
+-   better type def to match meta reducers ([ce00383](https://github.com/satanTime/ngrx-entity-relationship/commit/ce00383feb3eb8f87db7f8232f3cde626d20f470))
+
 # [1.3.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.2.3...v1.3.0) (2020-06-05)
 
 ### Features
