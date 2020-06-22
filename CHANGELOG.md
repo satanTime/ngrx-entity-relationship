@@ -1,3 +1,9 @@
+## [1.3.2](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.3.1...v1.3.2) (2020-06-22)
+
+### Bug Fixes
+
+-   simple types for HANDLER*ROOT*\* typedef ([b90ff28](https://github.com/satanTime/ngrx-entity-relationship/commit/b90ff284739dcc573d866c517ea13c54994338a6))
+
 ## [1.3.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.3.0...v1.3.1) (2020-06-14)
 
 ### Bug Fixes
