@@ -14,6 +14,7 @@
 
 ### API short list
 
+- [selector argument](#selector-argument)
 * [rootEntity function](#rootentity-function)
 * [relatedEntity function](#relatedentity-function)
 * [childEntity function](#childentity-function)
@@ -22,13 +23,14 @@
 - [relatedEntitySelector function](#relatedentityselector-function)
 - [childEntitySelector function](#childentityselector-function)
 - [childrenEntitiesSelector function](#childrenentitiesselector-function)
-* [selector argument](#selector-argument)
-* [rootEntities function](#rootentities-function)
+- [rootEntities function](#rootentities-function)
 * [relationships pipe operator](#relationships-pipe-operator)
 * [rootEntityFlags options](#rootentityflags-options)
-- [Releasing cache](#releasing-cache)
-- [Usage with createSelector](#usage-with-createselector)
-- [NGRX integration](#ngrx-store-integration)
+* [Types](#types)
+* [Releasing cache](#releasing-cache)
+* [Usage with createSelector](#usage-with-createselector)
+* [Gathering information of a selector](#gathering-information-of-a-selector)
+* [NGRX integration](#ngrx-store-integration)
 
 ## Problem
 
@@ -461,6 +463,28 @@ Simply set it to `true` before you start update and back to `false` after it.
 
 **When you set it back to `false` you need to share the store to get updated entities**.
 
+### Types
+
+There is a list of recommended types.
+
+#### HANDLER_ENTITY
+
+Simplifies definition of `HANDLER_ROOT_ENTITY`:
+```typescript
+const selectUser1: HANDLER_ENTITY<User> = rootEntity(/*...*/);
+// instead of
+const selectUser2: HANDLER_ROOT_ENTITY<StoreState, User, User, string> = rootEntity(/*...*/);
+```
+
+#### HANDLER_ENTITIES
+
+Simplifies definition of `HANDLER_ROOT_ENTITIES`:
+```typescript
+const selectUsers1: HANDLER_ENTITIES<User> = rootEntities(/*...*/);
+// instead of
+const selectUsers2: HANDLER_ROOT_ENTITIES<StoreState, User, User, string> = rootEntities(/*...*/);
+```
+
 ### Releasing cache
 
 Every function of the library that works with data selection returns a structure that has `release` function.
@@ -837,3 +861,15 @@ export const selectUser = rootEntity(
 ```
 
 This approach helps to solve circular dependencies.
+
+### expected member-variable-declaration to have a typedef (typedef)
+
+The answer is in [Types](#types).
+
+There are two common types: `HANDLER_ROOT_ENTITY` and `HANDLER_ROOT_ENTITIES`,
+but they are complicated and to solve the issue they can be replaced by `HANDLER_ENTITY`, `HANDLER_ENTITIES`.
+
+```typescript
+const selectUser: HANDLER_ENTITY<User> = rootEntity(/*...*/);
+const selectUsers: HANDLER_ENTITIES<User> = rootEntities(/*...*/);
+```

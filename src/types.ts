@@ -61,6 +61,10 @@ export type ENTITY_SELECTOR<S = any, E = any> = {
     relationships: Array<HANDLER_RELATED_ENTITY<S, E>>;
 };
 
+export type HANDLER_ENTITY<E, S = any, I extends ID_TYPES = ID_TYPES> = HANDLER_ROOT_ENTITY<S, E, E, I>;
+
+export type HANDLER_ENTITIES<E, S = any, I extends ID_TYPES = ID_TYPES> = HANDLER_ROOT_ENTITIES<S, E, E, I>;
+
 export type HANDLER_ROOT_ENTITY<S, E, T, I> = ENTITY_SELECTOR<S, E> & {
     (state: S, id: undefined | null | I | STORE_SELECTOR<S, undefined | null | I>): undefined | T;
     release(): void;
