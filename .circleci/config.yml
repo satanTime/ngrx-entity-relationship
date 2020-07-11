@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-    build:
+    Core:
         docker:
             - image: satantime/puppeteer-node:12-buster
         steps:
@@ -10,11 +10,13 @@ jobs:
             - run:
                   name: NPM Install
                   command: npm install
-
             - save_cache:
                   key: root-cache-{{ checksum "package-lock.json" }}
                   paths:
                       - ./node_modules
+            - run:
+                  name: Build
+                  command: npm run build
             - run:
                   name: Lint
                   command: npm run lint
@@ -29,85 +31,264 @@ jobs:
             - store_artifacts:
                   path: ./test-reports/coverage
                   prefix: coverage
-
+            - persist_to_workspace:
+                  root: dist
+                  paths:
+                      - .
+    'Angular 6':
+        docker:
+            - image: satantime/puppeteer-node:12-buster
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: dist
+            - restore_cache:
+                  key: root-cache-{{ checksum "package-lock.json" }}
             - restore_cache:
                   key: a6-cache-{{ checksum "e2e/angular6/package-lock.json" }}
-            - restore_cache:
-                  key: a7-cache-{{ checksum "e2e/angular7/package-lock.json" }}
-            - restore_cache:
-                  key: a8-cache-{{ checksum "e2e/angular8/package-lock.json" }}
-            - restore_cache:
-                  key: a9-cache-ivy-false-{{ checksum "e2e/angular9-ivy-false/package-lock.json" }}
-            - restore_cache:
-                  key: a9-cache-ivy-true-{{ checksum "e2e/angular9-ivy-true/package-lock.json" }}
             - run:
                   name: NPM Install for E2E
-                  command: npm run i:a
+                  command: npm run i:a6
             - save_cache:
                   key: a6-cache-{{ checksum "e2e/angular6/package-lock.json" }}
                   paths:
                       - ./e2e/angular6/node_modules
-            - save_cache:
-                  key: a7-cache-{{ checksum "e2e/angular7/package-lock.json" }}
-                  paths:
-                      - ./e2e/angular7/node_modules
-            - save_cache:
-                  key: a8-cache-{{ checksum "e2e/angular8/package-lock.json" }}
-                  paths:
-                      - ./e2e/angular8/node_modules
-            - save_cache:
-                  key: a9-cache-ivy-false-{{ checksum "e2e/angular9-ivy-false/package-lock.json" }}
-                  paths:
-                      - ./e2e/angular9-ivy-false/node_modules
-            - save_cache:
-                  key: a9-cache-ivy-true-{{ checksum "e2e/angular9-ivy-true/package-lock.json" }}
-                  paths:
-                      - ./e2e/angular9-ivy-true/node_modules
             - run:
                   name: Spreading Build
-                  command: npm run build && npm run s:a && npm run s:test
+                  command: npm run s:a6
+            - run:
+                  name: Spreading Tests
+                  command: npm run s:test:a6
             - run:
                   name: Angular 6 UT
                   command: npm run test:a6
             - run:
-                  name: Angular 7 UT
-                  command: npm run test:a7
-            - run:
-                  name: Angular 8 UT
-                  command: npm run test:a8
-            - run:
-                  name: Angular 9 Ivy false UT
-                  command: npm run test:a9t
-            - run:
-                  name: Angular 9 Ivy true UT
-                  command: npm run test:a9t
-            - run:
                   name: Angular 6 E2E
                   command: npm run e2e:a6
+            - run:
+                  name: Angular 6 Build
+                  command: npm run b:a6
+    'Angular 7':
+        docker:
+            - image: satantime/puppeteer-node:12-buster
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: dist
+            - restore_cache:
+                  key: root-cache-{{ checksum "package-lock.json" }}
+            - restore_cache:
+                  key: a7-cache-{{ checksum "e2e/angular7/package-lock.json" }}
+            - run:
+                  name: NPM Install for E2E
+                  command: npm run i:a7
+            - save_cache:
+                  key: a7-cache-{{ checksum "e2e/angular7/package-lock.json" }}
+                  paths:
+                      - ./e2e/angular7/node_modules
+            - run:
+                  name: Spreading Build
+                  command: npm run s:a7
+            - run:
+                  name: Spreading Tests
+                  command: npm run s:test:a7
+            - run:
+                  name: Angular 7 UT
+                  command: npm run test:a7
             - run:
                   name: Angular 7 E2E
                   command: npm run e2e:a7
             - run:
+                  name: Angular 7 Build
+                  command: npm run b:a7
+    'Angular 8':
+        docker:
+            - image: satantime/puppeteer-node:12-buster
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: dist
+            - restore_cache:
+                  key: root-cache-{{ checksum "package-lock.json" }}
+            - restore_cache:
+                  key: a8-cache-{{ checksum "e2e/angular8/package-lock.json" }}
+            - run:
+                  name: NPM Install for E2E
+                  command: npm run i:a8
+            - save_cache:
+                  key: a8-cache-{{ checksum "e2e/angular8/package-lock.json" }}
+                  paths:
+                      - ./e2e/angular8/node_modules
+            - run:
+                  name: Spreading Build
+                  command: npm run s:a8
+            - run:
+                  name: Spreading Tests
+                  command: npm run s:test:a8
+            - run:
+                  name: Angular 8 UT
+                  command: npm run test:a8
+            - run:
                   name: Angular 8 E2E
                   command: npm run e2e:a8
             - run:
-                  name: Angular 9 Ivy false E2E
-                  command: npm run e2e:a9f
-            - run:
-                  name: Angular 9 Ivy true E2E
-                  command: npm run e2e:a9t
-            - run:
-                  name: Angular 6 Build
-                  command: npm run b:a6
-            - run:
-                  name: Angular 7 Build
-                  command: npm run b:a7
-            - run:
                   name: Angular 8 Build
                   command: npm run b:a8
+    'Angular 9 without Ivy':
+        docker:
+            - image: satantime/puppeteer-node:12-buster
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: dist
+            - restore_cache:
+                  key: root-cache-{{ checksum "package-lock.json" }}
+            - restore_cache:
+                  key: a9f-cache-{{ checksum "e2e/angular9-ivy-false/package-lock.json" }}
             - run:
-                  name: Angular 9 Ivy false Build
+                  name: NPM Install for E2E
+                  command: npm run i:a9f
+            - save_cache:
+                  key: a9f-cache-{{ checksum "e2e/angular9-ivy-false/package-lock.json" }}
+                  paths:
+                      - ./e2e/angular9-ivy-false/node_modules
+            - run:
+                  name: Spreading Build
+                  command: npm run s:a9f
+            - run:
+                  name: Spreading Tests
+                  command: npm run s:test:a9f
+            - run:
+                  name: Angular 9 UT
+                  command: npm run test:a9f
+            - run:
+                  name: Angular 9 E2E
+                  command: npm run e2e:a9f
+            - run:
+                  name: Angular 9 Build
                   command: npm run b:a9f
+    'Angular 9 with Ivy':
+        docker:
+            - image: satantime/puppeteer-node:12-buster
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: dist
+            - restore_cache:
+                  key: root-cache-{{ checksum "package-lock.json" }}
+            - restore_cache:
+                  key: a9t-cache-{{ checksum "e2e/angular9-ivy-true/package-lock.json" }}
             - run:
-                  name: Angular 9 Ivy true Build
+                  name: NPM Install for E2E
+                  command: npm run i:a9t
+            - save_cache:
+                  key: a9t-cache-{{ checksum "e2e/angular9-ivy-true/package-lock.json" }}
+                  paths:
+                      - ./e2e/angular9-ivy-true/node_modules
+            - run:
+                  name: Spreading Build
+                  command: npm run s:a9t
+            - run:
+                  name: Spreading Tests
+                  command: npm run s:test:a9t
+            - run:
+                  name: Angular 9 UT
+                  command: npm run test:a9t
+            - run:
+                  name: Angular 9 E2E
+                  command: npm run e2e:a9t
+            - run:
+                  name: Angular 9 Build
                   command: npm run b:a9t
+    'Angular 10 without Ivy':
+        docker:
+            - image: satantime/puppeteer-node:12-buster
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: dist
+            - restore_cache:
+                  key: root-cache-{{ checksum "package-lock.json" }}
+            - restore_cache:
+                  key: a10f-cache-{{ checksum "e2e/angular10-ivy-false/package-lock.json" }}
+            - run:
+                  name: NPM Install for E2E
+                  command: npm run i:a10f
+            - save_cache:
+                  key: a10f-cache-{{ checksum "e2e/angular10-ivy-false/package-lock.json" }}
+                  paths:
+                      - ./e2e/angular10-ivy-false/node_modules
+            - run:
+                  name: Spreading Build
+                  command: npm run s:a10f
+            - run:
+                  name: Spreading Tests
+                  command: npm run s:test:a10f
+            - run:
+                  name: Angular 10 UT
+                  command: npm run test:a10f
+            - run:
+                  name: Angular 10 E2E
+                  command: npm run e2e:a10f
+            - run:
+                  name: Angular 10 Build
+                  command: npm run b:a10f
+    'Angular 10 with Ivy':
+        docker:
+            - image: satantime/puppeteer-node:12-buster
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: dist
+            - restore_cache:
+                  key: root-cache-{{ checksum "package-lock.json" }}
+            - restore_cache:
+                  key: a10t-cache-{{ checksum "e2e/angular10-ivy-true/package-lock.json" }}
+            - run:
+                  name: NPM Install for E2E
+                  command: npm run i:a10t
+            - save_cache:
+                  key: a10t-cache-{{ checksum "e2e/angular10-ivy-true/package-lock.json" }}
+                  paths:
+                      - ./e2e/angular10-ivy-true/node_modules
+            - run:
+                  name: Spreading Build
+                  command: npm run s:a10t
+            - run:
+                  name: Spreading Tests
+                  command: npm run s:test:a10t
+            - run:
+                  name: Angular 10 UT
+                  command: npm run test:a10t
+            - run:
+                  name: Angular 10 E2E
+                  command: npm run e2e:a10t
+            - run:
+                  name: Angular 10 Build
+                  command: npm run b:a10t
+workflows:
+    version: 2
+    build:
+        jobs:
+            - Core
+            - 'Angular 6':
+                  requires:
+                      - Core
+            - 'Angular 7':
+                  requires:
+                      - Core
+            - 'Angular 8':
+                  requires:
+                      - Core
+            - 'Angular 9 without Ivy':
+                  requires:
+                      - Core
+            - 'Angular 9 with Ivy':
+                  requires:
+                      - Core
+            - 'Angular 10 without Ivy':
+                  requires:
+                      - Core
+            - 'Angular 10 with Ivy':
+                  requires:
+                      - Core

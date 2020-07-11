@@ -107,12 +107,7 @@
                     }
                 }
             }
-        },
-        "ngrx-entity-relations": {
-            "projectType": "library",
-            "root": "ngrx-entity-relations",
-            "sourceRoot": "src"
         }
     },
-    "defaultProject": "ngrx-entity-relations"
+    "defaultProject": "app"
 }

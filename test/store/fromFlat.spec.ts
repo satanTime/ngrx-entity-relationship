@@ -69,7 +69,8 @@ describe('store/fromFlat', () => {
                     {
                         flatKey: 'type3',
                     },
-                    relatedEntity<any, any, any>(() => undefined, 'keyId', 'keyValue', { // should be ignored because it exists
+                    relatedEntity<any, any, any>(() => undefined, 'keyId', 'keyValue', {
+                        // should be ignored because it exists
                         flatKey: 'type1',
                     }),
                 ),

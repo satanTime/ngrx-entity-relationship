@@ -1,3 +1,4 @@
+.browserslistrc
 .editorconfig
 .gitignore
 .gitkeep
@@ -9,3 +10,4 @@ favicon.ico
 package-lock.json
 
 node_modules
+test-reports
