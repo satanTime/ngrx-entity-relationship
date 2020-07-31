@@ -1,3 +1,9 @@
+## [1.3.3](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.3.2...v1.3.3) (2020-07-31)
+
+### Bug Fixes
+
+-   spread arguments in ie9 ([1d3e529](https://github.com/satanTime/ngrx-entity-relationship/commit/1d3e52961cb7e6597a4fc2b738b1c5dd8263ee2a))
+
 ## [1.3.2](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.3.1...v1.3.2) (2020-06-22)
 
 ### Bug Fixes
