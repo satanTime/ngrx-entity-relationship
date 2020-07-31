@@ -7,6 +7,7 @@ import {
     isSelectorMeta,
     TRANSFORMER,
 } from './types';
+import {argsToArray} from './utils';
 
 export function rootEntitySelector<STORE, ENTITY, TRANSFORMED>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
@@ -51,7 +52,7 @@ export function rootEntitySelector<STORE, ENTITY, TRANSFORMED>(
     function callback(
         metaOverride?: SELECTOR_META,
     ): HANDLER_ROOT_ENTITY<STORE, ENTITY, ENTITY | TRANSFORMED, ID_TYPES> {
-        let relationships: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>> = [...arguments];
+        let relationships: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>> = argsToArray(arguments);
         const transformer = isSelectorMeta(guess1) ? undefined : guess1;
         let currentMeta = isSelectorMeta(guess1) ? guess1 : guess2;
         if (isSelectorMeta(metaOverride)) {

@@ -1,5 +1,6 @@
 import {childrenEntities} from './childrenEntities';
 import {FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, ID_FILTER_PROPS, ID_TYPES, isSelectorMeta} from './types';
+import {argsToArray} from './utils';
 
 export function childrenEntitiesSelector<
     STORE,
@@ -37,7 +38,7 @@ export function childrenEntitiesSelector<
     ...relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>>
 ) => HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
     function callback(): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
-        let relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>> = [...arguments];
+        let relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>> = argsToArray(arguments);
         let currentMeta = isSelectorMeta(meta) ? meta : undefined;
         if (isSelectorMeta(relationships[0])) {
             currentMeta = relationships[0];

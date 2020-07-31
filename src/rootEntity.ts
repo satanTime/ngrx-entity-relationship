@@ -12,7 +12,7 @@ import {
     TRANSFORMER,
     UNKNOWN,
 } from './types';
-import {mergeCache, normalizeSelector, verifyCache} from './utils';
+import {argsToArray, mergeCache, normalizeSelector, verifyCache} from './utils';
 
 export function rootEntity<STORE, ENTITY>(
     featureSelector: FEATURE_SELECTOR<STORE, ENTITY>,
@@ -43,7 +43,7 @@ export function rootEntity<STORE, ENTITY, TRANSFORMED>(
     guess1?: TRANSFORMER<ENTITY, TRANSFORMED> | SELECTOR_META | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
     guess2?: SELECTOR_META | HANDLER_RELATED_ENTITY<STORE, ENTITY>,
 ): HANDLER_ROOT_ENTITY<STORE, ENTITY, ENTITY | TRANSFORMED, ID_TYPES> {
-    let relationships: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>> = [...arguments];
+    let relationships: Array<HANDLER_RELATED_ENTITY<STORE, ENTITY>> = argsToArray(arguments);
     relationships = relationships.slice(1);
 
     let transformer: undefined | TRANSFORMER<ENTITY, TRANSFORMED>;

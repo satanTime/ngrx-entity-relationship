@@ -1,4 +1,4 @@
-import {mergeCache, normalizeSelector, verifyCache} from 'ngrx-entity-relationship/dist/utils';
+import {argsToArray, mergeCache, normalizeSelector, verifyCache} from 'ngrx-entity-relationship/dist/utils';
 
 describe('utils', () => {
     describe('normalizeSelector', () => {
@@ -285,6 +285,19 @@ describe('utils', () => {
             expect(to.get(selector).get('id1')).toBe('id1exists');
             mergeCache(from, to);
             expect(to.get(selector).get('id1')).toBe('id1exists');
+        });
+    });
+
+    describe('argsToArray', () => {
+        it('converts an object to an array', () => {
+            const data = {
+                [0]: 1,
+                [1]: 2,
+                length: 2,
+                test: 123,
+            };
+            const actual = argsToArray(data);
+            expect(actual).toEqual([1, 2]);
         });
     });
 });

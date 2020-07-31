@@ -9,7 +9,7 @@ import {
     UNKNOWN,
     VALUES_FILTER_PROPS,
 } from './types';
-import {mergeCache, normalizeSelector, verifyCache} from './utils';
+import {argsToArray, mergeCache, normalizeSelector, verifyCache} from './utils';
 
 export function relatedEntity<
     STORE,
@@ -49,7 +49,7 @@ export function relatedEntity<
     keyId: RELATED_KEY_IDS | RELATED_KEY_IDS_ARRAYS,
     keyValue: RELATED_KEY_VALUES | RELATED_KEY_VALUES_ARRAYS,
 ): HANDLER_RELATED_ENTITY<STORE, PARENT_ENTITY> {
-    let relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>> = [...arguments];
+    let relationships: Array<HANDLER_RELATED_ENTITY<STORE, RELATED_ENTITY>> = argsToArray(arguments);
     relationships = relationships.slice(3);
 
     let meta: SELECTOR_META = {};
