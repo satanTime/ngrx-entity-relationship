@@ -1,3 +1,9 @@
+## [1.3.4](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.3.3...v1.3.4) (2020-09-12)
+
+### Bug Fixes
+
+-   stable ngrx ([ec137aa](https://github.com/satanTime/ngrx-entity-relationship/commit/ec137aae54330b17e8ad9981b290fbd35b05aa0c))
+
 ## [1.3.3](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.3.2...v1.3.3) (2020-07-31)
 
 ### Bug Fixes
