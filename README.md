@@ -9,10 +9,10 @@
 - Angular 7 and `@ngrx/entity@7` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular7/src/app/entity))
 - Angular 8 and `@ngrx/entity@8` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular8/src/app/entity))
 - Angular 9 and `@ngrx/entity@9` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular9-ivy-true/src/app/entity))
-- Angular 10 and `@ngrx/entity@9` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular10-ivy-true/src/app/entity))
+- Angular 10 and `@ngrx/entity@10` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular10-ivy-true/src/app/entity))
 * Angular 8 and `@ngrx/data@8` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular8/src/app/data))
 * Angular 9 and `@ngrx/data@9` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular9-ivy-true/src/app/data))
-* Angular 10 and `@ngrx/data@9` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular10-ivy-true/src/app/data))
+* Angular 10 and `@ngrx/data@10` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular10-ivy-true/src/app/data))
 
 ### API short list
 
