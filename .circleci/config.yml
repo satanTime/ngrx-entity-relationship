@@ -28,7 +28,7 @@ jobs:
                   command: ./node_modules/.bin/coveralls < test-reports/coverage/lcov/lcov.info
             - run:
                   name: Collecting Coverage codecov.io
-                  command: ./node_modules/.bin/codecov -f test-reports/coverage/lcov/lcov.info
+                  command: ./node_modules/.bin/codecov -f test-reports/coverage/lcov/lcov.info --disable=gcov
             - store_test_results:
                   path: ./test-reports
             - store_artifacts:
