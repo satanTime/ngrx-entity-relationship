@@ -1,8 +1,9 @@
 # A simple way to use relationships within ngrx/store, ngrx/entity and ngrx/data
 
-[![npm version](https://badge.fury.io/js/ngrx-entity-relationship.svg)](https://badge.fury.io/js/ngrx-entity-relationship)
-[![CircleCI](https://circleci.com/gh/satanTime/ngrx-entity-relationship.svg?style=shield)](https://app.circleci.com/pipelines/github/satanTime/ngrx-entity-relationship)
+[![NPM Version](https://badge.fury.io/js/ngrx-entity-relationship.svg)](https://badge.fury.io/js/ngrx-entity-relationship)
+[![Build Status](https://circleci.com/gh/satanTime/ngrx-entity-relationship.svg?style=shield)](https://app.circleci.com/pipelines/github/satanTime/ngrx-entity-relationship)
 [![Coverage Status](https://coveralls.io/repos/github/satanTime/ngrx-entity-relationship/badge.svg?branch=master)](https://coveralls.io/github/satanTime/ngrx-entity-relationship?branch=master)
+[![Code Quality](https://img.shields.io/lgtm/grade/javascript/g/satanTime/ngrx-entity-relationship.svg)](https://lgtm.com/projects/g/satanTime/ngrx-entity-relationship/context:javascript)
 
 ### Supports
 - Angular 6 and `@ngrx/entity@6` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular6/src/app/entity))
