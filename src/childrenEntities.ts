@@ -83,6 +83,7 @@ export function childrenEntities<
                     continue;
                 }
                 const id = idSelector(entity);
+                // istanbul ignore else
                 if (id) {
                     ids.push(id);
                 }
@@ -95,6 +96,7 @@ export function childrenEntities<
         }
         if (!ids.length) {
             source[keyValue] = emptyResult.get(parentId);
+            // istanbul ignore else
             if (!source[keyValue]) {
                 source[keyValue] = [] as PARENT_ENTITY[RELATED_KEY_VALUES_ARRAYS];
                 emptyResult.set(parentId, source[keyValue]);
@@ -127,6 +129,7 @@ export function childrenEntities<
                 `${cacheHash}:${id}`,
             ) || [new Map(), undefined];
             if (verifyCache(state, entityChecks)) {
+                // istanbul ignore else
                 if (entityValue) {
                     value.push(entityValue);
                 }

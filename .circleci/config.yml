@@ -266,6 +266,72 @@ jobs:
             - run:
                   name: Angular 10 Build
                   command: npm run b:a10t
+    'Angular 11 without Ivy':
+        docker:
+            - image: satantime/puppeteer-node:12-buster
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: dist
+            - restore_cache:
+                  key: root-cache-{{ checksum "package-lock.json" }}
+            - restore_cache:
+                  key: a11f-cache-{{ checksum "e2e/angular11-ivy-false/package-lock.json" }}
+            - run:
+                  name: NPM Install for E2E
+                  command: npm run i:a11f
+            - save_cache:
+                  key: a11f-cache-{{ checksum "e2e/angular11-ivy-false/package-lock.json" }}
+                  paths:
+                      - ./e2e/angular11-ivy-false/node_modules
+            - run:
+                  name: Spreading Build
+                  command: npm run s:a11f
+            - run:
+                  name: Spreading Tests
+                  command: npm run s:test:a11f
+            - run:
+                  name: Angular 11 UT
+                  command: npm run test:a11f
+            - run:
+                  name: Angular 11 E2E
+                  command: npm run e2e:a11f
+            - run:
+                  name: Angular 11 Build
+                  command: npm run b:a11f
+    'Angular 11 with Ivy':
+        docker:
+            - image: satantime/puppeteer-node:12-buster
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: dist
+            - restore_cache:
+                  key: root-cache-{{ checksum "package-lock.json" }}
+            - restore_cache:
+                  key: a11t-cache-{{ checksum "e2e/angular11-ivy-true/package-lock.json" }}
+            - run:
+                  name: NPM Install for E2E
+                  command: npm run i:a11t
+            - save_cache:
+                  key: a11t-cache-{{ checksum "e2e/angular11-ivy-true/package-lock.json" }}
+                  paths:
+                      - ./e2e/angular11-ivy-true/node_modules
+            - run:
+                  name: Spreading Build
+                  command: npm run s:a11t
+            - run:
+                  name: Spreading Tests
+                  command: npm run s:test:a11t
+            - run:
+                  name: Angular 11 UT
+                  command: npm run test:a11t
+            - run:
+                  name: Angular 11 E2E
+                  command: npm run e2e:a11t
+            - run:
+                  name: Angular 11 Build
+                  command: npm run b:a11t
 workflows:
     version: 2
     build:
@@ -290,5 +356,11 @@ workflows:
                   requires:
                       - Core
             - 'Angular 10 with Ivy':
+                  requires:
+                      - Core
+            - 'Angular 11 without Ivy':
+                  requires:
+                      - Core
+            - 'Angular 11 with Ivy':
                   requires:
                       - Core

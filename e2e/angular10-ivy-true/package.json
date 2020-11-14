@@ -8,12 +8,12 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e --webdriver-update=false",
-        "postinstall": "webdriver-manager update --versions.chrome 83.0.4103.39"
+        "postinstall": "webdriver-manager update --versions.chrome 86.0.4240.22"
     },
     "private": true,
     "peerDependencies": {
         "ngrx-entity-relationship": "*",
-        "puppeteer": "~3.3.0"
+        "puppeteer": "~5.4.1"
     },
     "dependencies": {
         "@angular/animations": "~10.0.3",

@@ -127,6 +127,7 @@ export function relatedEntity<
                 `${cacheHash}:${id}`,
             ) || [new Map(), undefined];
             if (verifyCache(state, entityChecks)) {
+                // istanbul ignore else
                 if (entityValue) {
                     valueEntities.push(entityValue);
                 }
