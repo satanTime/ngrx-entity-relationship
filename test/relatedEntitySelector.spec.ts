@@ -10,13 +10,9 @@ describe('relatedEntitySelector', () => {
     };
 
     it('marks callback with ngrxEntityRelationship key', () => {
-        const actual = relatedEntitySelector<any, any, any, any, any>(jasmine.createSpy(), '', '');
+        const actual: any = relatedEntitySelector<any, any, any, any, any>(jasmine.createSpy(), '', '');
         expect(actual).toEqual(jasmine.any(Function));
-        expect(actual).toEqual(
-            jasmine.objectContaining({
-                ngrxEntityRelationship: 'relatedEntitySelector',
-            }),
-        );
+        expect(actual.ngrxEntityRelationship).toEqual('relatedEntitySelector');
     });
 
     it('calls relatedEntity with relations', () => {

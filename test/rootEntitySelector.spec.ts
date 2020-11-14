@@ -10,13 +10,9 @@ describe('rootEntitySelector', () => {
     };
 
     it('marks callback with ngrxEntityRelationship key', () => {
-        const actual = rootEntitySelector(jasmine.createSpy());
+        const actual: any = rootEntitySelector(jasmine.createSpy());
         expect(actual).toEqual(jasmine.any(Function));
-        expect(actual).toEqual(
-            jasmine.objectContaining({
-                ngrxEntityRelationship: 'rootEntitySelector',
-            }),
-        );
+        expect(actual.ngrxEntityRelationship).toEqual('rootEntitySelector');
     });
 
     it('calls rootEntity with transformer and relations', () => {
