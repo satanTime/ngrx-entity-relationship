@@ -1,3 +1,9 @@
+## [1.3.5](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.3.4...v1.3.5) (2020-11-14)
+
+### Bug Fixes
+
+-   adding Angular 11 coverage ([2c5a8b9](https://github.com/satanTime/ngrx-entity-relationship/commit/2c5a8b983a17ecacc9b012fac1dd7e781c140ee0))
+
 ## [1.3.4](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.3.3...v1.3.4) (2020-09-12)
 
 ### Bug Fixes
