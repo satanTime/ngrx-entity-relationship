@@ -24,8 +24,11 @@ jobs:
                   name: Tests
                   command: npm run test -- --single-run --no-progress --coverage
             - run:
-                  name: Collecting Coverage
-                  command: ./node_modules/coveralls/bin/coveralls.js < test-reports/coverage/lcov/lcov.info
+                  name: Collecting Coverage coveralls.io
+                  command: ./node_modules/.bin/coveralls < test-reports/coverage/lcov/lcov.info
+            - run:
+                  name: Collecting Coverage codecov.io
+                  command: ./node_modules/.bin/codecov -f test-reports/coverage/lcov/lcov.info
             - store_test_results:
                   path: ./test-reports
             - store_artifacts:
