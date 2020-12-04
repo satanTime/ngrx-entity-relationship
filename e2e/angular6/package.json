@@ -31,7 +31,7 @@
         "classlist.js": "1.1.20150312",
         "core-js": "2.6.11",
         "rxjs": "6.2.2",
-        "zone.js": "0.8.29"
+        "zone.js": "0.11.3"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "0.8.9",
