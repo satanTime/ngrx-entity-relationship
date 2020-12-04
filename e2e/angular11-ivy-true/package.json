@@ -13,7 +13,7 @@
     "private": true,
     "peerDependencies": {
         "ngrx-entity-relationship": "*",
-        "puppeteer": "~5.4.1"
+        "puppeteer": "~5.4.1 || ~5.5.0"
     },
     "dependencies": {
         "@angular/animations": "11.0.0",
