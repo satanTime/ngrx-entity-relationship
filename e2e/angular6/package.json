@@ -29,7 +29,7 @@
         "@ngrx/entity": "6.1.2",
         "@ngrx/store": "6.1.2",
         "classlist.js": "1.1.20150312",
-        "core-js": "2.6.11",
+        "core-js": "2.6.12",
         "rxjs": "6.2.2",
         "zone.js": "0.8.29"
     },
