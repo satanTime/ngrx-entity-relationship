@@ -6,12 +6,12 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                  key: root-cache-{{ checksum "package-lock.json" }}
+                  key: root-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - run:
                   name: NPM Install
                   command: npm install
             - save_cache:
-                  key: root-cache-{{ checksum "package-lock.json" }}
+                  key: root-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
                   paths:
                       - ./node_modules
             - run:
@@ -46,14 +46,14 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-cache-{{ checksum "package-lock.json" }}
+                  key: root-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
-                  key: a6-cache-{{ checksum "e2e/angular6/package-lock.json" }}
+                  key: a6-cache-{{ checksum "e2e/angular6/package.json" }}-{{ checksum "e2e/angular6/package-lock.json" }}
             - run:
                   name: NPM Install for E2E
                   command: npm run i:a6
             - save_cache:
-                  key: a6-cache-{{ checksum "e2e/angular6/package-lock.json" }}
+                  key: a6-cache-{{ checksum "e2e/angular6/package.json" }}-{{ checksum "e2e/angular6/package-lock.json" }}
                   paths:
                       - ./e2e/angular6/node_modules
             - run:
@@ -79,14 +79,14 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-cache-{{ checksum "package-lock.json" }}
+                  key: root-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
-                  key: a7-cache-{{ checksum "e2e/angular7/package-lock.json" }}
+                  key: a7-cache-{{ checksum "e2e/angular7/package.json" }}-{{ checksum "e2e/angular7/package-lock.json" }}
             - run:
                   name: NPM Install for E2E
                   command: npm run i:a7
             - save_cache:
-                  key: a7-cache-{{ checksum "e2e/angular7/package-lock.json" }}
+                  key: a7-cache-{{ checksum "e2e/angular7/package.json" }}-{{ checksum "e2e/angular7/package-lock.json" }}
                   paths:
                       - ./e2e/angular7/node_modules
             - run:
@@ -112,14 +112,14 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-cache-{{ checksum "package-lock.json" }}
+                  key: root-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
-                  key: a8-cache-{{ checksum "e2e/angular8/package-lock.json" }}
+                  key: a8-cache-{{ checksum "e2e/angular8/package.json" }}-{{ checksum "e2e/angular8/package-lock.json" }}
             - run:
                   name: NPM Install for E2E
                   command: npm run i:a8
             - save_cache:
-                  key: a8-cache-{{ checksum "e2e/angular8/package-lock.json" }}
+                  key: a8-cache-{{ checksum "e2e/angular8/package.json" }}-{{ checksum "e2e/angular8/package-lock.json" }}
                   paths:
                       - ./e2e/angular8/node_modules
             - run:
@@ -145,14 +145,14 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-cache-{{ checksum "package-lock.json" }}
+                  key: root-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
-                  key: a9f-cache-{{ checksum "e2e/angular9-ivy-false/package-lock.json" }}
+                  key: a9f-cache-{{ checksum "e2e/angular9-ivy-false/package.json" }}-{{ checksum "e2e/angular9-ivy-false/package-lock.json" }}
             - run:
                   name: NPM Install for E2E
                   command: npm run i:a9f
             - save_cache:
-                  key: a9f-cache-{{ checksum "e2e/angular9-ivy-false/package-lock.json" }}
+                  key: a9f-cache-{{ checksum "e2e/angular9-ivy-false/package.json" }}-{{ checksum "e2e/angular9-ivy-false/package-lock.json" }}
                   paths:
                       - ./e2e/angular9-ivy-false/node_modules
             - run:
@@ -178,14 +178,14 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-cache-{{ checksum "package-lock.json" }}
+                  key: root-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
-                  key: a9t-cache-{{ checksum "e2e/angular9-ivy-true/package-lock.json" }}
+                  key: a9t-cache-{{ checksum "e2e/angular9-ivy-true/package.json" }}-{{ checksum "e2e/angular9-ivy-true/package-lock.json" }}
             - run:
                   name: NPM Install for E2E
                   command: npm run i:a9t
             - save_cache:
-                  key: a9t-cache-{{ checksum "e2e/angular9-ivy-true/package-lock.json" }}
+                  key: a9t-cache-{{ checksum "e2e/angular9-ivy-true/package.json" }}-{{ checksum "e2e/angular9-ivy-true/package-lock.json" }}
                   paths:
                       - ./e2e/angular9-ivy-true/node_modules
             - run:
@@ -211,14 +211,14 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-cache-{{ checksum "package-lock.json" }}
+                  key: root-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
-                  key: a10f-cache-{{ checksum "e2e/angular10-ivy-false/package-lock.json" }}
+                  key: a10f-cache-{{ checksum "e2e/angular10-ivy-false/package.json" }}-{{ checksum "e2e/angular10-ivy-false/package-lock.json" }}
             - run:
                   name: NPM Install for E2E
                   command: npm run i:a10f
             - save_cache:
-                  key: a10f-cache-{{ checksum "e2e/angular10-ivy-false/package-lock.json" }}
+                  key: a10f-cache-{{ checksum "e2e/angular10-ivy-false/package.json" }}-{{ checksum "e2e/angular10-ivy-false/package-lock.json" }}
                   paths:
                       - ./e2e/angular10-ivy-false/node_modules
             - run:
@@ -244,14 +244,14 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-cache-{{ checksum "package-lock.json" }}
+                  key: root-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
-                  key: a10t-cache-{{ checksum "e2e/angular10-ivy-true/package-lock.json" }}
+                  key: a10t-cache-{{ checksum "e2e/angular10-ivy-true/package.json" }}-{{ checksum "e2e/angular10-ivy-true/package-lock.json" }}
             - run:
                   name: NPM Install for E2E
                   command: npm run i:a10t
             - save_cache:
-                  key: a10t-cache-{{ checksum "e2e/angular10-ivy-true/package-lock.json" }}
+                  key: a10t-cache-{{ checksum "e2e/angular10-ivy-true/package.json" }}-{{ checksum "e2e/angular10-ivy-true/package-lock.json" }}
                   paths:
                       - ./e2e/angular10-ivy-true/node_modules
             - run:
@@ -277,14 +277,14 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-cache-{{ checksum "package-lock.json" }}
+                  key: root-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
-                  key: a11f-cache-{{ checksum "e2e/angular11-ivy-false/package-lock.json" }}
+                  key: a11f-cache-{{ checksum "e2e/angular11-ivy-false/package.json" }}-{{ checksum "e2e/angular11-ivy-false/package-lock.json" }}
             - run:
                   name: NPM Install for E2E
                   command: npm run i:a11f
             - save_cache:
-                  key: a11f-cache-{{ checksum "e2e/angular11-ivy-false/package-lock.json" }}
+                  key: a11f-cache-{{ checksum "e2e/angular11-ivy-false/package.json" }}-{{ checksum "e2e/angular11-ivy-false/package-lock.json" }}
                   paths:
                       - ./e2e/angular11-ivy-false/node_modules
             - run:
@@ -310,14 +310,14 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-cache-{{ checksum "package-lock.json" }}
+                  key: root-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
-                  key: a11t-cache-{{ checksum "e2e/angular11-ivy-true/package-lock.json" }}
+                  key: a11t-cache-{{ checksum "e2e/angular11-ivy-true/package.json" }}-{{ checksum "e2e/angular11-ivy-true/package-lock.json" }}
             - run:
                   name: NPM Install for E2E
                   command: npm run i:a11t
             - save_cache:
-                  key: a11t-cache-{{ checksum "e2e/angular11-ivy-true/package-lock.json" }}
+                  key: a11t-cache-{{ checksum "e2e/angular11-ivy-true/package.json" }}-{{ checksum "e2e/angular11-ivy-true/package-lock.json" }}
                   paths:
                       - ./e2e/angular11-ivy-true/node_modules
             - run:

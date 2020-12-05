@@ -142,8 +142,9 @@
             "e2e/**"
         ],
         "rangeStrategy": "pin",
-        "separateMultipleMajor": true,
+        "rebaseWhen": "behind-base-branch",
         "separateMajorMinor": true,
-        "separateMinorPatch": true
+        "separateMinorPatch": true,
+        "separateMultipleMajor": true
     }
 }
