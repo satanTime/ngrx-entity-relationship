@@ -138,19 +138,12 @@
         }
     },
     "renovate": {
-        "packageRules": [
-            {
-                "paths": [
-                    "+(package.json)"
-                ],
-                "enabled": true
-            },
-            {
-                "paths": [
-                    "e2e/**"
-                ],
-                "enabled": false
-            }
-        ]
+        "ignorePaths": [
+            "e2e/**"
+        ],
+        "rangeStrategy": "pin",
+        "separateMultipleMajor": true,
+        "separateMajorMinor": true,
+        "separateMinorPatch": true
     }
 }
