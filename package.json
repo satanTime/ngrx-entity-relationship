@@ -10,15 +10,15 @@
     "scripts": {
         "build": "rm -Rf tmp && rm -Rf dist && tsc",
         "i:a": "npm run i:a6 && npm run i:a7 && npm run i:a8 && npm run i:a9f && npm run i:a9t && npm run i:a10f && npm run i:a10t && npm run i:a11f && npm run i:a11t",
-        "i:a6": "cd e2e/angular6 && npm install && npm run postinstall",
-        "i:a7": "cd e2e/angular7 && npm install && npm run postinstall",
-        "i:a8": "cd e2e/angular8 && npm install && npm run postinstall",
-        "i:a9f": "cd e2e/angular9-ivy-false && npm install && npm run postinstall",
-        "i:a9t": "cd e2e/angular9-ivy-true && npm install && npm run postinstall",
-        "i:a10f": "cd e2e/angular10-ivy-false && npm install && npm run postinstall",
-        "i:a10t": "cd e2e/angular10-ivy-true && npm install && npm run postinstall",
-        "i:a11f": "cd e2e/angular11-ivy-false && npm install && npm run postinstall",
-        "i:a11t": "cd e2e/angular11-ivy-true && npm install && npm run postinstall",
+        "i:a6": "cd e2e/angular6 && npm install --ignore-scripts && npm run postinstall",
+        "i:a7": "cd e2e/angular7 && npm install --ignore-scripts && npm run postinstall",
+        "i:a8": "cd e2e/angular8 && npm install --ignore-scripts && npm run postinstall",
+        "i:a9f": "cd e2e/angular9-ivy-false && npm install --ignore-scripts && npm run postinstall",
+        "i:a9t": "cd e2e/angular9-ivy-true && npm install --ignore-scripts && npm run postinstall",
+        "i:a10f": "cd e2e/angular10-ivy-false && npm install --ignore-scripts && npm run postinstall",
+        "i:a10t": "cd e2e/angular10-ivy-true && npm install --ignore-scripts && npm run postinstall",
+        "i:a11f": "cd e2e/angular11-ivy-false && npm install --ignore-scripts && npm run postinstall",
+        "i:a11t": "cd e2e/angular11-ivy-true && npm install --ignore-scripts && npm run postinstall",
         "s:a": "npm run s:a6 && npm run s:a7 && npm run s:a8 && npm run s:a9f && npm run s:a9t && npm run s:a10f && npm run s:a10t && npm run s:a11f && npm run s:a11t",
         "s:a6": "P=e2e/angular6/node_modules/ngrx-entity-relationship && rm -Rf $P && mkdir -p $P && cp -R dist $P && cp package.json $P",
         "s:a7": "P=e2e/angular7/node_modules/ngrx-entity-relationship && rm -Rf $P && mkdir -p $P && cp -R dist $P && cp package.json $P",
@@ -128,7 +128,7 @@
         "tslint-defocus": "2.0.6",
         "tslint-lines-between-class-members": "1.3.6",
         "tslint-microsoft-contrib": "6.2.0",
-        "typescript": "3.8.3"
+        "typescript": "4.1.2"
     },
     "husky": {
         "hooks": {

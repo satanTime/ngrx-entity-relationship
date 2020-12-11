@@ -2,7 +2,7 @@ version: 2.1
 jobs:
     Core:
         docker:
-            - image: satantime/puppeteer-node:12-buster
+            - image: satantime/puppeteer-node:14-buster
         steps:
             - checkout
             - restore_cache:
@@ -40,7 +40,7 @@ jobs:
                       - .
     'Angular 6':
         docker:
-            - image: satantime/puppeteer-node:12-buster
+            - image: satantime/puppeteer-node:14-buster
         steps:
             - checkout
             - attach_workspace:
@@ -73,7 +73,7 @@ jobs:
                   command: npm run b:a6
     'Angular 7':
         docker:
-            - image: satantime/puppeteer-node:12-buster
+            - image: satantime/puppeteer-node:14-buster
         steps:
             - checkout
             - attach_workspace:
@@ -106,7 +106,7 @@ jobs:
                   command: npm run b:a7
     'Angular 8':
         docker:
-            - image: satantime/puppeteer-node:12-buster
+            - image: satantime/puppeteer-node:14-buster
         steps:
             - checkout
             - attach_workspace:
@@ -139,7 +139,7 @@ jobs:
                   command: npm run b:a8
     'Angular 9 without Ivy':
         docker:
-            - image: satantime/puppeteer-node:12-buster
+            - image: satantime/puppeteer-node:14-buster
         steps:
             - checkout
             - attach_workspace:
@@ -172,7 +172,7 @@ jobs:
                   command: npm run b:a9f
     'Angular 9 with Ivy':
         docker:
-            - image: satantime/puppeteer-node:12-buster
+            - image: satantime/puppeteer-node:14-buster
         steps:
             - checkout
             - attach_workspace:
@@ -205,7 +205,7 @@ jobs:
                   command: npm run b:a9t
     'Angular 10 without Ivy':
         docker:
-            - image: satantime/puppeteer-node:12-buster
+            - image: satantime/puppeteer-node:14-buster
         steps:
             - checkout
             - attach_workspace:
@@ -238,7 +238,7 @@ jobs:
                   command: npm run b:a10f
     'Angular 10 with Ivy':
         docker:
-            - image: satantime/puppeteer-node:12-buster
+            - image: satantime/puppeteer-node:14-buster
         steps:
             - checkout
             - attach_workspace:
@@ -271,7 +271,7 @@ jobs:
                   command: npm run b:a10t
     'Angular 11 without Ivy':
         docker:
-            - image: satantime/puppeteer-node:12-buster
+            - image: satantime/puppeteer-node:14-buster
         steps:
             - checkout
             - attach_workspace:
@@ -304,7 +304,7 @@ jobs:
                   command: npm run b:a11f
     'Angular 11 with Ivy':
         docker:
-            - image: satantime/puppeteer-node:12-buster
+            - image: satantime/puppeteer-node:14-buster
         steps:
             - checkout
             - attach_workspace:

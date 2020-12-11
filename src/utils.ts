@@ -116,3 +116,16 @@ export function argsToArray<T>(args: {length: number} & {[key: number]: T}): Arr
     }
     return result;
 }
+
+export function isObject(value: UNKNOWN): value is object {
+    return !!value && typeof value === 'object';
+}
+
+export function objectKeys<T extends object, K extends keyof T>(value: T): Array<K> {
+    return <Array<K>>Object.keys(value);
+}
+
+export function objectValues<T extends object, K extends T[keyof T]>(value: T): Array<K> {
+    const keys = objectKeys(value);
+    return <Array<K>>keys.map(key => value[key]);
+}

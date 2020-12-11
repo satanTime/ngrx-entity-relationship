@@ -1,4 +1,10 @@
-import {argsToArray, mergeCache, normalizeSelector, verifyCache} from 'ngrx-entity-relationship/dist/utils';
+import {
+    argsToArray,
+    mergeCache,
+    normalizeSelector,
+    objectValues,
+    verifyCache,
+} from 'ngrx-entity-relationship/dist/utils';
 
 describe('utils', () => {
     describe('normalizeSelector', () => {
@@ -298,6 +304,19 @@ describe('utils', () => {
             };
             const actual = argsToArray(data);
             expect(actual).toEqual([1, 2]);
+        });
+    });
+
+    describe('objectValues', () => {
+        it('extracts only values', () => {
+            const data = {
+                [0]: 1,
+                [1]: 2,
+                length: 2,
+                test: 123,
+            };
+            const actual = objectValues(data);
+            expect(actual).toEqual([1, 2, 2, 123]);
         });
     });
 });

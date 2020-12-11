@@ -37,7 +37,11 @@ export function relationships<STORE, SET, TRANSFORMED, TYPES>(
                     result.pipe(
                         map(set => {
                             if (Array.isArray(set)) {
-                                return (set.map(entity => selector.idSelector(entity)) as any) as TYPES;
+                                const processed: Array<ID_TYPES> = [];
+                                for (const entity of set) {
+                                    processed.push(selector.idSelector(entity));
+                                }
+                                return (processed as any) as TYPES;
                             }
                             return (selector.idSelector(set) as any) as TYPES;
                         }),

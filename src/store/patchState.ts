@@ -1,18 +1,16 @@
 import {UNKNOWN} from '../types';
+import {isObject, objectKeys} from '../utils';
 
-const func = <T extends any>(state: T, source: UNKNOWN, destination: UNKNOWN): T => {
+const func = <T>(state: T, source: UNKNOWN, destination: UNKNOWN): T => {
     if (source === destination) {
         return state;
     }
-    if (state === null) {
-        return state;
-    }
-    if (typeof state !== 'object') {
+    if (!isObject(state)) {
         return state;
     }
 
-    for (const key of Object.keys(state)) {
-        if (typeof state[key] !== 'object' || state[key] === null) {
+    for (const key of objectKeys(state)) {
+        if (!isObject(state[key])) {
             continue;
         }
 
