@@ -6,7 +6,6 @@
         "start": "ng serve",
         "build": "ng build",
         "test": "ng test",
-        "lint": "ng lint",
         "e2e": "ng e2e --webdriver-update=false",
         "postinstall": "webdriver-manager update --versions.chrome 88.0.4324.27 --gecko=false"
     },
@@ -41,7 +40,6 @@
         "@types/jasmine": "3.5.10",
         "@types/jasminewd2": "2.0.8",
         "@types/node": "12.12.44",
-        "codelyzer": "5.2.2",
         "jasmine-core": "3.5.0",
         "jasmine-spec-reporter": "4.2.1",
         "karma": "4.3.0",
@@ -51,7 +49,6 @@
         "karma-jasmine-html-reporter": "1.5.4",
         "protractor": "5.4.4",
         "ts-node": "8.3.0",
-        "tslint": "5.18.0",
         "typescript": "3.7.5"
     }
 }
