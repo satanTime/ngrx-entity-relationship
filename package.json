@@ -138,13 +138,17 @@
         }
     },
     "renovate": {
-        "ignorePaths": [
-            "e2e/**"
+        "extends": [
+            "config:base"
         ],
         "rangeStrategy": "pin",
-        "rebaseWhen": "behind-base-branch",
+        "rebaseWhen": "conflicted",
         "separateMajorMinor": true,
         "separateMinorPatch": true,
-        "separateMultipleMajor": true
+        "separateMultipleMajor": true,
+        "includeForks": true,
+        "ignoreDeprecated": false,
+        "semanticCommitScope": "{{#if baseDir}}{{baseDir}}{{else}}deps{{/if}}",
+        "additionalBranchPrefix": "{{#if baseDir}}{{baseDir}}/{{else}}root/{{/if}}"
     }
 }
