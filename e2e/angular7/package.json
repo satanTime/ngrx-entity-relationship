@@ -27,7 +27,7 @@
         "@ngrx/entity": "7.4.0",
         "@ngrx/store": "7.4.0",
         "classlist.js": "1.1.20150312",
-        "core-js": "2.6.11",
+        "core-js": "2.6.12",
         "rxjs": "6.3.3",
         "tslib": "1.13.0",
         "zone.js": "0.8.29"
