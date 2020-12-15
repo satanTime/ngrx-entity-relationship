@@ -139,7 +139,8 @@
     },
     "renovate": {
         "extends": [
-            "config:base"
+            "config:base",
+            ":semanticCommitTypeAll(chore)"
         ],
         "rangeStrategy": "pin",
         "rebaseWhen": "conflicted",
