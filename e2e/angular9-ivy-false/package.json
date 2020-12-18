@@ -49,6 +49,6 @@
         "karma-jasmine-html-reporter": "1.5.4",
         "protractor": "5.4.4",
         "ts-node": "8.3.0",
-        "typescript": "3.7.5"
+        "typescript": "3.9.7"
     }
 }
