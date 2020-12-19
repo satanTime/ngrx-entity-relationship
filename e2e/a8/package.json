@@ -27,7 +27,6 @@
         "@ngrx/effects": "8.6.0",
         "@ngrx/entity": "8.6.0",
         "@ngrx/store": "8.6.0",
-        "classlist.js": "1.1.20150312",
         "rxjs": "6.4.0",
         "tslib": "1.13.0",
         "zone.js": "0.9.1"
@@ -45,7 +44,7 @@
         "karma": "4.1.0",
         "karma-chrome-launcher": "2.2.0",
         "karma-jasmine": "2.0.1",
-        "karma-jasmine-html-reporter": "1.5.4",
+        "karma-jasmine-html-reporter": "1.4.0",
         "protractor": "5.4.4",
         "ts-node": "7.0.1",
         "typescript": "3.5.3"

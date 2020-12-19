@@ -27,7 +27,6 @@
         "@ngrx/effects": "6.1.2",
         "@ngrx/entity": "6.1.2",
         "@ngrx/store": "6.1.2",
-        "classlist.js": "1.1.20150312",
         "core-js": "2.6.12",
         "rxjs": "6.2.2",
         "zone.js": "0.8.29"
@@ -40,7 +39,7 @@
         "@types/jasmine": "2.8.17",
         "@types/jasminewd2": "2.0.8",
         "@types/node": "8.9.5",
-        "jasmine-core": "2.99.1",
+        "jasmine-core": "2.8.0",
         "jasmine-spec-reporter": "4.2.1",
         "karma": "3.0.0",
         "karma-chrome-launcher": "2.2.0",
