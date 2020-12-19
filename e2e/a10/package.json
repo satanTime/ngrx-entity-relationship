@@ -1,0 +1,57 @@
+{
+    "name": "a10",
+    "version": "0.0.0",
+    "scripts": {
+        "ng": "ng",
+        "start": "ng serve",
+        "build": "npm run build:ivy-on && npm run build:ivy-off",
+        "build:ivy-on": "ng build --configuration ivy-on",
+        "build:ivy-off": "ng build --configuration ivy-off",
+        "test": "npm run test:ivy-on && npm run test:ivy-off",
+        "test:ivy-on": "ng test --configuration ivy-on",
+        "test:ivy-off": "ng test --configuration ivy-off",
+        "e2e": "npm run e2e:ivy-on && npm run e2e:ivy-off",
+        "e2e:ivy-on": "ng e2e --webdriver-update=false --configuration ivy-on",
+        "e2e:ivy-off": "ng e2e --webdriver-update=false --configuration ivy-off",
+        "postinstall": "webdriver-manager update --versions.chrome 88.0.4324.27 --gecko=false"
+    },
+    "private": true,
+    "peerDependencies": {
+        "ngrx-entity-relationship": "*",
+        "puppeteer": "5.5.0"
+    },
+    "dependencies": {
+        "@angular/animations": "10.2.3",
+        "@angular/common": "10.2.3",
+        "@angular/compiler": "10.2.3",
+        "@angular/core": "10.2.3",
+        "@angular/forms": "10.2.3",
+        "@angular/platform-browser": "10.2.3",
+        "@angular/platform-browser-dynamic": "10.2.3",
+        "@angular/router": "10.2.3",
+        "@ngrx/data": "10.1.0",
+        "@ngrx/effects": "10.1.0",
+        "@ngrx/entity": "10.1.0",
+        "@ngrx/store": "10.1.0",
+        "rxjs": "6.5.5",
+        "tslib": "2.0.3",
+        "zone.js": "0.10.3"
+    },
+    "devDependencies": {
+        "@angular-devkit/build-angular": "0.1002.0",
+        "@angular/cli": "10.2.0",
+        "@angular/compiler-cli": "10.2.3",
+        "@types/node": "12.19.9",
+        "@types/jasmine": "3.5.14",
+        "@types/jasminewd2": "2.0.8",
+        "jasmine-core": "3.5.0",
+        "jasmine-spec-reporter": "5.0.2",
+        "karma": "5.2.3",
+        "karma-chrome-launcher": "3.1.0",
+        "karma-jasmine": "3.3.1",
+        "karma-jasmine-html-reporter": "1.5.4",
+        "protractor": "7.0.0",
+        "ts-node": "8.10.2",
+        "typescript": "3.9.7"
+    }
+}
