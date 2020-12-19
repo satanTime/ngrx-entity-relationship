@@ -22,6 +22,7 @@
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
                         "aot": true,
+                        "progress": false,
                         "assets": ["src/favicon.ico", "src/assets"],
                         "styles": ["src/styles.css"],
                         "scripts": []
