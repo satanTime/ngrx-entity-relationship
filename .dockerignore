@@ -1,0 +1,11 @@
+/.git
+/dist
+/e2e/a6/node_modules
+/e2e/a7/node_modules
+/e2e/a8/node_modules
+/e2e/a9/node_modules
+/e2e/a10/node_modules
+/e2e/a11/node_modules
+/node_modules
+/test-reports
+/tmp

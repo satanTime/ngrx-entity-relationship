@@ -12,7 +12,7 @@ module.exports = {
             return [];
         }
 
-        commands.push(`prettier --write ${files.join(' ')}`);
+        commands.push(`prettier -w -u ${files.join(' ')}`);
 
         return commands;
     },
@@ -33,7 +33,7 @@ module.exports = {
         if (filesForLint.length) {
             commands.push(`npm run lint -- --fix --force ${filesForLint.join(' ')}`);
         }
-        commands.push(`prettier --write ${files.join(' ')}`);
+        commands.push(`prettier -w -u ${files.join(' ')}`);
 
         return commands;
     },
