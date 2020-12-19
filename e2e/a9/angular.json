@@ -1,0 +1,82 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "a9": {
+            "projectType": "application",
+            "schematics": {},
+            "root": "",
+            "sourceRoot": "src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/a9",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "aot": true,
+                        "progress": false,
+                        "assets": ["src/favicon.ico", "src/assets"],
+                        "styles": ["src/styles.css"],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "ivy-on": {
+                            "tsConfig": "tsconfig.ivy-on.json"
+                        },
+                        "ivy-off": {
+                            "tsConfig": "tsconfig.ivy-off.json"
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "configurations": {
+                        "ivy-on": {
+                            "browserTarget": "a9:build:ivy-on"
+                        },
+                        "ivy-off": {
+                            "browserTarget": "a9:build:ivy-off"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "src/test.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "karmaConfig": "karma.conf.js",
+                        "assets": ["src/favicon.ico", "src/assets"],
+                        "styles": ["src/styles.css"],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "ivy-on": {
+                            "tsConfig": "tsconfig.ivy-on.json"
+                        },
+                        "ivy-off": {
+                            "tsConfig": "tsconfig.ivy-off.json"
+                        }
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "configurations": {
+                        "ivy-on": {
+                            "devServerTarget": "a9:serve:ivy-on",
+                            "protractorConfig": "e2e/protractor.ivy-on.js"
+                        },
+                        "ivy-off": {
+                            "devServerTarget": "a9:serve:ivy-off",
+                            "protractorConfig": "e2e/protractor.ivy-off.js"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "defaultProject": "a9"
+}

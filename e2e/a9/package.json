@@ -1,0 +1,59 @@
+{
+    "name": "a9",
+    "version": "0.0.0",
+    "scripts": {
+        "ng": "ng",
+        "start": "ng serve",
+        "build": "npm run build:ivy-on && npm run build:ivy-off",
+        "build:ivy-on": "ng build --configuration ivy-on",
+        "build:ivy-off": "ng build --configuration ivy-off",
+        "test": "npm run test:ivy-on && npm run test:ivy-off",
+        "test:ivy-on": "ng test --configuration ivy-on",
+        "test:ivy-off": "ng test --configuration ivy-off",
+        "e2e": "npm run e2e:ivy-on && npm run e2e:ivy-off",
+        "e2e:ivy-on": "ng e2e --webdriver-update=false --configuration ivy-on",
+        "e2e:ivy-off": "ng e2e --webdriver-update=false --configuration ivy-off",
+        "postinstall": "webdriver-manager update --versions.chrome 88.0.4324.27 --gecko=false"
+    },
+    "private": true,
+    "peerDependencies": {
+        "ngrx-entity-relationship": "*",
+        "puppeteer": "5.5.0"
+    },
+    "dependencies": {
+        "@angular/animations": "9.1.12",
+        "@angular/common": "9.1.12",
+        "@angular/compiler": "9.1.12",
+        "@angular/core": "9.1.12",
+        "@angular/forms": "9.1.12",
+        "@angular/platform-browser": "9.1.12",
+        "@angular/platform-browser-dynamic": "9.1.12",
+        "@angular/router": "9.1.12",
+        "@ngrx/data": "9.2.0",
+        "@ngrx/effects": "9.2.0",
+        "@ngrx/entity": "9.2.0",
+        "@ngrx/store": "9.2.0",
+        "classlist.js": "1.1.20150312",
+        "rxjs": "6.5.5",
+        "tslib": "1.14.1",
+        "zone.js": "0.10.3"
+    },
+    "devDependencies": {
+        "@angular-devkit/build-angular": "0.901.12",
+        "@angular/cli": "9.1.12",
+        "@angular/compiler-cli": "9.1.12",
+        "@angular/language-service": "9.1.12",
+        "@types/jasmine": "3.5.14",
+        "@types/jasminewd2": "2.0.8",
+        "@types/node": "12.19.9",
+        "jasmine-core": "3.5.0",
+        "jasmine-spec-reporter": "4.2.1",
+        "karma": "4.4.1",
+        "karma-chrome-launcher": "3.1.0",
+        "karma-jasmine": "2.0.1",
+        "karma-jasmine-html-reporter": "1.5.4",
+        "protractor": "5.4.4",
+        "ts-node": "8.10.2",
+        "typescript": "3.7.5"
+    }
+}
