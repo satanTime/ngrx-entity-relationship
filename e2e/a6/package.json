@@ -1,5 +1,5 @@
 {
-    "name": "angular6",
+    "name": "a6",
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
@@ -44,7 +44,6 @@
         "jasmine-spec-reporter": "4.2.1",
         "karma": "3.0.0",
         "karma-chrome-launcher": "2.2.0",
-        "karma-coverage-istanbul-reporter": "2.0.6",
         "karma-jasmine": "1.1.2",
         "karma-jasmine-html-reporter": "0.2.2",
         "protractor": "5.4.4",
