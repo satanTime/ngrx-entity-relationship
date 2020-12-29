@@ -46,9 +46,7 @@ rules:
     export-name: false
     forin: true
     function-constructor: true
-    function-name:
-        - true
-        - static-method-regex: "^forRoot|[A-Z_\\\\d]+$"
+    function-name: false
     import-name: false
     increment-decrement: true
     insecure-random: false

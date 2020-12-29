@@ -11,7 +11,12 @@ class ReduceFlat {
     constructor(public readonly data: any, public readonly selector: ENTITY_SELECTOR) {}
 }
 
-const reduceFlat = (payload: {data: any; selector: ENTITY_SELECTOR}) => new ReduceFlat(payload.data, payload.selector);
+// Because of redux it can't be a ReduceGraph instance.
+const reduceFlat = (payload: {data: any; selector: ENTITY_SELECTOR}) => ({
+    data: payload.data,
+    selector: payload.selector,
+    type: ngrxEntityRelationshipActions.reduceFlat,
+});
 reduceFlat.type = ngrxEntityRelationshipActions.reduceFlat;
 
 class ReduceGraph {
@@ -20,8 +25,12 @@ class ReduceGraph {
     constructor(public readonly data: any, public readonly selector: ENTITY_SELECTOR) {}
 }
 
-const reduceGraph = (payload: {data: any; selector: ENTITY_SELECTOR}) =>
-    new ReduceGraph(payload.data, payload.selector);
+// Because of redux it can't be a ReduceGraph instance.
+const reduceGraph = (payload: {data: any; selector: ENTITY_SELECTOR}) => ({
+    data: payload.data,
+    selector: payload.selector,
+    type: ngrxEntityRelationshipActions.reduceGraph,
+});
 reduceGraph.type = ngrxEntityRelationshipActions.reduceGraph;
 
 export {ReduceFlat, reduceFlat, ReduceGraph, reduceGraph};

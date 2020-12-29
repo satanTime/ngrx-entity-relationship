@@ -26,7 +26,7 @@ describe('store/actions', () => {
         const data = Symbol();
         const selector = rootEntity(() => undefined);
         const actual = reduceFlat({data, selector});
-        expect(actual).toEqual(jasmine.any(ReduceFlat));
+        expect(actual).not.toEqual(jasmine.any(ReduceFlat));
         expect(actual).toEqual(
             jasmine.objectContaining({
                 type: ngrxEntityRelationshipActions.reduceFlat,
@@ -54,7 +54,7 @@ describe('store/actions', () => {
         const data = Symbol();
         const selector = rootEntity(() => undefined);
         const actual = reduceGraph({data, selector});
-        expect(actual).toEqual(jasmine.any(ReduceGraph));
+        expect(actual).not.toEqual(jasmine.any(ReduceGraph));
         expect(actual).toEqual(
             jasmine.objectContaining({
                 type: ngrxEntityRelationshipActions.reduceGraph,
