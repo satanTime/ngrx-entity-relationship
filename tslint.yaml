@@ -157,7 +157,7 @@ rules:
     prefer-conditional-expression: true
     prefer-const: true
     prefer-for-of: true
-    prefer-method-signature: true
+    prefer-method-signature: false
     prefer-object-spread: true
     prefer-readonly: true
     prefer-template: true

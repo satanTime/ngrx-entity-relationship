@@ -9,7 +9,12 @@ declare global {
 
 export type UNKNOWN = any;
 
-export type STORE_SELECTOR<T, V> = (state: T) => V;
+export type STORE_SELECTOR<T, V> = {
+    (state: T): V;
+    idsKey?: keyof any;
+    entitiesKey?: keyof any;
+    originalSelector?: (state: T) => V;
+};
 
 export type ID_SELECTOR<E> = (entity: E) => ID_TYPES;
 
@@ -25,10 +30,19 @@ export type FILTER_PROPS<Base, Condition> = {
     [Key in keyof Base]: Base[Key] extends Condition ? Key : never;
 }[keyof Base];
 
+export type ENTITY_STATE_CUSTOM<EK extends keyof any, IK extends keyof any, ENTITY> = {
+    [key in EK]: {
+        [id in ID_TYPES]?: ENTITY | undefined;
+    };
+} &
+    {
+        [key in IK]: Array<ID_TYPES>;
+    };
+
 export type ENTITY_STATE<E> = {
     ids: Array<ID_TYPES>;
     entities: {
-        [id in ID_TYPES]: E | undefined;
+        [id in ID_TYPES]?: E;
     };
 };
 
