@@ -11,8 +11,13 @@ export const func = (state: any, selector: ENTITY_SELECTOR, entity: any, meta?: 
         throw new Error('Cannot detect id of an entity');
     }
 
-    const originalState = selector.collectionSelector(state);
-    const originalEntity = originalState.entities[id];
+    const originalSelector = selector.collectionSelector.originalSelector || selector.collectionSelector;
+    const entitiesKey = selector.collectionSelector.entitiesKey || 'entities';
+    const idsKey = selector.collectionSelector.idsKey || 'ids';
+
+    // Any because keys may be different because of entitiesKey.
+    const originalState: any = originalSelector(state);
+    const originalEntity = originalState[entitiesKey][id];
     let featureState = originalState;
 
     // creating a clone
@@ -33,10 +38,10 @@ export const func = (state: any, selector: ENTITY_SELECTOR, entity: any, meta?: 
         clone[key] = originalEntity[key];
     }
 
-    if (featureState.ids.indexOf(id) === -1) {
+    if (featureState[idsKey] && featureState[idsKey].indexOf(id) === -1) {
         featureState = {
             ...featureState,
-            ids: [...featureState.ids, id],
+            [idsKey]: [...featureState[idsKey], id],
         };
     }
 
@@ -50,8 +55,8 @@ export const func = (state: any, selector: ENTITY_SELECTOR, entity: any, meta?: 
     if (isEntityChanged) {
         featureState = {
             ...featureState,
-            entities: {
-                ...featureState.entities,
+            [entitiesKey]: {
+                ...featureState[entitiesKey],
                 [id]: clone,
             },
         };

@@ -6,26 +6,26 @@ export class AppPage {
     }
 
     getCompany() {
-        return element(by.css('[data-role="company"]')).getText();
+        return element(by.css('[role="company"]')).getText();
     }
 
     getUsers() {
-        return element(by.css('[data-role="users"]')).getText();
+        return element(by.css('[role="users"]')).getText();
     }
 
     getFights() {
-        return element(by.css('[data-role="fights"]')).getText();
+        return element(by.css('[role="fights"]')).getText();
     }
 
     getHeroes() {
-        return element(by.css('[data-role="heroes"]')).getText();
+        return element(by.css('[role="heroes"]')).getText();
     }
 
     getVillains() {
-        return element(by.css('[data-role="villains"]')).getText();
+        return element(by.css('[role="villains"]')).getText();
     }
 
     clickButton(role: string) {
-        return element(by.css(`button[data-role="${role}"]`)).click();
+        return element(by.css(`button[role="${role}"]`)).click();
     }
 }

@@ -15,7 +15,12 @@ export * from './operators/relationships';
 
 export * from './store';
 
+export * from './selectByIds';
+export * from './stateKeys';
+
 export {
+    HANDLER_ENTITY,
+    HANDLER_ENTITIES,
     ENTITY_SELECTOR,
     ENTITY_STATE,
     FEATURE_SELECTOR,

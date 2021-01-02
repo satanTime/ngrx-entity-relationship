@@ -1,8 +1,8 @@
 <h2>Actions</h2>
-<button (click)="entitiesService.changeHero('hero1')" data-role="hero1">Change hero1</button>
-<button (click)="entitiesService.changeHero('hero2')" data-role="hero2">Change hero2</button>
-<button (click)="entitiesService.changeVillain('villain3')" data-role="villain3">Change villain3</button>
-<button (click)="entitiesService.changeVillain('villain4')" data-role="villain4">Change villain4</button>
+<button (click)="entitiesService.changeHero('hero1')" role="hero1">Change hero1</button>
+<button (click)="entitiesService.changeHero('hero2')" role="hero2">Change hero2</button>
+<button (click)="entitiesService.changeVillain('villain3')" role="villain3">Change villain3</button>
+<button (click)="entitiesService.changeVillain('villain4')" role="villain4">Change villain4</button>
 
 <h2>Fights</h2>
 <strong>selector</strong>
@@ -24,7 +24,7 @@ public readonly fights$ = this.fight.selectors$.entities$.pipe(
 <pre>
 selector.fights$ | async | json
 </pre>
-<pre data-role="fights">{{ selector.fights$ | async | json }}</pre>
+<pre role="fights">{{ selector.fights$ | async | json }}</pre>
 
 <h2>Heroes</h2>
 <pre>
@@ -47,7 +47,7 @@ public readonly heroes$ = this.hero.selectors$.entities$.pipe(
 <pre>
 selector.heroes$ | async | json
 </pre>
-<pre data-role="heroes">{{ selector.heroes$ | async | json }}</pre>
+<pre role="heroes">{{ selector.heroes$ | async | json }}</pre>
 
 <h2>Villains</h2>
 <pre>
@@ -70,4 +70,4 @@ public readonly villains$ = this.villain.selectors$.entities$.pipe(
 <pre>
 selector.villains$ | async | json
 </pre>
-<pre data-role="villains">{{ selector.villains$ | async | json }}</pre>
+<pre role="villains">{{ selector.villains$ | async | json }}</pre>

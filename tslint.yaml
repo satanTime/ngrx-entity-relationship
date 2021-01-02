@@ -46,9 +46,7 @@ rules:
     export-name: false
     forin: true
     function-constructor: true
-    function-name:
-        - true
-        - static-method-regex: "^forRoot|[A-Z_\\\\d]+$"
+    function-name: false
     import-name: false
     increment-decrement: true
     insecure-random: false
@@ -159,7 +157,7 @@ rules:
     prefer-conditional-expression: true
     prefer-const: true
     prefer-for-of: true
-    prefer-method-signature: true
+    prefer-method-signature: false
     prefer-object-spread: true
     prefer-readonly: true
     prefer-template: true

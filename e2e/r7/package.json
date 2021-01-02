@@ -1,0 +1,50 @@
+{
+    "name": "r7",
+    "version": "0.0.0",
+    "private": true,
+    "peerDependencies": {
+        "ngrx-entity-relationship": "*"
+    },
+    "dependencies": {
+        "@reduxjs/toolkit": "^1.5.0",
+        "@testing-library/jest-dom": "^5.11.6",
+        "@testing-library/react": "^11.2.2",
+        "@testing-library/user-event": "^12.6.0",
+        "@types/jest": "^26.0.19",
+        "@types/node": "^12.19.11",
+        "@types/react": "^16.14.2",
+        "@types/react-dom": "^16.9.10",
+        "@types/react-redux": "^7.1.14",
+        "@types/redux": "^3.6.0",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "react-redux": "^7.2.2",
+        "react-scripts": "4.0.1",
+        "redux": "^4.0.5",
+        "typescript": "^4.1.3",
+        "web-vitals": "^0.2.4"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ],
+        "rules": {
+            "jsx-a11y/aria-role": "off"
+        }
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%"
+        ],
+        "development": [
+            ">0.2%"
+        ]
+    }
+}
