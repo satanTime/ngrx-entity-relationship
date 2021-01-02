@@ -6,14 +6,14 @@ export class AppPage {
     }
 
     getCompany() {
-        return element(by.css('[data-role="company"]')).getText();
+        return element(by.css('[role="company"]')).getText();
     }
 
     getUsers() {
-        return element(by.css('[data-role="users"]')).getText();
+        return element(by.css('[role="users"]')).getText();
     }
 
     clickButton(role: string) {
-        return element(by.css(`button[data-role="${role}"]`)).click();
+        return element(by.css(`button[role="${role}"]`)).click();
     }
 }
