@@ -1,21 +1,23 @@
 # A simple way to use relationships within ngrx/store, ngrx/entity and ngrx/data
 
-[![NPM Version](https://badge.fury.io/js/ngrx-entity-relationship.svg)](https://badge.fury.io/js/ngrx-entity-relationship)
-[![Build Status](https://circleci.com/gh/satanTime/ngrx-entity-relationship.svg?style=shield)](https://app.circleci.com/pipelines/github/satanTime/ngrx-entity-relationship)
-[![Coverage Status](https://coveralls.io/repos/github/satanTime/ngrx-entity-relationship/badge.svg?branch=master)](https://coveralls.io/github/satanTime/ngrx-entity-relationship?branch=master)
-[![Code Quality](https://img.shields.io/lgtm/grade/javascript/g/satanTime/ngrx-entity-relationship.svg)](https://lgtm.com/projects/g/satanTime/ngrx-entity-relationship/context:javascript)
+[![chat on gitter](https://img.shields.io/gitter/room/satanTime/ngrx-entity-relationship)](https://gitter.im/ngrx-entity-relationship/community)
+[![npm version](https://img.shields.io/npm/v/ngrx-entity-relationship)](https://www.npmjs.com/package/ng-mocks)
+[![build status](https://circleci.com/gh/satanTime/ngrx-entity-relationship.svg?style=shield)](https://app.circleci.com/pipelines/github/satanTime/ngrx-entity-relationship)
+[![coverage status](https://img.shields.io/coveralls/github/satanTime/ngrx-entity-relationship/master)](https://coveralls.io/github/satanTime/ngrx-entity-relationship?branch=master)
+[![language grade](https://img.shields.io/lgtm/grade/javascript/g/satanTime/ngrx-entity-relationship)](https://lgtm.com/projects/g/satanTime/ngrx-entity-relationship/context:javascript)
 
 ### Supports
-- Angular 6 and `@ngrx/entity@6` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular6/src/app/entity))
-- Angular 7 and `@ngrx/entity@7` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular7/src/app/entity))
-- Angular 8 and `@ngrx/entity@8` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular8/src/app/entity))
-- Angular 9 and `@ngrx/entity@9` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular9-ivy-true/src/app/entity))
-- Angular 10 and `@ngrx/entity@10` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular10-ivy-true/src/app/entity))
-- Angular 11 and `@ngrx/entity@10` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular11-ivy-true/src/app/entity))
-* Angular 8 and `@ngrx/data@8` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular8/src/app/data))
-* Angular 9 and `@ngrx/data@9` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular9-ivy-true/src/app/data))
-* Angular 10 and `@ngrx/data@10` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular10-ivy-true/src/app/data))
-* Angular 11 and `@ngrx/data@10` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/angular11-ivy-true/src/app/data))
+- React and Redux 7 ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/r7/src/entity))
+* Angular 6 and `@ngrx/entity@6` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/a6/src/app/entity))
+* Angular 7 and `@ngrx/entity@7` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/a7/src/app/entity))
+* Angular 8 and `@ngrx/entity@8` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/a8/src/app/entity))
+* Angular 9 and `@ngrx/entity@9` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/a9/src/app/entity))
+* Angular 10 and `@ngrx/entity@10` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/a10/src/app/entity))
+* Angular 11 and `@ngrx/entity@10` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/a11/src/app/entity))
+- Angular 8 and `@ngrx/data@8` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/a8/src/app/data))
+- Angular 9 and `@ngrx/data@9` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/a9/src/app/data))
+- Angular 10 and `@ngrx/data@10` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/a10/src/app/data))
+- Angular 11 and `@ngrx/data@10` ([real usage example](https://github.com/satanTime/ngrx-entity-relationship/tree/master/e2e/a11/src/app/data))
 
 ### API short list
 
