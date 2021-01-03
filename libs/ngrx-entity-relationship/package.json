@@ -50,6 +50,7 @@
     "homepage": "https://github.com/satanTime/ngrx-entity-relationship#readme",
     "license": "Apache-2.0",
     "files": [
+        "e2e",
         "lib",
         "index.d.ts",
         "index.js"

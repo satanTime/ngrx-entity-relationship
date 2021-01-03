@@ -2,7 +2,7 @@
     "name": "ngrx-entity-relationship",
     "private": true,
     "scripts": {
-        "build": "rm -Rf tmp && rm -Rf dist && tsc -p ./libs/ngrx-entity-relationship && cp ./libs/ngrx-entity-relationship/package.json ./dist/ngrx-entity-relationship && cp ./README.md ./dist/ngrx-entity-relationship && cp ./CHANGELOG.md ./dist/ngrx-entity-relationship && cp ./LICENSE ./dist/ngrx-entity-relationship",
+        "build": "rm -Rf tmp && rm -Rf dist && tsc -p ./libs/ngrx-entity-relationship && cp ./libs/ngrx-entity-relationship/package.json ./dist/ngrx-entity-relationship && cp -r ./libs/ngrx-entity-relationship/test/e2e ./dist/ngrx-entity-relationship && cp ./README.md ./dist/ngrx-entity-relationship && cp ./CHANGELOG.md ./dist/ngrx-entity-relationship && cp ./LICENSE ./dist/ngrx-entity-relationship",
         "i:a": "npm run i:a6 && npm run i:a7 && npm run i:a8 && npm run i:a9 && npm run i:a10 && npm run i:a11 && npm run i:r7",
         "i:a6": "cd e2e/a6 && npm install --ignore-scripts && npm run postinstall",
         "i:a7": "cd e2e/a7 && npm install --ignore-scripts && npm run postinstall",
