@@ -1,14 +1,8 @@
 {
     "name": "ngrx-entity-relationship",
-    "version": "1.3.5",
-    "description": "Selector of related entities for @ngrx/entity and @ngrx/data",
-    "files": [
-        "dist"
-    ],
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "private": true,
     "scripts": {
-        "build": "rm -Rf tmp && rm -Rf dist && tsc",
+        "build": "rm -Rf tmp && rm -Rf dist && tsc -p ./libs/ngrx-entity-relationship && cp ./libs/ngrx-entity-relationship/package.json ./dist/ngrx-entity-relationship && cp ./README.md ./dist/ngrx-entity-relationship && cp ./CHANGELOG.md ./dist/ngrx-entity-relationship && cp ./LICENSE ./dist/ngrx-entity-relationship",
         "i:a": "npm run i:a6 && npm run i:a7 && npm run i:a8 && npm run i:a9 && npm run i:a10 && npm run i:a11 && npm run i:r7",
         "i:a6": "cd e2e/a6 && npm install --ignore-scripts && npm run postinstall",
         "i:a7": "cd e2e/a7 && npm install --ignore-scripts && npm run postinstall",
@@ -18,20 +12,20 @@
         "i:a11": "cd e2e/a11 && npm install --ignore-scripts && npm run postinstall && ./node_modules/.bin/ngcc",
         "i:r7": "cd e2e/r7 && npm install --ignore-scripts",
         "s:a": "npm run s:a6 && npm run s:a7 && npm run s:a8 && npm run s:a9 && npm run s:a10 && npm run s:a11 && npm run s:r7",
-        "s:a6": "P=e2e/a6/node_modules/ngrx-entity-relationship && rm -Rf $P && mkdir -p $P && cp -R dist $P && cp package.json $P",
-        "s:a7": "P=e2e/a7/node_modules/ngrx-entity-relationship && rm -Rf $P && mkdir -p $P && cp -R dist $P && cp package.json $P",
-        "s:a8": "P=e2e/a8/node_modules/ngrx-entity-relationship && rm -Rf $P && mkdir -p $P && cp -R dist $P && cp package.json $P",
-        "s:a9": "P=e2e/a9/node_modules/ngrx-entity-relationship && rm -Rf $P && mkdir -p $P && cp -R dist $P && cp package.json $P",
-        "s:a10": "P=e2e/a10/node_modules/ngrx-entity-relationship && rm -Rf $P && mkdir -p $P && cp -R dist $P && cp package.json $P",
-        "s:a11": "P=e2e/a11/node_modules/ngrx-entity-relationship && rm -Rf $P && mkdir -p $P && cp -R dist $P && cp package.json $P",
-        "s:r7": "P=e2e/r7/node_modules/ngrx-entity-relationship && rm -Rf $P && mkdir -p $P && cp -R dist $P && cp package.json $P",
+        "s:a6": "P=e2e/a6/node_modules && rm -Rf $P/ngrx-entity-relationship && cp -R dist/ngrx-entity-relationship $P",
+        "s:a7": "P=e2e/a7/node_modules && rm -Rf $P/ngrx-entity-relationship && cp -R dist/ngrx-entity-relationship $P",
+        "s:a8": "P=e2e/a8/node_modules && rm -Rf $P/ngrx-entity-relationship && cp -R dist/ngrx-entity-relationship $P",
+        "s:a9": "P=e2e/a9/node_modules && rm -Rf $P/ngrx-entity-relationship && cp -R dist/ngrx-entity-relationship $P",
+        "s:a10": "P=e2e/a10/node_modules && rm -Rf $P/ngrx-entity-relationship && cp -R dist/ngrx-entity-relationship $P",
+        "s:a11": "P=e2e/a11/node_modules && rm -Rf $P/ngrx-entity-relationship && cp -R dist/ngrx-entity-relationship $P",
+        "s:r7": "P=e2e/r7/node_modules && rm -Rf $P/ngrx-entity-relationship && cp -R dist/ngrx-entity-relationship $P",
         "s:test": "npm run s:test:a6 && npm run s:test:a7 && npm run s:test:a8 && npm run s:test:a9 && npm run s:test:a10 && npm run s:test:a11",
-        "s:test:a6": "P=e2e/a6/src/test && rm -Rf $P && mkdir -p $P && cp -R test $P",
-        "s:test:a7": "P=e2e/a7/src/test && rm -Rf $P && mkdir -p $P && cp -R test $P",
-        "s:test:a8": "P=e2e/a8/src/test && rm -Rf $P && mkdir -p $P && cp -R test $P",
-        "s:test:a9": "P=e2e/a9/src/test && rm -Rf $P && mkdir -p $P && cp -R test $P",
-        "s:test:a10": "P=e2e/a10/src/test && rm -Rf $P && mkdir -p $P && cp -R test $P",
-        "s:test:a11": "P=e2e/a11/src/test && rm -Rf $P && mkdir -p $P && cp -R test $P",
+        "s:test:a6": "P=e2e/a6/src && rm -Rf $P/test && cp -R libs/ngrx-entity-relationship/test $P",
+        "s:test:a7": "P=e2e/a7/src && rm -Rf $P/test && cp -R libs/ngrx-entity-relationship/test $P",
+        "s:test:a8": "P=e2e/a8/src && rm -Rf $P/test && cp -R libs/ngrx-entity-relationship/test $P",
+        "s:test:a9": "P=e2e/a9/src && rm -Rf $P/test && cp -R libs/ngrx-entity-relationship/test $P",
+        "s:test:a10": "P=e2e/a10/src && rm -Rf $P/test && cp -R libs/ngrx-entity-relationship/test $P",
+        "s:test:a11": "P=e2e/a11/src && rm -Rf $P/test && cp -R libs/ngrx-entity-relationship/test $P",
         "b:a": "npm run b:a6 && npm run b:a7 && npm run b:a8 && npm run b:a9 && npm run b:a10 && npm run b:a11 && npm run b:r7",
         "b:a6": "cd e2e/a6 && npm run build && rm -Rf dist",
         "b:a7": "cd e2e/a7 && npm run build && rm -Rf dist",
@@ -59,10 +53,10 @@
         "e2e:a11": "npm run e2e:a11:off && npm run e2e:a11:on",
         "e2e:a11:off": "cd e2e/a11 && npm run e2e:ivy-off",
         "e2e:a11:on": "cd e2e/a11 && npm run e2e:ivy-on",
-        "e2e": "npm run build && npm run i:a && npm run s:a && npm run s:test && npm run test:a && npm run e2e:a",
+        "e2e": "npm run build && npm run i:a && npm run s:a && npm run s:test && npm run test:a && npm run e2e:a && npm run b:a",
         "lint": "tsc -p ./tsconfig.json --noEmit && tsc -p ./tsconfig.spec.json --noEmit && tslint --config ./tslint.yaml -p ./tsconfig.json",
         "release": "export $(cat .env) && semantic-release",
-        "test": "karma start",
+        "test": "karma start ./libs/ngrx-entity-relationship/karma.conf.js",
         "test:debug": "npm test -- --no-single-run --auto-watch --browsers=Chrome",
         "test:a": "npm run test:a6 && npm run test:a7 &&npm run test:a8 && npm run test:a9 && npm run test:a10 && npm run test:a11 && npm run test:r7",
         "test:a6": "cd e2e/a6 && npm run test",
@@ -79,30 +73,6 @@
         "test:a11:on": "cd e2e/a11 && npm run test:ivy-on",
         "test:r7": "cd e2e/r7 && CI=1 npm run test"
     },
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:satanTime/ngrx-entity-relationship.git"
-    },
-    "keywords": [
-        "ngrx",
-        "ngrx-entity",
-        "ngrx-data",
-        "ngrx-relationships",
-        "entities",
-        "relation",
-        "relations",
-        "relationship",
-        "relationships",
-        "related",
-        "angular",
-        "ivy"
-    ],
-    "author": "MG. <m@sudo.eu>",
-    "license": "Apache-2.0",
-    "bugs": {
-        "url": "https://github.com/satanTime/ngrx-entity-relationship/issues"
-    },
-    "homepage": "https://github.com/satanTime/ngrx-entity-relationship#readme",
     "devDependencies": {
         "@commitlint/cli": "11.0.0",
         "@commitlint/config-conventional": "11.0.0",
@@ -134,11 +104,20 @@
         "tslint-microsoft-contrib": "6.2.0",
         "typescript": "4.1.3"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/satanTime/ngrx-entity-relationship"
+    },
     "husky": {
         "hooks": {
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
             "pre-commit": "lint-staged && npm run lint && npm run test",
             "post-commit": "git update-index --again"
         }
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
     }
 }

@@ -1,5 +1,4 @@
-import {rootEntities, selectByIds} from 'ngrx-entity-relationship';
-import {HANDLER_ENTITIES, HANDLER_ENTITY} from 'ngrx-entity-relationship/dist/types';
+import {HANDLER_ENTITIES, HANDLER_ENTITY, rootEntities, selectByIds} from 'ngrx-entity-relationship';
 import React from 'react';
 import {useSelector} from 'react-redux';
 

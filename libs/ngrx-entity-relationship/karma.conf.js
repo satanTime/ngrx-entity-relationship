@@ -31,7 +31,7 @@ module.exports = function (config) {
             tsconfig: 'tsconfig.spec.json',
         },
         coverageReporter: {
-            dir: './test-reports/coverage',
+            dir: '../../test-reports/coverage',
             reporters: [
                 {
                     type: 'lcov',
@@ -44,7 +44,7 @@ module.exports = function (config) {
             ],
         },
         junitReporter: {
-            outputDir: require('path').join(__dirname, './test-reports'),
+            outputDir: require('path').join(__dirname, '../../test-reports'),
             outputFile: 'specs-junit.xml',
             useBrowserName: false,
         },

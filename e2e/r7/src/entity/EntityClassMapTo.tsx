@@ -1,5 +1,4 @@
-import {rootEntities} from 'ngrx-entity-relationship';
-import {HANDLER_ENTITIES, HANDLER_ENTITY} from 'ngrx-entity-relationship/dist/types';
+import {HANDLER_ENTITIES, HANDLER_ENTITY, rootEntities} from 'ngrx-entity-relationship';
 import React, {ReactNode} from 'react';
 import {connect} from 'react-redux';
 

@@ -1,5 +1,5 @@
 import {childEntity, ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY} from 'ngrx-entity-relationship';
-import {UNKNOWN} from 'ngrx-entity-relationship/dist/types';
+import {UNKNOWN} from 'ngrx-entity-relationship/lib/types';
 
 describe('childEntity', () => {
     type Entity = {

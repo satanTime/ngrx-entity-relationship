@@ -15,8 +15,8 @@
         "experimentalDecorators": true,
         "skipLibCheck": true,
         "paths": {
-            "ngrx-entity-relationship": ["src/index"],
-            "ngrx-entity-relationship/dist/*": ["src/*"]
+            "ngrx-entity-relationship": ["libs/ngrx-entity-relationship/src/index"],
+            "ngrx-entity-relationship/*": ["libs/ngrx-entity-relationship/src/*"]
         },
 
         "noFallthroughCasesInSwitch": true,
@@ -30,5 +30,5 @@
         "strictNullChecks": true,
         "strictPropertyInitialization": true
     },
-    "include": ["src/index.ts"]
+    "files": ["libs/ngrx-entity-relationship/src/index.ts"]
 }

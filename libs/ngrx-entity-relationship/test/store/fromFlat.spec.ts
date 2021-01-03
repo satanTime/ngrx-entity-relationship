@@ -1,6 +1,6 @@
 import {relatedEntity, rootEntity} from 'ngrx-entity-relationship';
-import {fromFlat} from 'ngrx-entity-relationship/dist/store/fromFlat';
-import {injectEntity} from 'ngrx-entity-relationship/dist/store/injectEntity';
+import {fromFlat} from 'ngrx-entity-relationship/lib/store/fromFlat';
+import {injectEntity} from 'ngrx-entity-relationship/lib/store/injectEntity';
 
 describe('store/fromFlat', () => {
     let injectEntitySpy: jasmine.Spy;

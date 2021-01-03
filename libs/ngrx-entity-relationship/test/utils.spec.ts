@@ -4,7 +4,7 @@ import {
     normalizeSelector,
     objectValues,
     verifyCache,
-} from 'ngrx-entity-relationship/dist/utils';
+} from 'ngrx-entity-relationship/lib/utils';
 
 describe('utils', () => {
     describe('normalizeSelector', () => {

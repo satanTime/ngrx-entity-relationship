@@ -1,0 +1,41 @@
+# https://docs.codeclimate.com/docs/advanced-configuration
+version: '2'
+exclude_patterns:
+    - '.circleci/'
+    - 'dist/'
+    - 'docker/'
+    - 'libs/ngrx-entity-relationship/karma.conf.js'
+    - 'libs/ngrx-entity-relationship/test/'
+    - 'node_modules/'
+    - 'test-reports/'
+    - 'tmp/'
+    - '.dockerignore'
+    - '.editorconfig'
+    - '.gitignore'
+    - '.lintstagedrc.js'
+    - '.prettierignore'
+    - 'Dockerfile'
+    - 'LICENSE'
+    - 'renovate.json'
+    - '**/*.json'
+    - '**/*.md'
+    - '**/*.yml'
+    - '**/*.spec.ts'
+    - '**/*.fixtures.ts'
+plugins:
+    structure:
+        enabled: true
+    duplication:
+        enabled: true
+        config:
+            languages:
+                typescript:
+checks:
+    method-complexity:
+        config:
+            threshold: 10
+    return-statements:
+        enabled: false
+    similar-code:
+        config:
+            threshold: 70
