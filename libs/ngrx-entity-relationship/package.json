@@ -53,7 +53,9 @@
         "e2e",
         "lib",
         "index.d.ts",
-        "index.js"
+        "index.js",
+        "rxjs.d.ts",
+        "rxjs.js"
     ],
     "standard": {},
     "scripts": {

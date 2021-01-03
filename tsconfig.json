@@ -30,5 +30,5 @@
         "strictNullChecks": true,
         "strictPropertyInitialization": true
     },
-    "files": ["libs/ngrx-entity-relationship/src/index.ts"]
+    "files": ["libs/ngrx-entity-relationship/src/index.ts", "libs/ngrx-entity-relationship/src/rxjs.ts"]
 }

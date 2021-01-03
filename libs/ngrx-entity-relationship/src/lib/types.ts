@@ -1,5 +1,3 @@
-import {Observable} from 'rxjs';
-
 declare global {
     // tslint:disable-next-line:class-name
     export interface SELECTOR_META {
@@ -17,10 +15,6 @@ export type STORE_SELECTOR<T, V> = {
 };
 
 export type ID_SELECTOR<E> = (entity: E) => ID_TYPES;
-
-export type STORE_INSTANCE<T> = {
-    select<K, Props>(mapFn: (state: T, props: Props) => K, props: Props): Observable<K>;
-};
 
 export type ACTION = {
     type: string;

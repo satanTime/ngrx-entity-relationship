@@ -3,5 +3,5 @@
     "compilerOptions": {
         "outDir": "../../dist/ngrx-entity-relationship"
     },
-    "files": ["src/index.ts"]
+    "files": ["src/index.ts", "src/rxjs.ts"]
 }

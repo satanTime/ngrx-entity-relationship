@@ -1,7 +1,11 @@
 import {iif, Observable, of} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 
-import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, ID_TYPES, STORE_INSTANCE} from '../types';
+import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, ID_TYPES} from '../types';
+
+export type STORE_INSTANCE<T> = {
+    select<K, Props>(mapFn: (state: T, props: Props) => K, props: Props): Observable<K>;
+};
 
 export function relationships<STORE, ENTITY>(
     store: STORE_INSTANCE<STORE>,
