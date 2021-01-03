@@ -54,7 +54,7 @@
         "e2e:a11:off": "cd e2e/a11 && npm run e2e:ivy-off",
         "e2e:a11:on": "cd e2e/a11 && npm run e2e:ivy-on",
         "e2e": "npm run build && npm run i:a && npm run s:a && npm run s:test && npm run test:a && npm run e2e:a && npm run b:a",
-        "lint": "tsc -p ./tsconfig.json --noEmit && tsc -p ./tsconfig.spec.json --noEmit && tslint --config ./tslint.yaml -p ./tsconfig.json",
+        "lint": "tsc -p ./tsconfig.json --noEmit && tsc -p ./tsconfig.spec.json --noEmit && tslint --config tslint.yml -p ./tsconfig.json",
         "release": "export $(cat .env) && semantic-release",
         "test": "karma start ./libs/ngrx-entity-relationship/karma.conf.js",
         "test:debug": "npm test -- --no-single-run --auto-watch --browsers=Chrome",
