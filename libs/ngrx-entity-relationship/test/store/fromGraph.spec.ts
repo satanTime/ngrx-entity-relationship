@@ -1,6 +1,6 @@
 import {relatedEntity, rootEntity} from 'ngrx-entity-relationship';
-import {fromGraph} from 'ngrx-entity-relationship/dist/store/fromGraph';
-import {injectEntity} from 'ngrx-entity-relationship/dist/store/injectEntity';
+import {fromGraph} from 'ngrx-entity-relationship/lib/store/fromGraph';
+import {injectEntity} from 'ngrx-entity-relationship/lib/store/injectEntity';
 
 describe('store/fromGraph', () => {
     let injectEntitySpy: jasmine.Spy;

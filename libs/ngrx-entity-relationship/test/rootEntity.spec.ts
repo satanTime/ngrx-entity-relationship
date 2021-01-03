@@ -6,7 +6,7 @@ import {
     rootEntity,
     rootEntityFlags,
 } from 'ngrx-entity-relationship';
-import {UNKNOWN} from 'ngrx-entity-relationship/dist/types';
+import {UNKNOWN} from 'ngrx-entity-relationship/lib/types';
 
 describe('rootEntity', () => {
     type Entity = {

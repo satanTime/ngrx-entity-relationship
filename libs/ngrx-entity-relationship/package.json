@@ -1,0 +1,64 @@
+{
+    "name": "ngrx-entity-relationship",
+    "version": "0.0.0",
+    "description": "ORM selectors for redux, @ngrx/entity and @ngrx/data. Ease of relationships with entities.",
+    "keywords": [
+        "orm",
+        "redux",
+        "ngrx",
+        "ngrx-entity",
+        "ngrx-data",
+        "ngrx",
+        "entity",
+        "entities",
+        "relation",
+        "relations",
+        "relationship",
+        "relationships",
+        "related",
+        "normalization",
+        "react",
+        "angular",
+        "ivy"
+    ],
+    "author": {
+        "name": "MG.",
+        "email": "m@sudo.eu",
+        "url": "https://sudo.eu"
+    },
+    "contributors": [
+        {
+            "name": "MG.",
+            "email": "m@sudo.eu",
+            "url": "https://sudo.eu"
+        }
+    ],
+    "maintainers": [
+        {
+            "name": "MG.",
+            "email": "m@sudo.eu",
+            "url": "https://sudo.eu"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/satanTime/ngrx-entity-relationship"
+    },
+    "bugs": {
+        "url": "https://github.com/satanTime/ngrx-entity-relationship/issues"
+    },
+    "homepage": "https://github.com/satanTime/ngrx-entity-relationship#readme",
+    "license": "Apache-2.0",
+    "files": [
+        "lib",
+        "index.d.ts",
+        "index.js"
+    ],
+    "standard": {},
+    "scripts": {
+        "test": "karma start"
+    },
+    "types": "index.d.ts",
+    "main": "index.js",
+    "sideEffects": false
+}

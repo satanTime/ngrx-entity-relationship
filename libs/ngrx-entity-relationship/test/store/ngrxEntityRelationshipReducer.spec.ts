@@ -1,6 +1,6 @@
 import {ngrxEntityRelationshipActions, ngrxEntityRelationshipReducer} from 'ngrx-entity-relationship';
-import {fromFlat} from 'ngrx-entity-relationship/dist/store/fromFlat';
-import {fromGraph} from 'ngrx-entity-relationship/dist/store/fromGraph';
+import {fromFlat} from 'ngrx-entity-relationship/lib/store/fromFlat';
+import {fromGraph} from 'ngrx-entity-relationship/lib/store/fromGraph';
 
 describe('store/ngrxEntityRelationshipReducer', () => {
     let fromGraphSpy: jasmine.Spy;

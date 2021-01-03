@@ -1,6 +1,6 @@
-import {relatedEntity, rootEntity} from 'ngrx-entity-relationship';
-import {injectEntity} from 'ngrx-entity-relationship/dist/store/injectEntity';
-import {patchState} from 'ngrx-entity-relationship/dist/store/patchState';
+import {rootEntity} from 'ngrx-entity-relationship';
+import {injectEntity} from 'ngrx-entity-relationship/lib/store/injectEntity';
+import {patchState} from 'ngrx-entity-relationship/lib/store/patchState';
 
 describe('store/patchState', () => {
     let patchStateSpy: jasmine.Spy;

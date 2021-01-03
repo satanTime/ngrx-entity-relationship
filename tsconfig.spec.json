@@ -15,6 +15,5 @@
         "strictNullChecks": false,
         "strictPropertyInitialization": false
     },
-    "files": ["src/index.ts"],
-    "include": ["test/**/*.ts"]
+    "include": ["libs/ngrx-entity-relationship/test/**/*.ts"]
 }

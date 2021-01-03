@@ -1,4 +1,4 @@
-import {patchState} from 'ngrx-entity-relationship/dist/store/patchState';
+import {patchState} from 'ngrx-entity-relationship/lib/store/patchState';
 
 describe('store/patchState', () => {
     it('touches only objects', () => {

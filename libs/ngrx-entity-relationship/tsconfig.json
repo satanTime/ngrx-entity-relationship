@@ -1,0 +1,7 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../../dist/ngrx-entity-relationship"
+    },
+    "files": ["src/index.ts"]
+}
