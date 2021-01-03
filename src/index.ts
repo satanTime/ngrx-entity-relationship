@@ -1,22 +1,23 @@
-export * from './rootEntityFlags';
+export {rootEntityFlags} from './rootEntityFlags';
 
-export * from './childEntity';
-export * from './childrenEntities';
-export * from './relatedEntity';
-export * from './rootEntities';
-export * from './rootEntity';
+export {childEntity} from './childEntity';
+export {childrenEntities} from './childrenEntities';
+export {relatedEntity} from './relatedEntity';
+export {rootEntities} from './rootEntities';
+export {rootEntity} from './rootEntity';
 
-export * from './childEntitySelector';
-export * from './childrenEntitiesSelector';
-export * from './relatedEntitySelector';
-export * from './rootEntitySelector';
+export {childEntitySelector} from './childEntitySelector';
+export {childrenEntitiesSelector} from './childrenEntitiesSelector';
+export {relatedEntitySelector} from './relatedEntitySelector';
+export {rootEntitySelector} from './rootEntitySelector';
 
-export * from './operators/relationships';
+export {relationships} from './operators/relationships';
 
-export * from './store';
+export {ngrxEntityRelationshipActions, ReduceFlat, reduceFlat, ReduceGraph, reduceGraph} from './store/actions';
+export {ngrxEntityRelationshipReducer} from './store/ngrxEntityRelationshipReducer';
 
-export * from './selectByIds';
-export * from './stateKeys';
+export {selectByIds} from './selectByIds';
+export {stateKeys} from './stateKeys';
 
 export {
     HANDLER_ENTITY,
