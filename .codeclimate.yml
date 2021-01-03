@@ -2,6 +2,7 @@
 version: '2'
 exclude_patterns:
     - '.circleci/'
+    - 'e2e/'
     - 'dist/'
     - 'docker/'
     - 'libs/ngrx-entity-relationship/karma.conf.js'
