@@ -6,7 +6,6 @@ import {connect, DefaultRootState} from 'react-redux';
 import {Company} from './store/company/company.model';
 import {EntityService} from './store/entity.service';
 import {
-    RootState,
     sAddressCompany,
     sCompany,
     sCompanyAddress,
@@ -92,7 +91,8 @@ class EntityClassSelf extends React.Component<{
                     <h2>Company</h2>
                     <strong>selector</strong>
                     <pre>
-                        {`const companyWithCrazyData = sCompany(
+                        {`
+protected readonly companyWithCrazyData: HANDLER_ENTITY<Company> = sCompany(
     sCompanyAddress(),
     sCompanyAdmin(
         sUserEmployees(),
@@ -104,11 +104,21 @@ class EntityClassSelf extends React.Component<{
             ),
         ),
     ),
-);`}
+);
+                        `.trim()}
                     </pre>
                     <strong>usage</strong>
-                    <pre>const company$ = store.select(companyWithCrazyData, 'company3');</pre>
-                    <strong>company$ | async | json</strong>
+                    <pre>
+                        {`
+protected readonly selectedCompany = (store: DefaultRootState) =>
+    this.companyWithCrazyData(store, selectCurrentCompanyId);
+                    `.trim()}
+                    </pre>
+                    <strong>
+                        {`
+{JSON.stringify(this.selectedCompany(this.props.state), null, 2)}
+                    `.trim()}
+                    </strong>
                     <pre role='companies'>{JSON.stringify(this.selectedCompany(this.props.state), null, 2)}</pre>
                 </section>
 
@@ -116,18 +126,29 @@ class EntityClassSelf extends React.Component<{
                     <h2>Users</h2>
                     <strong>selector</strong>
                     <pre>
-                        {`const users = rootEntities(
+                        {`
+protected readonly users: HANDLER_ENTITIES<User> = rootEntities(
     sUser(
         sUserEmployees(
             sUserManager(),
         ),
         sUserManager(),
     ),
-);`}
+);
+                        `.trim()}
                     </pre>
                     <strong>usage</strong>
-                    <pre>const users$ = store.select(users, ['user1', 'user3', 'user6']);</pre>
-                    <strong>users$ | async | json</strong>
+                    <pre>
+                        {`
+protected readonly selectedUsers =
+    (store: DefaultRootState) => this.users(store, selectCurrentUsersIds);
+                    `.trim()}
+                    </pre>
+                    <strong>
+                        {`
+{JSON.stringify(this.selectedUsers(this.props.state), null, 2)}
+                    `.trim()}
+                    </strong>
                     <pre role='users'>{JSON.stringify(this.selectedUsers(this.props.state), null, 2)}</pre>
                 </section>
             </div>
@@ -139,8 +160,8 @@ class EntityClassSelf extends React.Component<{
         this.companyWithCrazyData.release();
     }
 
-    protected readonly selectedUsers: any = (store: RootState) => this.users(store, selectCurrentUsersIds);
-    protected readonly selectedCompany: any = (store: RootState) =>
+    protected readonly selectedUsers = (store: DefaultRootState) => this.users(store, selectCurrentUsersIds);
+    protected readonly selectedCompany = (store: DefaultRootState) =>
         this.companyWithCrazyData(store, selectCurrentCompanyId);
 }
 

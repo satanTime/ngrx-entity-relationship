@@ -89,7 +89,8 @@ export function EntityFunction({service}: {service: EntityService}): JSX.Element
                 <h2>Company</h2>
                 <strong>selector</strong>
                 <pre>
-                    {`const companyWithCrazyData = sCompany(
+                    {`
+const companyWithCrazyData: HANDLER_ENTITY<Company> = sCompany(
     sCompanyAddress(),
     sCompanyAdmin(
         sUserEmployees(),
@@ -101,11 +102,20 @@ export function EntityFunction({service}: {service: EntityService}): JSX.Element
             ),
         ),
     ),
-);`}
+);
+                    `.trim()}
                 </pre>
                 <strong>usage</strong>
-                <pre>const company$ = store.select(companyWithCrazyData, 'company3');</pre>
-                <strong>company$ | async | json</strong>
+                <pre>
+                    {`
+const selectedCompany: Company | undefined = useSelector(selectByIds(companyWithCrazyData, 'company3'));
+                `.trim()}
+                </pre>
+                <strong>
+                    {`
+{JSON.stringify(selectedCompany, null, 2)}
+                `.trim()}
+                </strong>
                 <pre role='companies'>{JSON.stringify(selectedCompany, null, 2)}</pre>
             </section>
 
@@ -113,18 +123,28 @@ export function EntityFunction({service}: {service: EntityService}): JSX.Element
                 <h2>Users</h2>
                 <strong>selector</strong>
                 <pre>
-                    {`const users = rootEntities(
+                    {`
+const users: HANDLER_ENTITIES<User> = rootEntities(
     sUser(
         sUserEmployees(
             sUserManager(),
         ),
         sUserManager(),
     ),
-);`}
+);
+                    `.trim()}
                 </pre>
                 <strong>usage</strong>
-                <pre>const users$ = store.select(users, ['user1', 'user3', 'user6']);</pre>
-                <strong>users$ | async | json</strong>
+                <pre>
+                    {`
+const selectedUsers: Array<User> = useSelector(selectByIds(users, selectCurrentUsersIds));
+                `.trim()}
+                </pre>
+                <strong>
+                    {`
+{JSON.stringify(selectedUsers, null, 2)}
+                `.trim()}
+                </strong>
                 <pre role='users'>{JSON.stringify(selectedUsers, null, 2)}</pre>
             </section>
         </div>

@@ -4,6 +4,12 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// function App(): JSX.Element {
+//     return (
+//         <div>Hello world</div>
+//     );
+// }
+
 ReactDOM.render(
     <React.StrictMode>
         <App />

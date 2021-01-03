@@ -12,7 +12,6 @@ import {
     sCompanyAddress,
     sCompanyAdmin,
     sCompanyStaff,
-    selectCurrentUsersIds,
     sUser,
     sUserCompany,
     sUserEmployees,
@@ -92,7 +91,8 @@ class EntityClassMapTo extends React.Component<{
                     <h2>Company</h2>
                     <strong>selector</strong>
                     <pre>
-                        {`const companyWithCrazyData = sCompany(
+                        {`
+const companyWithCrazyData: HANDLER_ENTITY<Company> = sCompany(
     sCompanyAddress(),
     sCompanyAdmin(
         sUserEmployees(),
@@ -104,11 +104,24 @@ class EntityClassMapTo extends React.Component<{
             ),
         ),
     ),
-);`}
+);
+                        `.trim()}
                     </pre>
                     <strong>usage</strong>
-                    <pre>const company$ = store.select(companyWithCrazyData, 'company3');</pre>
-                    <strong>company$ | async | json</strong>
+                    <pre>
+                        {`
+const mapStateToProps = (state: RootState) => {
+    return {
+        companies: companyWithCrazyData(state, 'company3'),
+    };
+};
+                    `.trim()}
+                    </pre>
+                    <strong>
+                        {`
+{JSON.stringify(this.props.companies, null, 2)}
+                    `.trim()}
+                    </strong>
                     <pre role='companies'>{JSON.stringify(this.props.companies, null, 2)}</pre>
                 </section>
 
@@ -116,18 +129,33 @@ class EntityClassMapTo extends React.Component<{
                     <h2>Users</h2>
                     <strong>selector</strong>
                     <pre>
-                        {`const users = rootEntities(
+                        {`
+const users: HANDLER_ENTITIES<User> = rootEntities(
     sUser(
         sUserEmployees(
             sUserManager(),
         ),
         sUserManager(),
     ),
-);`}
+);
+                        `.trim()}
                     </pre>
                     <strong>usage</strong>
-                    <pre>const users$ = store.select(users, ['user1', 'user3', 'user6']);</pre>
-                    <strong>users$ | async | json</strong>
+                    <pre>
+                        {`
+const mapStateToProps = (state: RootState) => {
+    return {
+        companies: companyWithCrazyData(state, 'company3'),
+        users: users(state, ['user1', 'user3', 'user6']),
+    };
+};
+                    `.trim()}
+                    </pre>
+                    <strong>
+                        {`
+{JSON.stringify(this.props.users, null, 2)}
+                    `.trim()}
+                    </strong>
                     <pre role='users'>{JSON.stringify(this.props.users, null, 2)}</pre>
                 </section>
             </div>
@@ -143,7 +171,7 @@ class EntityClassMapTo extends React.Component<{
 const mapStateToProps = (state: RootState) => {
     return {
         companies: companyWithCrazyData(state, 'company3'),
-        users: users(state, selectCurrentUsersIds),
+        users: users(state, ['user1', 'user3', 'user6']),
     };
 };
 
