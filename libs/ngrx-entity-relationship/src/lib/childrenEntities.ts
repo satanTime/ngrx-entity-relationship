@@ -10,7 +10,7 @@ import {
     UNKNOWN,
     VALUES_FILTER_PROPS,
 } from './types';
-import {argsToArray, mergeCache, normalizeSelector, verifyCache} from './utils';
+import {argsToArray, mergeCache, normalizeSelector, objectValues, verifyCache} from './utils';
 
 export function childrenEntities<
     STORE,
@@ -75,7 +75,7 @@ export function childrenEntities<
         ];
         if (!verifyCache(state, idsChecks)) {
             ids = [];
-            for (const entity of Object.values(featureState.entities)) {
+            for (const entity of objectValues(featureState.entities)) {
                 if (
                     !entity ||
                     entity[keyId] !== ((parentId as any) as RELATED_ENTITY[RELATED_KEY_IDS]) // todo fix any A8

@@ -15,14 +15,23 @@ jobs:
                   paths:
                       - ./node_modules
             - run:
+                  name: Core Style
+                  command: ./node_modules/.bin/prettier -u -c .
+            - run:
                   name: Build
-                  command: npm run build
+                  command: npm run build -- --prod --project ngrx-entity-relationship --skip-nx-cache
             - run:
                   name: Lint
                   command: npm run lint
             - run:
+                  name: TS Source
+                  command: ./node_modules/.bin/tsc --noEmit -p ./libs/ngrx-entity-relationship/tsconfig.lib.json
+            - run:
+                  name: TS Spec
+                  command: ./node_modules/.bin/tsc --noEmit -p ./libs/ngrx-entity-relationship/tsconfig.spec.json
+            - run:
                   name: Tests
-                  command: npm run test -- --single-run --no-progress --coverage
+                  command: npm run test -- --codeCoverage --reporters junit
             - run:
                   name: Collecting Coverage coveralls.io
                   command: ./node_modules/.bin/coveralls < test-reports/coverage/lcov/lcov.info
@@ -96,8 +105,6 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
-            - restore_cache:
                   key: a6-{{ checksum "e2e/a6/package.json" }}-{{ checksum "e2e/a6/package-lock.json" }}
             - run:
                   name: Spreading Build
@@ -121,8 +128,6 @@ jobs:
             - checkout
             - attach_workspace:
                   at: dist
-            - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
                   key: a7-{{ checksum "e2e/a7/package.json" }}-{{ checksum "e2e/a7/package-lock.json" }}
             - run:
@@ -148,8 +153,6 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
-            - restore_cache:
                   key: a8-{{ checksum "e2e/a8/package.json" }}-{{ checksum "e2e/a8/package-lock.json" }}
             - run:
                   name: Spreading Build
@@ -173,8 +176,6 @@ jobs:
             - checkout
             - attach_workspace:
                   at: dist
-            - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
                   key: a9-{{ checksum "e2e/a9/package.json" }}-{{ checksum "e2e/a9/package-lock.json" }}
             - run:
@@ -200,8 +201,6 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
-            - restore_cache:
                   key: a9-{{ checksum "e2e/a9/package.json" }}-{{ checksum "e2e/a9/package-lock.json" }}
             - run:
                   name: Spreading Build
@@ -225,8 +224,6 @@ jobs:
             - checkout
             - attach_workspace:
                   at: dist
-            - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
                   key: a10-{{ checksum "e2e/a10/package.json" }}-{{ checksum "e2e/a10/package-lock.json" }}
             - run:
@@ -252,8 +249,6 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
-            - restore_cache:
                   key: a10-{{ checksum "e2e/a10/package.json" }}-{{ checksum "e2e/a10/package-lock.json" }}
             - run:
                   name: Spreading Build
@@ -277,8 +272,6 @@ jobs:
             - checkout
             - attach_workspace:
                   at: dist
-            - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
                   key: a11-{{ checksum "e2e/a11/package.json" }}-{{ checksum "e2e/a11/package-lock.json" }}
             - run:
@@ -304,8 +297,6 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
-            - restore_cache:
                   key: a11-{{ checksum "e2e/a11/package.json" }}-{{ checksum "e2e/a11/package-lock.json" }}
             - run:
                   name: Spreading Build
@@ -329,8 +320,6 @@ jobs:
             - checkout
             - attach_workspace:
                   at: dist
-            - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
                   key: r7-{{ checksum "e2e/r7/package.json" }}-{{ checksum "e2e/r7/package-lock.json" }}
             - run:

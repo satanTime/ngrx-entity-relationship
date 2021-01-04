@@ -1,4 +1,5 @@
 import {ENTITY_SELECTOR} from '../types';
+import {objectKeys} from '../utils';
 
 import {patchState} from './patchState';
 
@@ -22,7 +23,7 @@ export const func = (state: any, selector: ENTITY_SELECTOR, entity: any, meta?: 
 
     // creating a clone
     const clone: any = {};
-    for (const key of Object.keys(entity)) {
+    for (const key of objectKeys(entity)) {
         if (meta && meta.skipFields && meta.skipFields.indexOf(key) !== -1) {
             continue;
         }
@@ -30,8 +31,8 @@ export const func = (state: any, selector: ENTITY_SELECTOR, entity: any, meta?: 
     }
     Object.setPrototypeOf(clone, Object.getPrototypeOf(entity));
 
-    const existingKeys = Object.keys(clone);
-    for (const key of originalEntity ? Object.keys(originalEntity) : []) {
+    const existingKeys = objectKeys(clone);
+    for (const key of originalEntity ? objectKeys(originalEntity) : []) {
         if (existingKeys.indexOf(key) !== -1) {
             continue;
         }
@@ -46,7 +47,7 @@ export const func = (state: any, selector: ENTITY_SELECTOR, entity: any, meta?: 
     }
 
     let isEntityChanged = !originalEntity;
-    for (const key of Object.keys(clone)) {
+    for (const key of objectKeys(clone)) {
         if (isEntityChanged || !originalEntity || clone[key] !== originalEntity[key]) {
             isEntityChanged = true;
             break;

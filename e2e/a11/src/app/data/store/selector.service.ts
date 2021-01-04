@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
-import {childrenEntities, relatedEntity, relationships, rootEntities, rootEntity} from 'ngrx-entity-relationship';
-import {FightCollection} from './collections/fight.collection';
+import {childrenEntities, relatedEntity, rootEntities, rootEntity} from 'ngrx-entity-relationship';
+import {relationships} from 'ngrx-entity-relationship/rxjs';
 
+import {FightCollection} from './collections/fight.collection';
 import {HeroCollection} from './collections/hero.collection';
 import {VillainCollection} from './collections/villain.collection';
 

@@ -1,6 +1,6 @@
-import {rootEntity} from 'ngrx-entity-relationship';
-import {injectEntity} from 'ngrx-entity-relationship/lib/store/injectEntity';
-import {patchState} from 'ngrx-entity-relationship/lib/store/patchState';
+import {injectEntity} from '../../src/lib/store/injectEntity';
+import {patchState} from '../../src/lib/store/patchState';
+import {rootEntity} from '../../src/public_api';
 
 describe('store/patchState', () => {
     let patchStateSpy: jasmine.Spy;
@@ -17,7 +17,7 @@ describe('store/patchState', () => {
 
     it('throws on primitives', () => {
         const state = Symbol();
-        const selector = rootEntity(() => undefined);
+        const selector = rootEntity(() => undefined as any);
         expect(() => injectEntity.func(state, selector, false)).toThrowError('Entity is not an object');
         expect(() => injectEntity.func(state, selector, 123)).toThrowError('Entity is not an object');
         expect(() => injectEntity.func(state, selector, 'str')).toThrowError('Entity is not an object');
@@ -27,7 +27,7 @@ describe('store/patchState', () => {
     it('throws on unknown id selectors', () => {
         const state = Symbol();
         const entity = {};
-        const selector = rootEntity(() => undefined);
+        const selector = rootEntity(() => undefined as any);
         expect(() => injectEntity.func(state, selector, entity)).toThrowError('Cannot detect id of an entity');
     });
 

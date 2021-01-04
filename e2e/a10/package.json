@@ -17,8 +17,7 @@
     },
     "private": true,
     "peerDependencies": {
-        "ngrx-entity-relationship": "*",
-        "puppeteer": "5.5.0"
+        "ngrx-entity-relationship": "*"
     },
     "dependencies": {
         "@angular/animations": "10.2.4",
@@ -51,6 +50,7 @@
         "karma-jasmine": "3.3.1",
         "karma-jasmine-html-reporter": "1.5.4",
         "protractor": "7.0.0",
+        "puppeteer": "5.5.0",
         "ts-node": "8.10.2",
         "typescript": "3.9.7"
     }

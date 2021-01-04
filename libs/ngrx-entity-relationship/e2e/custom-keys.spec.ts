@@ -50,7 +50,7 @@ describe('custom-keys', () => {
             selector,
         });
 
-        const reducer = ngrxEntityRelationshipReducer<typeof state>(s => s);
+        const reducer = ngrxEntityRelationshipReducer<typeof state>(((s: typeof state) => s) as any);
         const testingState = reducer(state, action);
 
         // data has been reduced.

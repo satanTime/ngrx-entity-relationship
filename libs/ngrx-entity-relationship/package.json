@@ -50,18 +50,27 @@
     "homepage": "https://github.com/satanTime/ngrx-entity-relationship#readme",
     "license": "Apache-2.0",
     "files": [
+        "bundles",
         "e2e",
+        "esm2015",
+        "fesm2015",
         "lib",
-        "index.d.ts",
-        "index.js",
-        "rxjs.d.ts",
-        "rxjs.js"
+        "rxjs",
+        "ngrx-entity-relationship.d.ts",
+        "ngrx-entity-relationship.metadata.json",
+        "public_api.d.ts"
     ],
     "standard": {},
     "scripts": {
         "test": "karma start"
     },
     "types": "index.d.ts",
-    "main": "index.js",
+    "main": "bundles/ngrx-entity-relationship.umd.js",
+    "module": "fesm2015/ngrx-entity-relationship.js",
+    "es2015": "fesm2015/ngrx-entity-relationship.js",
+    "esm2015": "esm2015/ngrx-entity-relationship.js",
+    "fesm2015": "fesm2015/ngrx-entity-relationship.js",
+    "typings": "ngrx-entity-relationship.d.ts",
+    "metadata": "ngrx-entity-relationship.metadata.json",
     "sideEffects": false
 }

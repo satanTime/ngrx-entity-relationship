@@ -17,6 +17,8 @@ export {ngrxEntityRelationshipReducer} from './lib/store/ngrxEntityRelationshipR
 export {selectByIds} from './lib/selectByIds';
 export {stateKeys} from './lib/stateKeys';
 
+export {isBuiltInSelector, isSelectorMeta} from './lib/types';
+
 export {
     HANDLER_ENTITY,
     HANDLER_ENTITIES,
@@ -30,6 +32,4 @@ export {
     ID_TYPES,
     STORE_SELECTOR,
     TRANSFORMER,
-    isBuiltInSelector,
-    isSelectorMeta,
 } from './lib/types';

@@ -20,6 +20,7 @@ exclude_patterns:
     - '.releaserc.yml'
     - 'Dockerfile'
     - 'LICENSE'
+    - 'karma.conf.js'
     - 'renovate.json'
     - '**/*.json'
     - '**/*.md'

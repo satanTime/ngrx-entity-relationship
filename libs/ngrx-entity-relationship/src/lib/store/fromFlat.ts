@@ -1,4 +1,5 @@
 import {ENTITY_SELECTOR} from '../types';
+import {mapEntries, mapValues} from '../utils';
 
 import {injectEntity} from './injectEntity';
 
@@ -27,7 +28,7 @@ const extractMap = (
 
 const func = (state: any, selector: ENTITY_SELECTOR, data: any) => {
     const map = extractMap(selector, new Map());
-    for (const [key, {selectors, skipFields}] of map) {
+    for (const [key, {selectors, skipFields}] of mapEntries(map)) {
         const isSet = Array.isArray(data[key]);
         const entities = isSet ? data[key] : [data[key]];
 
@@ -36,8 +37,8 @@ const func = (state: any, selector: ENTITY_SELECTOR, data: any) => {
                 continue;
             }
 
-            for (const entitySelector of selectors) {
-                state = injectEntity.func(state, entitySelector, entity, {skipFields: [...skipFields]});
+            for (const entitySelector of mapValues(selectors)) {
+                state = injectEntity.func(state, entitySelector, entity, {skipFields: [...mapValues(skipFields)]});
             }
         }
     }

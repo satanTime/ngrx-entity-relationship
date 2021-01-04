@@ -159,7 +159,7 @@ describe('all-arguments-options-standard', () => {
     // creating selector with transformers
     const sUserSelectorTr = rootEntity(
         selectUsersState,
-        e => ({...e, tr: true}),
+        (e: User) => ({...e, tr: true}),
         relatedEntity(
             selectCompaniesState,
             'companyId',
@@ -188,7 +188,7 @@ describe('all-arguments-options-standard', () => {
     const sUserSelectorsTr = rootEntities(sUserSelectorTr);
     const sCompanySelectorTr = rootEntity(
         selectCompaniesState,
-        e => ({...e, tr: true}),
+        (e: Company) => ({...e, tr: true}),
         childrenEntities(
             selectUsersState,
             'companyId',
