@@ -12,5 +12,9 @@ module.exports = function (config) {
             ...baseConfig.coverageReporter,
             dir: join(__dirname, '../../test-reports/coverage'),
         },
+        junitReporter: {
+            ...baseConfig.junitReporter,
+            outputDir: join(__dirname, '../../test-reports'),
+        },
     });
 };
