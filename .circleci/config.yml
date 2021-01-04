@@ -9,7 +9,10 @@ jobs:
                   key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - run:
                   name: NPM Install
-                  command: npm install
+                  command: |
+                      npm install --ignore-scripts && \
+                      node ./node_modules/puppeteer/install.js && \
+                      npm run postinstall
             - save_cache:
                   key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
                   paths:
