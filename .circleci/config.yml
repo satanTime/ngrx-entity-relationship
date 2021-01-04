@@ -38,6 +38,19 @@ jobs:
             - run:
                   name: Collecting Coverage codecov.io
                   command: ./node_modules/.bin/codecov -f test-reports/coverage/lcov/lcov.info --disable=gcov
+            - run:
+                  name: Collecting Coverage codeclimate.com
+                  command: |
+                      curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 \
+                        > $HOME/codeclimate
+                      chmod +x $HOME/codeclimate
+                      $HOME/codeclimate before-build
+                      $HOME/codeclimate format-coverage \
+                        -t lcov test-reports/coverage/lcov/lcov.info \
+                        -o test-reports/codeclimate.json
+                      $HOME/codeclimate upload-coverage \
+                        -r cf49447c142f5bdfd06887571e5b339a8cbe7b2e4a527c6742e3dc0020b3374d \
+                        -i test-reports/codeclimate.json
             - store_test_results:
                   path: ./test-reports
             - store_artifacts:
