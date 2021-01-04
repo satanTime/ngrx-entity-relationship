@@ -1,13 +1,13 @@
-import {childrenEntities, ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY} from 'ngrx-entity-relationship';
-import {UNKNOWN} from 'ngrx-entity-relationship/lib/types';
+import {UNKNOWN} from '../src/lib/types';
+import {childrenEntities, ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY} from '../src/public_api';
 
 describe('childrenEntities', () => {
-    type Entity = {
+    interface Entity {
         id: string;
         name: string;
         parentId?: string | number;
         child?: Array<Entity>;
-    };
+    }
 
     it('marks callback with ngrxEntityRelationship key and passed args', () => {
         const rel1: any = Symbol();
@@ -125,7 +125,7 @@ describe('childrenEntities', () => {
         };
 
         selector('', state, new Map(), entity, selector.idSelector);
-        expect(entity.child[0]).not.toBe(state.feature.entities.id2);
+        expect(entity.child?.[0]).not.toBe(state.feature.entities.id2);
     });
 
     it('sets the cache when the children entities do not exist', () => {
@@ -230,9 +230,9 @@ describe('childrenEntities', () => {
                 entities: {},
             },
         };
-        const rel1: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy('rel1');
+        const rel1 = (jasmine.createSpy('rel1') as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel1.ngrxEntityRelationship = 'spy';
-        const rel2: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy('rel2');
+        const rel2 = (jasmine.createSpy('rel2') as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel2.ngrxEntityRelationship = 'spy';
 
         const featureSelector: FEATURE_SELECTOR<typeof state, Entity> = v => v.feature;
@@ -260,8 +260,20 @@ describe('childrenEntities', () => {
 
         const cache = new Map();
         selector('randChildrenEntities', state, cache, entity, selector.idSelector);
-        expect(rel1).toHaveBeenCalledWith('randChildrenEntities:0', state, cache, entity.child[0], selector.idSelector);
-        expect(rel2).toHaveBeenCalledWith('randChildrenEntities:1', state, cache, entity.child[0], selector.idSelector);
+        expect(rel1).toHaveBeenCalledWith(
+            'randChildrenEntities:0',
+            state,
+            cache,
+            entity.child?.[0] as any,
+            selector.idSelector,
+        );
+        expect(rel2).toHaveBeenCalledWith(
+            'randChildrenEntities:1',
+            state,
+            cache,
+            entity.child?.[0] as any,
+            selector.idSelector,
+        );
     });
 
     it('respects cache of relationships', () => {
@@ -271,9 +283,7 @@ describe('childrenEntities', () => {
                 entities: {},
             },
         };
-        const rel1: HANDLER_RELATED_ENTITY<typeof state, Entity> & jasmine.Spy = <any>jasmine.createSpy('rel1');
-        rel1.ngrxEntityRelationship = 'spy';
-        rel1.and.callFake((cacheKey, _2, cacheSet) => {
+        const rel1 = (jasmine.createSpy('rel1').and.callFake((cacheKey, _2, cacheSet) => {
             const result = new Map();
             result.set('rel1selector', new Map());
 
@@ -282,10 +292,9 @@ describe('childrenEntities', () => {
             hashMap.set('rel1', [result, undefined]);
 
             return 'rel1';
-        });
-        const rel2: HANDLER_RELATED_ENTITY<typeof state, Entity> & jasmine.Spy = <any>jasmine.createSpy('rel2');
-        rel2.ngrxEntityRelationship = 'spy';
-        rel2.and.callFake((cacheKey, _2, cacheSet) => {
+        }) as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        rel1.ngrxEntityRelationship = 'spy';
+        const rel2 = (jasmine.createSpy('rel2').and.callFake((cacheKey, _2, cacheSet) => {
             const result = new Map();
             result.set('rel2selector', new Map());
 
@@ -294,7 +303,8 @@ describe('childrenEntities', () => {
             hashMap.set('rel2', [result, undefined]);
 
             return 'rel2';
-        });
+        }) as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        rel2.ngrxEntityRelationship = 'spy';
 
         const featureSelector: FEATURE_SELECTOR<typeof state, Entity> = v => v.feature;
         const selector = childrenEntities<typeof state, Entity, Entity, 'parentId', 'child'>(
@@ -332,10 +342,10 @@ describe('childrenEntities', () => {
                 entities: {},
             },
         };
-        const rel1: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy('rel1');
+        const rel1 = (jasmine.createSpy('rel1') as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel1.ngrxEntityRelationship = 'spy';
         rel1.release = jasmine.createSpy('rel1.release');
-        const rel2: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy('rel2');
+        const rel2 = (jasmine.createSpy('rel2') as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel2.ngrxEntityRelationship = 'spy';
         rel2.release = jasmine.createSpy('rel2.release');
 
@@ -361,7 +371,7 @@ describe('childrenEntities', () => {
                 entities: {},
             },
         };
-        const idSelector = v => v.id;
+        const idSelector = (v: Entity) => v.id;
         const selector = childrenEntities<typeof state, Entity, Entity, 'parentId', 'child'>(
             {
                 selectors: {
@@ -446,7 +456,7 @@ describe('childrenEntities', () => {
                 name: 'name2',
                 parentId: 'id1',
             },
-        ]);
+        ] as any);
     });
 
     it('supports custom feature selector and id field of string', () => {
@@ -494,7 +504,7 @@ describe('childrenEntities', () => {
                 name: 'name2',
                 parentId: 'id1',
             },
-        ]);
+        ] as any);
     });
 
     it('supports custom feature selector and id field of number', () => {
@@ -542,7 +552,7 @@ describe('childrenEntities', () => {
                 name: 'name2',
                 parentId: 'id1',
             },
-        ]);
+        ] as any);
     });
 
     it('supports custom feature selector and id selector', () => {
@@ -552,7 +562,7 @@ describe('childrenEntities', () => {
                 entities: {},
             },
         };
-        const idSelector = v => v.feature;
+        const idSelector = (v: {feature: string}) => v.feature;
         const selector = childrenEntities<typeof state, UNKNOWN, UNKNOWN, 'parentId', 'child'>(
             {
                 collection: v => v.feature,
@@ -591,6 +601,6 @@ describe('childrenEntities', () => {
                 name: 'name2',
                 parentId: 'id1',
             },
-        ]);
+        ] as any);
     });
 });

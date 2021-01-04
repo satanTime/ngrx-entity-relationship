@@ -1,4 +1,4 @@
-import {patchState} from 'ngrx-entity-relationship/lib/store/patchState';
+import {patchState} from '../../src/lib/store/patchState';
 
 describe('store/patchState', () => {
     it('touches only objects', () => {
@@ -22,7 +22,6 @@ describe('store/patchState', () => {
                 key4: Symbol(),
             },
         };
-        const destination = Symbol();
 
         const actual = patchState.func(state, state.key3, state.key3);
         expect(actual).toBe(state);

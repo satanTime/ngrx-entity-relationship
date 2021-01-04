@@ -157,7 +157,7 @@ describe('reuse-of-nested-entities', () => {
             id1: {
                 ...state.companies.entities.id1,
                 name: 'name1.1',
-            },
+            } as any,
         };
 
         let expected = actual1;
@@ -213,19 +213,31 @@ describe('reuse-of-nested-entities', () => {
         // all parent entities should have new pointers because of their changed child.
         expect(actual2).not.toBe(expected);
         // an unchanged relationship should have the same pointer.
-        expect(actual2.employees).toBe(expected.employees);
-        expect(actual2.employees[0]).toBe(expected.employees[0]);
-        expect(actual2.employees[1]).toBe(expected.employees[1]);
-        expect(actual2.employees[2]).toBeUndefined();
+        expect(actual2 && actual2.employees).toBe(expected && expected.employees);
+        expect(actual2 && actual2.employees && actual2.employees[0]).toBe(
+            expected && expected.employees && expected.employees[0],
+        );
+        expect(actual2 && actual2.employees && actual2.employees[1]).toBe(
+            expected && expected.employees && expected.employees[1],
+        );
+        expect(actual2 && actual2.employees && actual2.employees[2]).toBeUndefined();
         // a changed relationship should have a new pointer.
-        expect(actual2.company).not.toBe(expected.company);
+        expect(actual2 && actual2.company).not.toBe(expected && expected.company);
         // an unchanged relationship should have the same pointer.
-        expect(actual2.company.staff).toBe(expected.company.staff);
-        expect(actual2.company.staff[0]).toBe(expected.company.staff[0]);
-        expect(actual2.company.staff[1]).toBe(expected.company.staff[1]);
-        expect(actual2.company.staff[2]).toBeUndefined();
+        expect(actual2 && actual2.company && actual2.company.staff).toBe(
+            expected && expected.company && expected.company.staff,
+        );
+        expect(actual2 && actual2.company && actual2.company.staff && actual2.company.staff[0]).toBe(
+            expected && expected.company && expected.company.staff && expected.company.staff[0],
+        );
+        expect(actual2 && actual2.company && actual2.company.staff && actual2.company.staff[1]).toBe(
+            expected && expected.company && expected.company.staff && expected.company.staff[1],
+        );
+        expect(actual2 && actual2.company && actual2.company.staff && actual2.company.staff[2]).toBeUndefined();
         // an unchanged relationship should have the same pointer.
-        expect(actual2.company.address).toBe(expected.company.address);
+        expect(actual2 && actual2.company && actual2.company.address).toBe(
+            expected && expected.company && expected.company.address,
+        );
 
         // changing the 2nd user, main user, employees, company, staff should be changed.
         // but the 1st user and the address should stay the same.
@@ -234,7 +246,7 @@ describe('reuse-of-nested-entities', () => {
             id2: {
                 ...state.users.entities.id2,
                 firstName: 'firstName2.1',
-            },
+            } as any,
         };
 
         expected = actual2;
@@ -289,18 +301,30 @@ describe('reuse-of-nested-entities', () => {
         });
         // all parent entities should have new pointers because of their changed child.
         expect(actual3).not.toBe(expected);
-        expect(actual3.company).not.toBe(expected.company);
+        expect(actual3 && actual3.company).not.toBe(expected && expected.company);
         // an employee has been changed, the array and the related entity has only to be changed.
-        expect(actual3.employees).not.toBe(expected.employees);
-        expect(actual3.employees[0]).toBe(expected.employees[0]);
-        expect(actual3.employees[1]).not.toBe(expected.employees[1]);
-        expect(actual3.employees[2]).toBeUndefined();
-        expect(actual3.company.staff).not.toBe(expected.company.staff);
-        expect(actual3.company.staff[0]).toBe(expected.company.staff[0]);
-        expect(actual3.company.staff[1]).not.toBe(expected.company.staff[1]);
-        expect(actual3.company.staff[2]).toBeUndefined();
+        expect(actual3 && actual3.employees).not.toBe(expected && expected.employees);
+        expect(actual3 && actual3.employees && actual3.employees[0]).toBe(
+            expected && expected.employees && expected.employees[0],
+        );
+        expect(actual3 && actual3.employees && actual3.employees[1]).not.toBe(
+            expected && expected.employees && expected.employees[1],
+        );
+        expect(actual3 && actual3.employees && actual3.employees[2]).toBeUndefined();
+        expect(actual3 && actual3.company && actual3.company.staff).not.toBe(
+            expected && expected.company && expected.company.staff,
+        );
+        expect(actual3 && actual3.company && actual3.company.staff && actual3.company.staff[0]).toBe(
+            expected && expected.company && expected.company.staff && expected.company.staff[0],
+        );
+        expect(actual3 && actual3.company && actual3.company.staff && actual3.company.staff[1]).not.toBe(
+            expected && expected.company && expected.company.staff && expected.company.staff[1],
+        );
+        expect(actual3 && actual3.company && actual3.company.staff && actual3.company.staff[2]).toBeUndefined();
         // an unchanged relationship should have the same pointer.
-        expect(actual3.company.address).toBe(expected.company.address);
+        expect(actual3 && actual3.company && actual3.company.address).toBe(
+            expected && expected.company && expected.company.address,
+        );
 
         // changing the address. only employees and staff should stay the same.
         state.addresses.entities = {
@@ -308,7 +332,7 @@ describe('reuse-of-nested-entities', () => {
             id1: {
                 ...state.addresses.entities.id1,
                 street: 'street1.1',
-            },
+            } as any,
         };
 
         expected = actual3;
@@ -363,17 +387,29 @@ describe('reuse-of-nested-entities', () => {
         });
         // all parent entities should have new pointers because of their changed child.
         expect(actual4).not.toBe(expected);
-        expect(actual4.company).not.toBe(expected.company);
-        expect(actual4.company.address).not.toBe(expected.company.address);
+        expect(actual4 && actual4.company).not.toBe(expected && expected.company);
+        expect(actual4 && actual4.company && actual4.company.address).not.toBe(
+            expected && expected.company && expected.company.address,
+        );
         // users weren't touched.
-        expect(actual4.employees).toBe(expected.employees);
-        expect(actual4.employees[0]).toBe(expected.employees[0]);
-        expect(actual4.employees[1]).toBe(expected.employees[1]);
-        expect(actual4.employees[2]).toBeUndefined();
-        expect(actual4.company.staff).toBe(expected.company.staff);
-        expect(actual4.company.staff[0]).toBe(expected.company.staff[0]);
-        expect(actual4.company.staff[1]).toBe(expected.company.staff[1]);
-        expect(actual4.company.staff[2]).toBeUndefined();
+        expect(actual4 && actual4.employees).toBe(expected && expected.employees);
+        expect(actual4 && actual4.employees && actual4.employees[0]).toBe(
+            expected && expected.employees && expected.employees[0],
+        );
+        expect(actual4 && actual4.employees && actual4.employees[1]).toBe(
+            expected && expected.employees && expected.employees[1],
+        );
+        expect(actual4 && actual4.employees && actual4.employees[2]).toBeUndefined();
+        expect(actual4 && actual4.company && actual4.company.staff).toBe(
+            expected && expected.company && expected.company.staff,
+        );
+        expect(actual4 && actual4.company && actual4.company.staff && actual4.company.staff[0]).toBe(
+            expected && expected.company && expected.company.staff && expected.company.staff[0],
+        );
+        expect(actual4 && actual4.company && actual4.company.staff && actual4.company.staff[1]).toBe(
+            expected && expected.company && expected.company.staff && expected.company.staff[1],
+        );
+        expect(actual4 && actual4.company && actual4.company.staff && actual4.company.staff[2]).toBeUndefined();
 
         // changing the root user. only address and the 2nd user shouldn't be touched.
         state.users.entities = {
@@ -381,7 +417,7 @@ describe('reuse-of-nested-entities', () => {
             id1: {
                 ...state.users.entities.id1,
                 firstName: 'firstName1.1',
-            },
+            } as any,
         };
 
         expected = actual4;
@@ -435,15 +471,27 @@ describe('reuse-of-nested-entities', () => {
             },
         });
         expect(actual5).not.toBe(expected);
-        expect(actual5.company).not.toBe(expected.company);
-        expect(actual5.employees).not.toBe(expected.employees);
-        expect(actual5.employees[0]).not.toBe(expected.employees[0]);
-        expect(actual5.employees[1]).toBe(expected.employees[1]);
-        expect(actual5.employees[2]).toBeUndefined();
-        expect(actual5.company.staff).not.toBe(expected.company.staff);
-        expect(actual5.company.staff[0]).not.toBe(expected.company.staff[0]);
-        expect(actual5.company.staff[1]).toBe(expected.company.staff[1]);
-        expect(actual5.company.staff[2]).toBeUndefined();
-        expect(actual5.company.address).toBe(expected.company.address);
+        expect(actual5 && actual5.company).not.toBe(expected && expected.company);
+        expect(actual5 && actual5.employees).not.toBe(expected && expected.employees);
+        expect(actual5 && actual5.employees && actual5.employees[0]).not.toBe(
+            expected && expected.employees && expected.employees[0],
+        );
+        expect(actual5 && actual5.employees && actual5.employees[1]).toBe(
+            expected && expected.employees && expected.employees[1],
+        );
+        expect(actual5 && actual5.employees && actual5.employees[2]).toBeUndefined();
+        expect(actual5 && actual5.company && actual5.company.staff).not.toBe(
+            expected && expected.company && expected.company.staff,
+        );
+        expect(actual5 && actual5.company && actual5.company.staff && actual5.company.staff[0]).not.toBe(
+            expected && expected.company && expected.company.staff && expected.company.staff[0],
+        );
+        expect(actual5 && actual5.company && actual5.company.staff && actual5.company.staff[1]).toBe(
+            expected && expected.company && expected.company.staff && expected.company.staff[1],
+        );
+        expect(actual5 && actual5.company && actual5.company.staff && actual5.company.staff[2]).toBeUndefined();
+        expect(actual5 && actual5.company && actual5.company.address).toBe(
+            expected && expected.company && expected.company.address,
+        );
     });
 });

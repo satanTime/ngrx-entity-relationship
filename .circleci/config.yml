@@ -9,26 +9,51 @@ jobs:
                   key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - run:
                   name: NPM Install
-                  command: npm install
+                  command: |
+                      npm install --ignore-scripts && \
+                      node ./node_modules/puppeteer/install.js && \
+                      npm run postinstall
             - save_cache:
                   key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
                   paths:
                       - ./node_modules
             - run:
+                  name: Core Style
+                  command: ./node_modules/.bin/prettier -u -c .
+            - run:
                   name: Build
-                  command: npm run build
+                  command: npm run st:build
             - run:
                   name: Lint
                   command: npm run lint
             - run:
+                  name: TS Source
+                  command: ./node_modules/.bin/tsc --noEmit -p ./libs/ngrx-entity-relationship/tsconfig.lib.json
+            - run:
+                  name: TS Spec
+                  command: ./node_modules/.bin/tsc --noEmit -p ./libs/ngrx-entity-relationship/tsconfig.spec.json
+            - run:
                   name: Tests
-                  command: npm run test -- --single-run --no-progress --coverage
+                  command: npm run test -- --codeCoverage --reporters junit
             - run:
                   name: Collecting Coverage coveralls.io
                   command: ./node_modules/.bin/coveralls < test-reports/coverage/lcov/lcov.info
             - run:
                   name: Collecting Coverage codecov.io
                   command: ./node_modules/.bin/codecov -f test-reports/coverage/lcov/lcov.info --disable=gcov
+            - run:
+                  name: Collecting Coverage codeclimate.com
+                  command: |
+                      curl -sL https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 \
+                        > $HOME/codeclimate
+                      chmod +x $HOME/codeclimate
+                      $HOME/codeclimate before-build
+                      $HOME/codeclimate format-coverage \
+                        -t lcov test-reports/coverage/lcov/lcov.info \
+                        -o test-reports/codeclimate.json
+                      $HOME/codeclimate upload-coverage \
+                        -r cf49447c142f5bdfd06887571e5b339a8cbe7b2e4a527c6742e3dc0020b3374d \
+                        -i test-reports/codeclimate.json
             - store_test_results:
                   path: ./test-reports
             - store_artifacts:
@@ -96,8 +121,6 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
-            - restore_cache:
                   key: a6-{{ checksum "e2e/a6/package.json" }}-{{ checksum "e2e/a6/package-lock.json" }}
             - run:
                   name: Spreading Build
@@ -121,8 +144,6 @@ jobs:
             - checkout
             - attach_workspace:
                   at: dist
-            - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
                   key: a7-{{ checksum "e2e/a7/package.json" }}-{{ checksum "e2e/a7/package-lock.json" }}
             - run:
@@ -148,8 +169,6 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
-            - restore_cache:
                   key: a8-{{ checksum "e2e/a8/package.json" }}-{{ checksum "e2e/a8/package-lock.json" }}
             - run:
                   name: Spreading Build
@@ -173,8 +192,6 @@ jobs:
             - checkout
             - attach_workspace:
                   at: dist
-            - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
                   key: a9-{{ checksum "e2e/a9/package.json" }}-{{ checksum "e2e/a9/package-lock.json" }}
             - run:
@@ -200,8 +217,6 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
-            - restore_cache:
                   key: a9-{{ checksum "e2e/a9/package.json" }}-{{ checksum "e2e/a9/package-lock.json" }}
             - run:
                   name: Spreading Build
@@ -225,8 +240,6 @@ jobs:
             - checkout
             - attach_workspace:
                   at: dist
-            - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
                   key: a10-{{ checksum "e2e/a10/package.json" }}-{{ checksum "e2e/a10/package-lock.json" }}
             - run:
@@ -252,8 +265,6 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
-            - restore_cache:
                   key: a10-{{ checksum "e2e/a10/package.json" }}-{{ checksum "e2e/a10/package-lock.json" }}
             - run:
                   name: Spreading Build
@@ -277,8 +288,6 @@ jobs:
             - checkout
             - attach_workspace:
                   at: dist
-            - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
                   key: a11-{{ checksum "e2e/a11/package.json" }}-{{ checksum "e2e/a11/package-lock.json" }}
             - run:
@@ -304,8 +313,6 @@ jobs:
             - attach_workspace:
                   at: dist
             - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
-            - restore_cache:
                   key: a11-{{ checksum "e2e/a11/package.json" }}-{{ checksum "e2e/a11/package-lock.json" }}
             - run:
                   name: Spreading Build
@@ -329,8 +336,6 @@ jobs:
             - checkout
             - attach_workspace:
                   at: dist
-            - restore_cache:
-                  key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
             - restore_cache:
                   key: r7-{{ checksum "e2e/r7/package.json" }}-{{ checksum "e2e/r7/package-lock.json" }}
             - run:

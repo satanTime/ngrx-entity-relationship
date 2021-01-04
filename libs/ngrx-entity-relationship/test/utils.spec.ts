@@ -1,15 +1,9 @@
-import {
-    argsToArray,
-    mergeCache,
-    normalizeSelector,
-    objectValues,
-    verifyCache,
-} from 'ngrx-entity-relationship/lib/utils';
+import {argsToArray, mergeCache, normalizeSelector, objectValues, verifyCache} from '../src/lib/utils';
 
 describe('utils', () => {
     describe('normalizeSelector', () => {
         it('throws an error in console about circular dependencies', () => {
-            expect(() => normalizeSelector(undefined)).toThrowError(
+            expect(() => normalizeSelector(undefined as any)).toThrowError(
                 new RegExp('https://github.com/satanTime/ngrx-entity-relationship#circular-dependency'),
             );
         });
@@ -91,7 +85,7 @@ describe('utils', () => {
                 },
             };
             const checks = new Map();
-            const selector = v => v.feature;
+            const selector = (v: {feature: unknown}) => v.feature;
             const selectorEntities = new Map();
 
             checks.set(selector, selectorEntities);
@@ -107,7 +101,7 @@ describe('utils', () => {
                 },
             };
             const checks = new Map();
-            const selector = v => v.feature;
+            const selector = (v: {feature: unknown}) => v.feature;
             const selectorEntities = new Map();
 
             checks.set(selector, selectorEntities);
@@ -127,7 +121,7 @@ describe('utils', () => {
                 },
             };
             const checks = new Map();
-            const selector = v => v.feature;
+            const selector = (v: {feature: unknown}) => v.feature;
             const selectorEntities = new Map();
 
             checks.set(selector, selectorEntities);
@@ -147,7 +141,7 @@ describe('utils', () => {
                 },
             };
             const checks = new Map();
-            const selector = v => v.feature;
+            const selector = (v: {feature: unknown}) => v.feature;
             const selectorEntities = new Map();
 
             checks.set(selector, selectorEntities);
@@ -167,7 +161,7 @@ describe('utils', () => {
                 },
             };
             const checks = new Map();
-            const selector = v => v.feature;
+            const selector = (v: {feature: unknown}) => v.feature;
             const selectorEntities = new Map();
 
             checks.set(selector, selectorEntities);
@@ -190,7 +184,7 @@ describe('utils', () => {
                 },
             };
             const checks = new Map();
-            const selector = v => v.feature;
+            const selector = (v: {feature: unknown}) => v.feature;
             const selectorEntities = new Map();
 
             checks.set(selector, selectorEntities);
@@ -218,9 +212,9 @@ describe('utils', () => {
                 },
             };
             const checks = new Map();
-            const selector1 = v => v.feature1;
+            const selector1 = (v: typeof state) => v.feature1;
             const selector1Entities = new Map();
-            const selector2 = v => v.feature1;
+            const selector2 = (v: typeof state) => v.feature2;
             const selector2Entities = new Map();
 
             checks.set(selector1, selector1Entities);
@@ -252,7 +246,7 @@ describe('utils', () => {
             const from = new Map();
             const to = new Map();
 
-            const selector = v => v.feature;
+            const selector = (v: {feature: unknown}) => v.feature;
             from.set(selector, new Map());
 
             expect(to.has(selector)).toBe(false);
@@ -264,7 +258,7 @@ describe('utils', () => {
             const from = new Map();
             const to = new Map();
 
-            const selector = v => v.feature;
+            const selector = (v: {feature: unknown}) => v.feature;
             const selector1Entities = new Map();
             selector1Entities.set('id1', 'id1value');
 
@@ -280,7 +274,7 @@ describe('utils', () => {
             const from = new Map();
             const to = new Map();
 
-            const selector = v => v.feature;
+            const selector = (v: {feature: unknown}) => v.feature;
             const selector1Entities = new Map();
             selector1Entities.set('id1', 'id1value');
 

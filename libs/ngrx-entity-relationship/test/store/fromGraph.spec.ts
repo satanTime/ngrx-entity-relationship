@@ -1,6 +1,6 @@
-import {relatedEntity, rootEntity} from 'ngrx-entity-relationship';
-import {fromGraph} from 'ngrx-entity-relationship/lib/store/fromGraph';
-import {injectEntity} from 'ngrx-entity-relationship/lib/store/injectEntity';
+import {fromGraph} from '../../src/lib/store/fromGraph';
+import {injectEntity} from '../../src/lib/store/injectEntity';
+import {relatedEntity, rootEntity} from '../../src/public_api';
 
 describe('store/fromGraph', () => {
     let injectEntitySpy: jasmine.Spy;
@@ -48,12 +48,12 @@ describe('store/fromGraph', () => {
         const state4 = Symbol();
 
         const selector = rootEntity<any, any>(
-            () => undefined,
+            () => undefined as any,
             relatedEntity<any, any, any>(
-                () => undefined,
+                () => undefined as any,
                 'keyId1',
                 'keyValue1',
-                relatedEntity<any, any, any>(() => undefined, 'keyId2', 'keyValue2'),
+                relatedEntity<any, any, any>(() => undefined as any, 'keyId2', 'keyValue2'),
             ),
         );
 
@@ -110,8 +110,8 @@ describe('store/fromGraph', () => {
             },
         ];
         const selector = rootEntity<any, any>(
-            () => undefined,
-            relatedEntity<any, any, any>(() => undefined, 'keyId', 'keyValue'),
+            () => undefined as any,
+            relatedEntity<any, any, any>(() => undefined as any, 'keyId', 'keyValue'),
         );
 
         injectEntitySpy.and.returnValues(state1);

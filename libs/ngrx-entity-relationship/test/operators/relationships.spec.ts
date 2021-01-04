@@ -1,24 +1,25 @@
-import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, relationships} from 'ngrx-entity-relationship';
-import {UNKNOWN} from 'ngrx-entity-relationship/lib/types';
 import {of, Subject} from 'rxjs';
 
+import {relationships} from '../../rxjs/src/public_api';
+import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, UNKNOWN} from '../../src/lib/types';
+
 describe('operators/relationships', () => {
-    type Entity = {
+    interface Entity {
         id: string;
         name: string;
         parent?: Entity;
         parentId?: string | number;
-    };
+    }
 
     it('returns undefined on undefined', doneFn => {
         const store$ = new Subject();
         const store = {
             select: jasmine.createSpy().and.returnValue(store$),
         };
-        const selector: HANDLER_ROOT_ENTITY<UNKNOWN, Entity, Entity, UNKNOWN> = <any>jasmine.createSpy();
+        const selector = (jasmine.createSpy() as any) as HANDLER_ROOT_ENTITY<UNKNOWN, Entity, Entity, UNKNOWN>;
         selector.ngrxEntityRelationship = 'spy';
 
-        of(undefined)
+        of(undefined as any)
             .pipe(relationships(store, selector))
             .subscribe(actual => {
                 expect(actual).toBeUndefined();
@@ -31,7 +32,7 @@ describe('operators/relationships', () => {
         const store = {
             select: jasmine.createSpy().and.returnValue(store$),
         };
-        const selector: HANDLER_ROOT_ENTITY<UNKNOWN, Entity, Entity, UNKNOWN> = <any>jasmine.createSpy();
+        const selector = (jasmine.createSpy() as any) as HANDLER_ROOT_ENTITY<UNKNOWN, Entity, Entity, UNKNOWN>;
         selector.ngrxEntityRelationship = 'spy';
         selector.idSelector = jasmine.createSpy('idSelector').and.returnValue('hello');
 
@@ -59,7 +60,7 @@ describe('operators/relationships', () => {
         const store = {
             select: jasmine.createSpy().and.returnValue(store$),
         };
-        const selector: HANDLER_ROOT_ENTITIES<UNKNOWN, Entity, Entity, UNKNOWN> = <any>jasmine.createSpy();
+        const selector = (jasmine.createSpy() as any) as HANDLER_ROOT_ENTITIES<UNKNOWN, Entity, Entity, UNKNOWN>;
         selector.ngrxEntityRelationship = 'spy';
         selector.idSelector = jasmine.createSpy('idSelector').and.returnValues('hello1', 'hello2');
 

@@ -4,12 +4,12 @@ release:
 plugins:
     - '@semantic-release/commit-analyzer'
     - - '@semantic-release/exec'
-      - prepareCmd: npm install && npm run lint && npm test && npm run e2e
+      - prepareCmd: npm install && npm run st:lint && npm test && npm run st:build
     - '@semantic-release/release-notes-generator'
     - - '@semantic-release/changelog'
       - changelogFile: CHANGELOG.md
     - - '@semantic-release/npm'
-      - pkgRoot: dist/ngrx-entity-relationship
+      - pkgRoot: dist/libs/ngrx-entity-relationship
         tarballDir: tmp
         npmPublish: false
     - - '@semantic-release/github'

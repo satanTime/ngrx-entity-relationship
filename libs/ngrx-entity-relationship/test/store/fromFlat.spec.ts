@@ -1,6 +1,6 @@
-import {relatedEntity, rootEntity} from 'ngrx-entity-relationship';
-import {fromFlat} from 'ngrx-entity-relationship/lib/store/fromFlat';
-import {injectEntity} from 'ngrx-entity-relationship/lib/store/injectEntity';
+import {fromFlat} from '../../src/lib/store/fromFlat';
+import {injectEntity} from '../../src/lib/store/injectEntity';
+import {relatedEntity, rootEntity} from '../../src/public_api';
 
 describe('store/fromFlat', () => {
     let injectEntitySpy: jasmine.Spy;
@@ -18,15 +18,15 @@ describe('store/fromFlat', () => {
     it('requires meta', () => {
         const state = Symbol();
         const data = undefined;
-        const selector = rootEntity(() => undefined);
-        selector.meta = undefined;
+        const selector = rootEntity(() => undefined as any);
+        selector.meta = undefined as any;
         expect(() => fromFlat.func(state, selector, data)).toThrowError('Flat key is not provided in meta');
     });
 
     it('requires meta.flatKey', () => {
         const state = Symbol();
         const data = undefined;
-        const selector = rootEntity(() => undefined);
+        const selector = rootEntity(() => undefined as any);
         selector.meta = {};
         expect(() => fromFlat.func(state, selector, data)).toThrowError('Flat key is not provided in meta');
     });
@@ -51,25 +51,25 @@ describe('store/fromFlat', () => {
         const state6 = Symbol();
 
         const selector = rootEntity<any, any>(
-            () => undefined,
+            () => undefined as any,
             {
                 flatKey: 'type1',
             },
             relatedEntity<any, any, any>(
-                () => undefined,
+                () => undefined as any,
                 'keyId',
                 'keyValue',
                 {
                     flatKey: 'type2',
                 },
                 relatedEntity<any, any, any>(
-                    () => undefined,
+                    () => undefined as any,
                     'keyId',
                     'keyValue',
                     {
                         flatKey: 'type3',
                     },
-                    relatedEntity<any, any, any>(() => undefined, 'keyId', 'keyValue', {
+                    relatedEntity<any, any, any>(() => undefined as any, 'keyId', 'keyValue', {
                         // should be ignored because it exists
                         flatKey: 'type1',
                     }),
@@ -109,7 +109,7 @@ describe('store/fromFlat', () => {
         const data = {
             test: [undefined, false, null],
         };
-        const selector = rootEntity(() => undefined);
+        const selector = rootEntity(() => undefined as any);
         selector.meta = {
             flatKey: 'test',
         };

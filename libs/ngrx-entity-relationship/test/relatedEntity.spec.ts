@@ -1,15 +1,15 @@
-import {ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, relatedEntity} from 'ngrx-entity-relationship';
-import {UNKNOWN} from 'ngrx-entity-relationship/lib/types';
+import {UNKNOWN} from '../src/lib/types';
+import {ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, relatedEntity} from '../src/public_api';
 
 describe('relatedEntity', () => {
-    type Entity = {
+    interface Entity {
         id: string;
         name: string;
         parent?: Entity;
         parentId?: string | number;
         parents?: Array<Entity>;
         parentsId?: Array<string | number>;
-    };
+    }
 
     it('marks callback with ngrxEntityRelationship key and passed args', () => {
         const rel1: any = Symbol();
@@ -286,8 +286,8 @@ describe('relatedEntity', () => {
         };
 
         selector('', state, new Map(), entity, selector.idSelector);
-        expect(entity.parents[0]).toEqual(state.feature.entities.id2);
-        expect(entity.parents[0]).not.toBe(state.feature.entities.id2);
+        expect(entity.parents?.[0]).toEqual(state.feature.entities.id2);
+        expect(entity.parents?.[0]).not.toBe(state.feature.entities.id2);
     });
 
     it('sets the cache when the related entity exists', () => {
@@ -384,9 +384,9 @@ describe('relatedEntity', () => {
                 entities: {},
             },
         };
-        const rel1: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy();
+        const rel1 = (jasmine.createSpy() as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel1.ngrxEntityRelationship = 'spy';
-        const rel2: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy();
+        const rel2 = (jasmine.createSpy() as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel2.ngrxEntityRelationship = 'spy';
 
         const selector = relatedEntity<typeof state, Entity, Entity, 'parentId', never, 'parent', never>(
@@ -418,8 +418,20 @@ describe('relatedEntity', () => {
 
         const cache = new Map();
         selector('randRelatedEntity', state, cache, entity, selector.idSelector);
-        expect(rel1).toHaveBeenCalledWith('randRelatedEntity:0', state, cache, entity.parent, selector.idSelector);
-        expect(rel2).toHaveBeenCalledWith('randRelatedEntity:1', state, cache, entity.parent, selector.idSelector);
+        expect(rel1).toHaveBeenCalledWith(
+            'randRelatedEntity:0',
+            state,
+            cache,
+            entity.parent as Entity,
+            selector.idSelector,
+        );
+        expect(rel2).toHaveBeenCalledWith(
+            'randRelatedEntity:1',
+            state,
+            cache,
+            entity.parent as Entity,
+            selector.idSelector,
+        );
     });
 
     it('calls relationships.release on own release call', () => {
@@ -429,10 +441,10 @@ describe('relatedEntity', () => {
                 entities: {},
             },
         };
-        const rel1: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy();
+        const rel1 = (jasmine.createSpy() as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel1.ngrxEntityRelationship = 'spy';
         rel1.release = jasmine.createSpy('rel1.release');
-        const rel2: HANDLER_RELATED_ENTITY<typeof state, Entity> = <any>jasmine.createSpy();
+        const rel2 = (jasmine.createSpy() as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel2.ngrxEntityRelationship = 'spy';
         rel2.release = jasmine.createSpy('rel2.release');
 
@@ -458,7 +470,7 @@ describe('relatedEntity', () => {
                 entities: {},
             },
         };
-        const idSelector = v => v.id;
+        const idSelector = (v: Entity) => v.id;
         const selector = relatedEntity<typeof state, Entity, Entity, 'parentId', never, 'parent', never>(
             {
                 selectors: {
@@ -563,7 +575,7 @@ describe('relatedEntity', () => {
         expect(entity.parent).toEqual({
             uuid: 'id2',
             name: 'name2',
-        });
+        } as any);
     });
 
     it('supports custom feature selector and id field of number', () => {
@@ -602,7 +614,7 @@ describe('relatedEntity', () => {
         expect(entity.parent).toEqual({
             5: 'id2',
             name: 'name2',
-        });
+        } as any);
     });
 
     it('supports custom feature selector and id selector', () => {
@@ -612,7 +624,7 @@ describe('relatedEntity', () => {
                 entities: {},
             },
         };
-        const idSelector = v => v.feature;
+        const idSelector = (v: Entity) => v.id;
         const selector = relatedEntity<typeof state, UNKNOWN, UNKNOWN, 'parentId', never, 'parent', never>(
             {
                 collection: v => v.feature,
@@ -642,6 +654,6 @@ describe('relatedEntity', () => {
         expect(entity.parent).toEqual({
             feature: 'id2',
             name: 'name2',
-        });
+        } as any);
     });
 });

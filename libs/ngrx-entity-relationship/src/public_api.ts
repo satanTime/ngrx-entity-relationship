@@ -11,13 +11,13 @@ export {childrenEntitiesSelector} from './lib/childrenEntitiesSelector';
 export {relatedEntitySelector} from './lib/relatedEntitySelector';
 export {rootEntitySelector} from './lib/rootEntitySelector';
 
-export {relationships} from './lib/operators/relationships';
-
 export {ngrxEntityRelationshipActions, ReduceFlat, reduceFlat, ReduceGraph, reduceGraph} from './lib/store/actions';
 export {ngrxEntityRelationshipReducer} from './lib/store/ngrxEntityRelationshipReducer';
 
 export {selectByIds} from './lib/selectByIds';
 export {stateKeys} from './lib/stateKeys';
+
+export {isBuiltInSelector, isSelectorMeta} from './lib/types';
 
 export {
     HANDLER_ENTITY,
@@ -30,9 +30,6 @@ export {
     HANDLER_ROOT_ENTITY,
     ID_SELECTOR,
     ID_TYPES,
-    STORE_INSTANCE,
     STORE_SELECTOR,
     TRANSFORMER,
-    isBuiltInSelector,
-    isSelectorMeta,
 } from './lib/types';

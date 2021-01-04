@@ -1,6 +1,7 @@
 import {
     FEATURE_SELECTOR,
     HANDLER_ROOT_ENTITY,
+    ID_SELECTOR,
     ID_TYPES,
     rootEntities,
     rootEntity,
@@ -8,13 +9,13 @@ import {
 } from 'ngrx-entity-relationship';
 
 describe('rootEntities', () => {
-    type Entity = {
+    interface Entity {
         id: string;
         name: string;
         parent?: Entity;
         parentId?: string;
         children?: Array<Entity>;
-    };
+    }
 
     afterEach(() => {
         rootEntityFlags.disabled = false;
@@ -34,7 +35,7 @@ describe('rootEntities', () => {
     });
 
     it('returns the same empty array on no ids', () => {
-        const selectorRoot: HANDLER_ROOT_ENTITY<{}, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>jasmine.createSpy();
+        const selectorRoot = (jasmine.createSpy() as any) as HANDLER_ROOT_ENTITY<{}, Entity, Entity, ID_TYPES>;
         const selector = rootEntities(selectorRoot);
 
         const actual = selector({}, undefined);
@@ -43,8 +44,8 @@ describe('rootEntities', () => {
     });
 
     it('returns the same idSelector as rootEntity', () => {
-        const selectorRoot: HANDLER_ROOT_ENTITY<{}, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>jasmine.createSpy();
-        selectorRoot.idSelector = <any>jasmine.createSpy();
+        const selectorRoot = (jasmine.createSpy() as any) as HANDLER_ROOT_ENTITY<{}, Entity, Entity, ID_TYPES>;
+        selectorRoot.idSelector = (jasmine.createSpy() as any) as ID_SELECTOR<Entity>;
         const selector = rootEntities(selectorRoot);
         expect(selector.idSelector).toBe(selectorRoot.idSelector);
 
@@ -55,15 +56,14 @@ describe('rootEntities', () => {
 
     it('returns the cached value when rootEntityFlags.disabled is true', () => {
         const state = {};
-        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>(
-            jasmine.createSpy()
-        );
+        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, Entity, ID_TYPES> &
+            jasmine.Spy = jasmine.createSpy() as any;
         const selector = rootEntities(selectorRoot);
 
-        const entity1state1 = Symbol();
-        const entity1state2 = Symbol();
-        const entity2state1 = Symbol();
-        const entity2state2 = Symbol();
+        const entity1state1 = (Symbol() as any) as Entity;
+        const entity1state2 = (Symbol() as any) as Entity;
+        const entity2state1 = (Symbol() as any) as Entity;
+        const entity2state2 = (Symbol() as any) as Entity;
         selectorRoot.and.returnValues(
             entity1state1,
             entity2state1,
@@ -112,13 +112,12 @@ describe('rootEntities', () => {
 
     it('collects only existing entities', () => {
         const state = {};
-        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>(
-            jasmine.createSpy()
-        );
+        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, Entity, ID_TYPES> &
+            jasmine.Spy = jasmine.createSpy() as any;
         const selector = rootEntities(selectorRoot);
 
-        const entity1 = Symbol();
-        const entity2 = Symbol();
+        const entity1 = (Symbol() as any) as Entity;
+        const entity2 = (Symbol() as any) as Entity;
         selectorRoot.and.returnValues(
             entity1,
             undefined,
@@ -148,14 +147,13 @@ describe('rootEntities', () => {
 
     it('returns the cached value when entities have not been changed unless the cache release', () => {
         const state = {};
-        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>(
-            jasmine.createSpy()
-        );
+        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, Entity, ID_TYPES> &
+            jasmine.Spy = jasmine.createSpy() as any;
         selectorRoot.release = jasmine.createSpy('selectorRoot.release');
         const selector = rootEntities(selectorRoot);
 
-        const entity1 = Symbol();
-        const entity2 = Symbol();
+        const entity1 = (Symbol() as any) as Entity;
+        const entity2 = (Symbol() as any) as Entity;
         selectorRoot.and.returnValues(
             entity1,
             entity2,
@@ -182,9 +180,12 @@ describe('rootEntities', () => {
     it('detects another selector as the id parameter', () => {
         const state = {};
         const selectorIds = jasmine.createSpy().and.returnValue([1, 2]);
-        const selectorRoot: HANDLER_ROOT_ENTITY<typeof state, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>(
-            jasmine.createSpy()
-        );
+        const selectorRoot = (jasmine.createSpy() as any) as HANDLER_ROOT_ENTITY<
+            typeof state,
+            Entity,
+            Entity,
+            ID_TYPES
+        >;
         const selector = rootEntities(selectorRoot);
         selector(state, selectorIds);
         expect(selectorIds).toHaveBeenCalledWith(state);
@@ -194,25 +195,25 @@ describe('rootEntities', () => {
 
     it('returns an array of transformed entities', () => {
         const state = {};
-        const funcSelector: FEATURE_SELECTOR<typeof state, Entity> & jasmine.Spy = <any>jasmine.createSpy();
-        const selectorRoot = rootEntity(funcSelector, () => 'transformed');
-        const selector = rootEntities(selectorRoot);
 
         const entity1 = Symbol();
         const entity2 = Symbol();
-        funcSelector.and.returnValue({
+
+        const funcSelector = (jasmine.createSpy().and.returnValue({
             entities: {
                 1: entity1,
                 2: entity2,
             },
-        });
+        }) as any) as FEATURE_SELECTOR<typeof state, Entity>;
+        const selectorRoot = rootEntity(funcSelector, () => 'transformed');
+        const selector = rootEntities(selectorRoot);
 
         const actual = selector(state, [1, 2]);
         expect(actual).toEqual(['transformed', 'transformed']);
     });
 
     it('calls rootEntity.release on own release call', () => {
-        const selectorRoot: HANDLER_ROOT_ENTITY<{}, Entity, Entity, ID_TYPES> & jasmine.Spy = <any>jasmine.createSpy();
+        const selectorRoot = (jasmine.createSpy() as any) as HANDLER_ROOT_ENTITY<{}, Entity, Entity, ID_TYPES>;
         selectorRoot.release = jasmine.createSpy('selectorRoot.release');
 
         expect(selectorRoot.release).not.toHaveBeenCalled();

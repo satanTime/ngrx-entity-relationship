@@ -1,10 +1,14 @@
 rulesDirectory:
     - node_modules/tslint-microsoft-contrib
     - node_modules/tslint-lines-between-class-members
+    - node_modules/@nrwl/workspace/src/tslint
 extends:
     - tslint:recommended
     - tslint-microsoft-contrib/recommended
     - tslint-defocus
+linterOptions:
+    exclude:
+        - '**/*'
 defaultSeverity: error
 
 rules:
@@ -41,17 +45,21 @@ rules:
     curly: true
     cyclomatic-complexity: false
     defocus: true
-    deprecation: false
+    deprecation:
+        severity: warn
     encoding: true
     export-name: false
     forin: true
     function-constructor: true
     function-name: false
+    import-blacklist:
+        - true
+        - rxjs/Rx
     import-name: false
     increment-decrement: true
     insecure-random: false
     interface-name: false
-    interface-over-type-literal: false
+    interface-over-type-literal: true
     label-position: true
     lines-between-class-members: true
     match-default-export-name: false
@@ -63,13 +71,18 @@ rules:
     member-access: true
     member-ordering:
         - true
-        - order: fields-first
+        - order:
+              - static-field
+              - instance-field
+              - static-method
+              - instance-method
     mocha-no-side-effect-code: false
     newline-per-chained-call: false
-    no-angle-bracket-type-assertion: false
+    no-angle-bracket-type-assertion: true
+    no-any: true
     no-arg: true
     no-backbone-get-set-outside-model: false
-    no-bitwise: false
+    no-bitwise: true
     no-boolean-literal-compare: true
     no-conditional-assignment: true
     no-console:
@@ -90,6 +103,9 @@ rules:
     no-floating-promises: true
     no-for-in-array: true
     no-http-string: false
+    no-inferrable-types:
+        - true
+        - ignore-params
     no-inferred-empty-object-type: true
     no-internal-module: true
     no-invalid-template-strings: true
@@ -99,6 +115,7 @@ rules:
     no-namespace: false
     no-non-null-assertion: true
     no-null-keyword: false
+    no-object-literal-type-assertion: true
     no-redundant-jsdoc: true
     no-reference: true
     no-reference-import: true
@@ -128,6 +145,7 @@ rules:
     no-unnecessary-initializer: true
     no-unnecessary-qualifier: true
     no-unnecessary-type-assertion: true
+    no-unsafe-any: true
     no-unsafe-finally: true
     no-unused-expression: true
     no-var-keyword: true
@@ -136,6 +154,14 @@ rules:
         - true
         - ignore-arrow-function-shorthand
     non-literal-fs-path: false
+    nx-enforce-module-boundaries:
+        - true
+        - allow: []
+          depConstraints:
+              - onlyDependOnLibsWithTags:
+                    - '*'
+                sourceTag: '*'
+          enforceBuildableLibDependency: true
     object-literal-key-quotes:
         - true
         - as-needed
@@ -161,6 +187,7 @@ rules:
     prefer-object-spread: true
     prefer-readonly: true
     prefer-template: true
+    prefer-type-cast: false
     promise-function-async: true
     quotemark:
         - true
@@ -204,9 +231,3 @@ rules:
         - check-type
         - check-type-operator
         - check-preblock
-
-    # fix one day
-    no-any: false
-    no-object-literal-type-assertion: false
-    no-unsafe-any: false
-    prefer-type-cast: false

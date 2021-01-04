@@ -122,10 +122,24 @@ export function isObject(value: UNKNOWN): value is object {
 }
 
 export function objectKeys<T extends object, K extends keyof T>(value: T): Array<K> {
-    return <Array<K>>Object.keys(value);
+    return Object.keys(value) as Array<K>;
 }
 
 export function objectValues<T extends object, K extends T[keyof T]>(value: T): Array<K> {
     const keys = objectKeys(value);
-    return <Array<K>>keys.map(key => value[key]);
+    return keys.map(key => value[key]) as Array<K>;
 }
+
+export function mapEntries<K, T>(set: Map<K, T>): Array<[K, T]> {
+    const result: Array<[K, T]> = [];
+    set.forEach((value: T, key: K) => result.push([key, value]));
+
+    return result;
+}
+
+export const mapValues = <T>(set: {forEach(a1: (value: T) => void): void}): Array<T> => {
+    const result: Array<T> = [];
+    set.forEach((value: T) => result.push(value));
+
+    return result;
+};
