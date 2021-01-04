@@ -19,7 +19,7 @@ jobs:
                   command: ./node_modules/.bin/prettier -u -c .
             - run:
                   name: Build
-                  command: npm run build -- --prod --project ngrx-entity-relationship --skip-nx-cache
+                  command: npm run st:build
             - run:
                   name: Lint
                   command: npm run lint
@@ -41,7 +41,7 @@ jobs:
             - run:
                   name: Collecting Coverage codeclimate.com
                   command: |
-                      curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 \
+                      curl -sL https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 \
                         > $HOME/codeclimate
                       chmod +x $HOME/codeclimate
                       $HOME/codeclimate before-build

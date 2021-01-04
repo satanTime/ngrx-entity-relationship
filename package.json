@@ -27,7 +27,7 @@
         "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
         "st:release": "export $(cat .env) && semantic-release",
         "st:lint": "tsc --noEmit -p ./libs/ngrx-entity-relationship/tsconfig.lib.json && tsc --noEmit -p ./libs/ngrx-entity-relationship/tsconfig.spec.json && npm run lint ngrx-entity-relationship",
-        "st:build": "rm -Rf tmp && rm -Rf dist && npm run st:lint && npm run build ngrx-entity-relationship -- --prod && cp ./libs/ngrx-entity-relationship/package.json ./dist/libs/ngrx-entity-relationship && cp -r ./libs/ngrx-entity-relationship/e2e ./dist/libs/ngrx-entity-relationship && cp ./README.md ./dist/libs/ngrx-entity-relationship && cp ./CHANGELOG.md ./dist/libs/ngrx-entity-relationship && cp ./LICENSE ./dist/libs/ngrx-entity-relationship",
+        "st:build": "rm -Rf tmp && rm -Rf dist && npm run st:lint && npm run build -- --project ngrx-entity-relationship --prod --skip-nx-cache && cp ./libs/ngrx-entity-relationship/package.json ./dist/libs/ngrx-entity-relationship && cp -r ./libs/ngrx-entity-relationship/e2e ./dist/libs/ngrx-entity-relationship && cp ./README.md ./dist/libs/ngrx-entity-relationship && cp ./CHANGELOG.md ./dist/libs/ngrx-entity-relationship && cp ./LICENSE ./dist/libs/ngrx-entity-relationship",
         "st:e2e": "npm run st:build && npm run i:a && npm run s:a &&  npm run s:test && npm run test:a && npm run e2e:a && npm run b:a",
         "i:a": "npm run i:a6 && npm run i:a7 && npm run i:a8 && npm run i:a9 && npm run i:a10 && npm run i:a11 && npm run i:r7",
         "i:a6": "cd e2e/a6 && npm install --ignore-scripts && node ./node_modules/puppeteer/install.js && npm run postinstall",
