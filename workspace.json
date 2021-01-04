@@ -4,7 +4,7 @@
         "ngrx-entity-relationship": {
             "projectType": "library",
             "root": "libs/ngrx-entity-relationship",
-            "sourceRoot": "libs/ngrx-entity-relationship/src",
+            "sourceRoot": "libs/ngrx-entity-relationship",
             "prefix": "ngrx-entity-relationship",
             "targets": {
                 "build": {
