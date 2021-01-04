@@ -5,7 +5,7 @@ exclude_patterns:
     - 'e2e/'
     - 'dist/'
     - 'docker/'
-    - 'libs/ngrx-entity-relationship/karma.conf.js'
+    - 'libs/ngrx-entity-relationship/e2e/'
     - 'libs/ngrx-entity-relationship/test/'
     - 'node_modules/'
     - 'test-reports/'
@@ -20,13 +20,14 @@ exclude_patterns:
     - '.releaserc.yml'
     - 'Dockerfile'
     - 'LICENSE'
-    - 'karma.conf.js'
     - 'renovate.json'
+    - '**/*.fixtures.ts'
     - '**/*.json'
     - '**/*.md'
-    - '**/*.yml'
     - '**/*.spec.ts'
-    - '**/*.fixtures.ts'
+    - '**/*.yml'
+    - '**/.gitkeep'
+    - '**/karma.conf.js'
 plugins:
     structure:
         enabled: true
