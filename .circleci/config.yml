@@ -21,9 +21,6 @@ jobs:
                   name: Core Style
                   command: ./node_modules/.bin/prettier -u -c .
             - run:
-                  name: Build
-                  command: npm run st:build
-            - run:
                   name: Lint
                   command: npm run lint
             - run:
@@ -35,6 +32,19 @@ jobs:
             - run:
                   name: Tests
                   command: npm run test -- --codeCoverage --reporters junit
+            - run:
+                  name: Build
+                  command: |
+                      npm run st:build
+                      cd ./dist/libs/ngrx-entity-relationship
+                      npm pack
+                      cd ..
+                      mv ./ngrx-entity-relationship/ngrx-entity-relationship-0.0.0.tgz ./
+                      rm -Rf ./ngrx-entity-relationship
+                      tar -xf ./ngrx-entity-relationship-0.0.0.tgz package
+                      rm ./ngrx-entity-relationship-0.0.0.tgz
+                      mv ./package ./ngrx-entity-relationship
+                      cd ../..
             - run:
                   name: Collecting Coverage coveralls.io
                   command: ./node_modules/.bin/coveralls < test-reports/coverage/lcov/lcov.info
