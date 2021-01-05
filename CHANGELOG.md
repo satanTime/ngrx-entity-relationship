@@ -1,3 +1,25 @@
+# [1.4.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.3.5...v1.4.0) (2021-01-05)
+
+### Bug Fixes
+
+-   redux support ([9142b12](https://github.com/satanTime/ngrx-entity-relationship/commit/9142b12bf0732f33d2f9a8d7c02be2441971dc1c))
+-   **deps:** update ngrx monorepo to v10.1.0 ([5746a1d](https://github.com/satanTime/ngrx-entity-relationship/commit/5746a1d2b88ae56a68840770fe070a9b1e053771))
+-   **e2e/angular10-ivy-false:** update angular monorepo to v10.0.14 ([a20d4f8](https://github.com/satanTime/ngrx-entity-relationship/commit/a20d4f84891927d7d2eff816ba3e3f64cecbb529))
+-   **e2e/angular10-ivy-false:** update dependency tslib to v2.0.3 ([752e8f0](https://github.com/satanTime/ngrx-entity-relationship/commit/752e8f092561717ed9836aa4516752d62554132b))
+-   **e2e/angular10-ivy-false:** update ngrx monorepo to v10.1.1 ([642856d](https://github.com/satanTime/ngrx-entity-relationship/commit/642856d1dde45b629056943885af19fd76af06b4))
+-   **e2e/angular10-ivy-true:** update angular monorepo to v10.0.14 ([4cb8963](https://github.com/satanTime/ngrx-entity-relationship/commit/4cb896349a52506d7c851e22bba6b664ea0f4b47))
+-   **e2e/angular10-ivy-true:** update dependency tslib to v2.0.3 ([c41365b](https://github.com/satanTime/ngrx-entity-relationship/commit/c41365b23d3218fac525dd6aa36dbea87b3bb17c))
+-   **e2e/angular11-ivy-false:** update angular monorepo to v11.0.4 ([d0abda8](https://github.com/satanTime/ngrx-entity-relationship/commit/d0abda800cf47e98077589b79a04dbb81c798cec))
+-   **e2e/angular11-ivy-true:** update angular monorepo to v11.0.4 ([5d810cb](https://github.com/satanTime/ngrx-entity-relationship/commit/5d810cbe420a8a7d7fd34ff4ddd569594400820a))
+-   **e2e/angular6:** update dependency core-js to v2.6.12 ([a5642a3](https://github.com/satanTime/ngrx-entity-relationship/commit/a5642a3711280c608354ec1eaa18e9c57efc9a6e))
+-   **e2e/angular7:** update dependency core-js to v2.6.12 ([b997d9d](https://github.com/satanTime/ngrx-entity-relationship/commit/b997d9d9a879e0eb6557d2ac6d8bc7ca4de37129))
+-   **e2e/angular9-ivy-false:** update angular monorepo to v9.1.12 ([f73029b](https://github.com/satanTime/ngrx-entity-relationship/commit/f73029bbaea333e8858c18806158486385aa2141))
+-   **e2e/angular9-ivy-true:** update angular monorepo to v9.1.12 ([e190b3e](https://github.com/satanTime/ngrx-entity-relationship/commit/e190b3eb661102d0eca17f98c8595518f2ec5813))
+
+### Features
+
+-   **redux:** full support ([aeb3a45](https://github.com/satanTime/ngrx-entity-relationship/commit/aeb3a4538f3b9c130a0eac6d076ab184fcdd9f90))
+
 ## [1.3.5](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.3.4...v1.3.5) (2020-11-14)
 
 ### Bug Fixes
