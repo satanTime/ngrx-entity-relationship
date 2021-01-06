@@ -30,11 +30,11 @@ export type ENTITY_STATE_CUSTOM<EK extends keyof any, IK extends keyof any, ENTI
     };
 } &
     {
-        [key in IK]: Array<ID_TYPES>;
+        [key in IK]?: Array<ID_TYPES>;
     };
 
 export interface ENTITY_STATE<E> {
-    ids: Array<ID_TYPES>;
+    ids?: Array<ID_TYPES>;
     entities: {
         [id in ID_TYPES]?: E;
     };
