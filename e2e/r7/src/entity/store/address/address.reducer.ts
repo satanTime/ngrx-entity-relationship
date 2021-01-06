@@ -4,12 +4,12 @@ import {updateAddress, upsertAddress} from './address.actions';
 import {Address} from './address.model';
 
 export interface AddressState {
-    ids: Array<string> | Array<number>;
+    existingIds: Array<string>;
     byIds: Dictionary<Address>;
 }
 
 export const initialState: AddressState = {
-    ids: [],
+    existingIds: [],
     byIds: {},
 };
 
@@ -18,7 +18,7 @@ export const addressReducer = createReducer(initialState, builder => {
         .addCase(upsertAddress, (state, action) => {
             return {
                 ...state,
-                id: [...state.ids],
+                existingIds: [...state.existingIds, action.payload.address.id],
                 byIds: {
                     ...state.byIds,
                     [action.payload.address.id]: action.payload.address,

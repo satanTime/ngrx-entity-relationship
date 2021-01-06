@@ -5,17 +5,17 @@ import {connect, DefaultRootState} from 'react-redux';
 import {Company} from './store/company/company.model';
 import {EntityService} from './store/entity.service';
 import {
-    sAddressCompany,
-    sCompany,
-    sCompanyAddress,
-    sCompanyAdmin,
-    sCompanyStaff,
+    relAddressCompany,
+    rootCompany,
+    relCompanyAddress,
+    relCompanyAdmin,
+    relCompanyStaff,
     selectCurrentCompanyId,
     selectCurrentUsersIds,
-    sUser,
-    sUserCompany,
-    sUserEmployees,
-    sUserManager,
+    rootUser,
+    relUserCompany,
+    relUserEmployees,
+    relUserManager,
 } from './store/reducers';
 import {User} from './store/user/user.model';
 
@@ -24,15 +24,15 @@ class EntityClassSelf extends React.Component<{
     state: DefaultRootState;
 }> {
     // prettier-ignore
-    protected readonly companyWithCrazyData: HANDLER_ENTITY<Company> = sCompany(
-        sCompanyAddress(),
-        sCompanyAdmin(
-            sUserEmployees(),
+    protected readonly companyWithCrazyData: HANDLER_ENTITY<Company> = rootCompany(
+        relCompanyAddress(),
+        relCompanyAdmin(
+            relUserEmployees(),
         ),
-        sCompanyStaff(
-            sUserCompany(
-                sCompanyAddress(
-                    sAddressCompany(),
+        relCompanyStaff(
+            relUserCompany(
+                relCompanyAddress(
+                    relAddressCompany(),
                 ),
             ),
         ),
@@ -40,11 +40,11 @@ class EntityClassSelf extends React.Component<{
 
     // prettier-ignore
     protected readonly users: HANDLER_ENTITIES<User> = rootEntities(
-        sUser(
-            sUserEmployees(
-                sUserManager(),
+        rootUser(
+            relUserEmployees(
+                relUserManager(),
             ),
-            sUserManager(),
+            relUserManager(),
         ),
     );
 

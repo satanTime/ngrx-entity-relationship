@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType, ROOT_EFFECTS_INIT} from '@ngrx/effects';
 import {reduceFlat, reduceGraph} from 'ngrx-entity-relationship';
 import {switchMapTo} from 'rxjs/operators';
-import {sAddress, sCompany, sUser} from './reducers';
+import {rootAddress, rootCompany, rootUser} from './reducers';
 
 @Injectable()
 export class EntityEffects {
@@ -21,7 +21,7 @@ export class EntityEffects {
                         name: 'Address 2',
                     },
                 ],
-                selector: sAddress(),
+                selector: rootAddress(),
             }),
             reduceGraph({
                 data: [
@@ -44,7 +44,7 @@ export class EntityEffects {
                         addressId: 'address2',
                     },
                 ],
-                selector: sCompany(),
+                selector: rootCompany(),
             }),
             reduceFlat({
                 data: {
@@ -84,7 +84,7 @@ export class EntityEffects {
                         },
                     ],
                 },
-                selector: sUser({
+                selector: rootUser({
                     flatKey: 'users',
                 }),
             }),

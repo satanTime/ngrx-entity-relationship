@@ -13,38 +13,38 @@ import {companyReducer, CompanyState} from './company/company.reducer';
 import {userReducer, UserState} from './user/user.reducer';
 
 export type RootState = {
-    address: AddressState;
-    company: CompanyState;
-    user: UserState;
+    users: UserState;
+    companies: CompanyState;
+    addresses: AddressState;
 };
 
 export const rootReducer = combineReducers<RootState>({
-    address: addressReducer,
-    company: companyReducer,
-    user: userReducer,
+    users: userReducer,
+    companies: companyReducer,
+    addresses: addressReducer,
 });
 
 // the lib part
-export const selectAddressState = stateKeys((state: RootState) => state.address, 'byIds', 'ids');
-export const selectCompanyState = (state: RootState) => state.company;
-export const selectUserState = (state: RootState) => state.user;
+export const selectUserState = (state: RootState) => state.users;
+export const selectCompanyState = (state: RootState) => state.companies;
+export const selectAddressState = stateKeys((state: RootState) => state.addresses, 'byIds', 'existingIds');
 
 // id selectors
 export const selectCurrentCompanyId = createSelector(selectCompanyState, s => s.selectedId);
 export const selectCurrentUsersIds = createSelector(selectUserState, s => s.selectedIds);
 
-// creating selector producers for Address and its relationships
-export const sAddress = rootEntitySelector(selectAddressState);
-export const sAddressCompany = childEntitySelector(selectCompanyState, 'addressId', 'company');
+// creating selector producers for User and its relationships
+export const rootUser = rootEntitySelector(selectUserState);
+export const relUserCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company');
+export const relUserEmployees = childrenEntitiesSelector(selectUserState, 'managerId', 'employees');
+export const relUserManager = relatedEntitySelector(selectUserState, 'managerId', 'manager');
 
 // creating selector producers for Company and its relationships
-export const sCompany = rootEntitySelector(selectCompanyState);
-export const sCompanyAddress = relatedEntitySelector(selectAddressState, 'addressId', 'address');
-export const sCompanyAdmin = relatedEntitySelector(selectUserState, 'adminId', 'admin');
-export const sCompanyStaff = childrenEntitiesSelector(selectUserState, 'companyId', 'staff');
+export const rootCompany = rootEntitySelector(selectCompanyState);
+export const relCompanyAddress = relatedEntitySelector(selectAddressState, 'addressId', 'address');
+export const relCompanyAdmin = relatedEntitySelector(selectUserState, 'adminId', 'admin');
+export const relCompanyStaff = childrenEntitiesSelector(selectUserState, 'companyId', 'staff');
 
-// creating selector producers for User and its relationships
-export const sUser = rootEntitySelector(selectUserState);
-export const sUserCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company');
-export const sUserEmployees = childrenEntitiesSelector(selectUserState, 'managerId', 'employees');
-export const sUserManager = relatedEntitySelector(selectUserState, 'managerId', 'manager');
+// creating selector producers for Address and its relationships
+export const rootAddress = rootEntitySelector(selectAddressState);
+export const relAddressCompany = childEntitySelector(selectCompanyState, 'addressId', 'company');

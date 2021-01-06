@@ -5,29 +5,29 @@ import {useSelector} from 'react-redux';
 import {Company} from './store/company/company.model';
 import {EntityService} from './store/entity.service';
 import {
-    sAddressCompany,
-    sCompany,
-    sCompanyAddress,
-    sCompanyAdmin,
-    sCompanyStaff,
+    relAddressCompany,
+    rootCompany,
+    relCompanyAddress,
+    relCompanyAdmin,
+    relCompanyStaff,
     selectCurrentUsersIds,
-    sUser,
-    sUserCompany,
-    sUserEmployees,
-    sUserManager,
+    rootUser,
+    relUserCompany,
+    relUserEmployees,
+    relUserManager,
 } from './store/reducers';
 import {User} from './store/user/user.model';
 
 // prettier-ignore
-const companyWithCrazyData: HANDLER_ENTITY<Company> = sCompany(
-    sCompanyAddress(),
-    sCompanyAdmin(
-        sUserEmployees(),
+const companyWithCrazyData: HANDLER_ENTITY<Company> = rootCompany(
+    relCompanyAddress(),
+    relCompanyAdmin(
+        relUserEmployees(),
     ),
-    sCompanyStaff(
-        sUserCompany(
-            sCompanyAddress(
-                sAddressCompany(),
+    relCompanyStaff(
+        relUserCompany(
+            relCompanyAddress(
+                relAddressCompany(),
             ),
         ),
     ),
@@ -35,11 +35,11 @@ const companyWithCrazyData: HANDLER_ENTITY<Company> = sCompany(
 
 // prettier-ignore
 const users: HANDLER_ENTITIES<User> = rootEntities(
-    sUser(
-        sUserEmployees(
-            sUserManager(),
+    rootUser(
+        relUserEmployees(
+            relUserManager(),
         ),
-        sUserManager(),
+        relUserManager(),
     ),
 );
 

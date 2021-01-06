@@ -5,7 +5,7 @@ import {UpdateAddress} from './address/address.actions';
 import {Address} from './address/address.model';
 import {UpdateCompany} from './company/company.actions';
 import {Company} from './company/company.model';
-import {sAddress, sCompany, State, sUser} from './reducers';
+import {rootAddress, rootCompany, State, rootUser} from './reducers';
 import {UpdateUser} from './user/user.actions';
 import {User} from './user/user.model';
 
@@ -15,7 +15,7 @@ export class EntityService {
 
     public changeUser(id: string): void {
         this.store
-            .select(sUser(), id)
+            .select(rootUser(), id)
             .pipe(
                 filter((v): v is User => !!v),
                 first(),
@@ -40,7 +40,7 @@ export class EntityService {
 
     public changeCompany(id: string): void {
         this.store
-            .select(sCompany(), id)
+            .select(rootCompany(), id)
             .pipe(
                 filter((v): v is Company => !!v),
                 first(),
@@ -65,7 +65,7 @@ export class EntityService {
 
     public changeAddress(id: string): void {
         this.store
-            .select(sAddress(), id)
+            .select(rootAddress(), id)
             .pipe(
                 filter((v): v is Address => !!v),
                 first(),

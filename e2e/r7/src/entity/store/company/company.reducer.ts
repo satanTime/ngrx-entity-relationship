@@ -4,7 +4,7 @@ import {updateCompany, upsertCompany} from './company.actions';
 import {Company} from './company.model';
 
 export interface CompanyState {
-    ids: Array<string> | Array<number>;
+    ids: Array<string>;
     entities: Dictionary<Company>;
     selectedId: string;
 }
@@ -20,7 +20,7 @@ export const companyReducer = createReducer(initialState, builder => {
         .addCase(upsertCompany, (state, action) => {
             return {
                 ...state,
-                id: [...state.ids],
+                ids: [...state.ids, action.payload.company.id],
                 entities: {
                     ...state.entities,
                     [action.payload.company.id]: action.payload.company,

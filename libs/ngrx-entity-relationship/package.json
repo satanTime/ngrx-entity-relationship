@@ -8,7 +8,6 @@
         "ngrx",
         "ngrx-entity",
         "ngrx-data",
-        "ngrx",
         "entity",
         "entities",
         "relation",
@@ -16,10 +15,11 @@
         "relationship",
         "relationships",
         "related",
-        "normalization",
         "react",
         "angular",
-        "ivy"
+        "normalization",
+        "relational",
+        "data"
     ],
     "author": {
         "name": "MG.",

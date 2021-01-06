@@ -6,18 +6,18 @@ import {filter, map, switchMap} from 'rxjs/operators';
 import {Company} from './store/company/company.model';
 import {EntityService} from './store/entity.service';
 import {
-    sAddressCompany,
-    sCompany,
-    sCompanyAddress,
-    sCompanyAdmin,
-    sCompanyStaff,
+    relAddressCompany,
+    rootCompany,
+    relCompanyAddress,
+    relCompanyAdmin,
+    rootCompanyStaff,
     selectCurrentCompanyId,
     selectCurrentUsersIds,
     State,
-    sUser,
-    sUserCompany,
-    sUserEmployees,
-    sUserManager,
+    rootUser,
+    relUserCompany,
+    relUserEmployees,
+    relUserManager,
 } from './store/reducers';
 import {User} from './store/user/user.model';
 
@@ -29,15 +29,15 @@ import {User} from './store/user/user.model';
 export class EntityComponent implements OnDestroy {
     public readonly company$: Observable<Company | undefined>;
     // prettier-ignore
-    private readonly companyWithCrazyData = sCompany(
-        sCompanyAddress(),
-        sCompanyAdmin(
-            sUserEmployees(),
+    private readonly companyWithCrazyData = rootCompany(
+        relCompanyAddress(),
+        relCompanyAdmin(
+            relUserEmployees(),
         ),
-        sCompanyStaff(
-            sUserCompany(
-                sCompanyAddress(
-                    sAddressCompany(),
+        rootCompanyStaff(
+            relUserCompany(
+                relCompanyAddress(
+                    relAddressCompany(),
                 ),
             ),
         ),
@@ -46,11 +46,11 @@ export class EntityComponent implements OnDestroy {
     public readonly users$: Observable<Array<User>>;
     // prettier-ignore
     private readonly users = rootEntities(
-        sUser(
-            sUserEmployees(
-                sUserManager(),
+        rootUser(
+            relUserEmployees(
+                relUserManager(),
             ),
-            sUserManager(),
+            relUserManager(),
         ),
     );
 

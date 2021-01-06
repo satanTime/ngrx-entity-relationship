@@ -2,14 +2,14 @@ import {Store} from 'redux';
 
 import {updateAddress} from './address/address.actions';
 import {updateCompany} from './company/company.actions';
-import {RootState, sAddress, sCompany, sUser} from './reducers';
+import {RootState, rootAddress, rootCompany, rootUser} from './reducers';
 import {updateUser} from './user/user.actions';
 
 export class EntityService {
     constructor(protected readonly store: Store<RootState>) {}
 
     public changeUser(id: string): void {
-        const entity = sUser()(this.store.getState(), id);
+        const entity = rootUser()(this.store.getState(), id);
         if (!entity) {
             return;
         }
@@ -30,7 +30,7 @@ export class EntityService {
     }
 
     public changeCompany(id: string): void {
-        const entity = sCompany()(this.store.getState(), id);
+        const entity = rootCompany()(this.store.getState(), id);
         if (!entity) {
             return;
         }
@@ -51,7 +51,7 @@ export class EntityService {
     }
 
     public changeAddress(id: string): void {
-        const entity = sAddress()(this.store.getState(), id);
+        const entity = rootAddress()(this.store.getState(), id);
         if (!entity) {
             return;
         }

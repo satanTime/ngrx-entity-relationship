@@ -1,7 +1,7 @@
 import {reduceFlat, reduceGraph} from 'ngrx-entity-relationship';
 import {Store} from 'redux';
 
-import {RootState, sAddress, sCompany, sUser} from './reducers';
+import {RootState, rootAddress, rootCompany, rootUser} from './reducers';
 
 export class EntityEffects {
     constructor(protected readonly store: Store<RootState>) {}
@@ -19,7 +19,7 @@ export class EntityEffects {
                         name: 'Address 2',
                     },
                 ],
-                selector: sAddress(),
+                selector: rootAddress(),
             }),
         );
     }
@@ -47,7 +47,7 @@ export class EntityEffects {
                         addressId: 'address2',
                     },
                 ],
-                selector: sCompany(),
+                selector: rootCompany(),
             }),
         );
     }
@@ -92,7 +92,7 @@ export class EntityEffects {
                         },
                     ],
                 },
-                selector: sUser({
+                selector: rootUser({
                     flatKey: 'users',
                 }),
             }),

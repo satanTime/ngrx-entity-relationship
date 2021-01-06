@@ -4,7 +4,7 @@ import {updateUser, upsertUser} from './user.actions';
 import {User} from './user.model';
 
 export interface UserState {
-    ids: Array<string> | Array<number>;
+    ids: Array<string>;
     entities: Dictionary<User>;
     selectedIds: Array<string>;
 }
@@ -20,7 +20,7 @@ export const userReducer = createReducer(initialState, builder => {
         .addCase(upsertUser, (state, action) => {
             return {
                 ...state,
-                id: [...state.ids],
+                ids: [...state.ids, action.payload.user.id],
                 entities: {
                     ...state.entities,
                     [action.payload.user.id]: action.payload.user,

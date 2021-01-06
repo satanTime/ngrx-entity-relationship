@@ -1,33 +1,32 @@
 import {HANDLER_ENTITIES, HANDLER_ENTITY, rootEntities} from 'ngrx-entity-relationship';
 import React, {ReactNode} from 'react';
-import {connect} from 'react-redux';
+import {connect, DefaultRootState} from 'react-redux';
 
 import {Company} from './store/company/company.model';
 import {EntityService} from './store/entity.service';
 import {
-    RootState,
-    sAddressCompany,
-    sCompany,
-    sCompanyAddress,
-    sCompanyAdmin,
-    sCompanyStaff,
-    sUser,
-    sUserCompany,
-    sUserEmployees,
-    sUserManager,
+    relAddressCompany,
+    rootCompany,
+    relCompanyAddress,
+    relCompanyAdmin,
+    relCompanyStaff,
+    rootUser,
+    relUserCompany,
+    relUserEmployees,
+    relUserManager,
 } from './store/reducers';
 import {User} from './store/user/user.model';
 
 // prettier-ignore
-const companyWithCrazyData: HANDLER_ENTITY<Company> = sCompany(
-    sCompanyAddress(),
-    sCompanyAdmin(
-        sUserEmployees(),
+const companyWithCrazyData: HANDLER_ENTITY<Company> = rootCompany(
+    relCompanyAddress(),
+    relCompanyAdmin(
+        relUserEmployees(),
     ),
-    sCompanyStaff(
-        sUserCompany(
-            sCompanyAddress(
-                sAddressCompany(),
+    relCompanyStaff(
+        relUserCompany(
+            relCompanyAddress(
+                relAddressCompany(),
             ),
         ),
     ),
@@ -35,11 +34,11 @@ const companyWithCrazyData: HANDLER_ENTITY<Company> = sCompany(
 
 // prettier-ignore
 const users: HANDLER_ENTITIES<User> = rootEntities(
-    sUser(
-        sUserEmployees(
-            sUserManager(),
+    rootUser(
+        relUserEmployees(
+            relUserManager(),
         ),
-        sUserManager(),
+        relUserManager(),
     ),
 );
 
@@ -167,7 +166,7 @@ const mapStateToProps = (state: RootState) => {
     }
 }
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: DefaultRootState) => {
     return {
         companies: companyWithCrazyData(state, 'company3'),
         users: users(state, ['user1', 'user3', 'user6']),
