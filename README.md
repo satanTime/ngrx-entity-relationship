@@ -17,7 +17,7 @@ The current version of the library has been tested and can be used with:
 
 - React Redux 7
 * Redux 4
-- NGRX 10
+- NGRX 10, try it live on [StackBlitz](https://stackblitz.com/github/satanTime/ngrx-entity-relationship-angular?file=src/app/app.component.ts)
 - NGRX 9
 - NGRX 8
 - NGRX 7
