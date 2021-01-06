@@ -1,3 +1,9 @@
+## [1.4.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.4.0...v1.4.1) (2021-01-06)
+
+### Bug Fixes
+
+-   ids key is optional ([5d53a2d](https://github.com/satanTime/ngrx-entity-relationship/commit/5d53a2da24fda4c09423ccca155e9c533a5482ce))
+
 # [1.4.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.3.5...v1.4.0) (2021-01-05)
 
 ### Bug Fixes
