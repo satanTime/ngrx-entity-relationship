@@ -15,6 +15,8 @@
         "baseUrl": ".",
         "paths": {
             "ngrx-entity-relationship": ["libs/ngrx-entity-relationship/src/public_api.ts"],
+            "ngrx-entity-relationship/augments": ["libs/ngrx-entity-relationship/augments/src/public_api.ts"],
+            "ngrx-entity-relationship/graphql": ["libs/ngrx-entity-relationship/graphql/src/public_api.ts"],
             "ngrx-entity-relationship/rxjs": ["libs/ngrx-entity-relationship/rxjs/src/public_api.ts"]
         },
         "skipLibCheck": true,

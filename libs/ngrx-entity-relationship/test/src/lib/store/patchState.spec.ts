@@ -1,4 +1,4 @@
-import {patchState} from '../../src/lib/store/patchState';
+import {patchState} from '../../../../src/lib/store/patchState';
 
 describe('store/patchState', () => {
     it('touches only objects', () => {

@@ -1,6 +1,6 @@
-import {fromFlat} from '../../src/lib/store/fromFlat';
-import {injectEntity} from '../../src/lib/store/injectEntity';
-import {relatedEntity, rootEntity} from '../../src/public_api';
+import {fromFlat} from '../../../../src/lib/store/fromFlat';
+import {injectEntity} from '../../../../src/lib/store/injectEntity';
+import {relatedEntity, rootEntity} from '../../../../src/public_api';
 
 describe('store/fromFlat', () => {
     let injectEntitySpy: jasmine.Spy;

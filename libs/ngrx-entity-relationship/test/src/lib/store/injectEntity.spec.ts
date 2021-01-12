@@ -1,6 +1,6 @@
-import {injectEntity} from '../../src/lib/store/injectEntity';
-import {patchState} from '../../src/lib/store/patchState';
-import {rootEntity} from '../../src/public_api';
+import {injectEntity} from '../../../../src/lib/store/injectEntity';
+import {patchState} from '../../../../src/lib/store/patchState';
+import {rootEntity} from '../../../../src/public_api';
 
 describe('store/patchState', () => {
     let patchStateSpy: jasmine.Spy;

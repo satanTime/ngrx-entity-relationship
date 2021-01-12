@@ -15,6 +15,6 @@
         "strictMetadataEmit": true,
         "enableResourceInlining": true
     },
-    "files": ["src/public_api.ts", "rxjs/src/public_api.ts"],
+    "files": ["src/public_api.ts", "rxjs/src/public_api.ts", "augments/src/public_api.ts", "graphql/src/public_api.ts"],
     "exclude": ["src/test.ts", "**/*.spec.ts"]
 }

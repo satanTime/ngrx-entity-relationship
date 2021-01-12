@@ -1,26 +1,29 @@
-import {childrenEntitiesSelector, HANDLER_RELATED_ENTITY} from 'ngrx-entity-relationship';
+import {relatedEntitySelector} from '../../../src/lib/relatedEntitySelector';
+import {HANDLER_RELATED_ENTITY} from '../../../src/lib/types';
 
-describe('childrenEntitiesSelector', () => {
+describe('relatedEntitySelector', () => {
     interface Entity {
         id: string;
         name: string;
-        parentId?: string | number;
-        child?: Array<Entity>;
+        parent?: Entity;
+        parentId?: string;
+        children?: Array<Entity>;
     }
 
     it('marks callback with ngrxEntityRelationship key', () => {
-        const actual: any = childrenEntitiesSelector<any, any, any, any, any>(jasmine.createSpy(), '', '');
+        const actual: any = relatedEntitySelector<any, any, any, any, any>(jasmine.createSpy(), '', '');
         expect(actual).toEqual(jasmine.any(Function));
-        expect(actual.ngrxEntityRelationship).toEqual('childrenEntitiesSelector');
+        expect(actual.ngrxEntityRelationship).toEqual('relatedEntitySelector');
     });
 
-    it('calls childrenEntities with relations', () => {
+    it('calls relatedEntity with relations', () => {
         const state = {
             feature: {
                 ids: [],
                 entities: {},
             },
         };
+
         const rel1 = (jasmine
             .createSpy('rel1')
             .and.callFake((_1, _2, _3, v) => (v.rel1 = true)) as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
@@ -31,10 +34,10 @@ describe('childrenEntitiesSelector', () => {
             .and.callFake((_1, _2, _3, v) => (v.rel2 = true)) as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel2.ngrxEntityRelationship = 'spy';
 
-        const entitySelector = childrenEntitiesSelector<typeof state, Entity, Entity, 'parentId', 'child'>(
+        const entitySelector = relatedEntitySelector<typeof state, Entity, Entity, 'parentId', 'parent'>(
             v => v.feature,
             'parentId',
-            'child',
+            'parent',
         );
 
         const selector = entitySelector(rel1, rel2);
@@ -42,24 +45,21 @@ describe('childrenEntitiesSelector', () => {
         const entity: Entity = {
             id: 'id1',
             name: 'name1',
+            parentId: 'id2',
         };
-
         state.feature.entities = {
             ...state.feature.entities,
             id2: {
                 id: 'id2',
                 name: 'name2',
-                parentId: 'id1',
             },
         };
-
-        const cache = new Map();
-        selector('', state, cache, entity, selector.idSelector);
-        expect(entity.child).toEqual([
+        selector('randRelatedEntitySelector', state, new Map(), entity, selector.idSelector);
+        expect(entity.parent).toEqual(
             jasmine.objectContaining({
                 rel1: true,
                 rel2: true,
-            }),
-        ] as any);
+            } as any),
+        );
     });
 });

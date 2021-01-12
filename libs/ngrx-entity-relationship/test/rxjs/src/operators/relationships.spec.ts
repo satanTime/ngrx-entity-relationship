@@ -1,7 +1,7 @@
 import {of, Subject} from 'rxjs';
 
-import {relationships} from '../../rxjs/src/public_api';
-import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, UNKNOWN} from '../../src/lib/types';
+import {relationships} from '../../../../rxjs/src/public_api';
+import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, UNKNOWN} from '../../../../src/lib/types';
 
 describe('operators/relationships', () => {
     interface Entity {

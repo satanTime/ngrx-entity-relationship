@@ -1,6 +1,6 @@
-import {fromFlat} from '../../src/lib/store/fromFlat';
-import {fromGraph} from '../../src/lib/store/fromGraph';
-import {ngrxEntityRelationshipActions, ngrxEntityRelationshipReducer} from '../../src/public_api';
+import {fromFlat} from '../../../../src/lib/store/fromFlat';
+import {fromGraph} from '../../../../src/lib/store/fromGraph';
+import {ngrxEntityRelationshipActions, ngrxEntityRelationshipReducer} from '../../../../src/public_api';
 
 describe('store/ngrxEntityRelationshipReducer', () => {
     let fromGraphSpy: jasmine.Spy;
