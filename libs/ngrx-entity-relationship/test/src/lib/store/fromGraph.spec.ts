@@ -1,6 +1,7 @@
+import {relatedEntity} from '../../../../src/lib/relatedEntity';
+import {rootEntity} from '../../../../src/lib/rootEntity';
 import {fromGraph} from '../../../../src/lib/store/fromGraph';
 import {injectEntity} from '../../../../src/lib/store/injectEntity';
-import {relatedEntity, rootEntity} from '../../../../src/public_api';
 
 describe('store/fromGraph', () => {
     let injectEntitySpy: jasmine.Spy;

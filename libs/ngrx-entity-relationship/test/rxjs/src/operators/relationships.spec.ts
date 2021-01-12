@@ -1,6 +1,6 @@
 import {of, Subject} from 'rxjs';
 
-import {relationships} from '../../../../rxjs/src/public_api';
+import {relationships} from '../../../../rxjs/src/operators/relationships';
 import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, UNKNOWN} from '../../../../src/lib/types';
 
 describe('operators/relationships', () => {

@@ -1,5 +1,6 @@
-import {FEATURE_SELECTOR, UNKNOWN} from '../../../src/lib/types';
-import {ENTITY_STATE, HANDLER_RELATED_ENTITY, rootEntity, rootEntityFlags} from '../../../src/public_api';
+import {rootEntity} from '../../../src/lib/rootEntity';
+import {rootEntityFlags} from '../../../src/lib/rootEntityFlags';
+import {ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, UNKNOWN} from '../../../src/lib/types';
 
 describe('rootEntity', () => {
     interface Entity {

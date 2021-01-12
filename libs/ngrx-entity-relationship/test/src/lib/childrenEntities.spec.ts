@@ -1,5 +1,5 @@
-import {UNKNOWN} from '../../../src/lib/types';
-import {childrenEntities, ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY} from '../../../src/public_api';
+import {childrenEntities} from '../../../src/lib/childrenEntities';
+import {ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, UNKNOWN} from '../../../src/lib/types';
 
 describe('childrenEntities', () => {
     interface Entity {

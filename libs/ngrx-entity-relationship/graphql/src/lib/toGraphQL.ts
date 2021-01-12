@@ -1,5 +1,4 @@
 import {ENTITY_SELECTOR} from 'ngrx-entity-relationship';
-import 'ngrx-entity-relationship/augments';
 
 const resolveGraphQL = (
     selector: ENTITY_SELECTOR,
@@ -7,20 +6,18 @@ const resolveGraphQL = (
         include: Array<keyof any>;
         prefix: string;
         level: number;
-    } = {
-        include: [],
-        prefix: '',
-        level: 0,
     },
 ) => {
     const prefix = options.prefix ? options.prefix.repeat(options.level) : '';
     let query = '';
-    const included: Array<string> = [];
+    const included: Array<string | number> = [];
     for (const relationship of selector.relationships) {
-        if (typeof relationship.keyId !== 'string') {
+        // istanbul ignore if
+        if (typeof relationship.keyId !== 'string' && typeof relationship.keyId !== 'number') {
             continue;
         }
-        if (typeof relationship.keyValue !== 'string') {
+        // istanbul ignore if
+        if (typeof relationship.keyValue !== 'string' && typeof relationship.keyValue !== 'number') {
             continue;
         }
         if (relationship.ngrxEntityRelationship === 'childrenEntities') {
@@ -52,12 +49,15 @@ const resolveGraphQL = (
         }
     }
     for (const field of options.include) {
-        if (typeof field !== 'string') {
+        // istanbul ignore if
+        if (typeof field !== 'string' && typeof field !== 'number') {
             continue;
         }
+        // istanbul ignore if
         if (included.indexOf(field) !== -1) {
             continue;
         }
+        included.push(field);
         query += `${prefix}${field}\n`;
     }
     const fields = selector.meta.gqlFields || [];
@@ -65,6 +65,7 @@ const resolveGraphQL = (
         if (included.indexOf(field) !== -1) {
             continue;
         }
+        included.push(field);
         query += `${prefix}${field}\n`;
     }
     return query;
@@ -77,6 +78,9 @@ function encodeValue(data: any): string | undefined {
     if (typeof data === 'string') {
         return JSON.stringify(data);
     }
+    if (typeof data === 'boolean') {
+        return JSON.stringify(data);
+    }
     if (data === null || data === undefined) {
         return JSON.stringify(null);
     }
@@ -84,7 +88,10 @@ function encodeValue(data: any): string | undefined {
         return undefined;
     }
     if (Array.isArray(data)) {
-        return JSON.stringify(data.map(encodeValue).filter(v => v !== undefined));
+        return `[${data
+            .map(encodeValue)
+            .filter(v => v !== undefined)
+            .join(',')}]`;
     }
     const fields: Array<string> = [];
     for (const key of Object.keys(data)) {
@@ -102,7 +109,7 @@ export function toGraphQL(query: string, params: object, selector: ENTITY_SELECT
 export function toGraphQL(query: string, selector: ENTITY_SELECTOR): string;
 
 export function toGraphQL(...queries: Array<any>): string {
-    const prefix = '';
+    const prefix = (window as any).ngrxGraphqlPrefix || '';
     let query = '';
     let selector: ENTITY_SELECTOR | undefined;
     let params: Record<string, any> | null | string | undefined;
@@ -115,15 +122,16 @@ export function toGraphQL(...queries: Array<any>): string {
     }
 
     const stringParams: Array<string> = [];
-    if (typeof params === 'string') {
-        stringParams.push(params);
-    }
     if (params && typeof params === 'object') {
         for (const key of Object.keys(params)) {
             if (key === '$') {
                 continue;
             }
-            stringParams.push(`${key}:${prefix ? ' ' : ''}${encodeValue(params[key])}`);
+            const value = encodeValue(params[key]);
+            if (value === undefined) {
+                continue;
+            }
+            stringParams.push(`${key}:${prefix ? ' ' : ''}${value}`);
         }
     }
     if (params && typeof params === 'object' && params.$ && typeof params.$ === 'object') {
