@@ -14,9 +14,16 @@
     "relations",
     "relationship",
     "relationships",
+    "query",
+    "queries",
+    "subscription",
+    "subscriptions",
+    "mutation",
+    "mutations",
     "related",
     "react",
     "angular",
+    "graphql",
     "normalization",
     "relational",
     "data"
@@ -54,6 +61,7 @@
     "e2e",
     "esm2015",
     "fesm2015",
+    "graphql",
     "lib",
     "rxjs",
     "ngrx-entity-relationship.d.ts",
@@ -61,7 +69,10 @@
     "public_api.d.ts"
   ],
   "standard": {},
-  "types": "index.d.ts",
+  "scripts": {
+    "test": "karma start"
+  },
+  "types": "public_api.d.ts",
   "main": "bundles/ngrx-entity-relationship.umd.js",
   "module": "fesm2015/ngrx-entity-relationship.js",
   "es2015": "fesm2015/ngrx-entity-relationship.js",
@@ -69,13 +80,5 @@
   "fesm2015": "fesm2015/ngrx-entity-relationship.js",
   "typings": "ngrx-entity-relationship.d.ts",
   "metadata": "ngrx-entity-relationship.metadata.json",
-  "sideEffects": false,
-  "dependencies": {
-    "tslib": "^2.0.0",
-    "rxjs": "6.6.3",
-    "zone.js": "0.11.3",
-    "@angular/core": "11.0.8",
-    "@angular/platform-browser-dynamic": "11.0.8"
-  },
-  "peerDependencies": {}
+  "sideEffects": false
 }
