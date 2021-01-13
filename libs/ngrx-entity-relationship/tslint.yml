@@ -1,11 +1,11 @@
 extends: ../../tslint.yml
 linterOptions:
-    exclude:
-        - '!**/*'
+  exclude:
+    - '!**/*'
 
 rules:
-    # TODO: fix one day
-    no-any: false
-    no-unsafe-any: false
-    no-object-literal-type-assertion: false
-    class-name: false
+  # TODO: fix one day
+  no-any: false
+  no-unsafe-any: false
+  no-object-literal-type-assertion: false
+  class-name: false

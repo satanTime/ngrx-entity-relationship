@@ -1,4 +1,5 @@
-import {ENTITY_STATE, HANDLER_RELATED_ENTITY, rootEntitySelector} from 'ngrx-entity-relationship';
+import {rootEntitySelector} from '../../../src/lib/rootEntitySelector';
+import {ENTITY_STATE, HANDLER_RELATED_ENTITY} from '../../../src/lib/types';
 
 describe('rootEntitySelector', () => {
     interface Entity {

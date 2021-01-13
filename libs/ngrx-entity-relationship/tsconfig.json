@@ -1,23 +1,23 @@
 {
-    "extends": "../../tsconfig.base.json",
-    "files": [],
-    "include": [],
-    "references": [
-        {
-            "path": "./tsconfig.lib.json"
-        },
-        {
-            "path": "./tsconfig.lib.prod.json"
-        },
-        {
-            "path": "./tsconfig.spec.json"
-        }
-    ],
-    "compilerOptions": {
-        "forceConsistentCasingInFileNames": true
+  "extends": "../../tsconfig.base.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
     },
-    "angularCompilerOptions": {
-        "strictInjectionParameters": true,
-        "strictTemplates": true
+    {
+      "path": "./tsconfig.lib.prod.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
     }
+  ],
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true
+  },
+  "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "strictTemplates": true
+  }
 }

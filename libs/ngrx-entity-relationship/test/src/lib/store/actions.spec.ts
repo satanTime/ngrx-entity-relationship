@@ -1,11 +1,11 @@
+import {rootEntity} from '../../../../src/lib/rootEntity';
 import {
     ngrxEntityRelationshipActions,
-    ReduceFlat,
     reduceFlat,
-    ReduceGraph,
+    ReduceFlat,
     reduceGraph,
-    rootEntity,
-} from 'ngrx-entity-relationship';
+    ReduceGraph,
+} from '../../../../src/lib/store/actions';
 
 describe('store/actions', () => {
     it('ReduceFlat', () => {

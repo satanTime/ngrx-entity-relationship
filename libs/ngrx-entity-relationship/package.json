@@ -1,76 +1,84 @@
 {
-    "name": "ngrx-entity-relationship",
-    "version": "0.0.0",
-    "description": "ORM selectors for redux, @ngrx/entity and @ngrx/data. Ease of relationships with entities.",
-    "keywords": [
-        "orm",
-        "redux",
-        "ngrx",
-        "ngrx-entity",
-        "ngrx-data",
-        "entity",
-        "entities",
-        "relation",
-        "relations",
-        "relationship",
-        "relationships",
-        "related",
-        "react",
-        "angular",
-        "normalization",
-        "relational",
-        "data"
-    ],
-    "author": {
-        "name": "MG.",
-        "email": "m@sudo.eu",
-        "url": "https://sudo.eu"
-    },
-    "contributors": [
-        {
-            "name": "MG.",
-            "email": "m@sudo.eu",
-            "url": "https://sudo.eu"
-        }
-    ],
-    "maintainers": [
-        {
-            "name": "MG.",
-            "email": "m@sudo.eu",
-            "url": "https://sudo.eu"
-        }
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/satanTime/ngrx-entity-relationship"
-    },
-    "bugs": {
-        "url": "https://github.com/satanTime/ngrx-entity-relationship/issues"
-    },
-    "homepage": "https://github.com/satanTime/ngrx-entity-relationship#readme",
-    "license": "Apache-2.0",
-    "files": [
-        "bundles",
-        "e2e",
-        "esm2015",
-        "fesm2015",
-        "lib",
-        "rxjs",
-        "ngrx-entity-relationship.d.ts",
-        "ngrx-entity-relationship.metadata.json",
-        "public_api.d.ts"
-    ],
-    "standard": {},
-    "scripts": {
-        "test": "karma start"
-    },
-    "types": "index.d.ts",
-    "main": "bundles/ngrx-entity-relationship.umd.js",
-    "module": "fesm2015/ngrx-entity-relationship.js",
-    "es2015": "fesm2015/ngrx-entity-relationship.js",
-    "esm2015": "esm2015/ngrx-entity-relationship.js",
-    "fesm2015": "fesm2015/ngrx-entity-relationship.js",
-    "typings": "ngrx-entity-relationship.d.ts",
-    "metadata": "ngrx-entity-relationship.metadata.json",
-    "sideEffects": false
+  "name": "ngrx-entity-relationship",
+  "version": "0.0.0",
+  "description": "ORM selectors for redux, @ngrx/entity and @ngrx/data. Ease of relationships with entities.",
+  "keywords": [
+    "orm",
+    "redux",
+    "ngrx",
+    "ngrx-entity",
+    "ngrx-data",
+    "entity",
+    "entities",
+    "relation",
+    "relations",
+    "relationship",
+    "relationships",
+    "query",
+    "queries",
+    "subscription",
+    "subscriptions",
+    "mutation",
+    "mutations",
+    "related",
+    "react",
+    "angular",
+    "graphql",
+    "normalization",
+    "relational",
+    "data"
+  ],
+  "author": {
+    "name": "MG.",
+    "email": "m@sudo.eu",
+    "url": "https://sudo.eu"
+  },
+  "contributors": [
+    {
+      "name": "MG.",
+      "email": "m@sudo.eu",
+      "url": "https://sudo.eu"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "MG.",
+      "email": "m@sudo.eu",
+      "url": "https://sudo.eu"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/satanTime/ngrx-entity-relationship"
+  },
+  "bugs": {
+    "url": "https://github.com/satanTime/ngrx-entity-relationship/issues"
+  },
+  "homepage": "https://github.com/satanTime/ngrx-entity-relationship#readme",
+  "license": "Apache-2.0",
+  "files": [
+    "bundles",
+    "e2e",
+    "esm2015",
+    "fesm2015",
+    "graphql",
+    "lib",
+    "rxjs",
+    "ngrx-entity-relationship.d.ts",
+    "ngrx-entity-relationship.metadata.json",
+    "public_api.d.ts"
+  ],
+  "standard": {},
+  "scripts": {
+    "test": "karma start"
+  },
+  "types": "public_api.d.ts",
+  "main": "bundles/ngrx-entity-relationship.umd.js",
+  "module": "fesm2015/ngrx-entity-relationship.js",
+  "es2015": "fesm2015/ngrx-entity-relationship.js",
+  "esm2015": "esm2015/ngrx-entity-relationship.js",
+  "fesm2015": "fesm2015/ngrx-entity-relationship.js",
+  "typings": "ngrx-entity-relationship.d.ts",
+  "metadata": "ngrx-entity-relationship.metadata.json",
+  "sideEffects": false
 }

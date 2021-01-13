@@ -1,12 +1,7 @@
-import {
-    FEATURE_SELECTOR,
-    HANDLER_ROOT_ENTITY,
-    ID_SELECTOR,
-    ID_TYPES,
-    rootEntities,
-    rootEntity,
-    rootEntityFlags,
-} from 'ngrx-entity-relationship';
+import {rootEntities} from '../../../src/lib/rootEntities';
+import {rootEntity} from '../../../src/lib/rootEntity';
+import {rootEntityFlags} from '../../../src/lib/rootEntityFlags';
+import {FEATURE_SELECTOR, HANDLER_ROOT_ENTITY, ID_SELECTOR, ID_TYPES} from '../../../src/lib/types';
 
 describe('rootEntities', () => {
     interface Entity {

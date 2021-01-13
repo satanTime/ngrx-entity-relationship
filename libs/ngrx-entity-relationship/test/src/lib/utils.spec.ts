@@ -1,4 +1,4 @@
-import {argsToArray, mergeCache, normalizeSelector, objectValues, verifyCache} from '../src/lib/utils';
+import {argsToArray, mergeCache, normalizeSelector, objectValues, verifyCache} from '../../../src/lib/utils';
 
 describe('utils', () => {
     describe('normalizeSelector', () => {

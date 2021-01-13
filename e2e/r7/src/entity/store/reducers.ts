@@ -34,7 +34,9 @@ export const selectCurrentCompanyId = createSelector(selectCompanyState, s => s.
 export const selectCurrentUsersIds = createSelector(selectUserState, s => s.selectedIds);
 
 // creating selector producers for User and its relationships
-export const rootUser = rootEntitySelector(selectUserState);
+export const rootUser = rootEntitySelector(selectUserState, {
+    gqlFields: ['id', 'firstName', 'lastName'],
+});
 export const relUserCompany = relatedEntitySelector(selectCompanyState, 'companyId', 'company');
 export const relUserEmployees = childrenEntitiesSelector(selectUserState, 'managerId', 'employees');
 export const relUserManager = relatedEntitySelector(selectUserState, 'managerId', 'manager');

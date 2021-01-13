@@ -1,20 +1,21 @@
-import {childEntitySelector, HANDLER_RELATED_ENTITY} from 'ngrx-entity-relationship';
+import {childrenEntitiesSelector} from '../../../src/lib/childrenEntitiesSelector';
+import {HANDLER_RELATED_ENTITY} from '../../../src/lib/types';
 
-describe('childEntitySelector', () => {
+describe('childrenEntitiesSelector', () => {
     interface Entity {
         id: string;
         name: string;
         parentId?: string | number;
-        child?: Entity;
+        child?: Array<Entity>;
     }
 
     it('marks callback with ngrxEntityRelationship key', () => {
-        const actual: any = childEntitySelector<any, any, any, any, any>(jasmine.createSpy(), undefined, undefined);
+        const actual: any = childrenEntitiesSelector<any, any, any, any, any>(jasmine.createSpy(), '', '');
         expect(actual).toEqual(jasmine.any(Function));
-        expect(actual.ngrxEntityRelationship).toEqual('childEntitySelector');
+        expect(actual.ngrxEntityRelationship).toEqual('childrenEntitiesSelector');
     });
 
-    it('calls childEntity with relations', () => {
+    it('calls childrenEntities with relations', () => {
         const state = {
             feature: {
                 ids: [],
@@ -31,7 +32,7 @@ describe('childEntitySelector', () => {
             .and.callFake((_1, _2, _3, v) => (v.rel2 = true)) as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel2.ngrxEntityRelationship = 'spy';
 
-        const entitySelector = childEntitySelector<typeof state, Entity, Entity, 'parentId', 'child'>(
+        const entitySelector = childrenEntitiesSelector<typeof state, Entity, Entity, 'parentId', 'child'>(
             v => v.feature,
             'parentId',
             'child',
@@ -55,11 +56,11 @@ describe('childEntitySelector', () => {
 
         const cache = new Map();
         selector('', state, cache, entity, selector.idSelector);
-        expect(entity.child).toEqual(
+        expect(entity.child).toEqual([
             jasmine.objectContaining({
                 rel1: true,
                 rel2: true,
-            } as any),
-        );
+            }),
+        ] as any);
     });
 });

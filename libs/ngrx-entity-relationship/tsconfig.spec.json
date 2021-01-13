@@ -1,11 +1,12 @@
 {
-    "extends": "./tsconfig.json",
-    "compilerOptions": {
-        "sourceMap": true,
-        "declaration": true,
-        "outDir": "../../dist/out-tsc",
-        "types": ["jasmine", "node"]
-    },
-    "files": ["src/test.ts"],
-    "include": ["**/*.spec.ts", "**/*.d.ts"]
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "sourceMap": true,
+    "declaration": true,
+    "removeComments": false,
+    "outDir": "../../dist/out-tsc",
+    "types": ["jasmine", "node"]
+  },
+  "files": ["src/test.ts"],
+  "include": ["**/*.spec.ts", "**/*.d.ts"]
 }

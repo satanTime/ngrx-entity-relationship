@@ -16,7 +16,9 @@ data and gracefully update the store.
 The current version of the library has been tested and can be used with:
 
 - React Redux 7, **try it live on [CodeSandbox](https://codesandbox.io/s/github/satanTime/ngrx-entity-relationship-react?file=/src/MyComponent.tsx)**
+
 * Redux 4
+
 - NGRX 10, **try it live on [StackBlitz](https://stackblitz.com/github/satanTime/ngrx-entity-relationship-angular?file=src/app/app.component.ts)
   or [CodeSandbox](https://codesandbox.io/s/github/satanTime/ngrx-entity-relationship-angular?file=/src/app/app.component.ts)**
 - NGRX 9
@@ -27,158 +29,163 @@ The current version of the library has been tested and can be used with:
 ## Problem of normalized entities and their relationships in Redux and NGRX
 
 Let's imagine that we have the next models:
+
 ```ts
 export interface User {
-    id: string;
-    firstName: string;
-    lastName: string;
+  id: string;
+  firstName: string;
+  lastName: string;
 
-    company?: Company;
-    companyId?: string;
+  company?: Company;
+  companyId?: string;
 }
 
 export interface Company {
-    id: string;
-    name: string;
+  id: string;
+  name: string;
 
-    staff?: Array<User>;
+  staff?: Array<User>;
 
-    admin?: User;
-    adminId?: string;
+  admin?: User;
+  adminId?: string;
 
-    address?: Address;
-    addressId?: string;
+  address?: Address;
+  addressId?: string;
 }
 
 export interface Address {
-    id: string;
-    street: string;
-    city: string;
-    country: string;
+  id: string;
+  street: string;
+  city: string;
+  country: string;
 
-    company?: Company;
+  company?: Company;
 }
 ```
 
 Entities of every model are normalized and stored in the store independently:
+
 ```ts
 const rootState = {
-    users: {
-        ids: ['1', '2'],
-        entities: {
-            '1': {
-                id: '1',
-                firstName: 'John',
-                lastName: 'Smith',
-                companyId: '1',
-            },
-            '2': {
-                id: '2',
-                firstName: 'Jack',
-                lastName: 'Black',
-                companyId: '1',
-            },
-        },
+  users: {
+    ids: ['1', '2'],
+    entities: {
+      '1': {
+        id: '1',
+        firstName: 'John',
+        lastName: 'Smith',
+        companyId: '1',
+      },
+      '2': {
+        id: '2',
+        firstName: 'Jack',
+        lastName: 'Black',
+        companyId: '1',
+      },
     },
-    companies: {
-        ids: ['1'],
-        entities: {
-            '1': {
-                id: '1',
-                name: 'Magic',
-                adminId: '2',
-                addressId: '1',
-            }
-        },
-    },
-    addresses: {
-        existingIds: ['1'],
-        byIds: {
-            '1': {
-                id: '1',
-                street: 'Main st.',
-                city: 'Town',
-                country: 'Land',
-            }
-        }
-    }
-}
-```
-
-Now we want to select an entity of user from the store with the related company and its address.
-The desired shape is like that:
-```ts
-const user = {
-    id: '1',
-    firstName: 'John',
-    lastName: 'Smith',
-    companyId: '1',
-    company: {
+  },
+  companies: {
+    ids: ['1'],
+    entities: {
+      '1': {
         id: '1',
         name: 'Magic',
         adminId: '2',
         addressId: '1',
-        address: {
-            id: '1',
-            street: 'Main st.',
-            city: 'Town',
-            country: 'Land',
-        },
+      },
     },
+  },
+  addresses: {
+    existingIds: ['1'],
+    byIds: {
+      '1': {
+        id: '1',
+        street: 'Main st.',
+        city: 'Town',
+        country: 'Land',
+      },
+    },
+  },
+};
+```
+
+Now we want to select an entity of user from the store with the related company and its address.
+The desired shape is like that:
+
+```ts
+const user = {
+  id: '1',
+  firstName: 'John',
+  lastName: 'Smith',
+  companyId: '1',
+  company: {
+    id: '1',
+    name: 'Magic',
+    adminId: '2',
+    addressId: '1',
+    address: {
+      id: '1',
+      street: 'Main st.',
+      city: 'Town',
+      country: 'Land',
+    },
+  },
 };
 ```
 
 Can you believe that the eventual solution is like that?
 
 ```ts
-const desiredUserShape = rootUser(
-    relUserCompany(
-        relCompanyAddress(),
-    ),
+const selectUser = rootUser(
+  relUserCompany(
+    relCompanyAddress(),
+  ),
 );
 ```
 
 And it's able to return any **relational data** until there is a configured selector between entities.
 
 ```ts
-const desiredUserShape = rootUser(
-    relUserCompany(
-        relCompanyStaff(
-            relUserCompany(
-                relCompanyAdmin(),
-            ),
-        ),
-        relCompanyAddress(
-            relAddressCompany(
-                relCompanyAdmin(
-                    relUserCompany(
-                        relCompanyAddress(),
-                    ),
-                ),
-            ),
-        ),
+const selectUser = rootUser(
+  relUserCompany(
+    relCompanyStaff(
+      relUserCompany(
+          relCompanyAdmin(),
+      ),
     ),
+    relCompanyAddress(
+      relAddressCompany(
+        relCompanyAdmin(
+          relUserCompany(
+            relCompanyAddress(),
+          ),
+        ),
+      ),
+    ),
+  ),
 );
 ```
 
 If we use `mapStateToProps` and **Redux** in **React**, then we could use the selector like that:
+
 ```ts
-const mapStateToProps = (state) => {
-    return {
-        user: desiredUserShape(state, selectUserId),
-    };
+const mapStateToProps = state => {
+  return {
+    user: selectUser(state, selectUserId),
+  };
 };
 ```
 
 if we use **NGRX** in **Angular**, then we could use the selector like that:
+
 ```ts
 class MyComponent {
-    ngOnInit() {
-        this.user$ = this.store.select(
-            desiredUserShape,
-            selectUserId,
-        );
-    }
+  ngOnInit() {
+    this.user$ = this.store.select(
+      selectUser,
+      selectUserId,
+    );
+  }
 }
 ```
 
@@ -200,23 +207,23 @@ we need to follow the next rules:
 ### Normalized state structure for Redux and NGRX
 
 The first step is to ensure that entities are reduced into the proper state, usually there are two properties:
-the first one stores an array of ids, and the second one stores a map of entities where keys are ids and values are normalized shapes.  
+the first one stores an array of ids, and the second one stores a map of entities where keys are ids and values are normalized shapes.
 
 ```ts
 export interface UserState {
-    ids: Array<string>;
-    entities: Dictionary<User>;
+  ids: Array<string>;
+  entities: Dictionary<User>;
 }
 
 export interface CompanyState {
-    ids: Array<string>;
-    entities: Dictionary<Company>;
+  ids: Array<string>;
+  entities: Dictionary<Company>;
 }
 
 // different keys are an example
 export interface AddressState {
-    existingIds: Array<string>;
-    byIds: Dictionary<Address>;
+  existingIds: Array<string>;
+  byIds: Dictionary<Address>;
 }
 ```
 
@@ -231,20 +238,33 @@ In this documentation, they are called **entity state selectors**.
 
 ```ts
 // Redux
-export const selectUserState = (state) => state.users;
-export const selectCompanyState = (state) => state.companies;
-// `stateKeys` function helps in case of different names of the properties.  
-export const selectAddressState = stateKeys((state) => state.addresses, 'byIds', 'existingIds');
+export const selectUserState = state => state.users;
+export const selectCompanyState = state => state.companies;
+// `stateKeys` function helps in case of different names of the properties.
+export const selectAddressState = stateKeys(
+  state => state.addresses,
+  'byIds',
+  'existingIds',
+);
 ```
 
 ```ts
 // NGRX
-export const selectUserState = createFeatureSelector<fromUser.State>('users');
-export const selectCompanyState = createFeatureSelector<fromCompany.State>('companies');
-export const selectAddressState = createFeatureSelector<fromAddress.State>('addresses');
+export const selectUserState =
+  createFeatureSelector<fromUser.State>(
+    'users',
+  );
+export const selectCompanyState =
+  createFeatureSelector<fromCompany.State>(
+    'companies',
+  );
+export const selectAddressState =
+  createFeatureSelector<fromAddress.State>(
+    'addresses',
+  );
 ```
 
-These functions can be defined in the same file where the corresponding or root reducer is defined. 
+These functions can be defined in the same file where the corresponding or root reducer is defined.
 
 ### Definition for root and relationship selectors
 
@@ -264,39 +284,39 @@ Then, we create a **relationship selector factory** to fetch its relationships.
 export const rootUser = rootEntitySelector(selectUserState);
 // user.company
 export const relUserCompany = relatedEntitySelector(
-    selectCompanyState,
-    'companyId',
-    'company',
+  selectCompanyState,
+  'companyId',
+  'company',
 );
 
 // company
 export const rootCompany = rootEntitySelector(selectCompanyState);
 // company.staff
 export const relCompanyStaff = childrenEntitiesSelector(
-    selectUserState,
-    'companyId', 
-    'staff',
+  selectUserState,
+  'companyId',
+  'staff',
 );
 // company.admin
 export const relCompanyAdmin = relatedEntitySelector(
-    selectUserState,
-    'adminId', 
-    'admin',
+  selectUserState,
+  'adminId',
+  'admin',
 );
 // company.address
 export const relCompanyAddress = relatedEntitySelector(
-    selectAddressState,
-    'addressId',
-    'address',
+  selectAddressState,
+  'addressId',
+  'address',
 );
 
 // address
 export const rootAddress = rootEntitySelector(selectAddressState);
 // address.company
 export const relAddressCompany = childEntitySelector(
-    selectCompanyState,
-    'addressId',
-    'company',
+  selectCompanyState,
+  'addressId',
+  'company',
 );
 ```
 
@@ -328,16 +348,16 @@ create a **root selector** via its factories there, and use it:
 
 ```ts
 // Redux
-const desiredUserShape = rootUser(
-    relUserCompany(
-        relCompanyAddress(),
-    ),
+const selectUser = rootUser(
+  relUserCompany(
+    relCompanyAddress(),
+  ),
 );
 
-const mapStateToProps = (state) => {
-    return {
-        user: desiredUserShape(state, '1'), // '1' is the id of user
-    };
+const mapStateToProps = state => {
+  return {
+    user: selectUser(state, '1'), // '1' is the id of user
+  };
 };
 
 export default connect(mapStateToProps)(MyComponent);
@@ -346,20 +366,21 @@ export default connect(mapStateToProps)(MyComponent);
 ```ts
 // NGRX
 export class MyComponent {
-    public readonly users$: Observable<User>;
+  public readonly users$: Observable<User>;
 
-    private readonly desiredUserShape = rootUser(
-        relUserCompany(
-            relCompanyAddress(),
-        ),
+  private readonly selectUser =
+    rootUser(
+      relUserCompany(
+        relCompanyAddress(),
+      ),
     );
 
-    constructor(private store: Store) {
-        this.users$ = this.store.select(
-            this.desiredUserShape,
-            '1', // '1' is the id of user
-        );
-    }
+  constructor(private store: Store) {
+    this.users$ = this.store.select(
+      this.selectUser,
+      '1', // '1' is the id of user
+    );
+  }
 }
 ```
 
@@ -367,21 +388,19 @@ Of course, instead of a hardcoded id like `1`, you can pass another selector, th
 
 ```ts
 // Redux
-desiredUserShape(state, selectCurrentUserId);
+selectUser(state, selectCurrentUserId);
 ```
 
 ```ts
 // NGRX
-this.store.select(
-    this.desiredUserShape,
-    selectCurrentUserId,
-);
+this.store.select(this.selectUser, selectCurrentUserId);
 ```
 
 Where `selectCurrentUserId` might be like that:
 
 ```ts
-const selectCurrentUserId = (globalState) => globalState.auth.currentUserId;
+const selectCurrentUserId = globalState =>
+  globalState.auth.currentUserId;
 ```
 
 ### Selecting an array of entities
@@ -390,22 +409,19 @@ A user is fine, but what about an array of users?
 The answer is [`rootEntities`](#rootentities-function). Simply pass an existing **root selector** into it.
 
 ```ts
-const desiredUsers = rootEntities(desiredUserShape);
+const selectUsers = rootEntities(selectUser);
 ```
 
-Now we can use `desiredUsers` in our components, but instead of an id, it requires an array of them.
+Now we can use `selectUsers` in our components, but instead of an id, it requires an array of them.
 
 ```ts
 // Redux
-desiredUsers(state, ['1', '2']);
+selectUsers(state, ['1', '2']);
 ```
 
 ```ts
 // NGRX
-this.store.select(
-    this.desiredUsers,
-    ['1', '2'],
-);
+this.store.select(this.selectUsers, ['1', '2']);
 ```
 
 Or a selector that selects an array of ids from the state.
@@ -424,46 +440,57 @@ There are many more features, such as:
 - [simplified types for typescript](#types)
 - [selectors metadata for whatever needs](#gathering-information-about-selectors)
 
-## Table of contents 
+## Table of contents
 
 - [Relationships between entities in `@ngrx/data`](#relationships-between-entities-in-ngrxdata)
 
 * [Normalizing flat structures](#reduceflat--reduceflat-action)
 * [Normalizing graph structures](#reducegraph--reducegraph-action)
-  
+
 - [API](#api)
-    - [possible selector definition](#entity-state-selector)
-    * [rootEntity](#rootentity-function)
-    * [relatedEntity](#relatedentity-function)
-    * [childEntity](#childentity-function)
-    * [childrenEntities](#childrenentities-function)
-    - [rootEntitySelector](#rootentityselector-function)
-    - [relatedEntitySelector](#relatedentityselector-function)
-    - [childEntitySelector](#childentityselector-function)
-    - [childrenEntitiesSelector](#childrenentitiesselector-function)
-    - [rootEntities](#rootentities-function)
-    * [relationships pipe operator](#relationships-pipe-operator)
-    * [rootEntityFlags options](#rootentityflags-options)
-    * [Types](#types)
+  - [possible selector definition](#entity-state-selector)
+  * [rootEntity](#rootentity-function)
+  * [relatedEntity](#relatedentity-function)
+  * [childEntity](#childentity-function)
+  * [childrenEntities](#childrenentities-function)
+  - [rootEntitySelector](#rootentityselector-function)
+  - [relatedEntitySelector](#relatedentityselector-function)
+  - [childEntitySelector](#childentityselector-function)
+  - [childrenEntitiesSelector](#childrenentitiesselector-function)
+  - [rootEntities](#rootentities-function)
+  * [relationships pipe operator](#relationships-pipe-operator)
+  * [rootEntityFlags options](#rootentityflags-options)
+  * [Types](#types)
 
 * [Releasing cache](#releasing-cache)
 * [Usage with createSelector from NGRX](#usage-with-createselector-from-ngrx)
 * [Gathering information of selectors](#gathering-information-about-selectors)
 
------
+---
 
 ### Relationships between entities in `@ngrx/data`
 
 Based on [ngrx docs](https://ngrx.io/guide/data/entity-collection-service#examples-from-the-demo-app)
 we should have 3 entity collection services.
+
 ```ts
-const userService = EntityCollectionServiceFactory.create<User>('users');
-const companyService = EntityCollectionServiceFactory.create<Company>('companies');
-const addressService = EntityCollectionServiceFactory.create<Address>('addresses');
+const userService =
+  EntityCollectionServiceFactory.create<User>(
+    'users',
+  );
+const companyService =
+  EntityCollectionServiceFactory.create<Company>(
+    'companies',
+  );
+const addressService =
+  EntityCollectionServiceFactory.create<Address>(
+    'addresses',
+  );
 ```
 
 Or later based on [ngrx docs](https://ngrx.io/guide/data/entity-collection-service#create-the-entitycollectionservice-as-a-class)
 we might have 3 service classes which extend `EntityCollectionServiceBase<T>`.
+
 ```ts
 const userService: UserEntityService;
 const companyService: CompanyEntityService;
@@ -477,58 +504,80 @@ For that we need [`rootEntity`](#rootentity-function) and [`relatedEntity`](#roo
 ```ts
 @Injectable({providedIn: 'root'})
 export class UserSelectorService {
-    // important dependencies
-    constructor(
-        protected readonly store: Store,
-        protected user: UserEntityService,
-        protected company: CompanyEntityService,
-        protected serviceFactory: EntityCollectionServiceFactory,
-    ) {
-    }
+  // important dependencies
+  constructor(
+    protected readonly store: Store,
+    protected user: UserEntityService,
+    protected company: CompanyEntityService,
+    protected serviceFactory: EntityCollectionServiceFactory,
+  ) {}
 
-    public readonly selectUser = rootEntity(
-        this.user, // a service of the User entity.
+  public readonly selectUser =
+    rootEntity(
+      // a service of the User entity.
+      this.user,
 
-        // now we define a relationship between a user and a company.
+      // now we define a relationship between a user and a company.
+      relatedEntity(
+        // a service of the Company entity.
+        this.company,
+        // the key in the user's model that points to the company's id.
+        'companyId',
+        // the key in the user's model that should be fulfilled with the company's entity.
+        'company',
+
+        // now we define a relationship between a company and an address.
         relatedEntity(
-            this.company, // a service of the Company entity.
-            'companyId', // the key in the user's model that points to the company's id.
-            'company', // the key in the user's model that should be fulfilled with the company's entity.
-
-            // now we define a relationship between a company and an address.
-            relatedEntity(
-                this.serviceFactory.create<Address>('addresses'), // a service of the Address entity.
-                'addressId', // the key in the company's model that points to the address's id.
-                'address', // the key in the company's model that should be fulfilled with the address's entity.
-            ),
+          // a service of the Address entity.
+          this.serviceFactory
+            .create<Address>('addresses'),
+          // the key in the company's model that points to the address's id.
+          'addressId',
+          // the key in the company's model that should be fulfilled with the address's entity.
+          'address',
         ),
+      ),
     );
 
-    public readonly selectUsers = rootEntities(
-        this.selectUser, // simply pass here a select for a single entity.
-    );
+  public readonly selectUsers = rootEntities(
+    // simply pass here a select for a single entity.
+    this.selectUser,
+  );
 }
 ```
 
 Except a single user, we can select an array of users.
 For that we need [`rootEntities`](#rootentities-function) function from the library.
+
 ```ts
 export class UserSelectorService {
-    // ...
-    public readonly selectUsers = rootEntities(
-        this.selectUser, // simply pass here a select for a single entity.
+  // ...
+  public readonly selectUsers =
+    // simply pass here a select for a single entity.
+    rootEntities(
+      this.selectUser,
     );
-    // ...
+  // ...
 }
 ```
 
 Now we can use the defined selectors in components.
+
 ```ts
 export class MyComponent {
-    constructor(store: Store, userSelectors: UserSelectorService) {
-        this.user$ = store.select(userSelectors.selectUser, '1');
-        this.users$ = store.select(userSelectors.selectUsers, ['1', '2']);
-    }
+  constructor(
+      store: Store,
+      userSelectors: UserSelectorService,
+  ) {
+    this.user$ = store.select(
+      userSelectors.selectUser,
+      '1',
+    );
+    this.users$ = store.select(
+      userSelectors.selectUsers,
+      ['1', '2'],
+    );
+  }
 }
 ```
 
@@ -537,6 +586,7 @@ export class MyComponent {
 ### Entity state selector
 
 An **entity state selector** can be:
+
 - a function that returns `EntityState<T>`
 - an instance of `EntityCollectionService<T>`
 - an instance of `EntityCollectionServiceBase<T>`
@@ -544,18 +594,23 @@ An **entity state selector** can be:
 
 The last case is useful when the `id` key of an entity isn't `id`, but another one: `Id`, `uuid`, etc.
 Then you can define here the key name, or a function which returns its value from an entity.
+
 ```ts
 const selector1 = {
-    collection: createFeatureSelector('users'),
-    id: 'Id',
+  collection: createFeatureSelector('users'),
+  id: 'Id',
 };
 const selector2 = {
-    collection: state => state.companies,
-    id: 'uuid',
+  collection: state => state.companies,
+  id: 'uuid',
 };
 const selector3 = {
-    collection: stateKeys(createFeatureSelector('addresses'), 'byIds', 'existingIds'),
-    id: entity => entity.uuid,
+  collection: stateKeys(
+    createFeatureSelector('addresses'),
+    'byIds',
+    'existingIds',
+  ),
+  id: entity => entity.uuid,
 };
 ```
 
@@ -566,29 +621,31 @@ its call produces a **root selector** which can be used with **Redux** and **NGR
 
 ```ts
 declare function rootEntity(
-    entityStateSelector,
-    transformer?,
-    ...relationships
+  entityStateSelector,
+  transformer?,
+  ...relationships
 );
 ```
 
 - `entityStateSelector` - is an **entity state selector** of a desired entity.
 
 - `transformer` - is an optional function which can be useful if we need a post processing transformation,
-   for example, to a class instance, basically an entity can be transformed to anything.
-   ```ts
-   const userClassInstance = rootEntity(
-       selector,
-       entity => plainToClass(UserClass, entity),
-   );
-   // selected entity will be an instance of UserClass.
-   
-   const userJsonString = rootEntity(
-       selector,
-       entity => JSON.stringify(entity),
-   );
-   // selected entity will be a JSON string.
-   ```
+  for example, to a class instance, basically an entity can be transformed to anything.
+
+  ```ts
+  const userClassInstance =
+    rootEntity(selector, entity =>
+      plainToClass(UserClass, entity),
+    );
+  // selected entity will be an instance of UserClass.
+
+  const userJsonString =
+    rootEntity(
+      selector,
+      entity => JSON.stringify(entity),
+    );
+  // selected entity will be a JSON string.
+  ```
 
 - `relationships` - is an optional parameter which accepts **relationship selectors** for the root entity.
 
@@ -601,18 +658,18 @@ It is useful when the id of the related entity is stored in the parent entity.
 
 ```ts
 declare function relatedEntity(
-    entityStateSelector,
-    keyId,
-    keyValue,
-    ...relationships
-)
+  entityStateSelector,
+  keyId,
+  keyValue,
+  ...relationships
+);
 ```
 
 - `entityStateSelector` - is an **entity state selector** of a desired entity.
 - `keyId` - a property name in the parent entity which points to the id of the related entity. (User.companyId -> Company.id)
 - `keyValue` - a property name in the parent entity where the related entity should be assigned.
 
-   > if `keyId` is an array of ids, then `keyValue` has to be an array of the related entities too.
+  > if `keyId` is an array of ids, then `keyValue` has to be an array of the related entities too.
 
 - `relationships` - is an optional parameter which accepts **relationship selectors** for the related entity.
 
@@ -622,29 +679,29 @@ Therefore, if we want a selector which fetches a user with its company it might 
 
 ```ts
 const user = rootEntity(
-    selectUserState,
-    relatedEntity(
-        selectCompanyState,
-        'companyId',
-        'company',
-    ),
+  selectUserState,
+  relatedEntity(
+    selectCompanyState,
+    'companyId',
+    'company',
+  ),
 );
 ```
 
 ### childEntity function
 
 `childEntity` is a **relationship selector factory**,
-its call produces a **relationship selector** which can be used within **root selectors** and another suitable **relationship selectors**. 
+its call produces a **relationship selector** which can be used within **root selectors** and another suitable **relationship selectors**.
 
 It is useful when the parent entity does not have the id of the related entity, but the related entity has the id of the parent entity.
 
 ```ts
 declare function childEntity(
-    entityStateSelector,
-    keyId,
-    keyValue,
-    ...relationships
-)
+  entityStateSelector,
+  keyId,
+  keyValue,
+  ...relationships
+);
 ```
 
 - `entityStateSelector` - is an **entity state selector** of a desired entity.
@@ -658,12 +715,12 @@ Therefore, if we want a selector which fetches an address with its company it mi
 
 ```ts
 const address = rootEntity(
-    selectAddressState,
-    childEntity(
-        selectCompanyState,
-        'addressId',
-        'company',
-    ),
+  selectAddressState,
+  childEntity(
+    selectCompanyState,
+    'addressId',
+    'company',
+  ),
 );
 ```
 
@@ -676,11 +733,11 @@ It is useful when the parent entity has a relationship to an array of entities a
 
 ```ts
 declare function childrenEntities(
-    entityStateSelector,
-    keyId,
-    keyValue,
-    ...relationships
-)
+  entityStateSelector,
+  keyId,
+  keyValue,
+  ...relationships
+);
 ```
 
 - `entityStateSelector` - is an **entity state selector** of a desired entity.
@@ -694,12 +751,12 @@ Therefore, if we want a selector which fetches a company with its staff it might
 
 ```ts
 const company = rootEntity(
-    selectCompanyState,
-    childrenEntities(
-        selectUserState,
-        'companyId',
-        'staff',
-    ),
+  selectCompanyState,
+  childrenEntities(
+    selectUserState,
+    'companyId',
+    'staff',
+  ),
 );
 ```
 
@@ -710,9 +767,9 @@ The goal here is to simply the process of creating **root selectors** with [`roo
 
 ```ts
 declare function rootEntitySelector(
-    entityStateSelector,
-    transformer?
-)
+  entityStateSelector,
+  transformer?,
+);
 ```
 
 It's parameters are the same as [`rootEntity`](#rootentity-function) has, but without relationships.
@@ -734,35 +791,37 @@ The goal here is to simply the process of creating **relationship selectors** wi
 
 ```ts
 declare function relatedEntitySelector(
-    entityStateSelector,
-    keyId,
-    keyValue
-)
+  entityStateSelector,
+  keyId,
+  keyValue,
+);
 ```
 
 It's parameters are the same as [`relatedEntity`](#relatedentity-function) has, but without relationships.
 
 ```ts
-const user = rootEntitySelector(selectUserState);
+const user = rootEntitySelector(
+  selectUserState,
+);
 const userCompany = relatedEntitySelector(
-    selectCompanyState,
-    'companyId',
-    'company',
+  selectCompanyState,
+  'companyId',
+  'company',
 );
 
 // later.
 const user1 = user(
-    userCompany(),
+  userCompany(),
 );
 
 // the same as.
 const user2 = rootEntity(
-    userSelector,
-    relatedEntity(
-        companySelector,
-        'companyId',
-        'company',
-    ),
+  userSelector,
+  relatedEntity(
+    companySelector,
+    'companyId',
+    'company',
+  ),
 );
 ```
 
@@ -773,35 +832,37 @@ The goal here is to simply the process of creating **relationship selectors** wi
 
 ```ts
 declare function childEntitySelector(
-    entityStateSelector,
-    keyId,
-    keyValue
-)
+  entityStateSelector,
+  keyId,
+  keyValue,
+);
 ```
 
 It's parameters are the same as [`childEntity`](#childentity-function) has, but without relationships.
 
 ```ts
-const address = rootEntitySelector(selectAddressState);
+const address = rootEntitySelector(
+  selectAddressState,
+);
 const addressCompany = childEntitySelector(
-    selectCompanyState,
-    'addressId',
-    'company',
+  selectCompanyState,
+  'addressId',
+  'company',
 );
 
 // later.
 const address1 = address(
-    addressCompany(),
+  addressCompany(),
 );
 
 // the same as.
 const address2 = rootEntity(
-    selectAddressState,
-    childEntity(
-        selectCompanyState,
-        'addressId',
-        'company',
-    ),
+  selectAddressState,
+  childEntity(
+    selectCompanyState,
+    'addressId',
+    'company',
+  ),
 );
 ```
 
@@ -812,35 +873,37 @@ The goal here is to simply the process of creating **relationship selectors** wi
 
 ```ts
 declare function childrenEntitiesSelector(
-    selector,
-    keyId,
-    keyValue
-)
+  selector,
+  keyId,
+  keyValue,
+);
 ```
 
 It's parameters are the same as [`childrenEntities`](#childrenentities-function) has, but without relationships.
 
 ```ts
-const company = rootEntitySelector(selectCompanyState);
+const company = rootEntitySelector(
+  selectCompanyState,
+);
 const companyStaff = childrenEntitiesSelector(
-    selectUserState,
-    'companyId',
-    'staff',
+  selectUserState,
+  'companyId',
+  'staff',
 );
 
 // later.
 const company1 = company(
-    selectUserState(),
+  selectUserState(),
 );
 
 // the same as.
 const company2 = rootEntity(
-    selectCompanyState,
-    childrenEntities(
-        selectUserState,
-        'companyId',
-        'staff',
-    ),
+  selectCompanyState,
+  childrenEntities(
+    selectUserState,
+    'companyId',
+    'staff',
+  ),
 );
 ```
 
@@ -850,9 +913,7 @@ const company2 = rootEntity(
 its call produces a **root selector** which can be used with **Redux** and **NGRX**.
 
 ```ts
-declare function rootEntities(
-    rootSelector
-)
+declare function rootEntities(rootSelector);
 ```
 
 - `rootSelector` - is a **root selector** which has been produced by `rootEntity` function.
@@ -867,27 +928,30 @@ const selectUsers = rootEntities(selectUser);
 and would like to extend them with relationships.
 
 For that we need:
+
 - the `store` object
 - a **root selector** we want to apply
 - an observable stream of entities
 
 Let's pretend we have a `user$` stream which emits a user entity time to time.
 Then we could extend it with the next operation.
+
 ```ts
 const userWithRelationships$ = user$.pipe(
-    // a user w/o relationships.
-    relationships(store, selectUser),
-    // now a user w/ relationships.
+  // a user w/o relationships.
+  relationships(store, selectUser),
+  // now a user w/ relationships.
 );
 ```
 
 The same can be done for a stream that emits an array of users.
 In this case the **root selector** for arrays should be used.
+
 ```ts
 const usersWithRelationships$ = users$.pipe(
-    // users w/o relationships.
-    relationships(store, selectUsers),
-    // now users w/ relationships.
+  // users w/o relationships.
+  relationships(store, selectUsers),
+  // now users w/ relationships.
 );
 ```
 
@@ -906,19 +970,31 @@ There is a list of recommended types.
 #### HANDLER_ENTITY
 
 Simplifies definition of `HANDLER_ROOT_ENTITY`:
+
 ```ts
 const selectUser1: HANDLER_ENTITY<User> = rootEntity(/*...*/);
 // instead of
-const selectUser2: HANDLER_ROOT_ENTITY<StoreState, User, User, string> = rootEntity(/*...*/);
+const selectUser2: HANDLER_ROOT_ENTITY<
+  StoreState,
+  User,
+  User,
+  string
+> = rootEntity(/*...*/);
 ```
 
 #### HANDLER_ENTITIES
 
 Simplifies definition of `HANDLER_ROOT_ENTITIES`:
+
 ```ts
 const selectUsers1: HANDLER_ENTITIES<User> = rootEntities(/*...*/);
 // instead of
-const selectUsers2: HANDLER_ROOT_ENTITIES<StoreState, User, User, string> = rootEntities(/*...*/);
+const selectUsers2: HANDLER_ROOT_ENTITIES<
+  StoreState,
+  User,
+  User,
+  string
+> = rootEntities(/*...*/);
 ```
 
 ### Releasing cache
@@ -927,36 +1003,40 @@ Every function of the library which produces selectors returns a shape that has 
 Its behavior and purpose is the same as
 [Memoized Selectors](https://ngrx.io/guide/store/selectors#resetting-memoized-selectors) of `@ngrx/store`.
 Once you do not need a selector simply call `release` to reset the memoized value.
+
 ```ts
 const selectUser = rootEntity(selectUserState);
-store.select(selectUser, 1).subsribe(user => {
+store
+  .select(selectUser, 1)
+  .subsribe(user => {
     // ...some activity
     selectUser.release();
-});
+  });
 ```
 
 ### Usage with createSelector from NGRX
 
 Imagine, there are two selectors:
+
 - a selector that returns the id of a current user
 
   ```ts
   export const selectCurrentUserId = createSelector(
-      selectUserState,
-      feature => feature.currentUserId,
-   );
-   ```  
+    selectUserState,
+    feature => feature.currentUserId,
+  );
+  ```
 
 - a **root selector** for users with relationships
 
   ```ts
   export const selectUserWithCompany = rootEntity(
-      selectUserState,
-      relatedEntity(
-          selectCompanyFeature,
-          'companyId',
-          'company',
-      ),
+    selectUserState,
+    relatedEntity(
+      selectCompanyFeature,
+      'companyId',
+      'company',
+    ),
   );
   ```
 
@@ -966,28 +1046,29 @@ Then we have 3 options:
 
   ```ts
   // selecting the id of a current user
-  store.select(selectCurrentUserId).pipe(
+  store
+    .select(selectCurrentUserId)
+    .pipe(
       // selecting the user with desired relationships
       switchMap(id => store.select(selectUserWithCompany, id)),
-  ).subscribe(user => {
+    )
+    .subscribe(user => {
       // profit
-  });
+    });
   ```
 
 - combine them together via `createSelector` function, but it is a bit uncomfortable
 
   ```ts
   export const selectCurrentUser = createSelector(
-      s => s, // selecting the whole store
-      selectCurrentUserId, // selecting the id of a current user
-      selectUserWithCompany, // selecting the user with desired relationships
+    s => s, // selecting the whole store
+    selectCurrentUserId, // selecting the id of a current user
+    selectUserWithCompany, // selecting the user with desired relationships
   );
-  
-  store
-      .select(selectCurrentUser)
-      .subscribe(user => {
-          // profit
-      });
+
+  store.select(selectCurrentUser).subscribe(user => {
+    // profit
+  });
   ```
 
 - pass an id selector as a parameter, quite short
@@ -995,10 +1076,10 @@ Then we have 3 options:
   ```ts
   // selecting the user with desired relationships
   store
-      .select(selectUserWithCompany, selectCurrentUserId)
-      .subscribe(user => {
-          // profit
-      });
+    .select(selectUserWithCompany, selectCurrentUserId)
+    .subscribe(user => {
+      // profit
+    });
   ```
 
 ### Gathering information about selectors
@@ -1028,12 +1109,17 @@ const store = createStore(ngrxEntityRelationshipReducer(rootReducer));
 
 ```ts
 // NGRX
-StoreModule.forRoot({/* ... */}, {
+StoreModule.forRoot(
+  {
+    /* ... */
+  },
+  {
     metaReducers: [
-        // ...
-        ngrxEntityRelationshipReducer, // <- add this
+      // ...
+      ngrxEntityRelationshipReducer, // <- add this
     ],
-})
+  },
+);
 ```
 
 After that [`reduceFlat`](#reduceflat--reduceflat-action) action and [`reduceGraph`](#reducegraph--reducegraph-action) action can be used.
@@ -1043,6 +1129,7 @@ After that [`reduceFlat`](#reduceflat--reduceflat-action) action and [`reduceGra
 This action helps to add to store data from a flat response.
 
 Imagine, a backend returns the next flat shape:
+
 ```json
 {
   "users": [
@@ -1073,28 +1160,29 @@ Imagine, a backend returns the next flat shape:
 ```
 
 There is a selector that fetches this data from the store (it has to have meta info `flatKey`):
+
 ```ts
 export const selectUser = rootEntity(
-    selectUserState,
+  selectUserState,
+  {
+    flatKey: 'users',
+  },
+  relatedEntity(
+    selectCompanyState,
+    'companyId',
+    'company',
     {
-        flatKey: 'users',
+      flatKey: 'companies',
     },
     relatedEntity(
-        selectCompanyState,
-        'companyId',
-        'company',
-        {
-            flatKey: 'companies',
-        },
-        relatedEntity(
-            selectAddressState,
-            'addressId',
-            'address',
-            {
-                flatKey: 'addresses',
-            },
-        ),
+      selectAddressState,
+      'addressId',
+      'address',
+      {
+        flatKey: 'addresses',
+      },
     ),
+  ),
 );
 ```
 
@@ -1102,20 +1190,26 @@ Then the store can be updated by dispatching the `reduceFlat` action:
 
 ```ts
 // Redux
-store.dispatch(reduceFlat({
+store.dispatch(
+  reduceFlat({
     data: response,
     selector: selectUser,
-}));
+  }),
+);
 ```
 
 ```ts
 // NGRX
-this.store.dispatch(reduceFlat({
-  data: response,
-  selector: selectUser,
-}));
+this.store.dispatch(
+  reduceFlat({
+    data: response,
+    selector: selectUser,
+  }),
+);
 // or
-this.store.dispatch(new ReduceFlat(response, selectUser));
+this.store.dispatch(
+  new ReduceFlat(response, selectUser),
+);
 ```
 
 ### ReduceGraph / reduceGraph action
@@ -1123,6 +1217,7 @@ this.store.dispatch(new ReduceFlat(response, selectUser));
 This action helps to add to store data from a graph response.
 
 Imagine a backend returns the next nested shape of user:
+
 ```json
 {
   "id": "1",
@@ -1145,19 +1240,20 @@ Imagine a backend returns the next nested shape of user:
 ```
 
 There is a selector that fetches this data from the store:
+
 ```ts
 export const selectUser = rootEntity(
-    selectUserState,
+  selectUserState,
+  relatedEntity(
+    selectCompanyState,
+    'companyId',
+    'company',
     relatedEntity(
-        selectCompanyState,
-        'companyId',
-        'company',
-        relatedEntity(
-            selectAddressState,
-            'addressId',
-            'address',
-        ),
+      selectAddressState,
+      'addressId',
+      'address',
     ),
+  ),
 );
 ```
 
@@ -1165,20 +1261,26 @@ Then the store can be updated by dispatching the `reduceGraph` action:
 
 ```ts
 // Redux
-store.dispatch(reduceGraph({
+store.dispatch(
+  reduceGraph({
     data: response,
     selector: selectUser,
-}));
+  }),
+);
 ```
 
 ```ts
 // NGRX
-this.store.dispatch(reduceGraph({
-  data: response,
-  selector: selectUser,
-}));
+this.store.dispatch(
+  reduceGraph({
+    data: response,
+    selector: selectUser,
+  }),
+);
 // or
-this.store.dispatch(new ReduceGraph(response, selectUser));
+this.store.dispatch(
+  new ReduceGraph(response, selectUser),
+);
 ```
 
 ## Transform an entity to a class instance
@@ -1188,50 +1290,53 @@ It should be specified as the latest parameter, but before relationships definit
 The transformation happens once on the final root entity when all relationships have been already fulfilled.
 
 ```ts
-const entityUser = rootEntitySelector(selectUserState, user => new UserClass(user));
+const entityUser = rootEntitySelector(
+  selectUserState,
+  user => new UserClass(user),
+);
 
 export const selectUser = rootEntity(
-    selectUserState,
-    user => new UserClass(user),
-    relatedEntity(
-        selectCompanyState,
-        'companyId',
-        'company',
-        childrenEntities(
-            selectUserState,
-            'companyId',
-            'staff',
-        ),
-        relatedEntity(
-            selectUserState,
-            'adminId',
-            'admin',
-        ),
-        relatedEntity(
-            selectAddressState,
-            'addressId',
-            'address',
-            childEntity(
-                selectCompanyState,
-                'addressId',
-                'company',
-            ),
-        ),
+  selectUserState,
+  user => new UserClass(user),
+  relatedEntity(
+    selectCompanyState,
+    'companyId',
+    'company',
+    childrenEntities(
+      selectUserState,
+      'companyId',
+      'staff',
     ),
+    relatedEntity(
+      selectUserState,
+      'adminId',
+      'admin',
+    ),
+    relatedEntity(
+      selectAddressState,
+      'addressId',
+      'address',
+      childEntity(
+        selectCompanyState,
+        'addressId',
+        'company',
+      ),
+    ),
+  ),
 );
 ```
 
 ## Warnings
 
--   The same entity selected directly from the store and selected by a **root selector** is a different object after.
+- The same entity selected directly from the store and selected by a **root selector** is a different object after.
 
-    It allows to avoid side effects and circular references
+  It allows to avoid side effects and circular references
 
--   A selector changes pointers of its entity only in case if the root or nested entity has been updated in the store.
+- A selector changes pointers of its entity only in case if the root or nested entity has been updated in the store.
 
-    Or if [`release`](#releasing-cache) has been called before.
+  Or if [`release`](#releasing-cache) has been called before.
 
--   A value of any related key can be `undefined`.
+- A value of any related key can be `undefined`.
 
 ## Troubleshooting
 
@@ -1240,32 +1345,53 @@ export const selectUser = rootEntity(
 `WARNING in Circular dependency detected` - simply repeat the rule #1 and put created selectors into a separate file.
 
 A file where we have feature selectors (anything, but not selectors with relationships): `store.ts`
+
 ```ts
-export const selectUserState = createFeatureSelector<fromUser.State>('users');
-export const selectCompanyState = createFeatureSelector<fromCompany.State>('companies');
-export const selectAddressState = createFeatureSelector<fromAddress.State>('addresses');
+export const selectUserState =
+  createFeatureSelector<fromUser.State>(
+    'users',
+  );
+export const selectCompanyState =
+  createFeatureSelector<fromCompany.State>(
+    'companies',
+  );
+export const selectAddressState =
+  createFeatureSelector<fromAddress.State>(
+    'addresses',
+  );
 ```
 
 A separate file where we import all feature selectors and declare combined selectors with relationships: `selectors.ts`
+
 ```ts
-import {selectUserState, selectCompanyState, selectAddressState} from 'store.ts';
+import {
+  selectUserState,
+  selectCompanyState,
+  selectAddressState,
+} from 'store.ts';
 
 export const selectUser = rootEntity(
-    selectUserState, // the selector of the user's feature.
+  selectUserState, // the selector of the user's feature.
 
-    // now we define a relationship between a user and a company.
+  // now we define a relationship between a user and a company.
+  relatedEntity(
+    // a selector of the company's feature.
+    selectCompanyState,
+    // the key in the user's model that points to the company's id.
+    'companyId',
+    // the key in the user's model that should be fulfilled with the company's entity.
+    'company',
+
+    // now we define a relationship between a company and an address.
     relatedEntity(
-        selectCompanyState, // a selector of the company's feature.
-        'companyId', // the key in the user's model that points to the company's id.
-        'company', // the key in the user's model that should be fulfilled with the company's entity.
-
-        // now we define a relationship between a company and an address.
-        relatedEntity(
-            selectAddressState, // a selector of the address's feature.
-            'addressId', // the key in the company's model that points to the address's id.
-            'address', // the key in the company's model that should be fulfilled with the address's entity.
-        ),
+      // a selector of the address's feature.
+      selectAddressState,
+      // the key in the company's model that points to the address's id.
+      'addressId',
+      // the key in the company's model that should be fulfilled with the address's entity.
+      'address',
     ),
+  ),
 );
 ```
 
@@ -1281,4 +1407,409 @@ but they are complicated and to solve the issue they can be replaced by `HANDLER
 ```ts
 const selectUser: HANDLER_ENTITY<User> = rootEntity(/*...*/);
 const selectUsers: HANDLER_ENTITIES<User> = rootEntities(/*...*/);
+```
+
+## Building GraphQL queries in Redux and NGRX
+
+A set of helper functions to convert existing selectors made by `ngrx-entity-relationship` to a `GraphQL` query via a simple interface.
+
+## Usage
+
+Imagine we have a selector:
+
+```ts
+export const selectUser = rootUser(
+  relUserCompany(
+    relCompanyAddress()
+  ),
+);
+```
+
+And, we want to get a `GraphQL` query like that:
+
+```graphql
+{
+  user(id: "1") {
+    id
+    firstName
+    lastName
+    companyId
+    company {
+      id
+      name
+      addressId
+      address {
+        id
+        street
+        city
+        country
+      }
+    }
+  }
+}
+```
+
+The only issue is that the selectors do not know fields of their entities.
+To solve this, we need to define them manually as meta of every selector.
+
+To do that, we need to go the place where the factory functions are defined
+and add meta information about `GraphQL`.
+
+> Don't forget to include fields for ids.
+
+```ts
+// user
+export const rootUser = rootEntitySelector(selectUserState, {
+  // here we go
+  gqlFields: ['id', 'firstName', 'lastName'],
+});
+// user.company
+export const relUserCompany = relatedEntitySelector(
+  selectCompanyState,
+  'companyId',
+  'company',
+  {
+    // here we go
+    gqlFields: ['id', 'name'],
+  },
+);
+// company.address
+export const relCompanyAddress = relatedEntitySelector(
+  selectAddressState,
+  'addressId',
+  'address',
+  {
+    // here we go
+    gqlFields: ['id', 'street', 'city', 'country'],
+  },
+);
+```
+
+Profit, now we can use this selector to generate a `GraphQL` query via helper functions.
+
+```ts
+// works for arrays of entities
+const allUsers = toGraphQL(
+  'users',
+  selectUser,
+);
+
+// works with parameters
+const userId1 = toGraphQL(
+  'user(id: "1")',
+  selectUser,
+);
+
+// converts parameters
+const userId2 = toGraphQL(
+  'user',
+  {id: '2'},
+  selectUser,
+);
+```
+
+The result will be
+
+```graphql
+{
+  users {
+    id
+    firstName
+    lastName
+    companyId
+    company {
+      id
+      name
+      addressId
+      address {
+        id
+        street
+        city
+        country
+      }
+    }
+  }
+}
+```
+
+```graphql
+{
+  user(id: "1") {
+    id
+    # and all other fields with relationships.
+  }
+}
+```
+
+```graphql
+{
+  user(id: "2") {
+    id
+    # and all other fields with relationships.
+  }
+}
+```
+
+If we want, we can combine these three queries into a single query,
+we need to use `toGraphQL` again, but with aliases:
+
+```ts
+const combined = toGraphQL(
+  toGraphQL('all:users', selectUser),
+  toGraphQL('u1:user(id: "1")', selectUser),
+  toGraphQL('u2:user', {id: '2'}, selectUser),
+);
+```
+
+It will generate:
+
+```graphql
+{
+  all: users {
+    id
+    # ...
+  }
+  u1: user(id: "1") {
+    id
+    # ...
+  }
+  u2: user(id: "2") {
+    id
+    # ...
+  }
+}
+```
+
+### Usage with HttpClient
+
+An example of a `ngrx` effect and `HttpClient`.
+
+```ts
+@Injectable()
+export class EntityEffects {
+  @Effect()
+  public readonly dataGraph$ = this.actions$.pipe(
+    ofType(UserActionTypes.LOAD),
+    switchMap(() =>
+      this.http
+        .get<{data: {users: Array<User>}}>(
+          'http://localhost:3000/graphql',
+          {
+            params: {
+              // toGraphQL generates the query
+              query: toGraphQL('users', selectUser),
+            },
+          },
+        )
+        .pipe(
+          // reduces data, requires meta reducer from ngrx-entity-relationship.
+          map(response =>
+            reduceGraph({
+              data: response.data.users,
+              selector: selectUser,
+            }),
+          ),
+        ),
+    ),
+  );
+
+  constructor(
+    protected readonly actions$: Actions,
+    protected readonly http: HttpClient,
+  ) {}
+}
+```
+
+### Usage with Apollo Service
+
+An example of a `ngrx` effect and `Apollo` service.
+
+```ts
+@Injectable()
+export class EntityEffects {
+  @Effect()
+  public readonly dataGraph$ = this.actions$.pipe(
+    ofType(UserActionTypes.LOAD),
+    switchMap(() =>
+      this.apollo
+        .query<{users: Array<User>}>({
+          // toGraphQL generates the query
+          query: gql(toGraphQL('users', selectUser)),
+        })
+        .pipe(
+          // reduces data, requires meta reducer from ngrx-entity-relationship.
+          map(response =>
+            reduceGraph({
+              data: response.data.users,
+              selector: selectUser,
+            }),
+          ),
+        ),
+    ),
+  );
+
+  constructor(
+    protected readonly actions$: Actions,
+    protected readonly apollo: Apollo,
+  ) {}
+}
+```
+
+### Subscriptions with GraphQL, Redux and NGRX
+
+`toGraphQL` is not enough to generate a subscription query.
+The library provides a helper function called `toSubscription` to solve the issue.
+
+For example
+
+```ts
+const query = toSubscription(toGraphQL('users', action.selector));
+```
+
+will generate
+
+```graphql
+subscription {
+  users {
+    id
+    # ...
+  }
+}
+```
+
+With `Apollo` service, it can be used like that
+
+```ts
+apollo.subscribe({
+  query: gql(
+    toSubscription(
+      toGraphQL('users', action.selector),
+    ),
+  ),
+}).subscribe(update => {
+  // magic is here.
+});
+```
+
+### Mutations with GraphQL, Redux and NGRX
+
+`toGraphQL` is not enough to generate a mutation query.
+The library provides a helper function called `toMutation` which solves the issue.
+
+For example
+
+```ts
+const query = toMutation(
+  toGraphQL(
+    'updateUser',
+    {
+      id: 'id1',
+      data: {
+        firstName: 'updatedFirstName',
+        lastName: 'lastFirstName',
+      },
+    },
+    action.selector,
+  ),
+);
+```
+
+will generate
+
+```graphql
+mutation {
+  updateUser(
+    id: "id1"
+    data: {
+      firstName: "updatedFirstName",
+      lastName: "lastFirstName"
+    }
+  ) {
+    id
+    # and all other fields with relationships.
+  }
+}
+```
+
+With `Apollo` service, it can be used like that
+
+```ts
+apollo.mutate({
+  mutation: gql(
+    toMutation(
+      toGraphQL(
+        'updateUser',
+        {
+          id: 'id1',
+          data: {
+            firstName: 'updatedFirstName',
+            lastName: 'lastFirstName',
+          },
+        },
+        action.selector,
+      ),
+    ),
+  ),
+}).subscribe(update => {
+  // magic is here.
+});
+```
+
+### Queries with GraphQL, Redux and NGRX
+
+`toGraphQL` is not enough to generate a query with variables.
+The library provides a function called `toQuery` which solves the issue,
+but about that in the next [Variables](#variables) section.
+
+### Variables
+
+All [`toQuery`](#queries-with-graphql-redux-and-ngrx),
+[`toSubscription`](#subscriptions-with-graphql-redux-and-ngrx)
+and [`toMutation`](#mutations-with-graphql-redux-and-ngrx) support variables.
+They can be passed as the first parameter.
+`toGraphQL` supports `$` to define variables instead of values.
+
+```ts
+apollo.mutate({
+  // the same for toQuery and toSubscription too.
+  mutation: gql(
+    toMutation(
+      {
+        // definition of variables and their types.
+        data: 'UpdateUserInput!',
+      },
+      toGraphQL(
+        'updateUser',
+        {
+          // a normal parameter with its value.
+          id: 'id1',
+          // under $ parameters and their variables can be defined.
+          $: {
+            data: '$data',
+          },
+        },
+        action.selector,
+      ),
+    ),
+  ),
+  variables: {
+    data: {
+      firstName: 'updatedFirstName',
+      lastName: 'lastFirstName',
+    },
+  },
+}).subscribe(update => {
+  // magic is here.
+});
+```
+
+will generate
+
+```graphql
+mutation($data: UpdateUserInput!) {
+  updateUser(id: "id1", data: $data) {
+    id
+    # and all other fields with relationships.
+  }
+}
 ```

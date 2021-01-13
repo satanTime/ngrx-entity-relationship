@@ -1,20 +1,20 @@
 {
-    "extends": "./tsconfig.json",
-    "compilerOptions": {
-        "outDir": "../../dist/out-tsc",
-        "target": "es3",
-        "declaration": true,
-        "declarationMap": true,
-        "inlineSources": true,
-        "importHelpers": false,
-        "types": [],
-        "lib": ["dom", "es2015"]
-    },
-    "angularCompilerOptions": {
-        "skipTemplateCodegen": true,
-        "strictMetadataEmit": true,
-        "enableResourceInlining": true
-    },
-    "files": ["src/public_api.ts", "rxjs/src/public_api.ts"],
-    "exclude": ["src/test.ts", "**/*.spec.ts"]
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "target": "es3",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "importHelpers": false,
+    "types": [],
+    "lib": ["dom", "es2015"]
+  },
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true
+  },
+  "files": ["src/public_api.ts", "rxjs/src/public_api.ts", "graphql/src/public_api.ts"],
+  "exclude": ["src/test.ts", "**/*.spec.ts"]
 }

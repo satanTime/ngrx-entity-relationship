@@ -1,35 +1,35 @@
-import {UNKNOWN} from '../src/lib/types';
-import {childEntity, ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY} from '../src/public_api';
+import {childrenEntities} from '../../../src/lib/childrenEntities';
+import {ENTITY_STATE, FEATURE_SELECTOR, HANDLER_RELATED_ENTITY, UNKNOWN} from '../../../src/lib/types';
 
-describe('childEntity', () => {
+describe('childrenEntities', () => {
     interface Entity {
         id: string;
         name: string;
         parentId?: string | number;
-        child?: Entity;
+        child?: Array<Entity>;
     }
 
     it('marks callback with ngrxEntityRelationship key and passed args', () => {
         const rel1: any = Symbol();
         const rel2: any = Symbol();
         const featureSelector = jasmine.createSpy();
-        const actual = childEntity<any, any, any, any, any>(featureSelector, 'myKeyId', 'myKeyValue', rel1, rel2);
+        const actual = childrenEntities<any, any, any, any, any>(featureSelector, 'myKeyId', 'myKeyValue', rel1, rel2);
         expect(actual).toEqual(jasmine.any(Function));
-        expect(actual.ngrxEntityRelationship).toEqual('childEntity');
+        expect(actual.ngrxEntityRelationship).toEqual('childrenEntities');
         expect(actual.collectionSelector).toBe(featureSelector);
         expect(actual.keyId).toEqual('myKeyId');
         expect(actual.keyValue).toEqual('myKeyValue');
         expect(actual.relationships).toEqual([rel1, rel2]);
     });
 
-    it('does not set anything if there is no child entity', () => {
+    it('set an empty array if there are no child entities', () => {
         const state = {
             feature: {
                 ids: [],
                 entities: {},
             },
         };
-        const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
+        const selector = childrenEntities<typeof state, Entity, Entity, 'parentId', 'child'>(
             v => v.feature,
             'parentId',
             'child',
@@ -41,17 +41,17 @@ describe('childEntity', () => {
         };
 
         selector('', state, new Map(), entity, selector.idSelector);
-        expect(entity.child).toBeUndefined();
+        expect(entity.child).toEqual([]);
     });
 
-    it('sets the child entity if it exists', () => {
+    it('set the children entities if they exist', () => {
         const state = {
             feature: {
                 ids: [],
                 entities: {},
             },
         };
-        const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
+        const selector = childrenEntities<typeof state, Entity, Entity, 'parentId', 'child'>(
             v => v.feature,
             'parentId',
             'child',
@@ -75,24 +75,36 @@ describe('childEntity', () => {
                 name: 'name2',
                 parentId: 'id1',
             },
+            id4: {
+                id: 'id4',
+                name: 'name4',
+                parentId: 'id1',
+            },
         };
 
         selector('', state, new Map(), entity, selector.idSelector);
-        expect(entity.child).toEqual({
-            id: 'id2',
-            name: 'name2',
-            parentId: 'id1',
-        });
+        expect(entity.child).toEqual([
+            {
+                id: 'id2',
+                name: 'name2',
+                parentId: 'id1',
+            },
+            {
+                id: 'id4',
+                name: 'name4',
+                parentId: 'id1',
+            },
+        ]);
     });
 
-    it('clones the child entity', () => {
+    it('clones the children entities', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
                 ids: [],
                 entities: {},
             },
         };
-        const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
+        const selector = childrenEntities<typeof state, Entity, Entity, 'parentId', 'child'>(
             v => v.feature,
             'parentId',
             'child',
@@ -113,10 +125,10 @@ describe('childEntity', () => {
         };
 
         selector('', state, new Map(), entity, selector.idSelector);
-        expect(entity.child).not.toBe(state.feature.entities.id2);
+        expect(entity.child?.[0]).not.toBe(state.feature.entities.id2);
     });
 
-    it('sets the cache when the related entity does not exist', () => {
+    it('sets the cache when the children entities do not exist', () => {
         const state = {
             feature: {
                 ids: [],
@@ -124,7 +136,7 @@ describe('childEntity', () => {
             },
         };
         const featureSelector: FEATURE_SELECTOR<typeof state, Entity> = v => v.feature;
-        const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
+        const selector = childrenEntities<typeof state, Entity, Entity, 'parentId', 'child'>(
             featureSelector,
             'parentId',
             'child',
@@ -136,15 +148,18 @@ describe('childEntity', () => {
         };
 
         const cache = new Map();
-        selector('randChildEntity', state, cache, entity, selector.idSelector);
+        selector('randChildrenEntities', state, cache, entity, selector.idSelector);
         expect(cache.size).toBe(1);
-        expect(cache.get('randChildEntity').get('!id1')[0].size).toBe(1);
-        expect(cache.get('randChildEntity').get('!id1')[0].get(featureSelector).size).toBe(1);
-        expect(cache.get('randChildEntity').get('!id1')[0].get(featureSelector).get(null)).toBe(state.feature.entities);
-        expect(cache.get('randChildEntity').get('!id1')[1]).toBeUndefined();
+        expect(cache.get('randChildrenEntities').size).toBe(1);
+        expect(cache.get('randChildrenEntities').get('!id1')[0].size).toBe(1);
+        expect(cache.get('randChildrenEntities').get('!id1')[0].get(featureSelector).size).toBe(1);
+        expect(cache.get('randChildrenEntities').get('!id1')[0].get(featureSelector).get(null)).toBe(
+            state.feature.entities,
+        );
+        expect(cache.get('randChildrenEntities').get('!id1')[1]).toEqual([]);
     });
 
-    it('sets the cache when the related entity exists', () => {
+    it('sets the cache when the children entities exist', () => {
         const state: {feature: ENTITY_STATE<Entity>} = {
             feature: {
                 ids: [],
@@ -152,7 +167,7 @@ describe('childEntity', () => {
             },
         };
         const featureSelector: FEATURE_SELECTOR<typeof state, Entity> = v => v.feature;
-        const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
+        const selector = childrenEntities<typeof state, Entity, Entity, 'parentId', 'child'>(
             featureSelector,
             'parentId',
             'child',
@@ -173,20 +188,39 @@ describe('childEntity', () => {
         };
 
         const cache = new Map();
-        selector('randChildEntity', state, cache, entity, selector.idSelector);
+        selector('randChildrenEntities', state, cache, entity, selector.idSelector);
         expect(cache.size).toBe(1);
-        expect(cache.get('randChildEntity').get('!id1')[0].size).toBe(1);
-        expect(cache.get('randChildEntity').get('!id1')[0].get(featureSelector).size).toBe(1);
-        expect(cache.get('randChildEntity').get('!id1')[0].get(featureSelector).get(null)).toBe(state.feature.entities);
-        expect(cache.get('randChildEntity').get('!id1')[1]).toBe('id2');
-        expect(cache.get('randChildEntity').get('#id2')[0].size).toBe(1);
-        expect(cache.get('randChildEntity').get('#id2')[0].get(featureSelector).size).toBe(2);
-        expect(cache.get('randChildEntity').get('#id2')[0].get(featureSelector).get(null)).toBe(state.feature.entities);
-        expect(cache.get('randChildEntity').get('#id2')[0].get(featureSelector).get('id2')).toBe(
+        expect(cache.get('randChildrenEntities').size).toBe(3);
+        expect(cache.get('randChildrenEntities').get('!id1')[0].size).toBe(1);
+        expect(cache.get('randChildrenEntities').get('!id1')[0].get(featureSelector).size).toBe(1);
+        expect(cache.get('randChildrenEntities').get('!id1')[0].get(featureSelector).get(null)).toBe(
+            state.feature.entities,
+        );
+        expect(cache.get('randChildrenEntities').get('!id1')[1]).toEqual(['id2']);
+
+        expect(cache.get('randChildrenEntities').get('#id2:id2')[0].size).toBe(1);
+        expect(cache.get('randChildrenEntities').get('#id2:id2')[0].get(featureSelector).size).toBe(2);
+        expect(cache.get('randChildrenEntities').get('#id2:id2')[0].get(featureSelector).get(null)).toBe(
+            state.feature.entities,
+        );
+        expect(cache.get('randChildrenEntities').get('#id2:id2')[0].get(featureSelector).get('id2')).toBe(
             state.feature.entities.id2,
         );
-        expect(cache.get('randChildEntity').get('#id2')[1]).not.toBe(state.feature.entities.id2);
-        expect(cache.get('randChildEntity').get('#id2')[1]).toEqual(state.feature.entities.id2);
+        expect(cache.get('randChildrenEntities').get('#id2:id2')[1]).not.toBe(state.feature.entities.id2);
+        expect(cache.get('randChildrenEntities').get('#id2:id2')[1]).toEqual(state.feature.entities.id2);
+
+        expect(cache.get('randChildrenEntities').get('#id2')[0].size).toBe(1);
+        expect(cache.get('randChildrenEntities').get('#id2')[0].get(featureSelector).size).toBe(2);
+        expect(cache.get('randChildrenEntities').get('#id2')[0].get(featureSelector).get(null)).toBe(
+            state.feature.entities,
+        );
+        expect(cache.get('randChildrenEntities').get('#id2')[0].get(featureSelector).get('id2')).toBe(
+            state.feature.entities.id2,
+        );
+        expect(cache.get('randChildrenEntities').get('#id2')[1].length).toBe(1);
+        expect(cache.get('randChildrenEntities').get('#id2')[1][0]).toBe(
+            cache.get('randChildrenEntities').get('#id2:id2')[1],
+        );
     });
 
     it('calls relationships with an incrementing prefix and arguments', () => {
@@ -202,7 +236,7 @@ describe('childEntity', () => {
         rel2.ngrxEntityRelationship = 'spy';
 
         const featureSelector: FEATURE_SELECTOR<typeof state, Entity> = v => v.feature;
-        const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
+        const selector = childrenEntities<typeof state, Entity, Entity, 'parentId', 'child'>(
             featureSelector,
             'parentId',
             'child',
@@ -225,9 +259,21 @@ describe('childEntity', () => {
         };
 
         const cache = new Map();
-        selector('randChildEntity', state, cache, entity, selector.idSelector);
-        expect(rel1).toHaveBeenCalledWith('randChildEntity:0', state, cache, entity.child as any, selector.idSelector);
-        expect(rel2).toHaveBeenCalledWith('randChildEntity:1', state, cache, entity.child as any, selector.idSelector);
+        selector('randChildrenEntities', state, cache, entity, selector.idSelector);
+        expect(rel1).toHaveBeenCalledWith(
+            'randChildrenEntities:0',
+            state,
+            cache,
+            entity.child?.[0] as any,
+            selector.idSelector,
+        );
+        expect(rel2).toHaveBeenCalledWith(
+            'randChildrenEntities:1',
+            state,
+            cache,
+            entity.child?.[0] as any,
+            selector.idSelector,
+        );
     });
 
     it('respects cache of relationships', () => {
@@ -248,7 +294,6 @@ describe('childEntity', () => {
             return 'rel1';
         }) as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel1.ngrxEntityRelationship = 'spy';
-
         const rel2 = (jasmine.createSpy('rel2').and.callFake((cacheKey, _2, cacheSet) => {
             const result = new Map();
             result.set('rel2selector', new Map());
@@ -262,7 +307,7 @@ describe('childEntity', () => {
         rel2.ngrxEntityRelationship = 'spy';
 
         const featureSelector: FEATURE_SELECTOR<typeof state, Entity> = v => v.feature;
-        const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
+        const selector = childrenEntities<typeof state, Entity, Entity, 'parentId', 'child'>(
             featureSelector,
             'parentId',
             'child',
@@ -304,7 +349,7 @@ describe('childEntity', () => {
         rel2.ngrxEntityRelationship = 'spy';
         rel2.release = jasmine.createSpy('rel2.release');
 
-        const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
+        const selector = childrenEntities<typeof state, Entity, Entity, 'parentId', 'child'>(
             v => v.feature,
             'parentId',
             'child',
@@ -327,7 +372,7 @@ describe('childEntity', () => {
             },
         };
         const idSelector = (v: Entity) => v.id;
-        const selector = childEntity<typeof state, Entity, Entity, 'parentId', 'child'>(
+        const selector = childrenEntities<typeof state, Entity, Entity, 'parentId', 'child'>(
             {
                 selectors: {
                     selectCollection: v => v.feature,
@@ -351,14 +396,22 @@ describe('childEntity', () => {
                 name: 'name2',
                 parentId: 'id1',
             },
+            id3: {
+                id: 'id3',
+                name: 'name2',
+                parentId: 'id2',
+            },
         };
 
-        selector('randChildEntity', state, new Map(), entity, selector.idSelector);
-        expect(entity.child).toEqual({
-            id: 'id2',
-            name: 'name2',
-            parentId: 'id1',
-        });
+        const cache = new Map();
+        selector('randChildrenEntities', state, cache, entity, selector.idSelector);
+        expect(entity.child).toEqual([
+            {
+                id: 'id2',
+                name: 'name2',
+                parentId: 'id1',
+            },
+        ]);
     });
 
     it('supports a default selector and returns id field', () => {
@@ -368,7 +421,7 @@ describe('childEntity', () => {
                 entities: {},
             },
         };
-        const selector = childEntity<typeof state, UNKNOWN, UNKNOWN, 'parentId', 'child'>(
+        const selector = childrenEntities<typeof state, UNKNOWN, UNKNOWN, 'parentId', 'child'>(
             v => v.feature,
             'parentId',
             'child',
@@ -388,14 +441,22 @@ describe('childEntity', () => {
                 name: 'name2',
                 parentId: 'id1',
             },
+            id3: {
+                id: 'id3',
+                name: 'name2',
+                parentId: 'id2',
+            },
         };
 
-        selector('randChildEntity', state, new Map(), entity, selector.idSelector);
-        expect(entity.child).toEqual({
-            id: 'id2',
-            name: 'name2',
-            parentId: 'id1',
-        } as any);
+        const cache = new Map();
+        selector('randChildrenEntities', state, cache, entity, selector.idSelector);
+        expect(entity.child).toEqual([
+            {
+                id: 'id2',
+                name: 'name2',
+                parentId: 'id1',
+            },
+        ] as any);
     });
 
     it('supports custom feature selector and id field of string', () => {
@@ -405,7 +466,7 @@ describe('childEntity', () => {
                 entities: {},
             },
         };
-        const selector = childEntity<typeof state, UNKNOWN, UNKNOWN, 'parentId', 'child'>(
+        const selector = childrenEntities<typeof state, UNKNOWN, UNKNOWN, 'parentId', 'child'>(
             {
                 collection: v => v.feature,
                 id: 'uuid',
@@ -428,14 +489,22 @@ describe('childEntity', () => {
                 name: 'name2',
                 parentId: 'id1',
             },
+            id3: {
+                uuid: 'id3',
+                name: 'name2',
+                parentId: 'id2',
+            },
         };
 
-        selector('randChildEntity', state, new Map(), entity, selector.idSelector);
-        expect(entity.child).toEqual({
-            uuid: 'id2',
-            name: 'name2',
-            parentId: 'id1',
-        } as any);
+        const cache = new Map();
+        selector('randChildrenEntities', state, cache, entity, selector.idSelector);
+        expect(entity.child).toEqual([
+            {
+                uuid: 'id2',
+                name: 'name2',
+                parentId: 'id1',
+            },
+        ] as any);
     });
 
     it('supports custom feature selector and id field of number', () => {
@@ -445,7 +514,7 @@ describe('childEntity', () => {
                 entities: {},
             },
         };
-        const selector = childEntity<typeof state, UNKNOWN, UNKNOWN, 'parentId', 'child'>(
+        const selector = childrenEntities<typeof state, UNKNOWN, UNKNOWN, 'parentId', 'child'>(
             {
                 collection: v => v.feature,
                 id: 5,
@@ -468,14 +537,22 @@ describe('childEntity', () => {
                 name: 'name2',
                 parentId: 'id1',
             },
+            id3: {
+                5: 'id3',
+                name: 'name2',
+                parentId: 'id2',
+            },
         };
 
-        selector('randChildEntity', state, new Map(), entity, selector.idSelector);
-        expect(entity.child).toEqual({
-            5: 'id2',
-            name: 'name2',
-            parentId: 'id1',
-        } as any);
+        const cache = new Map();
+        selector('randChildrenEntities', state, cache, entity, selector.idSelector);
+        expect(entity.child).toEqual([
+            {
+                5: 'id2',
+                name: 'name2',
+                parentId: 'id1',
+            },
+        ] as any);
     });
 
     it('supports custom feature selector and id selector', () => {
@@ -486,7 +563,7 @@ describe('childEntity', () => {
             },
         };
         const idSelector = (v: {feature: string}) => v.feature;
-        const selector = childEntity<typeof state, UNKNOWN, UNKNOWN, 'parentId', 'child'>(
+        const selector = childrenEntities<typeof state, UNKNOWN, UNKNOWN, 'parentId', 'child'>(
             {
                 collection: v => v.feature,
                 id: idSelector,
@@ -509,13 +586,21 @@ describe('childEntity', () => {
                 name: 'name2',
                 parentId: 'id1',
             },
+            id3: {
+                feature: 'id3',
+                name: 'name2',
+                parentId: 'id2',
+            },
         };
 
-        selector('randChildEntity', state, new Map(), entity, selector.idSelector);
-        expect(entity.child).toEqual({
-            feature: 'id2',
-            name: 'name2',
-            parentId: 'id1',
-        } as any);
+        const cache = new Map();
+        selector('randChildrenEntities', state, cache, entity, selector.idSelector);
+        expect(entity.child).toEqual([
+            {
+                feature: 'id2',
+                name: 'name2',
+                parentId: 'id1',
+            },
+        ] as any);
     });
 });

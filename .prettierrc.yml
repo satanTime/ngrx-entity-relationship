@@ -10,3 +10,14 @@ jsxBracketSameLine: false
 arrowParens: 'avoid'
 proseWrap: 'preserve'
 endOfLine: 'lf'
+overrides:
+  - files: 'README.md'
+    options:
+      printWidth: 70
+      tabWidth: 2
+  - files: '*.json'
+    options:
+      tabWidth: 2
+  - files: '*.yml'
+    options:
+      tabWidth: 2

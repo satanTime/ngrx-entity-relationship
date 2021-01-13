@@ -1,59 +1,59 @@
 {
-    "version": 2,
-    "projects": {
-        "ngrx-entity-relationship": {
-            "projectType": "library",
-            "root": "libs/ngrx-entity-relationship",
-            "sourceRoot": "libs/ngrx-entity-relationship",
-            "prefix": "ngrx-entity-relationship",
-            "targets": {
-                "build": {
-                    "executor": "@nrwl/angular:package",
-                    "options": {
-                        "tsConfig": "libs/ngrx-entity-relationship/tsconfig.lib.json",
-                        "project": "libs/ngrx-entity-relationship/ng-package.json"
-                    },
-                    "configurations": {
-                        "production": {
-                            "tsConfig": "libs/ngrx-entity-relationship/tsconfig.lib.prod.json"
-                        }
-                    }
-                },
-                "lint": {
-                    "executor": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "libs/ngrx-entity-relationship/tsconfig.lib.json",
-                            "libs/ngrx-entity-relationship/tsconfig.spec.json"
-                        ],
-                        "exclude": ["**/node_modules/**", "!libs/ngrx-entity-relationship/**/*"]
-                    }
-                },
-                "test": {
-                    "executor": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "libs/ngrx-entity-relationship/src/test.ts",
-                        "tsConfig": "libs/ngrx-entity-relationship/tsconfig.spec.json",
-                        "karmaConfig": "libs/ngrx-entity-relationship/karma.conf.js"
-                    }
-                }
+  "version": 2,
+  "projects": {
+    "ngrx-entity-relationship": {
+      "projectType": "library",
+      "root": "libs/ngrx-entity-relationship",
+      "sourceRoot": "libs/ngrx-entity-relationship",
+      "prefix": "ngrx-entity-relationship",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/ngrx-entity-relationship/tsconfig.lib.json",
+            "project": "libs/ngrx-entity-relationship/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ngrx-entity-relationship/tsconfig.lib.prod.json"
             }
-        }
-    },
-    "cli": {
-        "defaultCollection": "@nrwl/angular"
-    },
-    "generators": {
-        "@nrwl/angular:application": {
-            "unitTestRunner": "karma"
+          }
         },
-        "@nrwl/angular:library": {
-            "unitTestRunner": "karma",
-            "strict": true
+        "lint": {
+          "executor": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ngrx-entity-relationship/tsconfig.lib.json",
+              "libs/ngrx-entity-relationship/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/ngrx-entity-relationship/**/*"]
+          }
         },
-        "@nrwl/angular:component": {
-            "style": "css"
+        "test": {
+          "executor": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/ngrx-entity-relationship/src/test.ts",
+            "tsConfig": "libs/ngrx-entity-relationship/tsconfig.spec.json",
+            "karmaConfig": "libs/ngrx-entity-relationship/karma.conf.js"
+          }
         }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "generators": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "karma"
     },
-    "defaultProject": "ngrx-entity-relationship"
+    "@nrwl/angular:library": {
+      "unitTestRunner": "karma",
+      "strict": true
+    },
+    "@nrwl/angular:component": {
+      "style": "css"
+    }
+  },
+  "defaultProject": "ngrx-entity-relationship"
 }

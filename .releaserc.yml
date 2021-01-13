@@ -1,30 +1,30 @@
 release:
-    branches:
-        - master
+  branches:
+    - master
 plugins:
-    - '@semantic-release/commit-analyzer'
-    - - '@semantic-release/exec'
-      - prepareCmd: npm install && npm run st:lint && npm test && npm run st:build
-    - '@semantic-release/release-notes-generator'
-    - - '@semantic-release/changelog'
-      - changelogFile: CHANGELOG.md
-    - - '@semantic-release/npm'
-      - pkgRoot: dist/libs/ngrx-entity-relationship
-        tarballDir: tmp
-        npmPublish: false
-    - - '@semantic-release/github'
-      - assets:
-            - tmp/*.tgz
-        successComment: >-
-            [v${nextRelease.version}](https://github.com/satanTime/ngrx-entity-relationship/releases/tag/v${nextRelease.version})
-            has been released and contains a fix for the issue.
-            Feel free to reopen the issue or to submit a new one if you meet any problems.
-        failTitle: false
-        failComment: false
-        labels: false
-        releasedLabels:
-            - released
-            - >-
-                v${nextRelease.version}
-    - - '@semantic-release/git'
-      - message: 'chore(release): v${nextRelease.version}'
+  - '@semantic-release/commit-analyzer'
+  - - '@semantic-release/exec'
+    - prepareCmd: npm install && npm run st:lint && npm test && npm run st:build
+  - '@semantic-release/release-notes-generator'
+  - - '@semantic-release/changelog'
+    - changelogFile: CHANGELOG.md
+  - - '@semantic-release/npm'
+    - pkgRoot: dist/libs/ngrx-entity-relationship
+      tarballDir: tmp
+      npmPublish: false
+  - - '@semantic-release/github'
+    - assets:
+        - tmp/*.tgz
+      successComment: >-
+        [v${nextRelease.version}](https://github.com/satanTime/ngrx-entity-relationship/releases/tag/v${nextRelease.version})
+        has been released and contains a fix for the issue.
+        Feel free to reopen the issue or to submit a new one if you meet any problems.
+      failTitle: false
+      failComment: false
+      labels: false
+      releasedLabels:
+        - released
+        - >-
+          v${nextRelease.version}
+  - - '@semantic-release/git'
+    - message: 'chore(release): v${nextRelease.version}'
