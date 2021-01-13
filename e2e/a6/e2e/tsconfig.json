@@ -1,7 +1,7 @@
 {
-    "extends": "../tsconfig.json",
-    "compilerOptions": {
-        "module": "commonjs",
-        "types": ["jasmine", "jasminewd2", "node"]
-    }
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "types": ["jasmine", "jasminewd2", "node"]
+  }
 }
