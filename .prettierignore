@@ -3,6 +3,8 @@
 .gitignore
 .gitkeep
 .prettierignore
+CHANGELOG.md
+CODE_OF_CONDUCT.md
 LICENSE
 README.md
 browserslist
@@ -10,5 +12,6 @@ favicon.ico
 package-lock.json
 
 dist
+docs
 node_modules
 test-reports

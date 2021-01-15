@@ -11,7 +11,7 @@ arrowParens: 'avoid'
 proseWrap: 'preserve'
 endOfLine: 'lf'
 overrides:
-  - files: 'README.md'
+  - files: '*.md'
     options:
       printWidth: 70
       tabWidth: 2

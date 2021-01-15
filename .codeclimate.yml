@@ -5,6 +5,7 @@ exclude_patterns:
   - 'e2e/'
   - 'dist/'
   - 'docker/'
+  - 'docs/'
   - 'libs/ngrx-entity-relationship/e2e/'
   - 'libs/ngrx-entity-relationship/test/'
   - 'node_modules/'
