@@ -14,7 +14,8 @@ so, eventually, only selectors should be managed, the rest is done automatically
 
 The current version of `ngrx-entity-relationship` has been tested and can be used with:
 
-- Redux 4, React Redux 7, **try it live on [CodeSandbox](https://codesandbox.io/s/github/satanTime/ngrx-entity-relationship-react?file=/src/MyComponent.tsx)**
+- Redux 4, React Redux 7, **try it live on [StackBlitz](https://stackblitz.com/edit/ngrx-entity-relationship-react?file=src%2FMyComponent.tsx)**
+  or [CodeSandbox](https://codesandbox.io/s/github/satanTime/ngrx-entity-relationship-react?file=/src/MyComponent.tsx)**
 
 - NGRX 10, **try it live on [StackBlitz](https://stackblitz.com/github/satanTime/ngrx-entity-relationship-angular?file=src/app/app.component.ts)
   or [CodeSandbox](https://codesandbox.io/s/github/satanTime/ngrx-entity-relationship-angular?file=/src/app/app.component.ts)**

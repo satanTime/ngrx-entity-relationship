@@ -19,6 +19,7 @@
 - [NPM package](https://www.npmjs.com/package/ngrx-entity-relationship)
 
 * Live [Redux example on CodeSandbox](https://codesandbox.io/s/github/satanTime/ngrx-entity-relationship-react?file=/src/MyComponent.tsx)
+* Live [Redux example on StackBlitz](https://stackblitz.com/edit/ngrx-entity-relationship-react?file=src%2FMyComponent.tsx)
 * Live [NGRX example on CodeSandbox](https://codesandbox.io/s/github/satanTime/ngrx-entity-relationship-angular?file=/src/app/app.component.ts)
 * Live [NGRX example on StackBlitz](https://stackblitz.com/github/satanTime/ngrx-entity-relationship-angular?file=src/app/app.component.ts)
 
