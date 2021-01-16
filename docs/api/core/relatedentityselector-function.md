@@ -1,9 +1,9 @@
 ---
-description: relatedEntitySelector function
+description: Information about relatedEntitySelector function and how to create preconfigured relationship selector factories based on relatedEntity
 ---
 
 `relatedEntitySelector` is a function which creates a predefined **relationship selector factory**.
-The goal here is to simply the process of creating **relationship selectors** with [`relatedEntity`](#relatedentity-function).
+Its goal is to simply the process of creating **relationship selectors** with [`relatedEntity`](relatedentity-function.md).
 
 ```ts
 declare function relatedEntitySelector(
@@ -13,7 +13,7 @@ declare function relatedEntitySelector(
 );
 ```
 
-It's parameters are the same as [`relatedEntity`](#relatedentity-function) has, but without relationships.
+Its parameters are the same as [`relatedEntity`](relatedentity-function.md) has, but without relationships.
 
 ```ts
 const user = rootEntitySelector(

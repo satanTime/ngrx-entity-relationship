@@ -1,11 +1,16 @@
 ---
-description: Gathering information about selectors
+description: Information about metadata of selectors and how to gather it
 ---
 
-Besides the `release` function, every selector from the library provides information about itself:
+Every selector from the library provides information about itself:
 
-- `ngrxEntityRelationship` - name of its function: `rootEntity`, `rootEntities`, `relatedEntity`, `childEntity` and `childrenEntities`.
-- `collectionSelector` - the related entity state selector.
+- `ngrxEntityRelationship` - name of its function:
+  [`rootEntity`](../api/core/rootentity-function.md),
+  [`rootEntities`](../api/core/rootentities-function.md),
+  [`relatedEntity`](../api/core/relatedentity-function.md),
+  [`childEntity`](../api/core/childentity-function.md)
+  and [`childrenEntities`](../api/core/childrenentities-function.md).
+- `collectionSelector` - the related [**entity state selector**](../api/core/entity-state-selector.md).
 - `idSelector` - a function which returns ids of entities.
 - `relationships` - an array of passed **relationship selectors**.
 

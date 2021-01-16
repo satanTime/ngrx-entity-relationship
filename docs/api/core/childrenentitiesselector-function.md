@@ -1,9 +1,9 @@
 ---
-description: childrenEntitiesSelector function
+description: Information about childrenEntitiesSelector function and how to create preconfigured relationship selector factories based on childrenEntities
 ---
 
 `childrenEntitiesSelector` is a function which creates a predefined **relationship selector factory**.
-The goal here is to simply the process of creating **relationship selectors** with [`childrenEntities`](#childrenentities-function).
+Its goal is to simply the process of creating **relationship selectors** with [`childrenEntities`](childrenentities-function.md).
 
 ```ts
 declare function childrenEntitiesSelector(
@@ -13,7 +13,7 @@ declare function childrenEntitiesSelector(
 );
 ```
 
-It's parameters are the same as [`childrenEntities`](#childrenentities-function) has, but without relationships.
+Its parameters are the same as [`childrenEntities`](childrenentities-function.md) has, but without relationships.
 
 ```ts
 const company = rootEntitySelector(

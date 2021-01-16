@@ -1,11 +1,11 @@
 ---
-description: Releasing cache
+description: Information how to release cache from root selectors
 ---
 
-Every function of the library which produces selectors returns a shape that has `release` function.
+Every function of the library which produces selectors returns a shape that has the `release` function.
 Its behavior and purpose is the same as
-[Memoized Selectors](https://ngrx.io/guide/store/selectors#resetting-memoized-selectors) of `@ngrx/store`.
-Once you do not need a selector simply call `release` to reset the memoized value.
+[Memoized Selectors](https://ngrx.io/guide/store/selectors#resetting-memoized-selectors) from `@ngrx/store`.
+Once you do not need a selector simply call `release` to reset the cached entity.
 
 ```ts
 const selectUser = rootEntity(selectUserState);

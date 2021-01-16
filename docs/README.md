@@ -23,6 +23,13 @@ The current version of `ngrx-entity-relationship` has been tested and can be use
 - NGRX 7
 - NGRX 6
 
+**Need help or have a suggestion?**
+
+- [chat on gitter](https://gitter.im/ngrx-entity-relationship/community)
+- [ask a question on stackoverflow for Redux solution](https://stackoverflow.com/questions/ask?tags=ngrx-entity-relationship%20ngrx%20angular)
+- [ask a question on stackoverflow for NGRX solution](https://stackoverflow.com/questions/ask?tags=ngrx-entity-relationship%20redux%20reactjs)
+- [report an issue on GitHub](https://github.com/satanTime/ngrx-entity-relationship/issues/new)
+
 ## Problem of normalized entities and their relationships in Redux and NGRX
 
 Let's imagine that we have the next models:

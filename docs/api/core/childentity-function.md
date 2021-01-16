@@ -1,5 +1,5 @@
 ---
-description: childEntity function
+description: Information about childEntity function and how to create relationship selectors
 ---
 
 `childEntity` is a **relationship selector factory**,
@@ -16,14 +16,14 @@ declare function childEntity(
 );
 ```
 
-- `entityStateSelector` - is an **entity state selector** of a desired entity.
-- `keyId` - a property name in the related entity which points to the id of the parent entity. (Address.id -> Company.addressId)
-- `keyValue` - a property name in the parent entity where the related entity should be assigned.
+- `entityStateSelector` - is an [**entity state selector**](entity-state-selector.md) of a desired entity.
+- `keyId` - a property name in the related entity which points to the id of the parent entity, `addressId` from `Address.id -> Company.addressId`.
+- `keyValue` - a property name in the parent entity where the related entity should be assigned, `company` from `Address.company`.
 - `relationships` - is an optional parameter which accepts **relationship selectors** for the related entity.
 
 An example is the `Address`. Its model has `company`, but does not have `companyId`.
 However, `Company` entity has `addressId`.
-Therefore, if we want a selector which fetches an address with its company it might look like:
+Therefore, if we want a **root selector** which fetches an address with its company it might look like:
 
 ```ts
 const address = rootEntity(

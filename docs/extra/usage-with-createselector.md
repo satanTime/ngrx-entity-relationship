@@ -1,8 +1,8 @@
 ---
-description: Usage with createSelector from NGRX
+description: Information how to create combined selectors via createSelector from NGRX
 ---
 
-Imagine, there are two selectors:
+Imagine, there are two selectors in our **Angular** with **NGRX** app:
 
 - a selector that returns the id of a current user
 
@@ -43,13 +43,16 @@ Then we have 3 options:
     });
   ```
 
-- combine them together via `createSelector` function, but it is a bit uncomfortable
+- combine the selectors together via `createSelector` function, but it is a bit uncomfortable
 
   ```ts
   export const selectCurrentUser = createSelector(
-    s => s, // selecting the whole store
-    selectCurrentUserId, // selecting the id of a current user
-    selectUserWithCompany, // selecting the user with desired relationships
+    // selecting the whole store
+    s => s,
+    // selecting the id of a current user
+    selectCurrentUserId,
+    // selecting the user with desired relationships
+    selectUserWithCompany,
   );
 
   store.select(selectCurrentUser).subscribe(user => {
@@ -57,7 +60,7 @@ Then we have 3 options:
   });
   ```
 
-- pass an id selector as a parameter, quite short
+- pass an id selector as a parameter, what is the best choice and quite short
 
   ```ts
   // selecting the user with desired relationships

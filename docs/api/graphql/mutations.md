@@ -1,9 +1,9 @@
 ---
-description: Mutations with GraphQL, Redux and NGRX
+description: Information how to create mutation queries for GraphQL in Redux and NGRX
 ---
 
-`toGraphQL` is not enough to generate a mutation query.
-The library provides a helper function called `toMutation` which solves the issue.
+[`toGraphQL`](../../guide/graphql/quick.md) is not enough to generate a mutation query.
+`ngrx-entity-relationship` provides a helper function called `toMutation` which solves the issue.
 
 For example
 
@@ -40,7 +40,7 @@ mutation {
 }
 ```
 
-With `Apollo` service, it can be used like that
+With **Apollo service**, it can be used like that
 
 ```ts
 apollo.mutate({

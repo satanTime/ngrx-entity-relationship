@@ -1,9 +1,9 @@
 ---
-description: rootEntity function
+description: Information about rootEntity function and how to create root selectors
 ---
 
 `rootEntity` is a **root selector factory**,
-its call produces a **root selector** which can be used with **Redux** and **NGRX**.
+its call produces a **root selector** which can be used with **Redux** and **NGRX** in order to select related entities.
 
 ```ts
 declare function rootEntity(
@@ -13,9 +13,9 @@ declare function rootEntity(
 );
 ```
 
-- `entityStateSelector` - is an **entity state selector** of a desired entity.
+- `entityStateSelector` - is an [**entity state selector**](entity-state-selector.md) of a desired entity.
 
-- `transformer` - is an optional function which can be useful if we need a post processing transformation,
+- `transformer` - is an optional function which can be useful if we need a [post processing transformation](../../guide/transform-entities.md),
   for example, to a class instance, basically an entity can be transformed to anything.
 
   ```ts

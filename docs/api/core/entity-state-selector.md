@@ -1,15 +1,15 @@
 ---
-description: Entity state selector
+description: Information about how an entity state selector should look like in order to be used with ngrx-entity-relationship
 ---
 
 An **entity state selector** can be:
 
-- a function that returns `EntityState<T>`
-- an instance of `EntityCollectionService<T>`
-- an instance of `EntityCollectionServiceBase<T>`
-- an object `{collection: selector, id: selector}`
+- an object which contains selectors `{collection: selector, id: selector}`
+- a function that returns [`EntityState<T>`](https://ngrx.io/api/entity/EntityState) like in **NGRX**
+- an instance of [`EntityCollectionService<T>`](https://ngrx.io/api/data/EntityCollectionService) like in **NGRX**
+- an instance of [`EntityCollectionServiceBase<T>`](https://ngrx.io/api/data/EntityCollectionServiceBase) like in **NGRX** 
 
-The last case is useful when the `id` key of an entity isn't `id`, but another one: `Id`, `uuid`, etc.
+The first case is useful when the `id` key of an entity is not `id`, but another one: `Id`, `uuid`, etc.
 Then you can define here the key name, or a function which returns its value from an entity.
 
 ```ts

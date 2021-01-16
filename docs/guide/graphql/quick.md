@@ -14,7 +14,7 @@ export const selectUser = rootUser(
 );
 ```
 
-And we want to build a `GraphQL` query that fetches a user, its company and the address of the company:
+And we want to build a **GraphQL** query that fetches a user, its company and the address of the company:
 
 ```graphql
 {
@@ -47,7 +47,7 @@ which is an array of strings (entity keys).
 Therefore, to solve the issue we need to fill the `gqlFields` in every selector.
 
 To do that, we need to go the place where the factory functions are defined
-and add meta information about `GraphQL`.
+and add meta information about **GraphQL**.
 
 > Don't forget to include fields for ids.
 
@@ -79,7 +79,7 @@ export const relCompanyAddress = relatedEntitySelector(
 );
 ```
 
-Profit, now we can use this selector to generate a `GraphQL` query via `toGraphQL` helper functions.
+Profit, now we can use this selector to generate a **GraphQL** query via `toGraphQL` helper functions.
 
 ```ts
 // works for arrays of entities
