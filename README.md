@@ -14,7 +14,9 @@
 
 **Important links**
 
-- Here you can read [documentation with examples](https://ngrx-entity-relationship.sudo.eu)
+- [Documentation with examples](https://ngrx-entity-relationship.sudo.eu)
+- [GitHub repo](https://github.com/satanTime/ngrx-entity-relationship)
+- [NPM package](https://www.npmjs.com/package/ngrx-entity-relationship)
 
 * Live [Redux example on CodeSandbox](https://codesandbox.io/s/github/satanTime/ngrx-entity-relationship-react?file=/src/MyComponent.tsx)
 * Live [NGRX example on CodeSandbox](https://codesandbox.io/s/github/satanTime/ngrx-entity-relationship-angular?file=/src/app/app.component.ts)
@@ -68,8 +70,8 @@ Profit.
 
 ## What you could do next
 
-- [watch updates on github](https://github.com/satanTime/ngrx-entity-relationship),
-- [give a star](https://github.com/satanTime/ngrx-entity-relationship),
-- [share on twitter](https://twitter.com/intent/tweet?text=Check+ngrx-entity-relationship+package&url=https%3A%2F%2Fgithub.com%2FsatanTime%2Fngrx-entity-relationship).
+- [watch updates on github](https://github.com/satanTime/ngrx-entity-relationship)
+- [give a star](https://github.com/satanTime/ngrx-entity-relationship)
+- [share on twitter](https://twitter.com/intent/tweet?text=Check+ngrx-entity-relationship+package&url=https%3A%2F%2Fgithub.com%2FsatanTime%2Fngrx-entity-relationship)
 
 Thank you!

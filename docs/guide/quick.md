@@ -13,6 +13,16 @@ we need to follow the next rules:
 > If you need a solution for `@ngrx/data`,
 > then please read [the related section](ngrx-data.md) after this manual.
 
+## Installation
+
+```shell
+npm install ngrx-entity-relationship --save
+```
+
+```shell
+yarn add ngrx-entity-relationship
+```
+
 ## Normalized state structure for Redux and NGRX
 
 The first step is to ensure that entities are reduced into **the proper state**, there are two properties usually:
