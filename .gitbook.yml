@@ -3,7 +3,3 @@ root: ./docs
 structure:
   readme: README.md
   summary: summary.md
-pluginsConfig:
-  meta-single:
-    name: google-site-verification
-    content": jMrqjtRd20xHuqyWvctzCBPinKHJPpIy0ghFGRnT2xU
