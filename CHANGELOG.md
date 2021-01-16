@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.4.1...v1.5.0) (2021-01-16)
+
+
+### Features
+
+* merge with graphql extension ([cea8161](https://github.com/satanTime/ngrx-entity-relationship/commit/cea8161c6e2145623089aae631aa33e3f0cf97b4))
+
 ## [1.4.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.4.0...v1.4.1) (2021-01-06)
 
 ### Bug Fixes
