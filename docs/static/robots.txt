@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ngrx-entity-relationship.sudo.eu/sitemap.xml
