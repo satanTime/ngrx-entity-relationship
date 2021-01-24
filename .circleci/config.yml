@@ -33,6 +33,9 @@ jobs:
           name: Tests
           command: npm run test -- --codeCoverage --reporters junit
       - run:
+          name: Docs
+          command: npm run build:docs
+      - run:
           name: Build
           command: |
             npm run st:build
