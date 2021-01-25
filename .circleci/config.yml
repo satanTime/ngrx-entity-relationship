@@ -10,9 +10,11 @@ jobs:
       - run:
           name: NPM Install
           command: |
-            npm install --ignore-scripts && \
-            node ./node_modules/puppeteer/install.js && \
-            npm run postinstall
+            if [ ! -d "./node_modules/" ]; then
+              npm ci --no-optional --ignore-scripts && \
+              node ./node_modules/puppeteer/install.js && \
+              npm run postinstall
+            fi
       - save_cache:
           key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
           paths:
@@ -97,7 +99,28 @@ jobs:
           key: r7-{{ checksum "e2e/r7/package.json" }}-{{ checksum "e2e/r7/package-lock.json" }}
       - run:
           name: NPM Install
-          command: npm run i:a
+          command: |
+            if [ ! -d "e2e/a6/node_modules/" ]; then
+              npm run i:ci:a6
+            fi
+            if [ ! -d "e2e/a7/node_modules/" ]; then
+              npm run i:ci:a7
+            fi
+            if [ ! -d "e2e/a8/node_modules/" ]; then
+              npm run i:ci:a8
+            fi
+            if [ ! -d "e2e/a9/node_modules/" ]; then
+              npm run i:ci:a9
+            fi
+            if [ ! -d "e2e/a10/node_modules/" ]; then
+              npm run i:ci:a10
+            fi
+            if [ ! -d "e2e/a11/node_modules/" ]; then
+              npm run i:ci:a11
+            fi
+            if [ ! -d "e2e/r7/node_modules/" ]; then
+              npm run i:ci:r7
+            fi
       - save_cache:
           key: a6-{{ checksum "e2e/a6/package.json" }}-{{ checksum "e2e/a6/package-lock.json" }}
           paths:

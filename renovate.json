@@ -13,6 +13,11 @@
   "additionalBranchPrefix": "{{#if baseDir}}{{baseDir}}/{{else}}root/{{/if}}",
   "packageRules": [
     {
+      "paths": [".circleci/config.yml", "Dockerfile", "docker-compose.yml", "docs/package.json", "package.json"],
+      "additionalBranchPrefix": "root/"
+    },
+
+    {
       "paths": ["e2e/a6/package.json"],
       "packagePatterns": ["^@angular/"],
       "allowedVersions": "<=6"
