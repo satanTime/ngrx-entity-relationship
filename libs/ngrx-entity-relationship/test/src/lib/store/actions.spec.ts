@@ -9,7 +9,7 @@ import {
 
 describe('store/actions', () => {
     it('ReduceFlat', () => {
-        const data = Symbol();
+        const data = {p: Math.random()};
         const selector = rootEntity(() => undefined as any);
         const actual = new ReduceFlat(data, selector);
         expect(actual).toEqual(jasmine.any(ReduceFlat));
@@ -23,7 +23,7 @@ describe('store/actions', () => {
     });
 
     it('reduceFlat', () => {
-        const data = Symbol();
+        const data = {p: Math.random()};
         const selector = rootEntity(() => undefined as any);
         const actual = reduceFlat({data, selector});
         expect(actual).not.toEqual(jasmine.any(ReduceFlat));
@@ -37,7 +37,7 @@ describe('store/actions', () => {
     });
 
     it('ReduceGraph', () => {
-        const data = Symbol();
+        const data = {p: Math.random()};
         const selector = rootEntity(() => undefined as any);
         const actual = new ReduceGraph(data, selector);
         expect(actual).toEqual(jasmine.any(ReduceGraph));
@@ -51,7 +51,7 @@ describe('store/actions', () => {
     });
 
     it('reduceGraph', () => {
-        const data = Symbol();
+        const data = {p: Math.random()};
         const selector = rootEntity(() => undefined as any);
         const actual = reduceGraph({data, selector});
         expect(actual).not.toEqual(jasmine.any(ReduceGraph));

@@ -12,8 +12,8 @@ describe('relatedEntity', () => {
     }
 
     it('marks callback with ngrxEntityRelationship key and passed args', () => {
-        const rel1: any = Symbol();
-        const rel2: any = Symbol();
+        const rel1: any = () => ({p: Math.random()});
+        const rel2: any = () => ({p: Math.random()});
         const featureSelector = jasmine.createSpy();
         const actual = relatedEntity<any, any, any, any, any, any, any>(
             featureSelector,

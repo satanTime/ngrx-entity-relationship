@@ -11,10 +11,11 @@ module.exports = () => {
         basePath: '',
         frameworks: ['jasmine', '@angular-devkit/build-angular'],
         plugins: [
-            require('karma-jasmine'),
             require('karma-chrome-launcher'),
-            require('karma-jasmine-html-reporter'),
             require('karma-coverage'),
+            require('karma-ie-launcher'),
+            require('karma-jasmine'),
+            require('karma-jasmine-html-reporter'),
             require('karma-junit-reporter'),
             require('@angular-devkit/build-angular/plugins/karma'),
         ],
@@ -40,11 +41,15 @@ module.exports = () => {
         colors: true,
         logLevel: constants.LOG_INFO,
         autoWatch: true,
-        browsers: ['ChromeHeadlessNoSandbox'],
+        browsers: ['ChromeCi'],
         customLaunchers: {
-            ChromeHeadlessNoSandbox: {
+            ChromeCi: {
                 base: 'ChromeHeadless',
-                flags: ['--no-sandbox'],
+                flags: ['--headless', '--disable-gpu', '--no-sandbox', '--disable-dev-shm-usage'],
+            },
+            IECi: {
+                base: 'IE',
+                flags: ['-extoff'],
             },
         },
         singleRun: true,

@@ -1,4 +1,10 @@
 version: 2.1
+orbs:
+  win: circleci/windows@2.4.0
+parameters:
+  lockindex:
+    type: string
+    default: '1'
 jobs:
   Core:
     docker:
@@ -6,7 +12,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
+          key: root-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "package-lock.json" }}
       - run:
           name: NPM Install
           command: |
@@ -16,7 +22,7 @@ jobs:
               npm run postinstall
             fi
       - save_cache:
-          key: root-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
+          key: root-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
       - run:
@@ -84,19 +90,19 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: a6-{{ checksum "e2e/a6/package.json" }}-{{ checksum "e2e/a6/package-lock.json" }}
+          key: a6-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a6/package-lock.json" }}
       - restore_cache:
-          key: a7-{{ checksum "e2e/a7/package.json" }}-{{ checksum "e2e/a7/package-lock.json" }}
+          key: a7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a7/package-lock.json" }}
       - restore_cache:
-          key: a8-{{ checksum "e2e/a8/package.json" }}-{{ checksum "e2e/a8/package-lock.json" }}
+          key: a8-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a8/package-lock.json" }}
       - restore_cache:
-          key: a9-{{ checksum "e2e/a9/package.json" }}-{{ checksum "e2e/a9/package-lock.json" }}
+          key: a9-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a9/package-lock.json" }}
       - restore_cache:
-          key: a10-{{ checksum "e2e/a10/package.json" }}-{{ checksum "e2e/a10/package-lock.json" }}
+          key: a10-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a10/package-lock.json" }}
       - restore_cache:
-          key: a11-{{ checksum "e2e/a11/package.json" }}-{{ checksum "e2e/a11/package-lock.json" }}
+          key: a11-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a11/package-lock.json" }}
       - restore_cache:
-          key: r7-{{ checksum "e2e/r7/package.json" }}-{{ checksum "e2e/r7/package-lock.json" }}
+          key: r7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/r7/package-lock.json" }}
       - run:
           name: NPM Install
           command: |
@@ -122,31 +128,31 @@ jobs:
               npm run i:ci:r7
             fi
       - save_cache:
-          key: a6-{{ checksum "e2e/a6/package.json" }}-{{ checksum "e2e/a6/package-lock.json" }}
+          key: a6-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a6/package-lock.json" }}
           paths:
             - ./e2e/a6/node_modules
       - save_cache:
-          key: a7-{{ checksum "e2e/a7/package.json" }}-{{ checksum "e2e/a7/package-lock.json" }}
+          key: a7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a7/package-lock.json" }}
           paths:
             - ./e2e/a7/node_modules
       - save_cache:
-          key: a8-{{ checksum "e2e/a8/package.json" }}-{{ checksum "e2e/a8/package-lock.json" }}
+          key: a8-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a8/package-lock.json" }}
           paths:
             - ./e2e/a8/node_modules
       - save_cache:
-          key: a9-{{ checksum "e2e/a9/package.json" }}-{{ checksum "e2e/a9/package-lock.json" }}
+          key: a9-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a9/package-lock.json" }}
           paths:
             - ./e2e/a9/node_modules
       - save_cache:
-          key: a10-{{ checksum "e2e/a10/package.json" }}-{{ checksum "e2e/a10/package-lock.json" }}
+          key: a10-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a10/package-lock.json" }}
           paths:
             - ./e2e/a10/node_modules
       - save_cache:
-          key: a11-{{ checksum "e2e/a11/package.json" }}-{{ checksum "e2e/a11/package-lock.json" }}
+          key: a11-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a11/package-lock.json" }}
           paths:
             - ./e2e/a11/node_modules
       - save_cache:
-          key: r7-{{ checksum "e2e/r7/package.json" }}-{{ checksum "e2e/r7/package-lock.json" }}
+          key: r7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/r7/package-lock.json" }}
           paths:
             - ./e2e/r7/node_modules
   'Angular 6':
@@ -157,7 +163,7 @@ jobs:
       - attach_workspace:
           at: dist
       - restore_cache:
-          key: a6-{{ checksum "e2e/a6/package.json" }}-{{ checksum "e2e/a6/package-lock.json" }}
+          key: a6-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a6/package-lock.json" }}
       - run:
           name: Spreading Build
           command: npm run s:a6
@@ -181,7 +187,7 @@ jobs:
       - attach_workspace:
           at: dist
       - restore_cache:
-          key: a7-{{ checksum "e2e/a7/package.json" }}-{{ checksum "e2e/a7/package-lock.json" }}
+          key: a7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a7/package-lock.json" }}
       - run:
           name: Spreading Build
           command: npm run s:a7
@@ -205,7 +211,7 @@ jobs:
       - attach_workspace:
           at: dist
       - restore_cache:
-          key: a8-{{ checksum "e2e/a8/package.json" }}-{{ checksum "e2e/a8/package-lock.json" }}
+          key: a8-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a8/package-lock.json" }}
       - run:
           name: Spreading Build
           command: npm run s:a8
@@ -229,7 +235,7 @@ jobs:
       - attach_workspace:
           at: dist
       - restore_cache:
-          key: a9-{{ checksum "e2e/a9/package.json" }}-{{ checksum "e2e/a9/package-lock.json" }}
+          key: a9-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a9/package-lock.json" }}
       - run:
           name: Spreading Build
           command: npm run s:a9
@@ -253,7 +259,7 @@ jobs:
       - attach_workspace:
           at: dist
       - restore_cache:
-          key: a9-{{ checksum "e2e/a9/package.json" }}-{{ checksum "e2e/a9/package-lock.json" }}
+          key: a9-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a9/package-lock.json" }}
       - run:
           name: Spreading Build
           command: npm run s:a9
@@ -277,7 +283,7 @@ jobs:
       - attach_workspace:
           at: dist
       - restore_cache:
-          key: a10-{{ checksum "e2e/a10/package.json" }}-{{ checksum "e2e/a10/package-lock.json" }}
+          key: a10-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a10/package-lock.json" }}
       - run:
           name: Spreading Build
           command: npm run s:a10
@@ -301,7 +307,7 @@ jobs:
       - attach_workspace:
           at: dist
       - restore_cache:
-          key: a10-{{ checksum "e2e/a10/package.json" }}-{{ checksum "e2e/a10/package-lock.json" }}
+          key: a10-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a10/package-lock.json" }}
       - run:
           name: Spreading Build
           command: npm run s:a10
@@ -325,7 +331,7 @@ jobs:
       - attach_workspace:
           at: dist
       - restore_cache:
-          key: a11-{{ checksum "e2e/a11/package.json" }}-{{ checksum "e2e/a11/package-lock.json" }}
+          key: a11-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a11/package-lock.json" }}
       - run:
           name: Spreading Build
           command: npm run s:a11
@@ -349,7 +355,7 @@ jobs:
       - attach_workspace:
           at: dist
       - restore_cache:
-          key: a11-{{ checksum "e2e/a11/package.json" }}-{{ checksum "e2e/a11/package-lock.json" }}
+          key: a11-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a11/package-lock.json" }}
       - run:
           name: Spreading Build
           command: npm run s:a11
@@ -373,7 +379,7 @@ jobs:
       - attach_workspace:
           at: dist
       - restore_cache:
-          key: r7-{{ checksum "e2e/r7/package.json" }}-{{ checksum "e2e/r7/package-lock.json" }}
+          key: r7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/r7/package-lock.json" }}
       - run:
           name: Spreading Build
           command: npm run s:r7
@@ -383,12 +389,39 @@ jobs:
       - run:
           name: Build
           command: npm run b:r7
+  Core IE:
+    executor:
+      name: win/default
+    steps:
+      - checkout
+      - restore_cache:
+          key: root-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "package-lock.json" }}
+      - run:
+          name: NPM Install
+          command: |
+            if ((Test-Path "node_modules") -ne "True") {
+              npm ci --no-optional --ignore-scripts
+            }
+      - save_cache:
+          key: root-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Unit Tests
+          command: npm run test -- --reporters junit --browsers IECi
+      - store_test_results:
+          path: ./test-reports
+    environment:
+      IE_BIN: 'C:\Program Files\Internet Explorer\iexplore.exe'
 workflows:
   version: 2
   build:
     jobs:
       - Core
       - Install:
+          requires:
+            - Core
+      - 'Core IE':
           requires:
             - Core
       - 'Angular 6':

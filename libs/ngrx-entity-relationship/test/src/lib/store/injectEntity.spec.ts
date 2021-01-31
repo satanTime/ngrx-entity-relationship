@@ -16,7 +16,7 @@ describe('store/patchState', () => {
     });
 
     it('throws on primitives', () => {
-        const state = Symbol();
+        const state = {p: Math.random()};
         const selector = rootEntity(() => undefined as any);
         expect(() => injectEntity.func(state, selector, false)).toThrowError('Entity is not an object');
         expect(() => injectEntity.func(state, selector, 123)).toThrowError('Entity is not an object');
@@ -25,7 +25,7 @@ describe('store/patchState', () => {
     });
 
     it('throws on unknown id selectors', () => {
-        const state = Symbol();
+        const state = {p: Math.random()};
         const entity = {};
         const selector = rootEntity(() => undefined as any);
         expect(() => injectEntity.func(state, selector, entity)).toThrowError('Cannot detect id of an entity');
@@ -38,7 +38,7 @@ describe('store/patchState', () => {
                 entities: {},
             },
         };
-        const state1 = Symbol();
+        const state1 = {p: Math.random()};
         const entity = {
             id: '1',
             rand: 'rand1',
@@ -88,7 +88,7 @@ describe('store/patchState', () => {
                 },
             },
         };
-        const state1 = Symbol();
+        const state1 = {p: Math.random()};
         const entity = {
             id: '1',
             rand: 'rand1',
@@ -120,7 +120,7 @@ describe('store/patchState', () => {
                 entities: {},
             },
         };
-        const state1 = Symbol();
+        const state1 = {p: Math.random()};
         const entity = {
             id: '1',
             rand: 'rand1',
@@ -151,7 +151,7 @@ describe('store/patchState', () => {
                 },
             },
         };
-        const state1 = Symbol();
+        const state1 = {p: Math.random()};
         const entity = {
             id: '1',
             rand: 'rand1',
@@ -185,7 +185,7 @@ describe('store/patchState', () => {
                 },
             },
         };
-        const state1 = Symbol();
+        const state1 = {p: Math.random()};
         const entity = {
             id: '1',
             rand: 'rand1',
