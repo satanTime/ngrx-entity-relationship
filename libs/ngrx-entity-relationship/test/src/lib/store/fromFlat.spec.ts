@@ -17,7 +17,7 @@ describe('store/fromFlat', () => {
     });
 
     it('requires meta', () => {
-        const state = Symbol();
+        const state = {p: Math.random()};
         const data = undefined;
         const selector = rootEntity(() => undefined as any);
         selector.meta = undefined as any;
@@ -25,7 +25,7 @@ describe('store/fromFlat', () => {
     });
 
     it('requires meta.flatKey', () => {
-        const state = Symbol();
+        const state = {p: Math.random()};
         const data = undefined;
         const selector = rootEntity(() => undefined as any);
         selector.meta = {};
@@ -33,23 +33,23 @@ describe('store/fromFlat', () => {
     });
 
     it('makes graph data flat', () => {
-        const entity1 = Symbol();
-        const entity2 = Symbol();
-        const entity3 = Symbol();
-        const entity4 = Symbol();
+        const entity1 = {p: Math.random()};
+        const entity2 = {p: Math.random()};
+        const entity3 = {p: Math.random()};
+        const entity4 = {p: Math.random()};
         const data = {
             type1: [entity1, entity2],
             type2: [entity3],
             type3: entity4,
         };
 
-        const state = Symbol();
-        const state1 = Symbol();
-        const state2 = Symbol();
-        const state3 = Symbol();
-        const state4 = Symbol();
-        const state5 = Symbol();
-        const state6 = Symbol();
+        const state = {p: Math.random()};
+        const state1 = {p: Math.random()};
+        const state2 = {p: Math.random()};
+        const state3 = {p: Math.random()};
+        const state4 = {p: Math.random()};
+        const state5 = {p: Math.random()};
+        const state6 = {p: Math.random()};
 
         const selector = rootEntity<any, any>(
             () => undefined as any,
@@ -106,7 +106,7 @@ describe('store/fromFlat', () => {
     });
 
     it('ignores empty entities', () => {
-        const state = Symbol();
+        const state = {p: Math.random()};
         const data = {
             test: [undefined, false, null],
         };

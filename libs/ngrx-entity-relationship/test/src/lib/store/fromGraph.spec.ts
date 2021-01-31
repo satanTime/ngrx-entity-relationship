@@ -42,11 +42,11 @@ describe('store/fromGraph', () => {
             entity2,
         ];
 
-        const state = Symbol();
-        const state1 = Symbol();
-        const state2 = Symbol();
-        const state3 = Symbol();
-        const state4 = Symbol();
+        const state = {p: Math.random()};
+        const state1 = {p: Math.random()};
+        const state2 = {p: Math.random()};
+        const state3 = {p: Math.random()};
+        const state4 = {p: Math.random()};
 
         const selector = rootEntity<any, any>(
             () => undefined as any,
@@ -100,8 +100,8 @@ describe('store/fromGraph', () => {
     });
 
     it('ignores empty entities', () => {
-        const state = Symbol();
-        const state1 = Symbol();
+        const state = {p: Math.random()};
+        const state1 = {p: Math.random()};
         const data = [
             undefined,
             false,

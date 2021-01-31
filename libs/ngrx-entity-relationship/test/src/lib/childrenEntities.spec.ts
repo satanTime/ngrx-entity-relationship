@@ -10,8 +10,8 @@ describe('childrenEntities', () => {
     }
 
     it('marks callback with ngrxEntityRelationship key and passed args', () => {
-        const rel1: any = Symbol();
-        const rel2: any = Symbol();
+        const rel1: any = () => ({p: Math.random()});
+        const rel2: any = () => ({p: Math.random()});
         const featureSelector = jasmine.createSpy();
         const actual = childrenEntities<any, any, any, any, any>(featureSelector, 'myKeyId', 'myKeyValue', rel1, rel2);
         expect(actual).toEqual(jasmine.any(Function));

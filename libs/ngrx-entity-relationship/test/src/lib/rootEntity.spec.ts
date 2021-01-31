@@ -16,8 +16,8 @@ describe('rootEntity', () => {
     });
 
     it('marks callback with ngrxEntityRelationship key', () => {
-        const rel1 = Symbol() as any;
-        const rel2 = Symbol() as any;
+        const rel1: any = () => ({p: Math.random()});
+        const rel2: any = () => ({p: Math.random()});
         const featureSelector = jasmine.createSpy();
         // because rels aren't real rels we need to pass a transformer.
         const actual = rootEntity(featureSelector, () => null, rel1, rel2);
@@ -195,7 +195,7 @@ describe('rootEntity', () => {
         const rel = (jasmine.createSpy().and.callFake((cachePrefix, _, cache) => {
             const relSelector = () => state.feature2;
             cache.set(cachePrefix, new Map());
-            cache.get(cachePrefix).set('id2', [new Map(), Symbol()]);
+            cache.get(cachePrefix).set('id2', [new Map(), {p: Math.random()}]);
             cache.get(cachePrefix).get('id2')[0].set(relSelector, new Map());
             cache.get(cachePrefix).get('id2')[0].get(relSelector).set('id2', state.feature2.entities.id2);
             return 'id2';
@@ -304,7 +304,7 @@ describe('rootEntity', () => {
     it('detects another selector as the id parameter', () => {
         const entity = ({
             id: 1,
-            unique: Symbol(),
+            unique: {p: Math.random()},
         } as any) as Entity;
         const state = {
             feature: {

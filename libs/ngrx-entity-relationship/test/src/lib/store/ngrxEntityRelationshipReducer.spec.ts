@@ -24,14 +24,14 @@ describe('store/ngrxEntityRelationshipReducer', () => {
     });
 
     it('handles reduceGraph', () => {
-        const stateOriginal = Symbol();
-        const stateFromGraph = Symbol();
-        const stateReducer = Symbol();
+        const stateOriginal = {p: Math.random()};
+        const stateFromGraph = {p: Math.random()};
+        const stateReducer = {p: Math.random()};
         const reducer = jasmine.createSpy('reducer');
         const action = {
             type: ngrxEntityRelationshipActions.reduceGraph,
             selector: jasmine.createSpy('selector'),
-            data: Symbol(),
+            data: {p: Math.random()},
         };
         fromGraphSpy.and.returnValue(stateFromGraph);
         reducer.and.returnValue(stateReducer);
@@ -44,14 +44,14 @@ describe('store/ngrxEntityRelationshipReducer', () => {
     });
 
     it('handles reduceFlat', () => {
-        const stateOriginal = Symbol();
-        const stateFromFlat = Symbol();
-        const stateReducer = Symbol();
+        const stateOriginal = {p: Math.random()};
+        const stateFromFlat = {p: Math.random()};
+        const stateReducer = {p: Math.random()};
         const reducer = jasmine.createSpy('reducer');
         const action = {
             type: ngrxEntityRelationshipActions.reduceFlat,
             selector: jasmine.createSpy('selector'),
-            data: Symbol(),
+            data: {p: Math.random()},
         };
         fromFlatSpy.and.returnValue(stateFromFlat);
         reducer.and.returnValue(stateReducer);
@@ -64,8 +64,8 @@ describe('store/ngrxEntityRelationshipReducer', () => {
     });
 
     it('skips the rest', () => {
-        const stateOriginal = Symbol();
-        const stateReducer = Symbol();
+        const stateOriginal = {p: Math.random()};
+        const stateReducer = {p: Math.random()};
         const reducer = jasmine.createSpy('reducer');
         const action = {
             type: 'random',

@@ -40,7 +40,7 @@ describe('operators/relationships', () => {
             id: 'id1',
             name: 'name1',
         };
-        const expected = Symbol();
+        const expected = {p: Math.random()};
 
         of(entity)
             .pipe(relationships(store, selector))
@@ -72,7 +72,7 @@ describe('operators/relationships', () => {
             id: 'id2',
             name: 'name2',
         };
-        const expected = [Symbol(), Symbol()];
+        const expected = [{p: Math.random()}, {p: Math.random()}];
 
         of([entity1, entity2])
             .pipe(relationships(store, selector))

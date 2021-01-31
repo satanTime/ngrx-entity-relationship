@@ -18,9 +18,9 @@ describe('rootEntities', () => {
 
     it('marks callback with ngrxEntityRelationship key', () => {
         const rootSelector: any = jasmine.createSpy();
-        rootSelector.relationships = Symbol();
-        rootSelector.collectionSelector = Symbol();
-        rootSelector.idSelector = Symbol();
+        rootSelector.relationships = {p: Math.random()};
+        rootSelector.collectionSelector = {p: Math.random()};
+        rootSelector.idSelector = {p: Math.random()};
         const actual = rootEntities(rootSelector);
         expect(actual).toEqual(jasmine.any(Function));
         expect(actual.ngrxEntityRelationship).toEqual('rootEntities');
@@ -55,10 +55,10 @@ describe('rootEntities', () => {
             jasmine.Spy = jasmine.createSpy() as any;
         const selector = rootEntities(selectorRoot);
 
-        const entity1state1 = (Symbol() as any) as Entity;
-        const entity1state2 = (Symbol() as any) as Entity;
-        const entity2state1 = (Symbol() as any) as Entity;
-        const entity2state2 = (Symbol() as any) as Entity;
+        const entity1state1 = ({p: Math.random()} as any) as Entity;
+        const entity1state2 = ({p: Math.random()} as any) as Entity;
+        const entity2state1 = ({p: Math.random()} as any) as Entity;
+        const entity2state2 = ({p: Math.random()} as any) as Entity;
         selectorRoot.and.returnValues(
             entity1state1,
             entity2state1,
@@ -111,8 +111,8 @@ describe('rootEntities', () => {
             jasmine.Spy = jasmine.createSpy() as any;
         const selector = rootEntities(selectorRoot);
 
-        const entity1 = (Symbol() as any) as Entity;
-        const entity2 = (Symbol() as any) as Entity;
+        const entity1 = ({p: Math.random()} as any) as Entity;
+        const entity2 = ({p: Math.random()} as any) as Entity;
         selectorRoot.and.returnValues(
             entity1,
             undefined,
@@ -147,8 +147,8 @@ describe('rootEntities', () => {
         selectorRoot.release = jasmine.createSpy('selectorRoot.release');
         const selector = rootEntities(selectorRoot);
 
-        const entity1 = (Symbol() as any) as Entity;
-        const entity2 = (Symbol() as any) as Entity;
+        const entity1 = ({p: Math.random()} as any) as Entity;
+        const entity2 = ({p: Math.random()} as any) as Entity;
         selectorRoot.and.returnValues(
             entity1,
             entity2,
@@ -191,8 +191,8 @@ describe('rootEntities', () => {
     it('returns an array of transformed entities', () => {
         const state = {};
 
-        const entity1 = Symbol();
-        const entity2 = Symbol();
+        const entity1 = {p: Math.random()};
+        const entity2 = {p: Math.random()};
 
         const funcSelector = (jasmine.createSpy().and.returnValue({
             entities: {
