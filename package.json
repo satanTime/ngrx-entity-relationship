@@ -152,7 +152,7 @@
     "karma-jasmine-html-reporter": "1.5.4",
     "karma-junit-reporter": "2.0.1",
     "lint-staged": "10.5.4",
-    "ng-packagr": "11.2.0",
+    "ng-packagr": "11.2.1",
     "prettier": "2.2.1",
     "puppeteer": "6.0.0",
     "react": "16.14.0",
