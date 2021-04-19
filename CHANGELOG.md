@@ -1,3 +1,11 @@
+## [1.5.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.5.0...v1.5.1) (2021-04-19)
+
+
+### Bug Fixes
+
+* correct Apache License ([acb7b8b](https://github.com/satanTime/ngrx-entity-relationship/commit/acb7b8b373bb8547160fedb6135a30183df5ebbb))
+* right docusaurus version ([a6bf50b](https://github.com/satanTime/ngrx-entity-relationship/commit/a6bf50bb7556698e79be6c1582d2b84aa748ac5f))
+
 # [1.5.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.4.1...v1.5.0) (2021-01-16)
 
 
