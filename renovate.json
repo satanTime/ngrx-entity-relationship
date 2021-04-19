@@ -18,6 +18,13 @@
     },
 
     {
+      "paths": ["package.json", "docs/package.json"],
+      "packagePatterns": ["^@docusaurus/"],
+      "allowedVersions": "/\\.[0-9]+$/",
+      "ignoreUnstable": false
+    },
+
+    {
       "paths": ["e2e/a6/package.json"],
       "packagePatterns": ["^@angular/"],
       "allowedVersions": "<=6"
