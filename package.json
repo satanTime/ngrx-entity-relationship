@@ -138,7 +138,7 @@
     "@types/node": "12.20.11",
     "clsx": "1.1.1",
     "codecov": "3.8.1",
-    "codelyzer": "6.0.1",
+    "codelyzer": "6.0.2",
     "coveralls": "3.1.0",
     "dotenv": "8.2.0",
     "eslint": "7.25.0",
