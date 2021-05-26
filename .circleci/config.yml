@@ -114,6 +114,8 @@ jobs:
       - restore_cache:
           key: a11-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a11/package-lock.json" }}
       - restore_cache:
+          key: a12-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a12/package-lock.json" }}
+      - restore_cache:
           key: r7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/r7/package-lock.json" }}
       - run:
           name: NPM Install
@@ -135,6 +137,9 @@ jobs:
             fi
             if [ ! -d "e2e/a11/node_modules/" ]; then
               npm run i:ci:a11
+            fi
+            if [ ! -d "e2e/a12/node_modules/" ]; then
+              npm run i:ci:a12
             fi
             if [ ! -d "e2e/r7/node_modules/" ]; then
               npm run i:ci:r7
@@ -163,6 +168,10 @@ jobs:
           key: a11-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a11/package-lock.json" }}
           paths:
             - ./e2e/a11/node_modules
+      - save_cache:
+          key: a12-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a12/package-lock.json" }}
+          paths:
+            - ./e2e/a12/node_modules
       - save_cache:
           key: r7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/r7/package-lock.json" }}
           paths:
@@ -383,6 +392,54 @@ jobs:
       - run:
           name: Build
           command: npm run b:a11:on
+  'Angular 12 without Ivy':
+    docker:
+      - image: satantime/puppeteer-node:16.2.0-buster
+    steps:
+      - checkout
+      - attach_workspace:
+          at: dist
+      - restore_cache:
+          key: a12-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a12/package-lock.json" }}
+      - run:
+          name: Spreading Build
+          command: npm run s:a12
+      - run:
+          name: Spreading Tests
+          command: npm run s:test:a12
+      - run:
+          name: UT
+          command: npm run test:a12:off
+      - run:
+          name: E2E
+          command: npm run e2e:a12:off
+      - run:
+          name: Build
+          command: npm run b:a12:off
+  'Angular 12 with Ivy':
+    docker:
+      - image: satantime/puppeteer-node:16.2.0-buster
+    steps:
+      - checkout
+      - attach_workspace:
+          at: dist
+      - restore_cache:
+          key: a12-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a12/package-lock.json" }}
+      - run:
+          name: Spreading Build
+          command: npm run s:a12
+      - run:
+          name: Spreading Tests
+          command: npm run s:test:a12
+      - run:
+          name: UT
+          command: npm run test:a12:on
+      - run:
+          name: E2E
+          command: npm run e2e:a12:on
+      - run:
+          name: Build
+          command: npm run b:a12:on
   'React Redux 7':
     docker:
       - image: satantime/puppeteer-node:16.2.0-buster
@@ -461,6 +518,12 @@ workflows:
           requires:
             - Install
       - 'Angular 11 with Ivy':
+          requires:
+            - Install
+      - 'Angular 12 without Ivy':
+          requires:
+            - Install
+      - 'Angular 12 with Ivy':
           requires:
             - Install
       - 'React Redux 7':
