@@ -156,7 +156,8 @@ rules:
   non-literal-fs-path: false
   nx-enforce-module-boundaries:
     - true
-    - allow: []
+    - allow:
+        - ngrx-entity-relationship
       depConstraints:
         - onlyDependOnLibsWithTags:
             - '*'
