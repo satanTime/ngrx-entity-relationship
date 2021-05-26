@@ -13,7 +13,7 @@
     "e2e": "npm run e2e:ivy-on && npm run e2e:ivy-off",
     "e2e:ivy-on": "ng e2e --webdriver-update=false --configuration ivy-on",
     "e2e:ivy-off": "ng e2e --webdriver-update=false --configuration ivy-off",
-    "postinstall": "webdriver-manager update --versions.chrome 88.0.4324.27 --gecko=false"
+    "postinstall": "webdriver-manager update --versions.chrome 91.0.4472.19 --gecko=false"
   },
   "private": true,
   "peerDependencies": {
