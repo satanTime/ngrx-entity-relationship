@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "e2e": "ng e2e --webdriver-update=false",
-    "postinstall": "webdriver-manager update --versions.chrome 88.0.4324.27 --gecko=false"
+    "postinstall": "webdriver-manager update --versions.chrome 91.0.4472.19 --gecko=false"
   },
   "private": true,
   "peerDependencies": {
@@ -45,7 +45,7 @@
     "karma-jasmine": "1.1.2",
     "karma-jasmine-html-reporter": "0.2.2",
     "protractor": "5.4.4",
-    "puppeteer": "6.0.0",
+    "puppeteer": "9.1.1",
     "ts-node": "7.0.1",
     "typescript": "3.2.4"
   }
