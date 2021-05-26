@@ -1,0 +1,7 @@
+{
+  "extends": "../tsconfig.ivy-on.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "types": ["jasmine", "jasminewd2", "node"]
+  }
+}

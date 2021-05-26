@@ -1,0 +1,55 @@
+<h2>Actions</h2>
+<button (click)="entitiesService.changeUser('user1')" role="user1">Change user1</button>
+<button (click)="entitiesService.changeUser('user2')" role="user2">Change user2</button>
+<button (click)="entitiesService.changeUser('user3')" role="user3">Change user3</button>
+<button (click)="entitiesService.changeUser('user4')" role="user4">Change user4</button>
+<button (click)="entitiesService.changeUser('user5')" role="user5">Change user5</button>
+<button (click)="entitiesService.changeUser('user6')" role="user6">Change user6</button>
+<button (click)="entitiesService.changeCompany('company1')" role="company1">Change company1</button>
+<button (click)="entitiesService.changeCompany('company2')" role="company2">Change company2</button>
+<button (click)="entitiesService.changeCompany('company3')" role="company3">Change company3</button>
+<button (click)="entitiesService.changeAddress('address1')" role="address1">Change address1</button>
+<button (click)="entitiesService.changeAddress('address2')" role="address2">Change address2</button>
+
+<h2>Company</h2>
+<strong>selector</strong>
+<pre>
+const companyWithCrazyData = sCompany(
+    sCompanyAddress(),
+    sCompanyAdmin(
+        sUserEmployees(),
+    ),
+    sCompanyStaff(
+        sUserCompany(
+            sCompanyAddress(
+                sAddressCompany(),
+            ),
+        ),
+    ),
+);
+</pre>
+<strong>usage</strong>
+<pre>
+const company$ = store.select(companyWithCrazyData, 'company3');
+</pre>
+<strong>company$ | async | json</strong>
+<pre role="company">{{ company$ | async | json }}</pre>
+
+<h2>Users</h2>
+<strong>selector</strong>
+<pre>
+const users = rootEntities(
+    sUser(
+        sUserEmployees(
+            sUserManager(),
+        ),
+        sUserManager(),
+    ),
+);
+</pre>
+<strong>usage</strong>
+<pre>
+const users$ = store.select(users, ['user1', 'user3', 'user6']);
+</pre>
+<strong>users$ | async | json</strong>
+<pre role="users">{{ users$ | async | json }}</pre>
