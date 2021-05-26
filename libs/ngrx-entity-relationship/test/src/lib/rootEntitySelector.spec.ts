@@ -27,17 +27,17 @@ describe('rootEntitySelector', () => {
         const transformer = jasmine.createSpy('transformer');
         transformer.and.callFake(entity => ({...entity, transformed: true}));
 
-        const rel1 = (jasmine
+        const rel1 = jasmine
             .createSpy('rel1')
-            .and.callFake((_1, _2, _3, entity) => (entity.rel1 = true)) as any) as HANDLER_RELATED_ENTITY<
+            .and.callFake((_1, _2, _3, entity) => (entity.rel1 = true)) as any as HANDLER_RELATED_ENTITY<
             typeof state,
             Entity
         >;
         rel1.ngrxEntityRelationship = 'spy';
 
-        const rel2 = (jasmine
+        const rel2 = jasmine
             .createSpy('rel2')
-            .and.callFake((_1, _2, _3, entity) => (entity.rel2 = true)) as any) as HANDLER_RELATED_ENTITY<
+            .and.callFake((_1, _2, _3, entity) => (entity.rel2 = true)) as any as HANDLER_RELATED_ENTITY<
             typeof state,
             Entity
         >;
@@ -105,17 +105,17 @@ describe('rootEntitySelector', () => {
             },
         };
 
-        const rel1 = (jasmine
+        const rel1 = jasmine
             .createSpy('rel1')
-            .and.callFake((_1, _2, _3, entity) => (entity.rel1 = true)) as any) as HANDLER_RELATED_ENTITY<
+            .and.callFake((_1, _2, _3, entity) => (entity.rel1 = true)) as any as HANDLER_RELATED_ENTITY<
             typeof state,
             Entity
         >;
         rel1.ngrxEntityRelationship = 'spy';
 
-        const rel2 = (jasmine
+        const rel2 = jasmine
             .createSpy('rel2')
-            .and.callFake((_1, _2, _3, entity) => (entity.rel2 = true)) as any) as HANDLER_RELATED_ENTITY<
+            .and.callFake((_1, _2, _3, entity) => (entity.rel2 = true)) as any as HANDLER_RELATED_ENTITY<
             typeof state,
             Entity
         >;

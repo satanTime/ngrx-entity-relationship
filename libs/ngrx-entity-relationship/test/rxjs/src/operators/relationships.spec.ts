@@ -16,7 +16,7 @@ describe('operators/relationships', () => {
         const store = {
             select: jasmine.createSpy().and.returnValue(store$),
         };
-        const selector = (jasmine.createSpy() as any) as HANDLER_ROOT_ENTITY<UNKNOWN, Entity, Entity, UNKNOWN>;
+        const selector = jasmine.createSpy() as any as HANDLER_ROOT_ENTITY<UNKNOWN, Entity, Entity, UNKNOWN>;
         selector.ngrxEntityRelationship = 'spy';
 
         of(undefined as any)
@@ -32,7 +32,7 @@ describe('operators/relationships', () => {
         const store = {
             select: jasmine.createSpy().and.returnValue(store$),
         };
-        const selector = (jasmine.createSpy() as any) as HANDLER_ROOT_ENTITY<UNKNOWN, Entity, Entity, UNKNOWN>;
+        const selector = jasmine.createSpy() as any as HANDLER_ROOT_ENTITY<UNKNOWN, Entity, Entity, UNKNOWN>;
         selector.ngrxEntityRelationship = 'spy';
         selector.idSelector = jasmine.createSpy('idSelector').and.returnValue('hello');
 
@@ -60,7 +60,7 @@ describe('operators/relationships', () => {
         const store = {
             select: jasmine.createSpy().and.returnValue(store$),
         };
-        const selector = (jasmine.createSpy() as any) as HANDLER_ROOT_ENTITIES<UNKNOWN, Entity, Entity, UNKNOWN>;
+        const selector = jasmine.createSpy() as any as HANDLER_ROOT_ENTITIES<UNKNOWN, Entity, Entity, UNKNOWN>;
         selector.ngrxEntityRelationship = 'spy';
         selector.idSelector = jasmine.createSpy('idSelector').and.returnValues('hello1', 'hello2');
 

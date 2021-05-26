@@ -9,7 +9,7 @@ export function childrenEntitiesSelector<
     },
     RELATED_ENTITY,
     RELATED_KEY_IDS extends ID_FILTER_PROPS<RELATED_ENTITY, ID_TYPES> = ID_FILTER_PROPS<RELATED_ENTITY, ID_TYPES>,
-    RELATED_KEY_VALUES_ARRAYS extends keyof any = keyof any
+    RELATED_KEY_VALUES_ARRAYS extends keyof any = keyof any,
 >(
     featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
     keyId: RELATED_KEY_IDS,
@@ -27,7 +27,7 @@ export function childrenEntitiesSelector<
     },
     RELATED_ENTITY,
     RELATED_KEY_IDS extends ID_FILTER_PROPS<RELATED_ENTITY, ID_TYPES>,
-    RELATED_KEY_VALUES_ARRAYS extends keyof any
+    RELATED_KEY_VALUES_ARRAYS extends keyof any,
 >(
     featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
     keyId: RELATED_KEY_IDS,

@@ -230,9 +230,9 @@ describe('childrenEntities', () => {
                 entities: {},
             },
         };
-        const rel1 = (jasmine.createSpy('rel1') as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        const rel1 = jasmine.createSpy('rel1') as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel1.ngrxEntityRelationship = 'spy';
-        const rel2 = (jasmine.createSpy('rel2') as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        const rel2 = jasmine.createSpy('rel2') as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel2.ngrxEntityRelationship = 'spy';
 
         const featureSelector: FEATURE_SELECTOR<typeof state, Entity> = v => v.feature;
@@ -283,7 +283,7 @@ describe('childrenEntities', () => {
                 entities: {},
             },
         };
-        const rel1 = (jasmine.createSpy('rel1').and.callFake((cacheKey, _2, cacheSet) => {
+        const rel1 = jasmine.createSpy('rel1').and.callFake((cacheKey, _2, cacheSet) => {
             const result = new Map();
             result.set('rel1selector', new Map());
 
@@ -292,9 +292,9 @@ describe('childrenEntities', () => {
             hashMap.set('rel1', [result, undefined]);
 
             return 'rel1';
-        }) as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        }) as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel1.ngrxEntityRelationship = 'spy';
-        const rel2 = (jasmine.createSpy('rel2').and.callFake((cacheKey, _2, cacheSet) => {
+        const rel2 = jasmine.createSpy('rel2').and.callFake((cacheKey, _2, cacheSet) => {
             const result = new Map();
             result.set('rel2selector', new Map());
 
@@ -303,7 +303,7 @@ describe('childrenEntities', () => {
             hashMap.set('rel2', [result, undefined]);
 
             return 'rel2';
-        }) as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        }) as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel2.ngrxEntityRelationship = 'spy';
 
         const featureSelector: FEATURE_SELECTOR<typeof state, Entity> = v => v.feature;
@@ -342,10 +342,10 @@ describe('childrenEntities', () => {
                 entities: {},
             },
         };
-        const rel1 = (jasmine.createSpy('rel1') as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        const rel1 = jasmine.createSpy('rel1') as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel1.ngrxEntityRelationship = 'spy';
         rel1.release = jasmine.createSpy('rel1.release');
-        const rel2 = (jasmine.createSpy('rel2') as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        const rel2 = jasmine.createSpy('rel2') as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel2.ngrxEntityRelationship = 'spy';
         rel2.release = jasmine.createSpy('rel2.release');
 

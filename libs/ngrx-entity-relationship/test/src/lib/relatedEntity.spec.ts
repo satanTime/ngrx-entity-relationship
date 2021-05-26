@@ -384,9 +384,9 @@ describe('relatedEntity', () => {
                 entities: {},
             },
         };
-        const rel1 = (jasmine.createSpy() as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        const rel1 = jasmine.createSpy() as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel1.ngrxEntityRelationship = 'spy';
-        const rel2 = (jasmine.createSpy() as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        const rel2 = jasmine.createSpy() as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel2.ngrxEntityRelationship = 'spy';
 
         const selector = relatedEntity<typeof state, Entity, Entity, 'parentId', never, 'parent', never>(
@@ -441,10 +441,10 @@ describe('relatedEntity', () => {
                 entities: {},
             },
         };
-        const rel1 = (jasmine.createSpy() as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        const rel1 = jasmine.createSpy() as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel1.ngrxEntityRelationship = 'spy';
         rel1.release = jasmine.createSpy('rel1.release');
-        const rel2 = (jasmine.createSpy() as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        const rel2 = jasmine.createSpy() as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel2.ngrxEntityRelationship = 'spy';
         rel2.release = jasmine.createSpy('rel2.release');
 

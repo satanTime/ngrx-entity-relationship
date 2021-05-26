@@ -192,14 +192,14 @@ describe('rootEntity', () => {
             },
         };
 
-        const rel = (jasmine.createSpy().and.callFake((cachePrefix, _, cache) => {
+        const rel = jasmine.createSpy().and.callFake((cachePrefix, _, cache) => {
             const relSelector = () => state.feature2;
             cache.set(cachePrefix, new Map());
             cache.get(cachePrefix).set('id2', [new Map(), {p: Math.random()}]);
             cache.get(cachePrefix).get('id2')[0].set(relSelector, new Map());
             cache.get(cachePrefix).get('id2')[0].get(relSelector).set('id2', state.feature2.entities.id2);
             return 'id2';
-        }) as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        }) as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel.ngrxEntityRelationship = 'spy';
         rel.release = jasmine.createSpy('rel:release');
 
@@ -262,14 +262,14 @@ describe('rootEntity', () => {
             },
         };
 
-        const rel = (jasmine.createSpy().and.callFake((cachePrefix, _, cache) => {
+        const rel = jasmine.createSpy().and.callFake((cachePrefix, _, cache) => {
             const relSelector = () => state.feature2;
             cache.set(cachePrefix, new Map());
             cache.get(cachePrefix).set('id2', [new Map(), undefined]);
             cache.get(cachePrefix).get('id2')[0].set(relSelector, new Map());
             cache.get(cachePrefix).get('id2')[0].get(relSelector).set(null, state.feature2.entities);
             return 'id2';
-        }) as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        }) as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel.ngrxEntityRelationship = 'spy';
         rel.release = jasmine.createSpy('rel:release');
 
@@ -302,10 +302,10 @@ describe('rootEntity', () => {
     });
 
     it('detects another selector as the id parameter', () => {
-        const entity = ({
+        const entity = {
             id: 1,
             unique: {p: Math.random()},
-        } as any) as Entity;
+        } as any as Entity;
         const state = {
             feature: {
                 ids: [1],
@@ -315,7 +315,7 @@ describe('rootEntity', () => {
             },
         };
         const selectorIds = jasmine.createSpy().and.returnValue(1);
-        const selectorRoot = (jasmine.createSpy().and.returnValue(state.feature) as any) as FEATURE_SELECTOR<
+        const selectorRoot = jasmine.createSpy().and.returnValue(state.feature) as any as FEATURE_SELECTOR<
             typeof state,
             Entity
         >;
@@ -332,9 +332,9 @@ describe('rootEntity', () => {
                 entities: {},
             },
         };
-        const rel1 = (jasmine.createSpy() as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        const rel1 = jasmine.createSpy() as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel1.ngrxEntityRelationship = 'spy';
-        const rel2 = (jasmine.createSpy() as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        const rel2 = jasmine.createSpy() as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel2.ngrxEntityRelationship = 'spy';
 
         const selector = rootEntity<typeof state, Entity>(v => v.feature, rel1, rel2);
@@ -351,14 +351,14 @@ describe('rootEntity', () => {
             '0:0',
             state,
             jasmine.anything(),
-            (entity as any) as Entity,
+            entity as any as Entity,
             selector.idSelector,
         );
         expect(rel2).toHaveBeenCalledWith(
             '0:1',
             state,
             jasmine.anything(),
-            (entity as any) as Entity,
+            entity as any as Entity,
             selector.idSelector,
         );
     });
@@ -370,10 +370,10 @@ describe('rootEntity', () => {
                 entities: {},
             },
         };
-        const rel1 = (jasmine.createSpy() as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        const rel1 = jasmine.createSpy() as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel1.ngrxEntityRelationship = 'spy';
         rel1.release = jasmine.createSpy('rel1.release');
-        const rel2 = (jasmine.createSpy() as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+        const rel2 = jasmine.createSpy() as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel2.ngrxEntityRelationship = 'spy';
         rel2.release = jasmine.createSpy('rel2.release');
 
@@ -418,9 +418,9 @@ describe('rootEntity', () => {
             },
         };
         const transformer = jasmine.createSpy();
-        const rel = (jasmine
+        const rel = jasmine
             .createSpy()
-            .and.callFake((_1, _2, _3, v) => (v.processed = true)) as any) as HANDLER_RELATED_ENTITY<
+            .and.callFake((_1, _2, _3, v) => (v.processed = true)) as any as HANDLER_RELATED_ENTITY<
             typeof state,
             Entity
         >;
@@ -451,9 +451,9 @@ describe('rootEntity', () => {
             },
         };
         const transformer = () => 'transformed';
-        const rel = (jasmine
+        const rel = jasmine
             .createSpy()
-            .and.callFake((_1, _2, _3, v) => (v.processed = true)) as any) as HANDLER_RELATED_ENTITY<
+            .and.callFake((_1, _2, _3, v) => (v.processed = true)) as any as HANDLER_RELATED_ENTITY<
             typeof state,
             Entity
         >;

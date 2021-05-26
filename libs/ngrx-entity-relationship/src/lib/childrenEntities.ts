@@ -20,7 +20,7 @@ export function childrenEntities<
     RELATED_KEY_VALUES_ARRAYS extends VALUES_FILTER_PROPS<PARENT_ENTITY, Array<RELATED_ENTITY>> = VALUES_FILTER_PROPS<
         PARENT_ENTITY,
         Array<RELATED_ENTITY>
-    >
+    >,
 >(
     featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
     keyId: RELATED_KEY_IDS,
@@ -34,7 +34,7 @@ export function childrenEntities<
     PARENT_ENTITY,
     RELATED_ENTITY,
     RELATED_KEY_IDS extends ID_FILTER_PROPS<RELATED_ENTITY, ID_TYPES>,
-    RELATED_KEY_VALUES_ARRAYS extends VALUES_FILTER_PROPS<PARENT_ENTITY, Array<RELATED_ENTITY>>
+    RELATED_KEY_VALUES_ARRAYS extends VALUES_FILTER_PROPS<PARENT_ENTITY, Array<RELATED_ENTITY>>,
 >(
     featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
     keyId: RELATED_KEY_IDS,
@@ -78,7 +78,7 @@ export function childrenEntities<
             for (const entity of objectValues(featureState.entities)) {
                 if (
                     !entity ||
-                    entity[keyId] !== ((parentId as any) as RELATED_ENTITY[RELATED_KEY_IDS]) // todo fix any A8
+                    entity[keyId] !== (parentId as any as RELATED_ENTITY[RELATED_KEY_IDS]) // todo fix any A8
                 ) {
                     continue;
                 }
