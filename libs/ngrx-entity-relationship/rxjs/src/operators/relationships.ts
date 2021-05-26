@@ -44,9 +44,9 @@ export function relationships<STORE, SET, TRANSFORMED, TYPES>(
                                 for (const entity of set) {
                                     processed.push(selector.idSelector(entity));
                                 }
-                                return (processed as any) as TYPES;
+                                return processed as any as TYPES;
                             }
-                            return (selector.idSelector(set) as any) as TYPES;
+                            return selector.idSelector(set) as any as TYPES;
                         }),
                         switchMap(id => store.select(selector, id)),
                     ),

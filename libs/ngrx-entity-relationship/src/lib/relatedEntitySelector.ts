@@ -21,7 +21,7 @@ export function relatedEntitySelector<
           },
     RELATED_ENTITY,
     RELATED_KEY_IDS extends keyof any = keyof any,
-    RELATED_KEY_VALUES extends keyof any = keyof any
+    RELATED_KEY_VALUES extends keyof any = keyof any,
 >(
     featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
     keyId: RELATED_KEY_IDS,
@@ -51,7 +51,7 @@ export function relatedEntitySelector<
           },
     RELATED_ENTITY,
     RELATED_KEY_IDS extends keyof any,
-    RELATED_KEY_VALUES extends keyof any
+    RELATED_KEY_VALUES extends keyof any,
 >(
     featureSelector: FEATURE_SELECTOR<STORE, RELATED_ENTITY>,
     keyId: RELATED_KEY_IDS,

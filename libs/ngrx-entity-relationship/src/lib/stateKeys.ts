@@ -5,7 +5,7 @@ export function stateKeys<
     STORE extends SELECTOR extends STORE_SELECTOR<infer U, any> ? U : never,
     SLICE extends SELECTOR extends STORE_SELECTOR<any, infer U> ? U : never,
     E_KEY extends keyof SLICE,
-    ENTITY extends SLICE extends ENTITY_STATE_CUSTOM<E_KEY, 'ids', infer U> ? U : never
+    ENTITY extends SLICE extends ENTITY_STATE_CUSTOM<E_KEY, 'ids', infer U> ? U : never,
 >(selector: SELECTOR, entitiesKey: E_KEY): STORE_SELECTOR<STORE, ENTITY_STATE<ENTITY>>;
 
 export function stateKeys<
@@ -14,7 +14,7 @@ export function stateKeys<
     SLICE extends SELECTOR extends STORE_SELECTOR<any, infer U> ? U : never,
     E_KEY extends keyof SLICE,
     I_KEY extends keyof SLICE,
-    ENTITY extends SLICE extends ENTITY_STATE_CUSTOM<E_KEY, I_KEY, infer U> ? U : never
+    ENTITY extends SLICE extends ENTITY_STATE_CUSTOM<E_KEY, I_KEY, infer U> ? U : never,
 >(selector: SELECTOR, entitiesKey: E_KEY, idsKey: I_KEY): STORE_SELECTOR<STORE, ENTITY_STATE<ENTITY>>;
 
 export function stateKeys<
@@ -23,7 +23,7 @@ export function stateKeys<
     SLICE extends SELECTOR extends STORE_SELECTOR<any, infer U> ? U : never,
     E_KEY extends keyof SLICE,
     I_KEY extends keyof SLICE,
-    ENTITY extends SLICE extends ENTITY_STATE_CUSTOM<E_KEY, I_KEY, infer U> ? U : never
+    ENTITY extends SLICE extends ENTITY_STATE_CUSTOM<E_KEY, I_KEY, infer U> ? U : never,
 >(selector: SELECTOR, entitiesKey: E_KEY, idsKey?: I_KEY): STORE_SELECTOR<STORE, ENTITY_STATE<ENTITY>> {
     const callback: STORE_SELECTOR<STORE, ENTITY_STATE<ENTITY>> = (s: STORE): ENTITY_STATE<ENTITY> => {
         const slice = selector(s);

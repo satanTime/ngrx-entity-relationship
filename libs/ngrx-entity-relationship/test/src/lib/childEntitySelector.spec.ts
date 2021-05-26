@@ -22,14 +22,14 @@ describe('childEntitySelector', () => {
                 entities: {},
             },
         };
-        const rel1 = (jasmine
+        const rel1 = jasmine
             .createSpy('rel1')
-            .and.callFake((_1, _2, _3, v) => (v.rel1 = true)) as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+            .and.callFake((_1, _2, _3, v) => (v.rel1 = true)) as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel1.ngrxEntityRelationship = 'spy';
 
-        const rel2 = (jasmine
+        const rel2 = jasmine
             .createSpy('rel2')
-            .and.callFake((_1, _2, _3, v) => (v.rel2 = true)) as any) as HANDLER_RELATED_ENTITY<typeof state, Entity>;
+            .and.callFake((_1, _2, _3, v) => (v.rel2 = true)) as any as HANDLER_RELATED_ENTITY<typeof state, Entity>;
         rel2.ngrxEntityRelationship = 'spy';
 
         const entitySelector = childEntitySelector<typeof state, Entity, Entity, 'parentId', 'child'>(
