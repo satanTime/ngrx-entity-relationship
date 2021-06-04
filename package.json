@@ -28,7 +28,7 @@
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
+    "postinstall": "ngcc",
     "st:release": "export $(cat .env) && semantic-release",
     "st:lint": "tsc --noEmit -p ./libs/ngrx-entity-relationship/tsconfig.lib.json && tsc --noEmit -p ./libs/ngrx-entity-relationship/tsconfig.spec.json && npm run lint ngrx-entity-relationship",
     "st:build": "rm -Rf tmp && rm -Rf dist && npm run st:lint && npm run build -- --project ngrx-entity-relationship --prod --skip-nx-cache && cp ./libs/ngrx-entity-relationship/package.json ./dist/libs/ngrx-entity-relationship && cp -r ./libs/ngrx-entity-relationship/e2e ./dist/libs/ngrx-entity-relationship && cp ./README.md ./dist/libs/ngrx-entity-relationship && cp ./CHANGELOG.md ./dist/libs/ngrx-entity-relationship && cp ./LICENSE ./dist/libs/ngrx-entity-relationship",
@@ -172,7 +172,7 @@
     "tslint-defocus": "2.0.6",
     "tslint-lines-between-class-members": "1.3.6",
     "tslint-microsoft-contrib": "6.2.0",
-    "typescript": "4.1.5",
+    "typescript": "4.2.4",
     "zone.js": "0.11.4"
   },
   "repository": {
