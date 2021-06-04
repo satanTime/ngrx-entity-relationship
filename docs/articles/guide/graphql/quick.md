@@ -24,6 +24,9 @@ And we want to build a **GraphQL** query that fetches a user, its company and th
     id
     firstName
     lastName
+    permissions {
+      level
+    }
     companyId
     company {
       id
@@ -57,7 +60,17 @@ and add meta information about **GraphQL**.
 // user
 export const rootUser = rootEntitySelector(selectUserState, {
   // here we go
-  gqlFields: ['id', 'firstName', 'lastName'],
+  // usually we could define an array
+  // but because `permissions` isn't
+  // a normal field, we need to define
+  // an object, where values of its keys
+  // are an empty string or a sub query
+  gqlFields: {
+    id: '',
+    firstName: '',
+    lastName: '',
+    permissions: '{level}',
+  },
 });
 // user.company
 export const relUserCompany = relatedEntitySelector(
@@ -66,6 +79,8 @@ export const relUserCompany = relatedEntitySelector(
   'company',
   {
     // here we go
+    // no sub queries, therefore
+    // we can use an array
     gqlFields: ['id', 'name'],
   },
 );
