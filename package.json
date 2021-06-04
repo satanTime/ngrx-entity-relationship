@@ -190,5 +190,11 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  }
+  },
+  "browserslist": [
+    "last 2 version",
+    "> 1%",
+    "IE 11",
+    "not IE 10"
+  ]
 }
