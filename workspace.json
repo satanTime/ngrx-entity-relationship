@@ -35,6 +35,12 @@
             "main": "libs/ngrx-entity-relationship/src/test.ts",
             "tsConfig": "libs/ngrx-entity-relationship/tsconfig.spec.json",
             "karmaConfig": "libs/ngrx-entity-relationship/karma.conf.js"
+          },
+          "configurations": {
+            "ie": {
+              "tsConfig": "libs/ngrx-entity-relationship/tsconfig.ie.spec.json",
+              "browsers": "IECi"
+            }
           }
         }
       }

@@ -1,7 +1,6 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "es5",
     "sourceMap": true,
     "declaration": true,
     "removeComments": false,
