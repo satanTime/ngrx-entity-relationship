@@ -60,18 +60,27 @@ const resolveGraphQL = (
         included.push(field);
         query += `${prefix}${field}\n`;
     }
-    const fields = selector.meta.gqlFields || [];
-    for (const field of fields) {
-        if (included.indexOf(field) !== -1) {
-            continue;
+    if (Array.isArray(selector.meta.gqlFields)) {
+        for (const field of selector.meta.gqlFields) {
+            if (included.indexOf(field) !== -1) {
+                continue;
+            }
+            included.push(field);
+            query += `${prefix}${field}\n`;
         }
-        included.push(field);
-        query += `${prefix}${field}\n`;
+    } else if (selector.meta.gqlFields) {
+        for (const field of Object.keys(selector.meta.gqlFields)) {
+            if (included.indexOf(field) !== -1) {
+                continue;
+            }
+            included.push(field);
+            query += `${prefix}${field}${selector.meta.gqlFields[field]}\n`;
+        }
     }
     return query;
 };
 
-function encodeValue(data: any): string | undefined {
+function encodeValuePrimitives(data: any): string | undefined {
     if (typeof data === 'number') {
         return JSON.stringify(data);
     }
@@ -81,6 +90,16 @@ function encodeValue(data: any): string | undefined {
     if (typeof data === 'boolean') {
         return JSON.stringify(data);
     }
+
+    return undefined;
+}
+
+function encodeValue(data: any): string | undefined {
+    const primitives = encodeValuePrimitives(data);
+    if (primitives !== undefined) {
+        return primitives;
+    }
+
     if (data === null || data === undefined) {
         return JSON.stringify(null);
     }
