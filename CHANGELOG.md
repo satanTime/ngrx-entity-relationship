@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.5.1...v1.6.0) (2021-06-06)
+
+
+### Features
+
+* **graphql:** selecing sub sets and interfaces along with fields [#596](https://github.com/satanTime/ngrx-entity-relationship/issues/596) ([3d3857a](https://github.com/satanTime/ngrx-entity-relationship/commit/3d3857afe514aaa42daab50d016156466abb4367))
+
 ## [1.5.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.5.0...v1.5.1) (2021-04-19)
 
 
