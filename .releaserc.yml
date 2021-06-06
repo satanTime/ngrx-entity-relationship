@@ -4,7 +4,13 @@ release:
 plugins:
   - '@semantic-release/commit-analyzer'
   - - '@semantic-release/exec'
-    - prepareCmd: npm install && npm run st:lint && npm test && npm run st:build
+    - prepareCmd: npm install --no-audit --legacy-peer-deps --no-optional
+  - - '@semantic-release/exec'
+    - prepareCmd: npm run st:lint
+  - - '@semantic-release/exec'
+    - prepareCmd: npm test
+  - - '@semantic-release/exec'
+    - prepareCmd: npm run st:build
   - '@semantic-release/release-notes-generator'
   - - '@semantic-release/changelog'
     - changelogFile: CHANGELOG.md
