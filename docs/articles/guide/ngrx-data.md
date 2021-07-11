@@ -110,12 +110,16 @@ export class MyComponent {
       userSelectors: UserSelectorService,
   ) {
     this.user$ = store.select(
-      userSelectors.selectUser,
-      '1',
+      toStaticSelector(
+        userSelectors.selectUser,
+        '1',
+      ),
     );
     this.users$ = store.select(
-      userSelectors.selectUsers,
-      ['1', '2'],
+      toStaticSelector(
+        userSelectors.selectUsers,
+        ['1', '2'],
+      ),
     );
   }
 }

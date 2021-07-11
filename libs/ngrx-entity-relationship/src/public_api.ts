@@ -16,6 +16,8 @@ export {ngrxEntityRelationshipReducer} from './lib/store/ngrxEntityRelationshipR
 
 export {selectByIds} from './lib/selectByIds';
 export {stateKeys} from './lib/stateKeys';
+export {toFactorySelector} from './lib/toFactorySelector';
+export {toStaticSelector} from './lib/toStaticSelector';
 
 export {isBuiltInSelector, isSelectorMeta} from './lib/types';
 

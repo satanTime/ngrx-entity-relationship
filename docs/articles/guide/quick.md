@@ -55,8 +55,7 @@ the only requirement is the `Dictionary` (a regular object).
 The next step is to define functions which select the state of an entity.
 In this library, they are called [**entity state selectors**](../api/core/entity-state-selector.md).
 
-```ts
-// Redux
+```ts title="Redux"
 export const selectUserState = state => state.users;
 export const selectCompanyState = state => state.companies;
 // `stateKeys` function helps in case of different names of the properties.
@@ -67,8 +66,7 @@ export const selectAddressState = stateKeys(
 );
 ```
 
-```ts
-// NGRX
+```ts title="NGRX"
 export const selectUserState =
   createFeatureSelector<fromUser.State>(
     'users',
@@ -165,8 +163,7 @@ In case of arrays, such as `company.staff`, there is [`childrenEntitiesSelector`
 Now, let's go to a component where we want to select a user with relationships,
 and create a **root selector** via the factories there:
 
-```ts
-// Redux
+```ts title="Redux"
 const selectUser = rootUser(
   relUserCompany(
     relCompanyAddress(),
@@ -182,8 +179,32 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps)(MyComponent);
 ```
 
-```ts
-// NGRX
+```ts title="NGRX 12 and younger"
+export class MyComponent {
+  public readonly users$: Observable<User>;
+
+  private readonly selectUser =
+    rootUser(
+      relUserCompany(
+        relCompanyAddress(),
+      ),
+  );
+
+  constructor(private store: Store) {
+    this.users$ = this.store.select(
+      // toStaticSelector should be used
+      // to create a selector for v12
+      toStaticSelector(
+        this.selectUser,
+        // '1' is the id of user
+        '1',
+      ),
+    );
+  }
+}
+```
+
+```ts title="NGRX 11 and older"
 export class MyComponent {
   public readonly users$: Observable<User>;
 
@@ -205,13 +226,20 @@ export class MyComponent {
 
 Of course, instead of a hardcoded id like `1`, we can pass another **selector, that selects ids** from the state.
 
-```ts
-// Redux
+```ts title="Redux"
 selectUser(state, selectCurrentUserId);
 ```
 
-```ts
-// NGRX
+```ts title="NGRX 12 and younger"
+this.store.select(
+  toStaticSelector(
+    this.selectUser,
+    selectCurrentUserId,
+  ),
+);
+```
+
+```ts title="NGRX 11 and older"
 this.store.select(this.selectUser, selectCurrentUserId);
 ```
 
@@ -234,13 +262,20 @@ const selectUsers = rootEntities(selectUser);
 
 Now we can use `selectUsers` in our components, but instead of an id, it requires an array of them.
 
-```ts
-// Redux
+```ts title="Redux"
 selectUsers(state, ['1', '2']);
 ```
 
-```ts
-// NGRX
+```ts title="NGRX 12 and younger"
+this.store.select(
+  toStaticSelector(
+    this.selectUsers,
+    ['1', '2'],
+  ),
+);
+```
+
+```ts title="NGRX and older"
 this.store.select(this.selectUsers, ['1', '2']);
 ```
 

@@ -51,6 +51,8 @@ module.exports = {
                         'api/core/childentityselector-function',
                         'api/core/childrenentities-function',
                         'api/core/childrenentitiesselector-function',
+                        'api/core/to-factory-selector',
+                        'api/core/to-static-selector',
                     ],
                 },
                 {
