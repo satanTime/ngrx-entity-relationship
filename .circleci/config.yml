@@ -478,7 +478,7 @@ jobs:
             - ./node_modules
       - run:
           name: Unit Tests
-          command: npx nx test:ie ngrx-entity-relationship --reporters junit
+          command: npx nx run ngrx-entity-relationship:test:ie --reporters junit
       - store_test_results:
           path: ./test-reports
     environment:
