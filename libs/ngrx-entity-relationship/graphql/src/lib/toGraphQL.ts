@@ -126,10 +126,11 @@ function encodeValue(data: any): string | undefined {
 export function toGraphQL(...queries: Array<string>): string;
 export function toGraphQL(query: string, params: object, selector: ENTITY_SELECTOR): string;
 export function toGraphQL(query: string, selector: ENTITY_SELECTOR): string;
+export function toGraphQL(selector: ENTITY_SELECTOR): string;
 
 export function toGraphQL(...queries: Array<any>): string {
     const prefix = (window as any).ngrxGraphqlPrefix || '';
-    let query = '';
+    let query: string | undefined = '';
     let selector: ENTITY_SELECTOR | undefined;
     let params: Record<string, any> | null | string | undefined;
     if (queries.length >= 2 && typeof queries[1] !== 'string') {
@@ -138,6 +139,9 @@ export function toGraphQL(...queries: Array<any>): string {
         } else {
             [query, selector] = queries;
         }
+    } else if (queries.length === 1 && typeof queries[0] !== 'string') {
+        [selector] = queries;
+        query = undefined;
     }
 
     const stringParams: Array<string> = [];
@@ -165,11 +169,19 @@ export function toGraphQL(...queries: Array<any>): string {
     params = stringParams.length ? `(${stringParams.join(`,${prefix ? ' ' : ''}`)})` : '';
 
     if (selector) {
-        return `{\n${prefix}${query}${params}${prefix ? ' ' : ''}{\n${resolveGraphQL(selector, {
+        let gql = resolveGraphQL(selector, {
             include: [],
             prefix: `${prefix}`,
             level: 2,
-        })}${prefix}}\n}`;
+        });
+
+        if (query === undefined) {
+            return gql;
+        }
+
+        gql = `{\n${gql}${prefix}}`;
+
+        return query ? `{\n${prefix}${query}${params}${prefix ? ' ' : ''}${gql}\n}` : gql;
     }
     const parts: Array<string> = [];
     for (let part of queries) {
