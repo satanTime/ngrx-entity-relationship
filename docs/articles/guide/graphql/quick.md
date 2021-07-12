@@ -190,3 +190,37 @@ It will generate:
   }
 }
 ```
+
+It is also possible to generate a block with fields if to pass an empty string as the query parameter.
+
+```ts
+const shape = toGraphQL('', selectUser);
+```
+
+It will generate:
+
+```graphql
+{
+  id
+  someRel {
+    id
+  }
+  # ...
+}
+```
+
+Or to get a shape if to pass a selector only. 
+
+```ts
+const shape = toGraphQL(selectUser);
+```
+
+It will generate:
+
+```graphql
+id
+someRel {
+  id
+}
+# ...
+```
