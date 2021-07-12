@@ -1,3 +1,11 @@
+# [1.7.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.6.0...v1.7.0) (2021-07-12)
+
+
+### Features
+
+* **core:** factories for factory selectors for ngrx 12+ [#694](https://github.com/satanTime/ngrx-entity-relationship/issues/694) ([904d99a](https://github.com/satanTime/ngrx-entity-relationship/commit/904d99a584607eb0ee428b6bae92fefe0093082e))
+* **gql:** a way to get a block and a shape for gql ([c322e23](https://github.com/satanTime/ngrx-entity-relationship/commit/c322e23ed8d62be3af1e1e9b115db82ad14c5717))
+
 # [1.6.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.5.1...v1.6.0) (2021-06-06)
 
 
