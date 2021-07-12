@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {rootEntities} from 'ngrx-entity-relationship';
+import {rootEntities, toFactorySelector} from 'ngrx-entity-relationship';
 import {combineLatest, Observable} from 'rxjs';
 import {filter, map, switchMap} from 'rxjs/operators';
 import {Company} from './store/company/company.model';
@@ -29,7 +29,7 @@ import {User} from './store/user/user.model';
 export class EntityComponent implements OnDestroy {
     public readonly company$: Observable<Company | undefined>;
     // prettier-ignore
-    private readonly companyWithCrazyData = rootCompany(
+    private readonly companyWithCrazyData = toFactorySelector(rootCompany(
         relCompanyAddress(),
         relCompanyAdmin(
             relUserEmployees(),
@@ -41,25 +41,25 @@ export class EntityComponent implements OnDestroy {
                 ),
             ),
         ),
-    );
+    ));
 
     public readonly users$: Observable<Array<User>>;
     // prettier-ignore
-    private readonly users = rootEntities(
+    private readonly users = toFactorySelector(rootEntities(
         rootUser(
             relUserEmployees(
                 relUserManager(),
             ),
             relUserManager(),
         ),
-    );
+    ));
 
     constructor(protected readonly store: Store<State>, public readonly entitiesService: EntityService) {
         this.users$ = combineLatest([
-            this.store.select(this.users, selectCurrentUsersIds),
+            this.store.select(this.users(selectCurrentUsersIds)),
             this.store.pipe(
                 select(selectCurrentUsersIds),
-                switchMap(ids => this.store.select(this.users, ids)),
+                switchMap(ids => this.store.select(this.users(ids))),
             ),
         ]).pipe(
             filter(([a, b]) => a === b),
@@ -67,10 +67,10 @@ export class EntityComponent implements OnDestroy {
         );
 
         this.company$ = combineLatest([
-            this.store.select(this.companyWithCrazyData, selectCurrentCompanyId),
+            this.store.select(this.companyWithCrazyData(selectCurrentCompanyId)),
             this.store.pipe(
                 select(selectCurrentCompanyId),
-                switchMap(id => this.store.select(this.companyWithCrazyData, id)),
+                switchMap(id => this.store.select(this.companyWithCrazyData(id))),
             ),
         ]).pipe(
             filter(([a, b]) => a === b),

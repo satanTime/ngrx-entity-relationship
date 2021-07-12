@@ -19,9 +19,10 @@ The current version of `ngrx-entity-relationship` has been tested and can be use
 
 - Redux 4, React Redux 7, **try it live on [StackBlitz](https://stackblitz.com/edit/ngrx-entity-relationship-react?file=src/MyComponent.tsx)
   or [CodeSandbox](https://codesandbox.io/s/github/satanTime/ngrx-entity-relationship-react?file=/src/MyComponent.tsx)**
-
-- NGRX 10, **try it live on [StackBlitz](https://stackblitz.com/github/satanTime/ngrx-entity-relationship-angular?file=src/app/app.component.ts)
+- NGRX 12, **try it live on [StackBlitz](https://stackblitz.com/github/satanTime/ngrx-entity-relationship-angular?file=src/app/app.component.ts)
   or [CodeSandbox](https://codesandbox.io/s/github/satanTime/ngrx-entity-relationship-angular?file=/src/app/app.component.ts)**
+- NGRX 11
+- NGRX 10
 - NGRX 9
 - NGRX 8
 - NGRX 7

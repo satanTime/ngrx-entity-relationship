@@ -1,9 +1,9 @@
-import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, ID_TYPES} from 'ngrx-entity-relationship';
+import {HANDLER_ROOT_ENTITIES, HANDLER_ROOT_ENTITY, ID_TYPES, toFactorySelector} from 'ngrx-entity-relationship';
 import {iif, Observable, of} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 
 export interface STORE_INSTANCE<T> {
-    select<K, Props>(mapFn: (state: T, props: Props) => K, props: Props): Observable<K>;
+    select<K>(mapFn: (state: T) => K): Observable<K>;
 }
 
 export function relationships<STORE, ENTITY>(
@@ -30,6 +30,8 @@ export function relationships<STORE, SET, TRANSFORMED, TYPES>(
     store: STORE_INSTANCE<STORE>,
     selector: HANDLER_ROOT_ENTITY<STORE, SET, SET | TRANSFORMED, TYPES>,
 ): (next: Observable<SET>) => Observable<undefined | SET | TRANSFORMED> {
+    const factory = toFactorySelector(selector);
+
     return next =>
         next.pipe(
             switchMap(input => {
@@ -48,7 +50,7 @@ export function relationships<STORE, SET, TRANSFORMED, TYPES>(
                             }
                             return selector.idSelector(set) as any as TYPES;
                         }),
-                        switchMap(id => store.select(selector, id)),
+                        switchMap(id => store.select(factory(id))),
                     ),
                 );
             }),

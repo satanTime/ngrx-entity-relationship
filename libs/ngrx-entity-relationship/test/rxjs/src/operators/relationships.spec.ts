@@ -47,7 +47,7 @@ describe('operators/relationships', () => {
             .subscribe(actual => {
                 expect(actual).toBe(expected as any);
                 expect(selector.idSelector).toHaveBeenCalledWith(entity);
-                expect(store.select).toHaveBeenCalledWith(selector, 'hello');
+                expect(store.select).toHaveBeenCalledWith(jasmine.anything());
                 store$.complete();
                 doneFn();
             });
@@ -80,7 +80,7 @@ describe('operators/relationships', () => {
                 expect(actual).toBe(expected as any);
                 expect(selector.idSelector).toHaveBeenCalledWith(entity1);
                 expect(selector.idSelector).toHaveBeenCalledWith(entity2);
-                expect(store.select).toHaveBeenCalledWith(selector, ['hello1', 'hello2']);
+                expect(store.select).toHaveBeenCalledWith(jasmine.anything());
                 store$.complete();
                 doneFn();
             });
