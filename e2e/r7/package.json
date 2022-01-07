@@ -6,7 +6,7 @@
     "ngrx-entity-relationship": "*"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "1.6.2",
+    "@reduxjs/toolkit": "1.7.1",
     "@testing-library/jest-dom": "5.16.1",
     "@testing-library/react": "12.1.2",
     "@testing-library/user-event": "13.5.0",
