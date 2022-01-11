@@ -147,7 +147,7 @@
     "codecov": "3.8.3",
     "codelyzer": "6.0.2",
     "coveralls": "3.1.1",
-    "dotenv": "10.0.0",
+    "dotenv": "11.0.0",
     "eslint": "8.6.0",
     "husky": "7.0.4",
     "jasmine-core": "3.99.0",
