@@ -120,7 +120,7 @@
     "test:r7": "cd e2e/r7 && CI=1 npm run test"
   },
   "dependencies": {
-    "@angular-devkit/architect": "0.1202.14",
+    "@angular-devkit/architect": "0.1301.3",
     "@angular-devkit/build-angular": "12.2.14",
     "@angular/animations": "12.2.15",
     "@angular/common": "12.2.15",
