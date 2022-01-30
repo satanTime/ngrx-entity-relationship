@@ -155,7 +155,7 @@ describe('reuse-of-nested-entities', () => {
         state.companies.entities = {
             ...state.companies.entities,
             id1: {
-                ...state.companies.entities.id1,
+                ...state.companies.entities['id1'],
                 name: 'name1.1',
             } as any,
         };
@@ -244,7 +244,7 @@ describe('reuse-of-nested-entities', () => {
         state.users.entities = {
             ...state.users.entities,
             id2: {
-                ...state.users.entities.id2,
+                ...state.users.entities['id2'],
                 firstName: 'firstName2.1',
             } as any,
         };
@@ -330,7 +330,7 @@ describe('reuse-of-nested-entities', () => {
         state.addresses.entities = {
             ...state.addresses.entities,
             id1: {
-                ...state.addresses.entities.id1,
+                ...state.addresses.entities['id1'],
                 street: 'street1.1',
             } as any,
         };
@@ -415,7 +415,7 @@ describe('reuse-of-nested-entities', () => {
         state.users.entities = {
             ...state.users.entities,
             id1: {
-                ...state.users.entities.id1,
+                ...state.users.entities['id1'],
                 firstName: 'firstName1.1',
             } as any,
         };
