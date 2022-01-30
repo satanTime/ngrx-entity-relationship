@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig.ivy-off.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
     "types": ["jasmine", "jasminewd2", "node"]
