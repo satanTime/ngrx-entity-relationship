@@ -8,7 +8,7 @@ parameters:
 jobs:
   Core:
     docker:
-      - image: satantime/puppeteer-node:16.13.2-buster
+      - image: satantime/puppeteer-node:14.18.3
     steps:
       - checkout
       - restore_cache:
@@ -96,23 +96,6 @@ jobs:
           root: dist
           paths:
             - .
-  'Install':
-    docker:
-      - image: satantime/puppeteer-node:16.13.2-buster
-    steps:
-      - checkout
-      - restore_cache:
-          key: r7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/r7/package-lock.json" }}
-      - run:
-          name: NPM Install
-          command: |
-            if [ ! -d "e2e/r7/node_modules/" ]; then
-              npm run i:ci:r7
-            fi
-      - save_cache:
-          key: r7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/r7/package-lock.json" }}
-          paths:
-            - ./e2e/r7/node_modules
   'Angular 6 Install':
     docker:
       - image: satantime/puppeteer-node:8.17.0
@@ -537,9 +520,26 @@ jobs:
       - run:
           name: Build
           command: npm run b:a13
+  'React Redux 7 Install':
+    docker:
+      - image: satantime/puppeteer-node:14.18.3
+    steps:
+      - checkout
+      - restore_cache:
+          key: r7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/r7/package-lock.json" }}
+      - run:
+          name: NPM Install
+          command: |
+            if [ ! -d "e2e/r7/node_modules/" ]; then
+              npm run i:ci:r7
+            fi
+      - save_cache:
+          key: r7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/r7/package-lock.json" }}
+          paths:
+            - ./e2e/r7/node_modules
   'React Redux 7':
     docker:
-      - image: satantime/puppeteer-node:16.13.2-buster
+      - image: satantime/puppeteer-node:14.18.3
     steps:
       - checkout
       - attach_workspace:
@@ -588,9 +588,6 @@ workflows:
   Testing:
     jobs:
       - Core
-      - Install:
-          requires:
-            - Core
       - 'Core IE':
           requires:
             - Core
@@ -654,6 +651,9 @@ workflows:
       - 'Angular 13':
           requires:
             - Angular 13 Install
+      - 'React Redux 7 Install':
+          requires:
+            - Core
       - 'React Redux 7':
           requires:
-            - Install
+            - React Redux 7 Install
