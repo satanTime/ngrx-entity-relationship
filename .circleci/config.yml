@@ -102,8 +102,6 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: a6-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a6/package-lock.json" }}
-      - restore_cache:
           key: a7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a7/package-lock.json" }}
       - restore_cache:
           key: a8-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a8/package-lock.json" }}
@@ -122,9 +120,6 @@ jobs:
       - run:
           name: NPM Install
           command: |
-            if [ ! -d "e2e/a6/node_modules/" ]; then
-              npm run i:ci:a6
-            fi
             if [ ! -d "e2e/a7/node_modules/" ]; then
               npm run i:ci:a7
             fi
@@ -149,10 +144,6 @@ jobs:
             if [ ! -d "e2e/r7/node_modules/" ]; then
               npm run i:ci:r7
             fi
-      - save_cache:
-          key: a6-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a6/package-lock.json" }}
-          paths:
-            - ./e2e/a6/node_modules
       - save_cache:
           key: a7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a7/package-lock.json" }}
           paths:
@@ -185,9 +176,26 @@ jobs:
           key: r7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/r7/package-lock.json" }}
           paths:
             - ./e2e/r7/node_modules
+  'Angular 6 Install':
+    docker:
+      - image: satantime/puppeteer-node:8.17.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: a6-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a6/package-lock.json" }}
+      - run:
+          name: NPM Install
+          command: |
+            if [ ! -d "e2e/a6/node_modules/" ]; then
+              npm run i:ci:a6
+            fi
+      - save_cache:
+          key: a6-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a6/package-lock.json" }}
+          paths:
+            - ./e2e/a6/node_modules
   'Angular 6':
     docker:
-      - image: satantime/puppeteer-node:16.13.2-buster
+      - image: satantime/puppeteer-node:8.17.0
     steps:
       - checkout
       - attach_workspace:
@@ -530,9 +538,12 @@ workflows:
       - 'Core IE':
           requires:
             - Core
+      - 'Angular 6 Install':
+          requires:
+            - Core
       - 'Angular 6':
           requires:
-            - Install
+            - Angular 6 Install
       - 'Angular 7':
           requires:
             - Install
