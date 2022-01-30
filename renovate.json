@@ -801,6 +801,11 @@
     },
     {
       "paths": ["e2e/a13/package.json"],
+      "packageNames": ["puppeteer"],
+      "allowedVersions": "/^13\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
       "packageNames": ["ts-node"],
       "allowedVersions": "/^10\\./"
     },
@@ -808,6 +813,11 @@
       "paths": ["e2e/a13/package.json"],
       "packageNames": ["typescript"],
       "allowedVersions": "/^4\\.5\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["npm"],
+      "allowedVersions": "/^6\\./"
     },
 
     {
