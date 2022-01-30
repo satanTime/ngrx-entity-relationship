@@ -102,8 +102,6 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: a10-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a10/package-lock.json" }}
-      - restore_cache:
           key: a11-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a11/package-lock.json" }}
       - restore_cache:
           key: a12-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a12/package-lock.json" }}
@@ -114,9 +112,6 @@ jobs:
       - run:
           name: NPM Install
           command: |
-            if [ ! -d "e2e/a10/node_modules/" ]; then
-              npm run i:ci:a10
-            fi
             if [ ! -d "e2e/a11/node_modules/" ]; then
               npm run i:ci:a11
             fi
@@ -129,10 +124,6 @@ jobs:
             if [ ! -d "e2e/r7/node_modules/" ]; then
               npm run i:ci:r7
             fi
-      - save_cache:
-          key: a10-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a10/package-lock.json" }}
-          paths:
-            - ./e2e/a10/node_modules
       - save_cache:
           key: a11-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a11/package-lock.json" }}
           paths:
@@ -337,9 +328,26 @@ jobs:
       - run:
           name: Build
           command: npm run b:a9:on
+  'Angular 10 Install':
+    docker:
+      - image: satantime/puppeteer-node:12.22.9
+    steps:
+      - checkout
+      - restore_cache:
+          key: a10-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a10/package-lock.json" }}
+      - run:
+          name: NPM Install
+          command: |
+            if [ ! -d "e2e/a10/node_modules/" ]; then
+              npm run i:ci:a10
+            fi
+      - save_cache:
+          key: a10-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a10/package-lock.json" }}
+          paths:
+            - ./e2e/a10/node_modules
   'Angular 10 without Ivy':
     docker:
-      - image: satantime/puppeteer-node:16.13.2-buster
+      - image: satantime/puppeteer-node:12.22.9
     steps:
       - checkout
       - attach_workspace:
@@ -363,7 +371,7 @@ jobs:
           command: npm run b:a10:off
   'Angular 10 with Ivy':
     docker:
-      - image: satantime/puppeteer-node:16.13.2-buster
+      - image: satantime/puppeteer-node:12.22.9
     steps:
       - checkout
       - attach_workspace:
@@ -589,15 +597,18 @@ workflows:
       - 'Angular 9 with Ivy':
           requires:
             - Angular 9 Install
+      - 'Angular 10 Install':
+          requires:
+            - Core
       - 'Angular 10 without Ivy':
           requires:
-            - Install
+            - Angular 10 Install
       - 'Angular 10 with Ivy':
           requires:
-            - Install
+            - Angular 10 Install
       - 'Angular 11 without Ivy':
           requires:
-            - Install
+            - Angular 10 Install
       - 'Angular 11 with Ivy':
           requires:
             - Install
