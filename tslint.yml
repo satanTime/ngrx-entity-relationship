@@ -124,7 +124,7 @@ rules:
   no-return-await: true
   no-shadowed-variable: true
   no-sparse-arrays: true
-  no-string-literal: true
+  no-string-literal: false
   no-string-throw: true
   no-submodule-imports: false
   no-suspicious-comment: false

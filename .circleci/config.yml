@@ -116,6 +116,8 @@ jobs:
       - restore_cache:
           key: a12-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a12/package-lock.json" }}
       - restore_cache:
+          key: a13-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a13/package-lock.json" }}
+      - restore_cache:
           key: r7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/r7/package-lock.json" }}
       - run:
           name: NPM Install
@@ -140,6 +142,9 @@ jobs:
             fi
             if [ ! -d "e2e/a12/node_modules/" ]; then
               npm run i:ci:a12
+            fi
+            if [ ! -d "e2e/a13/node_modules/" ]; then
+              npm run i:ci:a13
             fi
             if [ ! -d "e2e/r7/node_modules/" ]; then
               npm run i:ci:r7
@@ -172,6 +177,10 @@ jobs:
           key: a12-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a12/package-lock.json" }}
           paths:
             - ./e2e/a12/node_modules
+      - save_cache:
+          key: a13-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a13/package-lock.json" }}
+          paths:
+            - ./e2e/a13/node_modules
       - save_cache:
           key: r7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/r7/package-lock.json" }}
           paths:
@@ -440,6 +449,30 @@ jobs:
       - run:
           name: Build
           command: npm run b:a12:on
+  'Angular 13':
+    docker:
+      - image: satantime/puppeteer-node:16.13.2-buster
+    steps:
+      - checkout
+      - attach_workspace:
+          at: dist
+      - restore_cache:
+          key: a13-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a13/package-lock.json" }}
+      - run:
+          name: Spreading Build
+          command: npm run s:a13
+      - run:
+          name: Spreading Tests
+          command: npm run s:test:a13
+      - run:
+          name: UT
+          command: npm run test:a13
+      - run:
+          name: E2E
+          command: npm run e2e:a13
+      - run:
+          name: Build
+          command: npm run b:a13
   'React Redux 7':
     docker:
       - image: satantime/puppeteer-node:16.13.2-buster
@@ -528,6 +561,9 @@ workflows:
           requires:
             - Install
       - 'Angular 12 with Ivy':
+          requires:
+            - Install
+      - 'Angular 13':
           requires:
             - Install
       - 'React Redux 7':

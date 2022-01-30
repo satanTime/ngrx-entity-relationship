@@ -628,8 +628,107 @@
     },
     {
       "paths": ["e2e/a12/package.json"],
+      "packageNames": ["ts-node"],
+      "allowedVersions": "/^10\\./"
+    },
+    {
+      "paths": ["e2e/a12/package.json"],
       "packageNames": ["typescript"],
       "allowedVersions": "/^4\\.2\\./"
+    },
+
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packagePatterns": ["^@angular/"],
+      "allowedVersions": "/^13\\./",
+      "ignoreUnstable": false
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packagePatterns": ["^@ngrx/"],
+      "allowedVersions": "/^13\\./",
+      "ignoreUnstable": false
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["rxjs"],
+      "allowedVersions": "/^7\\.5\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["tslib"],
+      "allowedVersions": "/^2\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["zone.js"],
+      "allowedVersions": "/^0\\.11\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["@angular-devkit/build-angular"],
+      "allowedVersions": "/^13\\./",
+      "ignoreUnstable": false
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["@types/jasmine"],
+      "allowedVersions": "/^3\\.10\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["jasmine-core"],
+      "allowedVersions": "/^4\\.0\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["@types/jasminewd2"],
+      "allowedVersions": "/^2\\.0\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["@types/node"],
+      "allowedVersions": "/^12\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["jasmine-spec-reporter"],
+      "allowedVersions": "/^5\\.0\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["karma"],
+      "allowedVersions": "/^6\\.3\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["karma-chrome-launcher"],
+      "allowedVersions": "/^3\\.1\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["karma-jasmine"],
+      "allowedVersions": "/^4\\.0\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["karma-jasmine-html-reporter"],
+      "allowedVersions": "/^1\\.7\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["protractor"],
+      "allowedVersions": "/^7\\.0\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["ts-node"],
+      "allowedVersions": "/^10\\./"
+    },
+    {
+      "paths": ["e2e/a13/package.json"],
+      "packageNames": ["typescript"],
+      "allowedVersions": "/^4\\.5\\./"
     },
 
     {
