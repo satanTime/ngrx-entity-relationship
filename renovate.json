@@ -16,6 +16,15 @@
   },
   "packageRules": [
     {
+      "paths": [".circleci/config.yml"],
+      "packagePatterns": ["satantime/puppeteer-node"],
+      "major": {
+        "enabled": false
+      },
+      "additionalBranchPrefix": "root/"
+    },
+
+    {
       "paths": [".circleci/config.yml", "Dockerfile", "docker-compose.yml", "docs/package.json", "package.json"],
       "additionalBranchPrefix": "root/"
     },
@@ -205,6 +214,11 @@
     },
     {
       "paths": ["e2e/a7/package.json"],
+      "packageNames": ["puppeteer"],
+      "allowedVersions": "/^2\\./"
+    },
+    {
+      "paths": ["e2e/a7/package.json"],
       "packageNames": ["ts-node"],
       "allowedVersions": "<=7"
     },
@@ -212,6 +226,11 @@
       "paths": ["e2e/a7/package.json"],
       "packageNames": ["typescript"],
       "allowedVersions": "<=3.2"
+    },
+    {
+      "paths": ["e2e/a7/package.json"],
+      "packageNames": ["npm"],
+      "allowedVersions": "/^6\\./"
     },
 
     {

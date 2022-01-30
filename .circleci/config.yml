@@ -102,8 +102,6 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: a7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a7/package-lock.json" }}
-      - restore_cache:
           key: a8-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a8/package-lock.json" }}
       - restore_cache:
           key: a9-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a9/package-lock.json" }}
@@ -120,9 +118,6 @@ jobs:
       - run:
           name: NPM Install
           command: |
-            if [ ! -d "e2e/a7/node_modules/" ]; then
-              npm run i:ci:a7
-            fi
             if [ ! -d "e2e/a8/node_modules/" ]; then
               npm run i:ci:a8
             fi
@@ -144,10 +139,6 @@ jobs:
             if [ ! -d "e2e/r7/node_modules/" ]; then
               npm run i:ci:r7
             fi
-      - save_cache:
-          key: a7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a7/package-lock.json" }}
-          paths:
-            - ./e2e/a7/node_modules
       - save_cache:
           key: a8-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a8/package-lock.json" }}
           paths:
@@ -217,9 +208,26 @@ jobs:
       - run:
           name: Build
           command: npm run b:a6
+  'Angular 7 Install':
+    docker:
+      - image: satantime/puppeteer-node:8.17.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: a7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a7/package-lock.json" }}
+      - run:
+          name: NPM Install
+          command: |
+            if [ ! -d "e2e/a7/node_modules/" ]; then
+              npm run i:ci:a7
+            fi
+      - save_cache:
+          key: a7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a7/package-lock.json" }}
+          paths:
+            - ./e2e/a7/node_modules
   'Angular 7':
     docker:
-      - image: satantime/puppeteer-node:16.13.2-buster
+      - image: satantime/puppeteer-node:8.17.0
     steps:
       - checkout
       - attach_workspace:
@@ -529,7 +537,7 @@ jobs:
       IE_BIN: 'C:\Program Files\Internet Explorer\iexplore.exe'
 workflows:
   version: 2
-  build:
+  Testing:
     jobs:
       - Core
       - Install:
@@ -544,9 +552,12 @@ workflows:
       - 'Angular 6':
           requires:
             - Angular 6 Install
+      - 'Angular 7 Install':
+          requires:
+            - Core
       - 'Angular 7':
           requires:
-            - Install
+            - Angular 7 Install
       - 'Angular 8':
           requires:
             - Install
