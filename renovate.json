@@ -630,6 +630,11 @@
       "paths": ["e2e/a12/package.json"],
       "packageNames": ["typescript"],
       "allowedVersions": "/^4\\.2\\./"
+    },
+
+    {
+      "packagePatterns": ["npm"],
+      "allowedVersions": "/^6\\./"
     }
   ]
 }

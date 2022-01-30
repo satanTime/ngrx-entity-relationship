@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "e2e": "ng e2e --webdriver-update=false",
-    "postinstall": "node_modules/protractor/bin/webdriver-manager update --versions.chrome 91.0.4472.19 --gecko=false"
+    "postinstall": "node_modules/protractor/bin/webdriver-manager update --versions.chrome 97.0.4692.71 --gecko=false"
   },
   "private": true,
   "peerDependencies": {
