@@ -102,8 +102,6 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: a8-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a8/package-lock.json" }}
-      - restore_cache:
           key: a9-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a9/package-lock.json" }}
       - restore_cache:
           key: a10-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a10/package-lock.json" }}
@@ -118,9 +116,6 @@ jobs:
       - run:
           name: NPM Install
           command: |
-            if [ ! -d "e2e/a8/node_modules/" ]; then
-              npm run i:ci:a8
-            fi
             if [ ! -d "e2e/a9/node_modules/" ]; then
               npm run i:ci:a9
             fi
@@ -139,10 +134,6 @@ jobs:
             if [ ! -d "e2e/r7/node_modules/" ]; then
               npm run i:ci:r7
             fi
-      - save_cache:
-          key: a8-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a8/package-lock.json" }}
-          paths:
-            - ./e2e/a8/node_modules
       - save_cache:
           key: a9-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a9/package-lock.json" }}
           paths:
@@ -249,9 +240,26 @@ jobs:
       - run:
           name: Build
           command: npm run b:a7
+  'Angular 8 Install':
+    docker:
+      - image: satantime/puppeteer-node:10.24.1
+    steps:
+      - checkout
+      - restore_cache:
+          key: a8-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a8/package-lock.json" }}
+      - run:
+          name: NPM Install
+          command: |
+            if [ ! -d "e2e/a8/node_modules/" ]; then
+              npm run i:ci:a8
+            fi
+      - save_cache:
+          key: a8-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a8/package-lock.json" }}
+          paths:
+            - ./e2e/a8/node_modules
   'Angular 8':
     docker:
-      - image: satantime/puppeteer-node:16.13.2-buster
+      - image: satantime/puppeteer-node:10.24.1
     steps:
       - checkout
       - attach_workspace:
@@ -558,9 +566,12 @@ workflows:
       - 'Angular 7':
           requires:
             - Angular 7 Install
+      - 'Angular 8 Install':
+          requires:
+            - Core
       - 'Angular 8':
           requires:
-            - Install
+            - Angular 8 Install
       - 'Angular 9 without Ivy':
           requires:
             - Install
