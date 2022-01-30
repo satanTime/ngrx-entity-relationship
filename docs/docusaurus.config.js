@@ -12,9 +12,6 @@ module.exports = {
     projectName: 'ngrx-entity-relationship',
     themeConfig: {
         hideableSidebar: true,
-        gtag: {
-            trackingID: 'G-5N6FDRBRCW',
-        },
         navbar: {
             title: 'ngrx-entity-relationship',
             items: [
@@ -138,6 +135,11 @@ module.exports = {
             },
         ],
         '@docusaurus/plugin-sitemap',
-        '@docusaurus/plugin-google-gtag',
+        [
+            '@docusaurus/plugin-google-gtag',
+            {
+                trackingID: 'G-5N6FDRBRCW',
+            },
+        ],
     ],
 };

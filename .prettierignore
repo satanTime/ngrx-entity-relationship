@@ -12,6 +12,6 @@ favicon.ico
 package-lock.json
 
 dist
-docs
+docs/articles
 node_modules
 test-reports

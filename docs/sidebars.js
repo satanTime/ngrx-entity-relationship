@@ -13,19 +13,12 @@ module.exports = {
                 {
                     type: 'category',
                     label: 'Normalization',
-                    items: [
-                        'normalization/reducer',
-                        'normalization/linear',
-                        'normalization/graph',
-                    ],
+                    items: ['normalization/reducer', 'normalization/linear', 'normalization/graph'],
                 },
                 {
                     type: 'category',
                     label: 'GraphQL',
-                    items: [
-                        'guide/graphql/quick',
-                        'guide/graphql/ngrx',
-                    ],
+                    items: ['guide/graphql/quick', 'guide/graphql/ngrx'],
                 },
                 'guide/transform-entities',
                 'guide/ngrx-data',
@@ -58,18 +51,12 @@ module.exports = {
                 {
                     type: 'category',
                     label: 'GraphQL',
-                    items: [
-                        'api/graphql/subscriptions',
-                        'api/graphql/mutations',
-                        'api/graphql/queries',
-                    ],
+                    items: ['api/graphql/subscriptions', 'api/graphql/mutations', 'api/graphql/queries'],
                 },
                 {
                     type: 'category',
                     label: 'RxJS',
-                    items: [
-                        'api/rxjs/relationships',
-                    ],
+                    items: ['api/rxjs/relationships'],
                 },
             ],
         },
@@ -86,11 +73,7 @@ module.exports = {
         {
             type: 'category',
             label: 'Troubleshooting',
-            items: [
-                'help/warnings',
-                'help/circular-dependency',
-                'help/typedef',
-            ],
+            items: ['help/warnings', 'help/circular-dependency', 'help/typedef'],
         },
     ],
 };
