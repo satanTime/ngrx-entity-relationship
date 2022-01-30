@@ -1,3 +1,5 @@
+## [1.7.1](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.7.0...v1.7.1) (2022-01-30)
+
 # [1.7.0](https://github.com/satanTime/ngrx-entity-relationship/compare/v1.6.0...v1.7.0) (2021-07-12)
 
 
