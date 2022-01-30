@@ -4,15 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npm run build:ivy-on && npm run build:ivy-off",
-    "build:ivy-on": "ng build --configuration ivy-on",
-    "build:ivy-off": "ng build --configuration ivy-off",
-    "test": "npm run test:ivy-on && npm run test:ivy-off",
-    "test:ivy-on": "ng test --configuration ivy-on",
-    "test:ivy-off": "ng test --configuration ivy-off",
-    "e2e": "npm run e2e:ivy-on && npm run e2e:ivy-off",
-    "e2e:ivy-on": "ng e2e --webdriver-update=false --configuration ivy-on",
-    "e2e:ivy-off": "ng e2e --webdriver-update=false --configuration ivy-off",
+    "build": "ng build",
+    "test": "ng test",
+    "e2e": "ng e2e --webdriver-update=false",
     "postinstall": "webdriver-manager update --versions.chrome 93.0.4577.63 --gecko=false"
   },
   "private": true,

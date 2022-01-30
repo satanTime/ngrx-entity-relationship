@@ -431,7 +431,7 @@ jobs:
           key: a12-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a12/package-lock.json" }}
           paths:
             - ./e2e/a12/node_modules
-  'Angular 12 without Ivy':
+  'Angular 12':
     docker:
       - image: satantime/puppeteer-node:12.22.9
     steps:
@@ -448,37 +448,13 @@ jobs:
           command: npm run s:test:a12
       - run:
           name: UT
-          command: npm run test:a12:off
+          command: npm run test:a12
       - run:
           name: E2E
-          command: npm run e2e:a12:off
+          command: npm run e2e:a12
       - run:
           name: Build
-          command: npm run b:a12:off
-  'Angular 12 with Ivy':
-    docker:
-      - image: satantime/puppeteer-node:12.22.9
-    steps:
-      - checkout
-      - attach_workspace:
-          at: dist
-      - restore_cache:
-          key: a12-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a12/package-lock.json" }}
-      - run:
-          name: Spreading Build
-          command: npm run s:a12
-      - run:
-          name: Spreading Tests
-          command: npm run s:test:a12
-      - run:
-          name: UT
-          command: npm run test:a12:on
-      - run:
-          name: E2E
-          command: npm run e2e:a12:on
-      - run:
-          name: Build
-          command: npm run b:a12:on
+          command: npm run b:a12
   'Angular 13 Install':
     docker:
       - image: satantime/puppeteer-node:12.22.9
@@ -639,10 +615,7 @@ workflows:
       - 'Angular 12 Install':
           requires:
             - Core
-      - 'Angular 12 without Ivy':
-          requires:
-            - Angular 12 Install
-      - 'Angular 12 with Ivy':
+      - 'Angular 12':
           requires:
             - Angular 12 Install
       - 'Angular 13 Install':
