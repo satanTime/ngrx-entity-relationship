@@ -697,6 +697,11 @@
     },
     {
       "paths": ["e2e/a12/package.json"],
+      "packageNames": ["puppeteer"],
+      "allowedVersions": "/^10\\./"
+    },
+    {
+      "paths": ["e2e/a12/package.json"],
       "packageNames": ["ts-node"],
       "allowedVersions": "/^10\\./"
     },
@@ -704,6 +709,11 @@
       "paths": ["e2e/a12/package.json"],
       "packageNames": ["typescript"],
       "allowedVersions": "/^4\\.2\\./"
+    },
+    {
+      "paths": ["e2e/a12/package.json"],
+      "packageNames": ["npm"],
+      "allowedVersions": "/^6\\./"
     },
 
     {

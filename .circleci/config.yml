@@ -102,27 +102,18 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: a12-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a12/package-lock.json" }}
-      - restore_cache:
           key: a13-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a13/package-lock.json" }}
       - restore_cache:
           key: r7-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/r7/package-lock.json" }}
       - run:
           name: NPM Install
           command: |
-            if [ ! -d "e2e/a12/node_modules/" ]; then
-              npm run i:ci:a12
-            fi
             if [ ! -d "e2e/a13/node_modules/" ]; then
               npm run i:ci:a13
             fi
             if [ ! -d "e2e/r7/node_modules/" ]; then
               npm run i:ci:r7
             fi
-      - save_cache:
-          key: a12-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a12/package-lock.json" }}
-          paths:
-            - ./e2e/a12/node_modules
       - save_cache:
           key: a13-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a13/package-lock.json" }}
           paths:
@@ -449,9 +440,26 @@ jobs:
       - run:
           name: Build
           command: npm run b:a11:on
+  'Angular 12 Install':
+    docker:
+      - image: satantime/puppeteer-node:12.22.9
+    steps:
+      - checkout
+      - restore_cache:
+          key: a12-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a12/package-lock.json" }}
+      - run:
+          name: NPM Install
+          command: |
+            if [ ! -d "e2e/a12/node_modules/" ]; then
+              npm run i:ci:a12
+            fi
+      - save_cache:
+          key: a12-<< pipeline.parameters.lockindex >>-{{ arch }}-{{ checksum "e2e/a12/package-lock.json" }}
+          paths:
+            - ./e2e/a12/node_modules
   'Angular 12 without Ivy':
     docker:
-      - image: satantime/puppeteer-node:16.13.2-buster
+      - image: satantime/puppeteer-node:12.22.9
     steps:
       - checkout
       - attach_workspace:
@@ -475,7 +483,7 @@ jobs:
           command: npm run b:a12:off
   'Angular 12 with Ivy':
     docker:
-      - image: satantime/puppeteer-node:16.13.2-buster
+      - image: satantime/puppeteer-node:12.22.9
     steps:
       - checkout
       - attach_workspace:
@@ -623,12 +631,15 @@ workflows:
       - 'Angular 11 with Ivy':
           requires:
             - Angular 11 Install
+      - 'Angular 12 Install':
+          requires:
+            - Core
       - 'Angular 12 without Ivy':
           requires:
-            - Install
+            - Angular 12 Install
       - 'Angular 12 with Ivy':
           requires:
-            - Install
+            - Angular 12 Install
       - 'Angular 13':
           requires:
             - Install
