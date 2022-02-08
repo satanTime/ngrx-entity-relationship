@@ -167,7 +167,7 @@
     "postcss": "8.4.6",
     "prettier": "2.5.1",
     "puppeteer": "13.2.0",
-    "rxjs": "7.5.2",
+    "rxjs": "7.5.3",
     "semantic-release": "19.0.2",
     "ts-node": "10.5.0",
     "tslib": "2.3.1",
