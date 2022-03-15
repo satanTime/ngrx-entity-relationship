@@ -164,7 +164,7 @@
     "lint-staged": "12.3.5",
     "npm": "6.14.16",
     "ng-packagr": "12.2.7",
-    "postcss": "8.4.8",
+    "postcss": "8.4.11",
     "prettier": "2.5.1",
     "puppeteer": "13.5.1",
     "rxjs": "7.5.5",
