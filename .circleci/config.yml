@@ -8,7 +8,7 @@ parameters:
 jobs:
   Core:
     docker:
-      - image: satantime/puppeteer-node:14.19.0
+      - image: satantime/puppeteer-node:14.19.1
     steps:
       - checkout
       - restore_cache:
@@ -498,7 +498,7 @@ jobs:
           command: npm run b:a13
   'React Redux 7 Install':
     docker:
-      - image: satantime/puppeteer-node:14.19.0
+      - image: satantime/puppeteer-node:14.19.1
     steps:
       - checkout
       - restore_cache:
@@ -515,7 +515,7 @@ jobs:
             - ./e2e/r7/node_modules
   'React Redux 7':
     docker:
-      - image: satantime/puppeteer-node:14.19.0
+      - image: satantime/puppeteer-node:14.19.1
     steps:
       - checkout
       - attach_workspace:
