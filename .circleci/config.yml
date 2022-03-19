@@ -221,7 +221,7 @@ jobs:
           command: npm run b:a8
   'Angular 9 Install':
     docker:
-      - image: satantime/puppeteer-node:12.22.10
+      - image: satantime/puppeteer-node:12.22.11
     steps:
       - checkout
       - restore_cache:
@@ -238,7 +238,7 @@ jobs:
             - ./e2e/a9/node_modules
   'Angular 9 without Ivy':
     docker:
-      - image: satantime/puppeteer-node:12.22.10
+      - image: satantime/puppeteer-node:12.22.11
     steps:
       - checkout
       - attach_workspace:
@@ -262,7 +262,7 @@ jobs:
           command: npm run b:a9:off
   'Angular 9 with Ivy':
     docker:
-      - image: satantime/puppeteer-node:12.22.10
+      - image: satantime/puppeteer-node:12.22.11
     steps:
       - checkout
       - attach_workspace:
@@ -286,7 +286,7 @@ jobs:
           command: npm run b:a9:on
   'Angular 10 Install':
     docker:
-      - image: satantime/puppeteer-node:12.22.10
+      - image: satantime/puppeteer-node:12.22.11
     steps:
       - checkout
       - restore_cache:
@@ -303,7 +303,7 @@ jobs:
             - ./e2e/a10/node_modules
   'Angular 10 without Ivy':
     docker:
-      - image: satantime/puppeteer-node:12.22.10
+      - image: satantime/puppeteer-node:12.22.11
     steps:
       - checkout
       - attach_workspace:
@@ -327,7 +327,7 @@ jobs:
           command: npm run b:a10:off
   'Angular 10 with Ivy':
     docker:
-      - image: satantime/puppeteer-node:12.22.10
+      - image: satantime/puppeteer-node:12.22.11
     steps:
       - checkout
       - attach_workspace:
@@ -351,7 +351,7 @@ jobs:
           command: npm run b:a10:on
   'Angular 11 Install':
     docker:
-      - image: satantime/puppeteer-node:12.22.10
+      - image: satantime/puppeteer-node:12.22.11
     steps:
       - checkout
       - restore_cache:
@@ -368,7 +368,7 @@ jobs:
             - ./e2e/a11/node_modules
   'Angular 11 without Ivy':
     docker:
-      - image: satantime/puppeteer-node:12.22.10
+      - image: satantime/puppeteer-node:12.22.11
     steps:
       - checkout
       - attach_workspace:
@@ -392,7 +392,7 @@ jobs:
           command: npm run b:a11:off
   'Angular 11 with Ivy':
     docker:
-      - image: satantime/puppeteer-node:12.22.10
+      - image: satantime/puppeteer-node:12.22.11
     steps:
       - checkout
       - attach_workspace:
@@ -416,7 +416,7 @@ jobs:
           command: npm run b:a11:on
   'Angular 12 Install':
     docker:
-      - image: satantime/puppeteer-node:12.22.10
+      - image: satantime/puppeteer-node:12.22.11
     steps:
       - checkout
       - restore_cache:
@@ -433,7 +433,7 @@ jobs:
             - ./e2e/a12/node_modules
   'Angular 12':
     docker:
-      - image: satantime/puppeteer-node:12.22.10
+      - image: satantime/puppeteer-node:12.22.11
     steps:
       - checkout
       - attach_workspace:
@@ -457,7 +457,7 @@ jobs:
           command: npm run b:a12
   'Angular 13 Install':
     docker:
-      - image: satantime/puppeteer-node:12.22.10
+      - image: satantime/puppeteer-node:12.22.11
     steps:
       - checkout
       - restore_cache:
@@ -474,7 +474,7 @@ jobs:
             - ./e2e/a13/node_modules
   'Angular 13':
     docker:
-      - image: satantime/puppeteer-node:12.22.10
+      - image: satantime/puppeteer-node:12.22.11
     steps:
       - checkout
       - attach_workspace:
