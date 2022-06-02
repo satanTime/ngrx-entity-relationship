@@ -159,7 +159,7 @@
     "karma-coverage": "2.2.0",
     "karma-ie-launcher": "1.0.0",
     "karma-jasmine": "4.0.2",
-    "karma-jasmine-html-reporter": "1.7.0",
+    "karma-jasmine-html-reporter": "2.0.0",
     "karma-junit-reporter": "2.0.1",
     "lint-staged": "13.0.0",
     "npm": "6.14.17",
