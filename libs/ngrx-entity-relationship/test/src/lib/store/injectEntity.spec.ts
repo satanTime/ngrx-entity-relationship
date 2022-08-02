@@ -113,6 +113,42 @@ describe('store/patchState', () => {
         );
     });
 
+    it('removes old field from an existing entity', () => {
+        const state = {
+            entity1: {
+                ids: ['1'],
+                entities: {
+                    1: {
+                        rand: 'rand0',
+                        old: true,
+                    },
+                },
+            },
+        };
+        const state1 = {p: Math.random()};
+        const entity = {
+            id: '1',
+            rand: 'rand1',
+        };
+        const selector = rootEntity<typeof state, any>(s => s.entity1);
+        patchStateSpy.and.returnValues(state1);
+
+        const actual = injectEntity.func(state, selector, entity);
+        expect(actual).toBe(state1);
+        expect(patchStateSpy).toHaveBeenCalledWith(
+            state,
+            state.entity1,
+            jasmine.objectContaining({
+                entities: {
+                    1: {
+                        id: '1',
+                        rand: 'rand1',
+                    },
+                },
+            }),
+        );
+    });
+
     it('adds id of a new entity to the store', () => {
         const state = {
             entity1: {
