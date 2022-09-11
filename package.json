@@ -166,7 +166,7 @@
     "ng-packagr": "12.2.7",
     "postcss": "8.4.16",
     "prettier": "2.7.1",
-    "puppeteer": "15.5.0",
+    "puppeteer": "16.2.0",
     "rxjs": "7.5.6",
     "semantic-release": "19.0.5",
     "ts-node": "10.4.0",
