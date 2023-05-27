@@ -150,7 +150,7 @@
     "codelyzer": "6.0.2",
     "coveralls": "3.1.1",
     "dotenv": "16.0.2",
-    "eslint": "8.38.0",
+    "eslint": "8.41.0",
     "husky": "8.0.1",
     "jasmine-core": "4.4.0",
     "jasmine-spec-reporter": "7.0.0",
