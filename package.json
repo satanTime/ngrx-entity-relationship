@@ -152,7 +152,7 @@
     "dotenv": "16.0.3",
     "eslint": "8.41.0",
     "husky": "8.0.3",
-    "jasmine-core": "4.4.0",
+    "jasmine-core": "4.6.0",
     "jasmine-spec-reporter": "7.0.0",
     "karma": "6.4.2",
     "karma-chrome-launcher": "3.2.0",
