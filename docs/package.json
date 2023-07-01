@@ -12,7 +12,7 @@
     "clear": "docusaurus clear"
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-beta.15",
+    "@docusaurus/core": "2.4.1",
     "@docusaurus/plugin-content-docs": "2.0.0-beta.15",
     "@docusaurus/plugin-google-gtag": "2.0.0-beta.15",
     "@docusaurus/plugin-sitemap": "2.0.0-beta.15",
