@@ -416,7 +416,7 @@ jobs:
           command: npm run b:a11:on
   'Angular 12 Install':
     docker:
-      - image: satantime/puppeteer-node:12.22.12
+      - image: satantime/puppeteer-node:7.3.0
     steps:
       - checkout
       - restore_cache:
