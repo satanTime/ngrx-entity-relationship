@@ -35,7 +35,7 @@
     "@angular/cli": "13.3.11",
     "@angular/compiler-cli": "13.4.0",
     "@types/jasmine": "3.10.11",
-    "@types/jasminewd2": "2.0.10",
+    "@types/jasminewd2": "2.0.13",
     "@types/node": "12.20.55",
     "jasmine-core": "4.0.1",
     "jasmine-spec-reporter": "5.0.2",
